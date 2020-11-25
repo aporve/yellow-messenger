@@ -1251,7 +1251,7 @@ file2.onchange = async function (e) {
       var pageId = 1;
       var sizevalid = isFileSizeValid(file, buttonNum);
       if (sizevalid) {
-       
+
         if (ext == "jpg") {
           var isFileBlur = fileCheck(file, buttonNum, pageID)
           if (isFileBlur == false) {
@@ -1326,7 +1326,7 @@ file3.onchange = async function (e) {
       var pageId = 1;
       var sizevalid = isFileSizeValid(file, buttonNum);
       if (sizevalid) {
-      
+
         if (ext == "jpg") {
           var isFileBlur = fileCheck(file, buttonNum, pageID)
           if (isFileBlur == false) {
@@ -1399,7 +1399,7 @@ file4.onchange = async function (e) {
       var pageId = 1;
       var sizevalid = isFileSizeValid(file, buttonNum);
       if (sizevalid) {
-       
+
         if (ext == "jpg") {
           var isFileBlur = fileCheck(file, buttonNum, pageID)
           if (isFileBlur == false) {
@@ -1474,7 +1474,7 @@ file5.onchange = async function (e) {
       var pageId = 1;
       var sizevalid = isFileSizeValid(file, buttonNum);
       if (sizevalid) {
-       
+
         if (ext == "jpg") {
           var isFileBlur = fileCheck(file, buttonNum, pageID)
           if (isFileBlur == false) {
@@ -1551,7 +1551,7 @@ file6.onchange = async function (e) {
       var pageId = 2
       var sizevalid = isFileSizeValid(file, buttonNum);
       if (sizevalid) {
-       
+
         if (ext == "jpg") {
           var isFileBlur = fileCheck(file, buttonNum, pageID)
           if (isFileBlur == false) {
@@ -1626,9 +1626,9 @@ file7.onchange = async function (e) {
       var buttonNum = 7;
       var sizevalid = isFileSizeValid(file, buttonNum);
       if (sizevalid) {
-      
+
         if (ext == "jpg") {
-          var isFileBlur = fileCheck(file, buttonNum, pageID)
+          var isFileBlur = fileCheck(file, buttonNum)
           if (isFileBlur == false) {
             file1Buffer = await getBuffer(file);
             console.log("file buffer : ")
@@ -1639,12 +1639,12 @@ file7.onchange = async function (e) {
         }
         else {
           proceedScan(file, buttonNum);
-        
-            file1Buffer = await getBuffer(file);
-            console.log("file buffer : ")
-            console.log(file1Buffer);
-            filesMap["file7"] = file1Buffer;
-          
+
+          file1Buffer = await getBuffer(file);
+          console.log("file buffer : ")
+          console.log(file1Buffer);
+          filesMap["file7"] = file1Buffer;
+
         }
 
       } else {
