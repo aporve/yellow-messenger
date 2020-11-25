@@ -44,9 +44,11 @@ let botId = url.searchParams.get('botId');
 
 $('#privacy_consent_1').prop('checked', true);
 $('#privacy_consent_2').prop('checked', true);
+$('#privacy_consent_3').prop('checked', true);
 
 $('#privacy_consent_beneficiary_1').prop('checked', true);
 $('#privacy_consent_beneficiary_2').prop('checked', true);
+$('#privacy_consent_beneficiary_3').prop('checked', true);
 
 let basicInformation = {};
 let InsuredInformation = {};
@@ -75,31 +77,31 @@ $(document).ready(function (event) {
     $(this).keypress(resetTimer);
 
     defaultBank();
-  
+
     $("#from_currency").change(function () {
-      var val = $(this).val();
-      if (val == "Peso") {
-        $("#field_Bank").html(
-            "<option value='Bank of the Philippine Islands - BPI' >Bank of the Philippine Islands - BPI</option><option value='BPI Family Savings Bank - BFB'>BPI Family Savings Bank - BFB</option><option value='Banco de Oro - BDO'>Banco de Oro - BDO</option><option value='China Banking Corporation - CBC'>China Banking Corporation - CBC</option><option value='Citibank Philippines - CITI'>Citibank Philippines - CITI</option><option value='Development Bank of the Phils - DBP'>Development Bank of the Phils - DBP</option><option value='Eastwest Bank - EWB'>Eastwest Bank - EWB</option><option value='Hongkong Shanghai Banking Corp. Phils - HSBC'>Hongkong Shanghai Banking Corp. Phils - HSBC</option><option value='Land Bank of the Philippines - LPB'>Land Bank of the Philippines - LPB</option><option value='Metropolitan Banks and Trust Company - MBTC'>Metropolitan Banks and Trust Company - MBTC</option><option value='Philippine National Bank - PNB'>Philippine National Bank - PNB</option><option value='Rizal Commercial Banking Corp - RCBC'>Rizal Commercial Banking Corp - RCBC</option><option value='Security Bank - SBTC'>Security Bank - SBTC</option><option value='Union Bank of the Philippines - UB'>Union Bank of the Philippines - UB</option>"
-        );
-      } else if (val == "USD") {
-        $("#field_Bank").html(
-            "<option value='Bank of the Philippine Islands - BPI'>Bank of the Philippine Islands - BPI</option><option value='Banco de Oro - BDO'>Banco de Oro - BDO</option>"
-        );
-      }
+        var val = $(this).val();
+        if (val == "Peso") {
+            $("#field_Bank").html(
+                "<option value='Bank of the Philippine Islands - BPI' >Bank of the Philippine Islands - BPI</option><option value='BPI Family Savings Bank - BFB'>BPI Family Savings Bank - BFB</option><option value='Banco de Oro - BDO'>Banco de Oro - BDO</option><option value='China Banking Corporation - CBC'>China Banking Corporation - CBC</option><option value='Citibank Philippines - CITI'>Citibank Philippines - CITI</option><option value='Development Bank of the Phils - DBP'>Development Bank of the Phils - DBP</option><option value='Eastwest Bank - EWB'>Eastwest Bank - EWB</option><option value='Hongkong Shanghai Banking Corp. Phils - HSBC'>Hongkong Shanghai Banking Corp. Phils - HSBC</option><option value='Land Bank of the Philippines - LPB'>Land Bank of the Philippines - LPB</option><option value='Metropolitan Banks and Trust Company - MBTC'>Metropolitan Banks and Trust Company - MBTC</option><option value='Philippine National Bank - PNB'>Philippine National Bank - PNB</option><option value='Rizal Commercial Banking Corp - RCBC'>Rizal Commercial Banking Corp - RCBC</option><option value='Security Bank - SBTC'>Security Bank - SBTC</option><option value='Union Bank of the Philippines - UB'>Union Bank of the Philippines - UB</option>"
+            );
+        } else if (val == "USD") {
+            $("#field_Bank").html(
+                "<option value='Bank of the Philippine Islands - BPI'>Bank of the Philippine Islands - BPI</option><option value='Banco de Oro - BDO'>Banco de Oro - BDO</option>"
+            );
+        }
     });
 
 
     $("#from_addBeneficiarycurrency").change(function () {
         var val = $(this).val();
         if (val == "Peso") {
-          $("#field_addBenificiaryBank").html(
-            "<option value='Bank of the Philippine Islands - BPI' >Bank of the Philippine Islands - BPI</option><option value='BPI Family Savings Bank - BFB'>BPI Family Savings Bank - BFB</option><option value='Banco de Oro - BDO'>Banco de Oro - BDO</option><option value='China Banking Corporation - CBC'>China Banking Corporation - CBC</option><option value='Citibank Philippines - CITI'>Citibank Philippines - CITI</option><option value='Development Bank of the Phils - DBP'>Development Bank of the Phils - DBP</option><option value='Eastwest Bank - EWB'>Eastwest Bank - EWB</option><option value='Hongkong Shanghai Banking Corp. Phils - HSBC'>Hongkong Shanghai Banking Corp. Phils - HSBC</option><option value='Land Bank of the Philippines - LPB'>Land Bank of the Philippines - LPB</option><option value='Metropolitan Banks and Trust Company - MBTC'>Metropolitan Banks and Trust Company - MBTC</option><option value='Philippine National Bank - PNB'>Philippine National Bank - PNB</option><option value='Rizal Commercial Banking Corp - RCBC'>Rizal Commercial Banking Corp - RCBC</option><option value='Security Bank - SBTC'>Security Bank - SBTC</option><option value='Union Bank of the Philippines - UB'>Union Bank of the Philippines - UB</option>"
-          );
+            $("#field_addBenificiaryBank").html(
+                "<option value='Bank of the Philippine Islands - BPI' >Bank of the Philippine Islands - BPI</option><option value='BPI Family Savings Bank - BFB'>BPI Family Savings Bank - BFB</option><option value='Banco de Oro - BDO'>Banco de Oro - BDO</option><option value='China Banking Corporation - CBC'>China Banking Corporation - CBC</option><option value='Citibank Philippines - CITI'>Citibank Philippines - CITI</option><option value='Development Bank of the Phils - DBP'>Development Bank of the Phils - DBP</option><option value='Eastwest Bank - EWB'>Eastwest Bank - EWB</option><option value='Hongkong Shanghai Banking Corp. Phils - HSBC'>Hongkong Shanghai Banking Corp. Phils - HSBC</option><option value='Land Bank of the Philippines - LPB'>Land Bank of the Philippines - LPB</option><option value='Metropolitan Banks and Trust Company - MBTC'>Metropolitan Banks and Trust Company - MBTC</option><option value='Philippine National Bank - PNB'>Philippine National Bank - PNB</option><option value='Rizal Commercial Banking Corp - RCBC'>Rizal Commercial Banking Corp - RCBC</option><option value='Security Bank - SBTC'>Security Bank - SBTC</option><option value='Union Bank of the Philippines - UB'>Union Bank of the Philippines - UB</option>"
+            );
         } else if (val == "USD") {
-          $("#field_addBenificiaryBank").html(
-            "<option value='Bank of the Philippine Islands - BPI'>Bank of the Philippine Islands - BPI</option><option value='Banco de Oro - BDO'>Banco de Oro - BDO</option>"
-          );
+            $("#field_addBenificiaryBank").html(
+                "<option value='Bank of the Philippine Islands - BPI'>Bank of the Philippine Islands - BPI</option><option value='Banco de Oro - BDO'>Banco de Oro - BDO</option>"
+            );
         }
     });
 });
@@ -107,12 +109,12 @@ $(document).ready(function (event) {
 function defaultBank() {
     var val = 'Peso';
     if (val == "Peso") {
-      $("#field_Bank").html(
-      "<option value='Bank of the Philippine Islands - BPI' >Bank of the Philippine Islands - BPI</option><option value='BPI Family Savings Bank - BFB'>BPI Family Savings Bank - BFB</option><option value='Banco de Oro - BDO'>Banco de Oro - BDO</option><option value='China Banking Corporation - CBC'>China Banking Corporation - CBC</option><option value='Citibank Philippines - CITI'>Citibank Philippines - CITI</option><option value='Development Bank of the Phils - DBP'>Development Bank of the Phils - DBP</option><option value='Eastwest Bank - EWB'>Eastwest Bank - EWB</option><option value='Hongkong Shanghai Banking Corp. Phils - HSBC'>Hongkong Shanghai Banking Corp. Phils - HSBC</option><option value='Land Bank of the Philippines - LPB'>Land Bank of the Philippines - LPB</option><option value='Metropolitan Banks and Trust Company - MBTC'>Metropolitan Banks and Trust Company - MBTC</option><option value='Philippine National Bank - PNB'>Philippine National Bank - PNB</option><option value='Rizal Commercial Banking Corp - RCBC'>Rizal Commercial Banking Corp - RCBC</option><option value='Security Bank - SBTC'>Security Bank - SBTC</option><option value='Union Bank of the Philippines - UB'>Union Bank of the Philippines - UB</option>"
-      );
-      $("#field_addBenificiaryBank").html(
-       "<option value='Bank of the Philippine Islands - BPI' >Bank of the Philippine Islands - BPI</option><option value='BPI Family Savings Bank - BFB'>BPI Family Savings Bank - BFB</option><option value='Banco de Oro - BDO'>Banco de Oro - BDO</option><option value='China Banking Corporation - CBC'>China Banking Corporation - CBC</option><option value='Citibank Philippines - CITI'>Citibank Philippines - CITI</option><option value='Development Bank of the Phils - DBP'>Development Bank of the Phils - DBP</option><option value='Eastwest Bank - EWB'>Eastwest Bank - EWB</option><option value='Hongkong Shanghai Banking Corp. Phils - HSBC'>Hongkong Shanghai Banking Corp. Phils - HSBC</option><option value='Land Bank of the Philippines - LPB'>Land Bank of the Philippines - LPB</option><option value='Metropolitan Banks and Trust Company - MBTC'>Metropolitan Banks and Trust Company - MBTC</option><option value='Philippine National Bank - PNB'>Philippine National Bank - PNB</option><option value='Rizal Commercial Banking Corp - RCBC'>Rizal Commercial Banking Corp - RCBC</option><option value='Security Bank - SBTC'>Security Bank - SBTC</option><option value='Union Bank of the Philippines - UB'>Union Bank of the Philippines - UB</option>"
-      );
+        $("#field_Bank").html(
+            "<option value='Bank of the Philippine Islands - BPI' >Bank of the Philippine Islands - BPI</option><option value='BPI Family Savings Bank - BFB'>BPI Family Savings Bank - BFB</option><option value='Banco de Oro - BDO'>Banco de Oro - BDO</option><option value='China Banking Corporation - CBC'>China Banking Corporation - CBC</option><option value='Citibank Philippines - CITI'>Citibank Philippines - CITI</option><option value='Development Bank of the Phils - DBP'>Development Bank of the Phils - DBP</option><option value='Eastwest Bank - EWB'>Eastwest Bank - EWB</option><option value='Hongkong Shanghai Banking Corp. Phils - HSBC'>Hongkong Shanghai Banking Corp. Phils - HSBC</option><option value='Land Bank of the Philippines - LPB'>Land Bank of the Philippines - LPB</option><option value='Metropolitan Banks and Trust Company - MBTC'>Metropolitan Banks and Trust Company - MBTC</option><option value='Philippine National Bank - PNB'>Philippine National Bank - PNB</option><option value='Rizal Commercial Banking Corp - RCBC'>Rizal Commercial Banking Corp - RCBC</option><option value='Security Bank - SBTC'>Security Bank - SBTC</option><option value='Union Bank of the Philippines - UB'>Union Bank of the Philippines - UB</option>"
+        );
+        $("#field_addBenificiaryBank").html(
+            "<option value='Bank of the Philippine Islands - BPI' >Bank of the Philippine Islands - BPI</option><option value='BPI Family Savings Bank - BFB'>BPI Family Savings Bank - BFB</option><option value='Banco de Oro - BDO'>Banco de Oro - BDO</option><option value='China Banking Corporation - CBC'>China Banking Corporation - CBC</option><option value='Citibank Philippines - CITI'>Citibank Philippines - CITI</option><option value='Development Bank of the Phils - DBP'>Development Bank of the Phils - DBP</option><option value='Eastwest Bank - EWB'>Eastwest Bank - EWB</option><option value='Hongkong Shanghai Banking Corp. Phils - HSBC'>Hongkong Shanghai Banking Corp. Phils - HSBC</option><option value='Land Bank of the Philippines - LPB'>Land Bank of the Philippines - LPB</option><option value='Metropolitan Banks and Trust Company - MBTC'>Metropolitan Banks and Trust Company - MBTC</option><option value='Philippine National Bank - PNB'>Philippine National Bank - PNB</option><option value='Rizal Commercial Banking Corp - RCBC'>Rizal Commercial Banking Corp - RCBC</option><option value='Security Bank - SBTC'>Security Bank - SBTC</option><option value='Union Bank of the Philippines - UB'>Union Bank of the Philippines - UB</option>"
+        );
     }
 }
 
@@ -154,15 +156,15 @@ function myDisable() {
     document.getElementById("form_Beneficiary").style.cursor = "no-drop";
 }
 
-function addFileToList(fileObject, fileName){
+function addFileToList(fileObject, fileName) {
     console.log(fileName);
-    let index = filesList.findIndex(x => x.Filename == fileName )
-  
-    if(index===-1){
-      console.log("adding bcoz unique");
-      filesList.push(fileObject);
+    let index = filesList.findIndex(x => x.Filename == fileName)
+
+    if (index === -1) {
+        console.log("adding bcoz unique");
+        filesList.push(fileObject);
     }
-  }
+}
 
 function timer() {
     var random = Math.floor(Math.random() * 5) + 1
@@ -411,16 +413,40 @@ function disableFutureDatesDOB() {
     $('#field_DOB').attr('max', maxDate);
 }
 
-function checkKeyword(keyword) {
+function checkKeyword(keyword, type) {
 
     if ((keyword == 'husband') || (keyword == 'wife') || (keyword == 'spouse') || (keyword == 'Husband') || (keyword == 'Wife') || (keyword == 'Spouse') || (keyword == 'HUSBAND') || (keyword == 'WIFE') || (keyword == 'SPOUSE')) {
+        if (type == 'new_beneficiary') {
+            document.getElementById("file_Upload_11").disabled = false;
+            document.getElementById("file_Upload_11").style.cursor = "pointer";
+            document.getElementById("file_Upload_11").style.opacity = "0";
+            document.getElementById("marriage_certificate_11").style.border = "none";
+        }
+        else {
+            document.getElementById("file_Upload_5").disabled = false;
+            document.getElementById("file_Upload_5").style.cursor = "pointer";
+            document.getElementById("file_Upload_5").style.opacity = "0";
+            document.getElementById("marriage_certificate").style.border = "none";
+        }
         return true;
     } else {
+        if (type == 'new_beneficiary') {
+            document.getElementById("file_Upload_11").disabled = true;
+            document.getElementById("file_Upload_11").style.cursor = "no-drop";
+            document.getElementById("file_Upload_11").style.opacity = "0.4";
+            document.getElementById("marriage_certificate_11").style.border = "none";
+        }
+        else {
+            document.getElementById("file_Upload_5").disabled = true;
+            document.getElementById("file_Upload_5").style.cursor = "no-drop";
+            document.getElementById("file_Upload_5").style.opacity = "0.4";
+            document.getElementById("marriage_certificate").style.border = "none";
+        }
         return false;
     }
 }
 
-function currentDate(date) {
+function currentDate(date, type) {
     var dtToday = new Date();
     var month = dtToday.getMonth() + 1;
     var day = dtToday.getDate();
@@ -432,8 +458,32 @@ function currentDate(date) {
     var age = year - userYear;
 
     if (age <= 18) {
+        if (type == 'new_beneficiary') {
+            document.getElementById("file_Upload_12").disabled = false;
+            document.getElementById("file_Upload_12").style.cursor = "pointer";
+            document.getElementById("file_Upload_12").style.opacity = "0";
+
+        }
+        else {
+            document.getElementById("file_Upload_6").disabled = false;
+            document.getElementById("file_Upload_6").style.cursor = "pointer";
+            document.getElementById("file_Upload_6").style.opacity = "0";
+
+        }
         return true;
     } else {
+        if (type == 'new_beneficiary') {
+            document.getElementById("file_Upload_12").disabled = true;
+            document.getElementById("file_Upload_12").style.cursor = "no-drop";
+            document.getElementById("file_Upload_12").style.opacity = "0.4";
+            document.getElementById("age_cert_12").style.border = "none";
+        }
+        else {
+            document.getElementById("file_Upload_6").disabled = true;
+            document.getElementById("file_Upload_6").style.cursor = "no-drop";
+            document.getElementById("file_Upload_6").style.opacity = "0.4";
+            document.getElementById("age_cert").style.border = "none";
+        }
         return false;
     }
 
@@ -599,7 +649,7 @@ function validateNotNumber(evt) {
 function handleFormAddBeneficiary(event) {
     event.preventDefault();
     // beneficiaryCount++;
-    beneficiaryCount = buttonCount+1;
+    beneficiaryCount = buttonCount + 1;
     traverse = 1;
     var field_addBeneficiaryFirstName = $("#field_addBeneficiaryFirstName").val();
     var field_addBeneficiaryMiddleName = $("#field_addBeneficiaryMiddleName").val();
@@ -632,9 +682,9 @@ function handleFormAddBeneficiary(event) {
     var lenaddBeneficiaryPOB = fieldCheckLength(field_addBeneficiaryPOB, 120);
     var lenaddBeneficiaryNationality = fieldCheckLength(field_addBeneficiaryNationality, 120);
     var lenaddBeneficiaryRelationToDeceased = fieldCheckLength(field_addBeneficiaryRelationToDeceased, 50);
-    var lenaddBeneficiaryEmployerName = fieldCheckLength(field_addBeneficiaryEmployerName, 30)
-    var ageaddBeneficiaryDOB = currentDate(field_addBeneficiaryDOB);
-    var relationaddBeneficiaryRelation = checkKeyword(field_addBeneficiaryRelationToDeceased);
+    var lenaddBeneficiaryEmployerName = fieldCheckLength(field_addBeneficiaryEmployerName, 30);
+    var ageaddBeneficiaryDOB = currentDate(field_addBeneficiaryDOB, 'new_beneficiary');
+    var relationaddBeneficiaryRelation = checkKeyword(field_addBeneficiaryRelationToDeceased, 'new_beneficiary');
     /*  var numAddBeniEmployerName = numberValidation(field_addBeneficiaryEmployerName);
      var specAddBeniEmployerName = specialcharacterValidation(field_addBeneficiaryEmployerName); */
 
@@ -870,7 +920,8 @@ function handleFormAddBeneficiary(event) {
             basic_checkbox: $('#invalidCheck_basicAddBeneficiary').is(':checked'),
             privacy_checkbox: $('#invalidCheck_privacyAddBeneficiary').is(':checked'),
             privacy_consent_beneficiary_1: $("#privacy_consent_beneficiary_1").is(":checked"),
-            privacy_consent_beneficiary_2: $("#privacy_consent_beneficiary_2").is(":checked")
+            privacy_consent_beneficiary_2: $("#privacy_consent_beneficiary_2").is(":checked"),
+            privacy_consent_beneficiary_3: $("#privacy_consent_beneficiary_3").is(":checked"),
         }
 
 
@@ -1065,9 +1116,9 @@ function handleForm(event) {
     var lenBeneficiaryPOB = fieldCheckLength(field_BeneficiaryPOB, 120);
     var lenBeneficiaryNationality = fieldCheckLength(field_BeneficiaryNationality, 120)
     var lenBeneficiaryRelationToDeceased = fieldCheckLength(field_BeneficiaryRelationToDeceased, 50)
-    var lenBeneficiaryEmployerName = fieldCheckLength(field_BeneficiaryEmployerName, 30)
-    var checkDOb = currentDate(field_BeneficiaryDOB);
-    var relationKeyword = checkKeyword(field_BeneficiaryRelationToDeceased);
+    var lenBeneficiaryEmployerName = fieldCheckLength(field_BeneficiaryEmployerName, 30);
+    var checkDOb = currentDate(field_BeneficiaryDOB, '');
+    var relationKeyword = checkKeyword(field_BeneficiaryRelationToDeceased, '');
 
 
     if (field_DOB.length !== 0) {
@@ -1436,7 +1487,8 @@ function handleForm(event) {
             basic_checkbox: $('#invalidCheck_basic').is(':checked'),
             privacy_checkbox: $('#invalidCheck_privacy').is(':checked'),
             privacy_consent_1: $("#privacy_consent_1").is(":checked"),
-            privacy_consent_2: $("#privacy_consent_2").is(":checked")
+            privacy_consent_2: $("#privacy_consent_2").is(":checked"),
+            privacy_consent_3: $("#privacy_consent_3").is(":checked")
         }
         InsuredInformation["FirstName"] = field_firstName;
         InsuredInformation["MiddleName"] = field_middleName;
@@ -1479,9 +1531,9 @@ function handleForm(event) {
         $("#customer_Name").text(`Hi ${field_BeneficiaryFirstName}, Hang in there as we are now processing your request. Kindly expect an SMS update from us within 1 to 2 working days on the status of your request.`);
         console.log('Data -> ', data)
 
-    }else if ((comapareDates == false) && ((field_DOB !== '') || (field_DOID !== ''))){
+    } else if ((comapareDates == false) && ((field_DOB !== '') || (field_DOID !== ''))) {
         $('#popUp_DOB').modal('show');
-    }else {
+    } else {
         $('#popUp').modal('show');
     }
 }
@@ -1629,10 +1681,12 @@ const proceedScan = async (fileObj, button, pageid) => {
 };
 
 const fileCheck = (file, button, pageid) => {
+    fileBlurStatus = false;
     console.log(button);
     var _URL = window.URL || window.webkitURL;
     console.log("FILE OBJECT -> ", file);
     var img = new Image();
+
     console.log("Before on load --> ");
     img.onload = function () {
         console.log("inside image load --> ");
@@ -1663,10 +1717,12 @@ const fileCheck = (file, button, pageid) => {
             $(`#file_loader_icon_${button}`).hide();
             $(`#file_Upload_Tick_${button}`).hide();
             $(`#file_upload_cancle_${button}`).show();
+            fileBlurStatus = true;
 
         } else {
             console.log("This is right JPG");
             proceedScan(file, button);
+            fileBlurStatus = false;
         }
     };
     img.onerror = function () {
@@ -1674,6 +1730,7 @@ const fileCheck = (file, button, pageid) => {
         /*  alert("not a valid file: " + file.type); */
     };
     img.src = _URL.createObjectURL(file);
+    return fileBlurStatus;
 };
 
 const isFileSizeValid = (file) => {
@@ -1698,25 +1755,42 @@ file1.onchange = async function (e) {
             var pageId = 1;
             var sizevalid = isFileSizeValid(file, buttonNum);
             if (sizevalid) {
+
                 if (ext == "jpg") {
-                    fileCheck(file, buttonNum, pageId);
+                    var isFileBlur = fileCheck(file, buttonNum, pageId)
+                    if (isFileBlur == false) {
+                        let fileName = referenceNumber + "-" + docType + "-" + tranType;
+
+                        let accident = {};
+                        accident['BeneficiaryNo'] = beneficiaryCount,
+                            accident['Filename'] = `${fileName}.pdf`,
+                            accident['DocType'] = "PDF",
+                            accident['DocTypeCode'] = docType,
+                            accident['DocumentDescription'] = "Death certificate of the deceased"
+
+                        addFileToList(accident, `${fileName}.pdf`);
+                        const formData = new FormData()
+                        formData.append('file', file, fileName + `.${ext}`);
+                        handleFileUpload(formData, fileName);
+                    }
                 }
                 else {
                     proceedScan(file, buttonNum, pageId);
+                    let fileName = referenceNumber + "-" + docType + "-" + tranType;
+
+                    let accident = {};
+                    accident['BeneficiaryNo'] = beneficiaryCount,
+                        accident['Filename'] = `${fileName}.pdf`,
+                        accident['DocType'] = "PDF",
+                        accident['DocTypeCode'] = docType,
+                        accident['DocumentDescription'] = "Death certificate of the deceased"
+
+                    addFileToList(accident, `${fileName}.pdf`);
+                    const formData = new FormData()
+                    formData.append('file', file, fileName + `.${ext}`);
+                    handleFileUpload(formData, fileName);
                 }
-                let fileName = referenceNumber + "-" + docType + "-" + tranType;
 
-                let accident = {};
-                accident['BeneficiaryNo'] = beneficiaryCount,
-                    accident['Filename'] = `${fileName}.pdf`,
-                    accident['DocType'] = "PDF",
-                    accident['DocTypeCode'] = docType,
-                    accident['DocumentDescription'] = "Death certificate of the deceased"
-
-                addFileToList(accident, `${fileName}.pdf`);
-                const formData = new FormData()
-                formData.append('file', file, fileName + `.${ext}`);
-                handleFileUpload(formData, fileName);
             } else {
                 $("#warning_parent").show();
                 $("#file_loader_icon_1").hide();
@@ -1752,25 +1826,42 @@ file2.onchange = async function (e) {
             var pageId = 1
             var sizevalid = isFileSizeValid(file, buttonNum);
             if (sizevalid) {
+
                 if (ext == "jpg") {
-                    fileCheck(file, buttonNum, pageId);
+                    var isFileBlur = fileCheck(file, buttonNum, pageId)
+                    if (isFileBlur == false) {
+                        let fileName = referenceNumber + "-" + docType + "-" + tranType;
+
+                        let accident = {};
+                        accident['BeneficiaryNo'] = beneficiaryCount,
+                            accident['Filename'] = `${fileName}.pdf`,
+                            accident['DocType'] = "PDF",
+                            accident['DocTypeCode'] = docType,
+                            accident['DocumentDescription'] = "Police Investigation Report"
+
+                        addFileToList(accident, `${fileName}.pdf`);
+                        const formData = new FormData()
+                        formData.append('file', file, fileName + `.${ext}`);
+                        handleFileUpload(formData, fileName);
+                    }
                 }
                 else {
                     proceedScan(file, buttonNum, pageId);
+                    let fileName = referenceNumber + "-" + docType + "-" + tranType;
+
+                    let accident = {};
+                    accident['BeneficiaryNo'] = beneficiaryCount,
+                        accident['Filename'] = `${fileName}.pdf`,
+                        accident['DocType'] = "PDF",
+                        accident['DocTypeCode'] = docType,
+                        accident['DocumentDescription'] = "Police Investigation Report"
+
+                    addFileToList(accident, `${fileName}.pdf`);
+                    const formData = new FormData()
+                    formData.append('file', file, fileName + `.${ext}`);
+                    handleFileUpload(formData, fileName);
                 }
-                let fileName = referenceNumber + "-" + docType + "-" + tranType;
 
-                let accident = {};
-                accident['BeneficiaryNo'] = beneficiaryCount,
-                    accident['Filename'] = `${fileName}.pdf`,
-                    accident['DocType'] = "PDF",
-                    accident['DocTypeCode'] = docType,
-                    accident['DocumentDescription'] = "Police Investigation Report"
-
-                addFileToList(accident, `${fileName}.pdf`);
-                const formData = new FormData()
-                formData.append('file', file, fileName + `.${ext}`);
-                handleFileUpload(formData, fileName);
             } else {
                 $("#warning_parent").show();
                 $("#file_loader_icon_2").hide();
@@ -1806,25 +1897,42 @@ file3.onchange = async function (e) {
             var pageId = 1;
             var sizevalid = isFileSizeValid(file, buttonNum);
             if (sizevalid) {
+
                 if (ext == "jpg") {
-                    fileCheck(file, buttonNum, pageId);
+                    var isFileBlur = fileCheck(file, buttonNum, pageId)
+                    if (isFileBlur == false) {
+                        let fileName = referenceNumber + "-" + docType + "-" + tranType;
+
+                        let accident = {};
+                        accident['BeneficiaryNo'] = beneficiaryCount,
+                            accident['Filename'] = `${fileName}.pdf`,
+                            accident['DocType'] = "PDF",
+                            accident['DocTypeCode'] = docType,
+                            accident['DocumentDescription'] = "Claimants valid Government ID (Front)"
+
+                        addFileToList(accident, `${fileName}.pdf`);
+                        const formData = new FormData()
+                        formData.append('file', file, fileName + `.${ext}`);
+                        handleFileUpload(formData, fileName);
+                    }
                 }
                 else {
                     proceedScan(file, buttonNum, pageId);
+                    let fileName = referenceNumber + "-" + docType + "-" + tranType;
+
+                    let accident = {};
+                    accident['BeneficiaryNo'] = beneficiaryCount,
+                        accident['Filename'] = `${fileName}.pdf`,
+                        accident['DocType'] = "PDF",
+                        accident['DocTypeCode'] = docType,
+                        accident['DocumentDescription'] = "Claimants valid Government ID (Front)"
+
+                    addFileToList(accident, `${fileName}.pdf`);
+                    const formData = new FormData()
+                    formData.append('file', file, fileName + `.${ext}`);
+                    handleFileUpload(formData, fileName);
                 }
-                let fileName = referenceNumber + "-" + docType + "-" + tranType;
 
-                let accident = {};
-                accident['BeneficiaryNo'] = beneficiaryCount,
-                    accident['Filename'] = `${fileName}.pdf`,
-                    accident['DocType'] = "PDF",
-                    accident['DocTypeCode'] = docType,
-                    accident['DocumentDescription'] = "Claimants valid Government ID (Front)"
-
-                addFileToList(accident, `${fileName}.pdf`);
-                const formData = new FormData()
-                formData.append('file', file, fileName + `.${ext}`);
-                handleFileUpload(formData, fileName);
             } else {
                 $("#warning_parent").show();
                 $("#file_loader_icon_3").hide();
@@ -1860,25 +1968,42 @@ file4.onchange = async function (e) {
             var pageId = 1;
             var sizevalid = isFileSizeValid(file, buttonNum);
             if (sizevalid) {
+
                 if (ext == "jpg") {
-                    fileCheck(file, buttonNum, pageId);
+                    var isFileBlur = fileCheck(file, buttonNum, pageId)
+                    if (isFileBlur == false) {
+                        let fileName = referenceNumber + "-" + docType + "-" + tranType;
+
+                        let accident = {};
+                        accident['BeneficiaryNo'] = beneficiaryCount,
+                            accident['Filename'] = `${fileName}.pdf`,
+                            accident['DocType'] = "PDF",
+                            accident['DocTypeCode'] = docType,
+                            accident['DocumentDescription'] = "Claimants valid Government ID (Back)"
+
+                        addFileToList(accident, `${fileName}.pdf`);
+                        const formData = new FormData()
+                        formData.append('file', file, fileName + `.${ext}`);
+                        handleFileUpload(formData, fileName);
+                    }
                 }
                 else {
                     proceedScan(file, buttonNum, pageId);
+                    let fileName = referenceNumber + "-" + docType + "-" + tranType;
+
+                    let accident = {};
+                    accident['BeneficiaryNo'] = beneficiaryCount,
+                        accident['Filename'] = `${fileName}.pdf`,
+                        accident['DocType'] = "PDF",
+                        accident['DocTypeCode'] = docType,
+                        accident['DocumentDescription'] = "Claimants valid Government ID (Back)"
+
+                    addFileToList(accident, `${fileName}.pdf`);
+                    const formData = new FormData()
+                    formData.append('file', file, fileName + `.${ext}`);
+                    handleFileUpload(formData, fileName);
                 }
-                let fileName = referenceNumber + "-" + docType + "-" + tranType;
 
-                let accident = {};
-                accident['BeneficiaryNo'] = beneficiaryCount,
-                    accident['Filename'] = `${fileName}.pdf`,
-                    accident['DocType'] = "PDF",
-                    accident['DocTypeCode'] = docType,
-                    accident['DocumentDescription'] = "Claimants valid Government ID (Back)"
-
-                addFileToList(accident, `${fileName}.pdf`);
-                const formData = new FormData()
-                formData.append('file', file, fileName + `.${ext}`);
-                handleFileUpload(formData, fileName);
             } else {
                 $("#warning_parent").show();
                 $("#file_loader_icon_4").hide();
@@ -1914,25 +2039,42 @@ file5.onchange = async function (e) {
             var pageId = 1
             var sizevalid = isFileSizeValid(file, buttonNum);
             if (sizevalid) {
+
                 if (ext == "jpg") {
-                    fileCheck(file, buttonNum, pageId);
+                    var isFileBlur = fileCheck(file, buttonNum, pageId)
+                    if (isFileBlur == false) {
+                        let fileName = referenceNumber + "-" + docType + "-" + tranType;
+
+                        let accident = {};
+                        accident['BeneficiaryNo'] = beneficiaryCount,
+                            accident['Filename'] = `${fileName}.pdf`,
+                            accident['DocType'] = "PDF",
+                            accident['DocTypeCode'] = docType,
+                            accident['DocumentDescription'] = "Marriage Contract"
+
+                        addFileToList(accident, `${fileName}.pdf`);
+                        const formData = new FormData()
+                        formData.append('file', file, fileName + `.${ext}`);
+                        handleFileUpload(formData, fileName);
+                    }
                 }
                 else {
                     proceedScan(file, buttonNum, pageId);
+                    let fileName = referenceNumber + "-" + docType + "-" + tranType;
+
+                    let accident = {};
+                    accident['BeneficiaryNo'] = beneficiaryCount,
+                        accident['Filename'] = `${fileName}.pdf`,
+                        accident['DocType'] = "PDF",
+                        accident['DocTypeCode'] = docType,
+                        accident['DocumentDescription'] = "Marriage Contract"
+
+                    addFileToList(accident, `${fileName}.pdf`);
+                    const formData = new FormData()
+                    formData.append('file', file, fileName + `.${ext}`);
+                    handleFileUpload(formData, fileName);
                 }
-                let fileName = referenceNumber + "-" + docType + "-" + tranType;
 
-                let accident = {};
-                accident['BeneficiaryNo'] = beneficiaryCount,
-                    accident['Filename'] = `${fileName}.pdf`,
-                    accident['DocType'] = "PDF",
-                    accident['DocTypeCode'] = docType,
-                    accident['DocumentDescription'] = "Marriage Contract"
-
-                addFileToList(accident, `${fileName}.pdf`);
-                const formData = new FormData()
-                formData.append('file', file, fileName + `.${ext}`);
-                handleFileUpload(formData, fileName);
             } else {
                 $("#warning_parent").show();
                 $("#file_loader_icon_5").hide();
@@ -1968,25 +2110,43 @@ file6.onchange = async function (e) {
             var pageId = 1;
             var sizevalid = isFileSizeValid(file, buttonNum);
             if (sizevalid) {
+
                 if (ext == "jpg") {
-                    fileCheck(file, buttonNum, pageId);
+                    var isFileBlur = fileCheck(file, buttonNum, pageId)
+                    if (isFileBlur == false) {
+                        let fileName = referenceNumber + "-" + docType + "-" + tranType;
+
+                        let accident = {};
+                        accident['BeneficiaryNo'] = beneficiaryCount,
+                            accident['Filename'] = `${fileName}.pdf`,
+                            accident['DocType'] = "PDF",
+                            accident['DocTypeCode'] = docType,
+                            accident['DocumentDescription'] = "Claimant Birth Certificate"
+
+                        addFileToList(accident, `${fileName}.pdf`);
+                        const formData = new FormData()
+                        formData.append('file', file, fileName + `.${ext}`);
+                        handleFileUpload(formData, fileName);
+                    }
+
                 }
                 else {
                     proceedScan(file, buttonNum, pageId);
+                    let fileName = referenceNumber + "-" + docType + "-" + tranType;
+
+                    let accident = {};
+                    accident['BeneficiaryNo'] = beneficiaryCount,
+                        accident['Filename'] = `${fileName}.pdf`,
+                        accident['DocType'] = "PDF",
+                        accident['DocTypeCode'] = docType,
+                        accident['DocumentDescription'] = "Claimant Birth Certificate"
+
+                    addFileToList(accident, `${fileName}.pdf`);
+                    const formData = new FormData()
+                    formData.append('file', file, fileName + `.${ext}`);
+                    handleFileUpload(formData, fileName);
                 }
-                let fileName = referenceNumber + "-" + docType + "-" + tranType;
 
-                let accident = {};
-                accident['BeneficiaryNo'] = beneficiaryCount,
-                    accident['Filename'] = `${fileName}.pdf`,
-                    accident['DocType'] = "PDF",
-                    accident['DocTypeCode'] = docType,
-                    accident['DocumentDescription'] = "Claimant Birth Certificate"
-
-                addFileToList(accident, `${fileName}.pdf`);
-                const formData = new FormData()
-                formData.append('file', file, fileName + `.${ext}`);
-                handleFileUpload(formData, fileName);
             } else {
                 $("#warning_parent").show();
                 $("#file_loader_icon_6").hide();
@@ -2010,7 +2170,7 @@ file6.onchange = async function (e) {
 
 file7.onchange = async function (e) {
     docType = "DIBA001";
-  tranType = "BA-MAJ";
+    tranType = "BA-MAJ";
     $("#file_upload_cancle_7").hide();
     $("#file_Upload_Tick_7").hide();
     var ext = this.value.match(/\.([^\.]+)$/)[1];
@@ -2022,27 +2182,46 @@ file7.onchange = async function (e) {
             var pageId = 2;
             var sizevalid = isFileSizeValid(file, buttonNum);
             if (sizevalid) {
+
                 if (ext == "jpg") {
-                    fileCheck(file, buttonNum, pageId);
+                    var isFileBlur = fileCheck(file, buttonNum, pageId)
+                    if (isFileBlur == false) {
+                        let fileName = referenceNumber + "-" + docType + "-" + tranType;
+
+                        let accident = {};
+
+                        accident['BeneficiaryNo'] = beneficiaryCount,
+                            accident["Filename"] = `${fileName}.pdf`,
+                            accident["DocType"] = "PDF",
+                            accident["DocTypeCode"] = docType,
+                            accident['DocumentDescription'] = "Proof of Bank Account"
+
+                        addFileToList(accident, `${fileName}.pdf`);
+
+                        const formData = new FormData()
+                        formData.append('file', file, fileName + `.${ext}`)
+                        handleFileUpload(formData, fileName);
+                    }
                 }
                 else {
                     proceedScan(file, buttonNum, pageId);
-                }
-                let fileName = referenceNumber + "-" + docType + "-" + tranType;
+                    let fileName = referenceNumber + "-" + docType + "-" + tranType;
 
-                let accident = {};
-        
-                accident['BeneficiaryNo'] = beneficiaryCount,
-                accident["Filename"] = `${fileName}.pdf`,
-                accident["DocType"]= "PDF",
-                accident["DocTypeCode"]= docType,
-                accident['DocumentDescription']= "Proof of Bank Account"
-        
-                addFileToList(accident, `${fileName}.pdf`);
-        
-                const formData = new FormData()
-                formData.append('file', file, fileName + `.${ext}`)
-                handleFileUpload(formData, fileName);
+                    let accident = {};
+
+                    accident['BeneficiaryNo'] = beneficiaryCount,
+                        accident["Filename"] = `${fileName}.pdf`,
+                        accident["DocType"] = "PDF",
+                        accident["DocTypeCode"] = docType,
+                        accident['DocumentDescription'] = "Proof of Bank Account"
+
+                    addFileToList(accident, `${fileName}.pdf`);
+
+                    const formData = new FormData()
+                    formData.append('file', file, fileName + `.${ext}`)
+                    handleFileUpload(formData, fileName);
+                }
+
             } else {
                 $("#warning_parent_acct").show();
                 $("#file_loader_icon_7").hide();
@@ -2079,26 +2258,44 @@ file8.onchange = async function (e) {
             var pageId = 3;
             var sizevalid = isFileSizeValid(file, buttonNum);
             if (sizevalid) {
+
                 if (ext == "jpg") {
-                    fileCheck(file, buttonNum, pageId);
+                    var isFileBlur = fileCheck(file, buttonNum, pageId)
+                    if (isFileBlur == false) {
+                        let fileName = referenceNumber + "-" + docType + "-" + tranType;
+
+                        let accident = {};
+                        accident['BeneficiaryNo'] = beneficiaryCount
+                        accident['Filename'] = `${fileName}.pdf`,
+                            accident['DocType'] = "PDF",
+                            accident['DocTypeCode'] = docType,
+                            accident['DocumentDescription'] = "Proof of Bank Account"
+
+
+                        addFileToList(accident, `${fileName}.pdf`);
+                        const formData = new FormData()
+                        formData.append('file', file, fileName + `.${ext}`);
+                        handleFileUpload(formData, fileName);
+                    }
                 }
                 else {
                     proceedScan(file, buttonNum, pageId);
+                    let fileName = referenceNumber + "-" + docType + "-" + tranType;
+
+                    let accident = {};
+                    accident['BeneficiaryNo'] = beneficiaryCount
+                    accident['Filename'] = `${fileName}.pdf`,
+                        accident['DocType'] = "PDF",
+                        accident['DocTypeCode'] = docType,
+                        accident['DocumentDescription'] = "Proof of Bank Account"
+
+
+                    addFileToList(accident, `${fileName}.pdf`);
+                    const formData = new FormData()
+                    formData.append('file', file, fileName + `.${ext}`);
+                    handleFileUpload(formData, fileName);
                 }
-                let fileName = referenceNumber + "-" + docType + "-" + tranType;
 
-                let accident = {};
-                accident['BeneficiaryNo'] = beneficiaryCount
-                accident['Filename'] = `${fileName}.pdf`,
-                    accident['DocType'] = "PDF",
-                    accident['DocTypeCode'] = docType,
-                    accident['DocumentDescription'] = "Proof of Bank Account"
-
-
-                addFileToList(accident, `${fileName}.pdf`);
-                const formData = new FormData()
-                formData.append('file', file, fileName + `.${ext}`);
-                handleFileUpload(formData, fileName);
             } else {
                 $("#warning_parent_addBeneficiaryacct").show();
                 $("#file_loader_icon_8").hide();
@@ -2134,26 +2331,44 @@ file9.onchange = async function (e) {
             var pageId = 4;
             var sizevalid = isFileSizeValid(file, buttonNum);
             if (sizevalid) {
+
                 if (ext == "jpg") {
-                    fileCheck(file, buttonNum, pageId);
+                    var isFileBlur = fileCheck(file, buttonNum, pageId)
+                    if (isFileBlur == false) {
+                        let fileName = referenceNumber + "-" + docType + "-" + tranType;
+
+                        let accident = {};
+                        accident['BeneficiaryNo'] = beneficiaryCount
+                        accident['Filename'] = `${fileName}.pdf`,
+                            accident['DocType'] = "PDF",
+                            accident['DocTypeCode'] = docType,
+                            accident['DocumentDescription'] = "Claimants valid Government ID (Front)"
+
+
+                        addFileToList(accident, `${fileName}.pdf`);
+                        const formData = new FormData()
+                        formData.append('file', file, fileName + `.${ext}`);
+                        handleFileUpload(formData, fileName);
+                    }
                 }
                 else {
                     proceedScan(file, buttonNum, pageId);
+                    let fileName = referenceNumber + "-" + docType + "-" + tranType;
+
+                    let accident = {};
+                    accident['BeneficiaryNo'] = beneficiaryCount
+                    accident['Filename'] = `${fileName}.pdf`,
+                        accident['DocType'] = "PDF",
+                        accident['DocTypeCode'] = docType,
+                        accident['DocumentDescription'] = "Claimants valid Government ID (Front)"
+
+
+                    addFileToList(accident, `${fileName}.pdf`);
+                    const formData = new FormData()
+                    formData.append('file', file, fileName + `.${ext}`);
+                    handleFileUpload(formData, fileName);
                 }
-                let fileName = referenceNumber + "-" + docType + "-" + tranType;
 
-                let accident = {};
-                accident['BeneficiaryNo'] = beneficiaryCount
-                accident['Filename'] = `${fileName}.pdf`,
-                    accident['DocType'] = "PDF",
-                    accident['DocTypeCode'] = docType,
-                    accident['DocumentDescription'] = "Claimants valid Government ID (Front)"
-
-
-                addFileToList(accident, `${fileName}.pdf`);
-                const formData = new FormData()
-                formData.append('file', file, fileName + `.${ext}`);
-                handleFileUpload(formData, fileName);
             } else {
                 $("#warning_parent_addBeneficiary").show();
                 $("#file_loader_icon_9").hide();
@@ -2189,26 +2404,44 @@ file10.onchange = async function (e) {
             var pageId = 4;
             var sizevalid = isFileSizeValid(file, buttonNum);
             if (sizevalid) {
+
                 if (ext == "jpg") {
-                    fileCheck(file, buttonNum, pageId);
+                    var isFileBlur = fileCheck(file, buttonNum, pageId)
+                    if (isFileBlur == false) {
+                        let fileName = referenceNumber + "-" + docType + "-" + tranType;
+
+                        let accident = {};
+                        accident['BeneficiaryNo'] = beneficiaryCount
+                        accident['Filename'] = `${fileName}.pdf`,
+                            accident['DocType'] = "PDF",
+                            accident['DocTypeCode'] = docType,
+                            accident['DocumentDescription'] = "Claimants valid Government ID (Back)"
+
+
+                        addFileToList(accident, `${fileName}.pdf`);
+                        const formData = new FormData()
+                        formData.append('file', file, fileName + `.${ext}`);
+                        handleFileUpload(formData, fileName);
+                    }
                 }
                 else {
                     proceedScan(file, buttonNum, pageId);
+                    let fileName = referenceNumber + "-" + docType + "-" + tranType;
+
+                    let accident = {};
+                    accident['BeneficiaryNo'] = beneficiaryCount
+                    accident['Filename'] = `${fileName}.pdf`,
+                        accident['DocType'] = "PDF",
+                        accident['DocTypeCode'] = docType,
+                        accident['DocumentDescription'] = "Claimants valid Government ID (Back)"
+
+
+                    addFileToList(accident, `${fileName}.pdf`);
+                    const formData = new FormData()
+                    formData.append('file', file, fileName + `.${ext}`);
+                    handleFileUpload(formData, fileName);
                 }
-                let fileName = referenceNumber + "-" + docType + "-" + tranType;
 
-                let accident = {};
-                accident['BeneficiaryNo'] = beneficiaryCount
-                accident['Filename'] = `${fileName}.pdf`,
-                    accident['DocType'] = "PDF",
-                    accident['DocTypeCode'] = docType,
-                    accident['DocumentDescription'] = "Claimants valid Government ID (Back)"
-
-
-                addFileToList(accident, `${fileName}.pdf`);
-                const formData = new FormData()
-                formData.append('file', file, fileName + `.${ext}`);
-                handleFileUpload(formData, fileName);
             } else {
                 $("#warning_parent_addBeneficiary").show();
                 $("#file_loader_icon_10").hide();
@@ -2245,25 +2478,43 @@ file11.onchange = async function (e) {
             var pageId = 4;
             var sizevalid = isFileSizeValid(file, buttonNum);
             if (sizevalid) {
+
                 if (ext == "jpg") {
-                    fileCheck(file, buttonNum, pageId);
+                    var isFileBlur = fileCheck(file, buttonNum, pageId)
+                    if (isFileBlur == false) {
+                        let fileName = referenceNumber + "-" + docType + "-" + tranType;
+
+                        let accident = {};
+                        accident['BeneficiaryNo'] = beneficiaryCount
+                        accident['Filename'] = `${fileName}.pdf`,
+                            accident['DocType'] = "PDF",
+                            accident['DocTypeCode'] = docType,
+                            accident['DocumentDescription'] = "Marriage Contract"
+
+                        addFileToList(accident, `${fileName}.pdf`);
+                        const formData = new FormData()
+                        formData.append('file', file, fileName + `.${ext}`);
+                        handleFileUpload(formData, fileName);
+                    }
+
                 }
                 else {
                     proceedScan(file, buttonNum, pageId);
+                    let fileName = referenceNumber + "-" + docType + "-" + tranType;
+
+                    let accident = {};
+                    accident['BeneficiaryNo'] = beneficiaryCount
+                    accident['Filename'] = `${fileName}.pdf`,
+                        accident['DocType'] = "PDF",
+                        accident['DocTypeCode'] = docType,
+                        accident['DocumentDescription'] = "Marriage Contract"
+
+                    addFileToList(accident, `${fileName}.pdf`);
+                    const formData = new FormData()
+                    formData.append('file', file, fileName + `.${ext}`);
+                    handleFileUpload(formData, fileName);
                 }
-                let fileName = referenceNumber + "-" + docType + "-" + tranType;
 
-                let accident = {};
-                accident['BeneficiaryNo'] = beneficiaryCount
-                accident['Filename'] = `${fileName}.pdf`,
-                    accident['DocType'] = "PDF",
-                    accident['DocTypeCode'] = docType,
-                    accident['DocumentDescription'] = "Marriage Contract"
-
-                addFileToList(accident, `${fileName}.pdf`);
-                const formData = new FormData()
-                formData.append('file', file, fileName + `.${ext}`);
-                handleFileUpload(formData, fileName);
             } else {
                 $("#warning_parent_addBeneficiary").show();
                 $("#file_loader_icon_11").hide();
@@ -2300,25 +2551,43 @@ file12.onchange = async function (e) {
             var pageId = 4;
             var sizevalid = isFileSizeValid(file, buttonNum);
             if (sizevalid) {
+
                 if (ext == "jpg") {
-                    fileCheck(file, buttonNum, pageId);
+                    var isFileBlur = fileCheck(file, buttonNum, pageId)
+                    if (isFileBlur == false) {
+                        let fileName = referenceNumber + "-" + docType + "-" + tranType;
+
+                        let accident = {};
+                        accident['BeneficiaryNo'] = beneficiaryCount
+                        accident['Filename'] = `${fileName}.pdf`,
+                            accident['DocType'] = "PDF",
+                            accident['DocTypeCode'] = docType,
+                            accident['DocumentDescription'] = "Claimant Birth Certificate"
+
+                        addFileToList(accident, `${fileName}.pdf`);
+                        const formData = new FormData()
+                        formData.append('file', file, fileName + `.${ext}`);
+                        handleFileUpload(formData, fileName);
+                    }
+
                 }
                 else {
                     proceedScan(file, buttonNum, pageId);
+                    let fileName = referenceNumber + "-" + docType + "-" + tranType;
+
+                    let accident = {};
+                    accident['BeneficiaryNo'] = beneficiaryCount
+                    accident['Filename'] = `${fileName}.pdf`,
+                        accident['DocType'] = "PDF",
+                        accident['DocTypeCode'] = docType,
+                        accident['DocumentDescription'] = "Claimant Birth Certificate"
+
+                    addFileToList(accident, `${fileName}.pdf`);
+                    const formData = new FormData()
+                    formData.append('file', file, fileName + `.${ext}`);
+                    handleFileUpload(formData, fileName);
                 }
-                let fileName = referenceNumber + "-" + docType + "-" + tranType;
 
-                let accident = {};
-                accident['BeneficiaryNo'] = beneficiaryCount
-                accident['Filename'] = `${fileName}.pdf`,
-                    accident['DocType'] = "PDF",
-                    accident['DocTypeCode'] = docType,
-                    accident['DocumentDescription'] = "Claimant Birth Certificate"
-
-                addFileToList(accident, `${fileName}.pdf`);
-                const formData = new FormData()
-                formData.append('file', file, fileName + `.${ext}`);
-                handleFileUpload(formData, fileName);
             } else {
                 $("#warning_parent_addBeneficiary").show();
                 $("#file_loader_icon_12").hide();
@@ -2425,6 +2694,7 @@ function addBeneficiary(event) {
         buttonCount = (buttonCount + 1);
         $('#privacy_consent_1').prop('checked', false);
         $('#privacy_consent_2').prop('checked', false);
+        $('#privacy_consent_3').prop('checked', false);
 
         $("#step1").addClass("active");
         $("#step2").removeClass("active");
@@ -2543,6 +2813,7 @@ function addBeneficiaryNew(event) {
 
             $('#privacy_consent_1').prop('checked', false);
             $('#privacy_consent_2').prop('checked', false);
+            $('#privacy_consent_3').prop('checked', false);
             $("#step1").addClass("active");
             $("#step2").removeClass("active");
             $("#step2>div").removeClass("active");
@@ -2556,7 +2827,7 @@ function resetBank() {
     $('#from_addBeneficiarycurrency').val('Peso');
     $("#field_addBenificiaryBank").html(
         "<option value='Bank of the Philippine Islands - BPI' >Bank of the Philippine Islands - BPI</option><option value='BPI Family Savings Bank - BFB'>BPI Family Savings Bank - BFB</option><option value='Banco de Oro - BDO'>Banco de Oro - BDO</option><option value='China Banking Corporation - CBC'>China Banking Corporation - CBC</option><option value='Citibank Philippines - CITI'>Citibank Philippines - CITI</option><option value='Development Bank of the Phils - DBP'>Development Bank of the Phils - DBP</option><option value='Eastwest Bank - EWB'>Eastwest Bank - EWB</option><option value='Hongkong Shanghai Banking Corp. Phils - HSBC'>Hongkong Shanghai Banking Corp. Phils - HSBC</option><option value='Land Bank of the Philippines - LPB'>Land Bank of the Philippines - LPB</option><option value='Metropolitan Banks and Trust Company - MBTC'>Metropolitan Banks and Trust Company - MBTC</option><option value='Philippine National Bank - PNB'>Philippine National Bank - PNB</option><option value='Rizal Commercial Banking Corp - RCBC'>Rizal Commercial Banking Corp - RCBC</option><option value='Security Bank - SBTC'>Security Bank - SBTC</option><option value='Union Bank of the Philippines - UB'>Union Bank of the Philippines - UB</option>"
-      );
+    );
 }
 
 
@@ -2583,6 +2854,7 @@ function screen() {
         if (isEmpty(data1) == true) {
             $('#privacy_consent_1').prop('checked', false);
             $('#privacy_consent_2').prop('checked', false);
+            $('#privacy_consent_3').prop('checked', false);
             $('#invalidCheck_privacyAddBeneficiary').prop('checked', false);
             $('#invalidCheck_basicAddBeneficiary').prop('checked', false);
             $("#step2").removeClass("active");
@@ -2594,6 +2866,7 @@ function screen() {
             if (trackaddBenificiary1 == 0) {
                 $('#privacy_consent_1').prop('checked', false);
                 $('#privacy_consent_2').prop('checked', false);
+                $('#privacy_consent_3').prop('checked', false);
                 /*  $("#step2").removeClass("active");
                  $("#step2>div").removeClass("active"); */
                 $("#step2").addClass("active");
@@ -2606,6 +2879,7 @@ function screen() {
             } else if ((trackaddBenificiary1 == 1) && (bpiCount == 0)) {
                 $('#privacy_consent_1').prop('checked', false);
                 $('#privacy_consent_2').prop('checked', false);
+                $('#privacy_consent_3').prop('checked', false);
                 $("#step2").addClass("active");
                 $("#step2>div").addClass("active");
                 $("#step3").remove("active");
@@ -2644,6 +2918,7 @@ function screen() {
         if (isEmpty(data2) == true) {
             $('#privacy_consent_1').prop('checked', false);
             $('#privacy_consent_2').prop('checked', false);
+            $('#privacy_consent_3').prop('checked', false);
             $('#invalidCheck_privacyAddBeneficiary').prop('checked', false);
             $('#invalidCheck_basicAddBeneficiary').prop('checked', false);
             $("#step2").removeClass("active");
@@ -2655,6 +2930,7 @@ function screen() {
             if (trackaddBenificiary2 == 0) {
                 $('#privacy_consent_1').prop('checked', false);
                 $('#privacy_consent_2').prop('checked', false);
+                $('#privacy_consent_3').prop('checked', false);
                 /*  $("#step2").removeClass("active");
                  $("#step2>div").removeClass("active"); */
                 $("#step2").addClass("active");
@@ -2667,6 +2943,7 @@ function screen() {
             } else if ((trackaddBenificiary2 == 1) && (bpiCount == 0)) {
                 $('#privacy_consent_1').prop('checked', false);
                 $('#privacy_consent_2').prop('checked', false);
+                $('#privacy_consent_3').prop('checked', false);
                 /*  $("#step2").removeClass("active");
                  $("#step2>div").removeClass("active"); */
                 $("#step2").addClass("active");
@@ -2680,6 +2957,7 @@ function screen() {
                 bpiCount = 0;
                 $('#privacy_consent_1').prop('checked', false);
                 $('#privacy_consent_2').prop('checked', false);
+                $('#privacy_consent_3').prop('checked', false);
                 $("#step2").addClass("active");
                 $("#step2>div").addClass("active");
                 $("#step3").remove("active");
@@ -2693,6 +2971,7 @@ function screen() {
         } else if (isEmpty(uppload_data2) == true) {
             $('#privacy_consent_1').prop('checked', false);
             $('#privacy_consent_2').prop('checked', false);
+            $('#privacy_consent_3').prop('checked', false);
             $("#step2").addClass("active");
             $("#step2>div").addClass("active");
             $("#step3").remove("active");
@@ -2710,6 +2989,7 @@ function screen() {
         if (isEmpty(data3) == true) {
             $('#privacy_consent_1').prop('checked', false);
             $('#privacy_consent_2').prop('checked', false);
+            $('#privacy_consent_3').prop('checked', false);
             $('#invalidCheck_privacyAddBeneficiary').prop('checked', false);
             $('#invalidCheck_basicAddBeneficiary').prop('checked', false);
             $("#step2").removeClass("active");
@@ -2721,6 +3001,7 @@ function screen() {
             if (trackaddBenificiary3 == 0) {
                 $('#privacy_consent_1').prop('checked', false);
                 $('#privacy_consent_2').prop('checked', false);
+                $('#privacy_consent_3').prop('checked', false);
                 /*  $("#step2").removeClass("active");
                  $("#step2>div").removeClass("active"); */
                 $("#step2").addClass("active");
@@ -2733,6 +3014,7 @@ function screen() {
             } else if ((trackaddBenificiary3 == 1) && (bpiCount == 0)) {
                 $('#privacy_consent_1').prop('checked', false);
                 $('#privacy_consent_2').prop('checked', false);
+                $('#privacy_consent_3').prop('checked', false);
                 /*  $("#step2").removeClass("active");
                  $("#step2>div").removeClass("active"); */
                 $("#step2").addClass("active");
@@ -2745,6 +3027,7 @@ function screen() {
                 bpiCount = 0;
                 $('#privacy_consent_1').prop('checked', false);
                 $('#privacy_consent_2').prop('checked', false);
+                $('#privacy_consent_3').prop('checked', false);
                 $("#step2").addClass("active");
                 $("#step2>div").addClass("active");
                 $("#step3").remove("active");
@@ -2758,6 +3041,7 @@ function screen() {
         } else if (isEmpty(uppload_data3) == true) {
             $('#privacy_consent_1').prop('checked', false);
             $('#privacy_consent_2').prop('checked', false);
+            $('#privacy_consent_3').prop('checked', false);
             $("#step2").addClass("active");
             $("#step2>div").addClass("active");
             $("#step3").remove("active");
@@ -2775,6 +3059,7 @@ function screen() {
         if (isEmpty(data4) == true) {
             $('#privacy_consent_1').prop('checked', false);
             $('#privacy_consent_2').prop('checked', false);
+            $('#privacy_consent_3').prop('checked', false);
             $('#invalidCheck_privacyAddBeneficiary').prop('checked', false);
             $('#invalidCheck_basicAddBeneficiary').prop('checked', false);
             $("#step2").removeClass("active");
@@ -2786,6 +3071,7 @@ function screen() {
             if (trackaddBenificiary4 == 0) {
                 $('#privacy_consent_1').prop('checked', false);
                 $('#privacy_consent_2').prop('checked', false);
+                $('#privacy_consent_3').prop('checked', false);
                 $("#step2").addClass("active");
                 $("#step2>div").addClass("active");
                 $("#step3").remove("active");
@@ -2796,6 +3082,7 @@ function screen() {
             } else if ((trackaddBenificiary4 == 1) && (bpiCount == 0)) {
                 $('#privacy_consent_1').prop('checked', false);
                 $('#privacy_consent_2').prop('checked', false);
+                $('#privacy_consent_3').prop('checked', false);
                 $("#step2").addClass("active");
                 $("#step2>div").addClass("active");
                 $("#step3").remove("active");
@@ -2833,6 +3120,7 @@ function screen() {
         if (isEmpty(data5) == true) {
             $('#privacy_consent_1').prop('checked', false);
             $('#privacy_consent_2').prop('checked', false);
+            $('#privacy_consent_3').prop('checked', false);
             $('#invalidCheck_privacyAddBeneficiary').prop('checked', false);
             $('#invalidCheck_basicAddBeneficiary').prop('checked', false);
             $("#step2").removeClass("active");
@@ -2844,6 +3132,7 @@ function screen() {
             if (trackaddBenificiary5 == 0) {
                 $('#privacy_consent_1').prop('checked', false);
                 $('#privacy_consent_2').prop('checked', false);
+                $('#privacy_consent_3').prop('checked', false);
                 /*  $("#step2").removeClass("active");
                  $("#step2>div").removeClass("active"); */
                 $("#step2").addClass("active");
@@ -2855,6 +3144,7 @@ function screen() {
             } else if ((trackaddBenificiary5 == 1) && (bpiCount == 0)) {
                 $('#privacy_consent_1').prop('checked', false);
                 $('#privacy_consent_2').prop('checked', false);
+                $('#privacy_consent_3').prop('checked', false);
                 $("#step2").addClass("active");
                 $("#step2>div").addClass("active");
                 $("#step3").remove("active");
@@ -2865,6 +3155,7 @@ function screen() {
                 bpiCount = 0;
                 $('#privacy_consent_1').prop('checked', false);
                 $('#privacy_consent_2').prop('checked', false);
+                $('#privacy_consent_3').prop('checked', false);
                 $("#step2").addClass("active");
                 $("#step2>div").addClass("active");
                 $("#step3").remove("active");
@@ -2878,6 +3169,7 @@ function screen() {
         } else if (isEmpty(uppload_data5) == true) {
             $('#privacy_consent_1').prop('checked', false);
             $('#privacy_consent_2').prop('checked', false);
+            $('#privacy_consent_3').prop('checked', false);
             $("#step2").addClass("active");
             $("#step2>div").addClass("active");
             $("#step3").remove("active");
@@ -2894,6 +3186,7 @@ function screen() {
         if (isEmpty(data6) == true) {
             $('#privacy_consent_1').prop('checked', false);
             $('#privacy_consent_2').prop('checked', false);
+            $('#privacy_consent_3').prop('checked', false);
             $('#invalidCheck_privacyAddBeneficiary').prop('checked', false);
             $('#invalidCheck_basicAddBeneficiary').prop('checked', false);
             $("#step2").removeClass("active");
@@ -2905,6 +3198,7 @@ function screen() {
             if (trackaddBenificiary6 == 0) {
                 $('#privacy_consent_1').prop('checked', false);
                 $('#privacy_consent_2').prop('checked', false);
+                $('#privacy_consent_3').prop('checked', false);
                 $("#step2").addClass("active");
                 $("#step2>div").addClass("active");
                 $("#step3").remove("active");
@@ -2915,6 +3209,7 @@ function screen() {
             } else if ((trackaddBenificiary6 == 1) && (bpiCount == 0)) {
                 $('#privacy_consent_1').prop('checked', false);
                 $('#privacy_consent_2').prop('checked', false);
+                $('#privacy_consent_3').prop('checked', false);
                 /*  $("#step2").removeClass("active");
                  $("#step2>div").removeClass("active"); */
                 $("#step2").addClass("active");
@@ -3233,7 +3528,7 @@ function handleAccountInfo(event) {
         $('#upload_feedback_label').text('Please upload your Bank Account Ownership');
         $('#popUp').modal('show');
         return;
-    }else {
+    } else {
         $('#upload_feedback_label').hide();
         $('#upload_feedback_label').text('');
     }
@@ -3385,7 +3680,7 @@ function addBenificiaryAccountInfo(event) {
             $('#upload_feedback_label8').text('Please upload your Bank Account Ownership');
             $('#popUp').modal('show');
             return;
-        } else {    
+        } else {
             $('#upload_feedback_label8').hide();
             $('#upload_feedback_label8').text('');
         }
@@ -3582,24 +3877,24 @@ function goBackPickUp() {
     $('#form_wrapper').show();
 }
 
-function checkUploadDocument(){
+function checkUploadDocument() {
 
-    if(upload_data.upload_file_1 !== '') {
+    if (upload_data.upload_file_1 !== '') {
         $('#file_Upload_Tick_1').show();
     }
-    if(upload_data.upload_file_2 !== '') {
+    if (upload_data.upload_file_2 !== '') {
         $('#file_Upload_Tick_2').show();
     }
-    if(upload_data.upload_file_3 !== '') {
+    if (upload_data.upload_file_3 !== '') {
         $('#file_Upload_Tick_3').show();
     }
-    if(upload_data.upload_file_4 !== '') {
+    if (upload_data.upload_file_4 !== '') {
         $('#file_Upload_Tick_4').show();
     }
-    if(upload_data.upload_file_5 !== '') {
+    if (upload_data.upload_file_5 !== '') {
         $('#file_Upload_Tick_5').show();
     }
-    if(upload_data.upload_file_6 !== '') {
+    if (upload_data.upload_file_6 !== '') {
         $('#file_Upload_Tick_6').show();
     }
 
@@ -3607,19 +3902,19 @@ function checkUploadDocument(){
 
 function checkUploadDocumentBene(data) {
 
-    if(data.upload_file_9 !== '') {
+    if (data.upload_file_9 !== '') {
         $('#file_Upload_Tick_9').show();
     }
-    if(data.upload_file_10 !== '') {
+    if (data.upload_file_10 !== '') {
         $('#file_Upload_Tick_10').show();
     }
-    if(data.upload_file_11 !== '') {
+    if (data.upload_file_11 !== '') {
         $('#file_Upload_Tick_11').show();
     }
-    if(data.upload_file_12 !== '') {
+    if (data.upload_file_12 !== '') {
         $('#file_Upload_Tick_12').show();
     }
-    
+
 }
 
 function goBackAddBeneficiary() {
@@ -3827,18 +4122,18 @@ function isEmpty(obj) {
 function setDataBeneficiary(data) {
     for (const [key, value] of Object.entries(data)) {
 
-        if( key == 'field_addBenificiaryBank'){
+        if (key == 'field_addBenificiaryBank') {
             $("#field_addBenificiaryBank").html(
                 `<option value='${value}'>${value}</option>`
-              );
-        }else if (key == 'field_addBeneficiaryCurrency'){
+            );
+        } else if (key == 'field_addBeneficiaryCurrency') {
             $('#from_addBeneficiarycurrency').val(`${value}`)
         }
         else {
             $(`#${key}`).val(`${value}`);
         }
 
-      }
+    }
 }
 
 function pickup_Bpi() {
