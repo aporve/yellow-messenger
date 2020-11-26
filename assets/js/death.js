@@ -4518,7 +4518,6 @@ function removeTimer() {
 
 function resendOtp(type) {
     //api call for resend otp
-
     removeTimer();
     resendCount++;
     if (resendCount > 5) {
@@ -4528,38 +4527,136 @@ function resendOtp(type) {
 
     }
     else {
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        var raw = JSON.stringify({
+
+            "companyName": "PAL",
+            "webReferenceNumber": referenceNumber
+
+        });
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw
+        };
+        fetch("http://localhost:3000/resend_otp", requestOptions).then((response) => response.json())
+            .then(response => {
+                console.log(response)
+                if (response.returnCode == '0') { //sucess
+                    $('#otpPopUp').modal('hide');
+                    $('#requirements').hide();
+                    $('#payment').show();
+                }
+                else {
+                    invalidOtp++;
+                    if (invalidOtp <= 3) {
+                        $('#invalidOtp').modal('show');
+                    }
+                    else {
+                        $('#invalidOtp').modal('hide');
+                        $('#maxInvalidOtp').modal('show');
+                    }
+
+                }
+
+            }).catch(error => {
+                console.log(error)
+            });
+
         $('#invalidOtp').modal('hide');
         if (type != 'resend') { $('#otpPopUp').modal('show'); }
         document.getElementById('otp').value = ''
         otpTimer();
-
     }
     $('#otpExpiry').modal('hide');
+
+    //--bfre api intgrtn--//
+
+    // removeTimer();
+    // resendCount++;
+    // if (resendCount > 5) {
+    //     $('#otpPopUp').modal('hide');
+    //     $('#invalidOtp').modal('hide');
+    //     $('#maxResendOtp').modal('show');
+
+    // }
+    // else {
+    //     $('#invalidOtp').modal('hide');
+    //     if (type != 'resend') { $('#otpPopUp').modal('show'); }
+    //     document.getElementById('otp').value = ''
+    //     otpTimer();
+
+    // }
+    // $('#otpExpiry').modal('hide');
 }
 
 
 function submitOtp() {
     //api call fro submit otp
-
-    var dummy_otp = '1234'
     removeTimer();
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    var raw = JSON.stringify({
+        "oneTimePINInformation": {
+            "companyName": "PAL",
+            "webReferenceNumber": referenceNumber,
+            "oneTimePIN": document.getElementById('otp').value
+        }
+    });
+    var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw
+    };
 
-    if (document.getElementById('otp').value != dummy_otp) {
-        invalidOtp++;
-        if (invalidOtp < 3) {
-            $('#invalidOtp').modal('show');
-        }
-        else {
-            $('#invalidOtp').modal('hide');
-            $('#maxInvalidOtp').modal('show');
-        }
-    }
-    else {
-        $('#otpPopUp').modal('hide');
-        $('#requirements').hide();
-        $('#process_confirmation').show();
-    }
-    document.getElementById('otp').value = '';
+
+    fetch("http://localhost:3000/otp_verification", requestOptions).then((response) => response.json())
+        .then(response => {
+            console.log(response)
+            if (response.returnCode == '0') { //sucess
+                $('#otpPopUp').modal('hide');
+                $('#requirements').hide();
+                $('#process_confirmation').show();
+            }
+            else {
+                invalidOtp++;
+                if (invalidOtp < 3) {
+                    $('#invalidOtp').modal('show');
+                }
+                else {
+                    $('#invalidOtp').modal('hide');
+                    $('#maxInvalidOtp').modal('show');
+                }
+
+            }
+
+        }).catch(error => {
+            console.log(error)
+        });
+    document.getElementById('otp').value = ''
+
+
+    //-before api intgrn -//
+    // var dummy_otp = '1234'
+    // removeTimer();
+
+    // if (document.getElementById('otp').value != dummy_otp) {
+    //     invalidOtp++;
+    //     if (invalidOtp < 3) {
+    //         $('#invalidOtp').modal('show');
+    //     }
+    //     else {
+    //         $('#invalidOtp').modal('hide');
+    //         $('#maxInvalidOtp').modal('show');
+    //     }
+    // }
+    // else {
+    //     $('#otpPopUp').modal('hide');
+    //     $('#requirements').hide();
+    //     $('#process_confirmation').show();
+    // }
+    // document.getElementById('otp').value = '';
 }
 
 // When the user clicks anywhere outside of the modal, close it and remove timer 

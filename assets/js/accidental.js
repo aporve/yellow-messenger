@@ -2203,7 +2203,6 @@ function removeTimer() {
 
 function resendOtp(type) {
   //api call for resend otp
-
   removeTimer();
   resendCount++;
   if (resendCount > 5) {
@@ -2213,13 +2212,67 @@ function resendOtp(type) {
 
   }
   else {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    var raw = JSON.stringify({
+
+      "companyName": "PAL",
+      "webReferenceNumber": referenceNumber
+
+    });
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw
+    };
+    fetch("http://localhost:3000/resend_otp", requestOptions).then((response) => response.json())
+      .then(response => {
+        console.log(response)
+        if (response.returnCode == '0') { //sucess
+          $('#otpPopUp').modal('hide');
+          $('#requirements').hide();
+          $('#payment').show();
+        }
+        else {
+          invalidOtp++;
+          if (invalidOtp <= 3) {
+            $('#invalidOtp').modal('show');
+          }
+          else {
+            $('#invalidOtp').modal('hide');
+            $('#maxInvalidOtp').modal('show');
+          }
+
+        }
+
+      }).catch(error => {
+        console.log(error)
+      });
+
     $('#invalidOtp').modal('hide');
     if (type != 'resend') { $('#otpPopUp').modal('show'); }
     document.getElementById('otp').value = ''
     otpTimer();
-
   }
   $('#otpExpiry').modal('hide');
+
+  //--befre api intgrtn--//
+  // removeTimer();
+  // resendCount++;
+  // if (resendCount > 5) {
+  //   $('#otpPopUp').modal('hide');
+  //   $('#invalidOtp').modal('hide');
+  //   $('#maxResendOtp').modal('show');
+
+  // }
+  // else {
+  //   $('#invalidOtp').modal('hide');
+  //   if (type != 'resend') { $('#otpPopUp').modal('show'); }
+  //   document.getElementById('otp').value = ''
+  //   otpTimer();
+
+  // }
+  // $('#otpExpiry').modal('hide');
 }
 
 
@@ -2227,7 +2280,6 @@ function submitOtp() {
 
   //--api call fro submit otp--//
   removeTimer();
-  var res;
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
   var raw = JSON.stringify({
@@ -2244,9 +2296,8 @@ function submitOtp() {
   };
   fetch("http://localhost:3000/otp_verification", requestOptions).then((response) => response.json())
     .then(response => {
-      debugger
       console.log(response)
-      if (response.returnCode == '0') {
+      if (response.returnCode == '0') { //sucess
         $('#otpPopUp').modal('hide');
         $('#requirements').hide();
         $('#payment').show();
@@ -2311,37 +2362,6 @@ function backToFileClaim() {
 
 
 
-//api methods
 
-//otp verification
-function otp_verification(otp) {
-  var res;
-  var myHeaders = new Headers();
-  myHeaders.append("Content-Type", "application/json");
-  var raw = JSON.stringify({
-    "oneTimePINInformation": {
-      "companyName": "PAL",
-      "webReferenceNumber": referenceNumber,
-      "oneTimePIN": otp
-    }
-  });
-  var requestOptions = {
-    method: 'POST',
-    headers: myHeaders,
-    body: raw
-  };
-  fetch("http://localhost:3000/otp_verification", requestOptions).then((response) => response.json())
-    .then(response => {
-      debugger
-      console.log(response)
-
-    }).catch(error => {
-      console.log(error)
-    });
-
-}
-
-
-//api methods
 
 //drop-2 methods
