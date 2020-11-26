@@ -513,6 +513,7 @@ function setCountryCode() {
  * you will be getting the cdn link to the file in the bot
  */
 const handleFileUpload = (formData, fileName) => {
+
     console.log("file upload new");
     var myHeaders = new Headers();
 
@@ -1728,7 +1729,7 @@ const proceedScan = async (fileObj, button, pageid) => {
 };
 
 const fileCheck = (file, button, pageid) => {
-    fileBlurStatus = false;
+    fileBlurStatus = true;
     console.log(button);
     var _URL = window.URL || window.webkitURL;
     console.log("FILE OBJECT -> ", file);

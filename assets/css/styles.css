@@ -313,6 +313,10 @@ small {
   margin-bottom: 4rem;
 }
 
+#warning_uploads_docs{
+  display: none;
+}
+
 #warning_parent {
   display: none;
 }

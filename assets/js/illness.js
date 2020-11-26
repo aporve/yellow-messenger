@@ -1031,12 +1031,13 @@ const proceedScan = async (fileObj, button, pageid) => {
 };
 
 const fileCheck = (file, button, pageid) => {
-    fileBlurStatus = false;
+    fileBlurStatus = true;
     console.log(button);
     var _URL = window.URL || window.webkitURL;
     console.log("FILE OBJECT -> ", file);
     var img = new Image();
     console.log("Before on load --> ");
+    
     img.onload = function () {
         console.log("inside image load --> ");
         console.log(this.width + " " + this.height);
