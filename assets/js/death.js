@@ -4545,30 +4545,21 @@ function resendOtp(type) {
             .then(response => {
                 console.log(response)
                 if (response.returnCode == '0') { //sucess
-                    $('#otpPopUp').modal('hide');
-                    $('#requirements').hide();
-                    $('#payment').show();
+                    $('#invalidOtp').modal('hide');
+                    if (type != 'resend') { $('#otpPopUp').modal('show'); }
+                    document.getElementById('otp').value = ''
+                    otpTimer();
                 }
                 else {
-                    invalidOtp++;
-                    if (invalidOtp <= 3) {
-                        $('#invalidOtp').modal('show');
-                    }
-                    else {
-                        $('#invalidOtp').modal('hide');
-                        $('#maxInvalidOtp').modal('show');
-                    }
 
+                    $('#otpExpiry').modal('hide');
                 }
 
             }).catch(error => {
                 console.log(error)
             });
 
-        $('#invalidOtp').modal('hide');
-        if (type != 'resend') { $('#otpPopUp').modal('show'); }
-        document.getElementById('otp').value = ''
-        otpTimer();
+
     }
     $('#otpExpiry').modal('hide');
 

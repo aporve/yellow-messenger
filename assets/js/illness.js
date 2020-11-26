@@ -1037,7 +1037,7 @@ const fileCheck = (file, button, pageid) => {
     console.log("FILE OBJECT -> ", file);
     var img = new Image();
     console.log("Before on load --> ");
-    
+
     img.onload = function () {
         console.log("inside image load --> ");
         console.log(this.width + " " + this.height);
@@ -1932,7 +1932,7 @@ function removeTimer() {
 }
 
 function resendOtp(type) {
-    //api call for resend otp
+    // //api call for resend otp
     removeTimer();
     resendCount++;
     if (resendCount > 5) {
@@ -1959,30 +1959,17 @@ function resendOtp(type) {
             .then(response => {
                 console.log(response)
                 if (response.returnCode == '0') { //sucess
-                    $('#otpPopUp').modal('hide');
-                    $('#requirements').hide();
-                    $('#payment').show();
+                    $('#invalidOtp').modal('hide');
+                    if (type != 'resend') { $('#otpPopUp').modal('show'); }
+                    document.getElementById('otp').value = ''
+                    otpTimer();
                 }
-                else {
-                    invalidOtp++;
-                    if (invalidOtp <= 3) {
-                        $('#invalidOtp').modal('show');
-                    }
-                    else {
-                        $('#invalidOtp').modal('hide');
-                        $('#maxInvalidOtp').modal('show');
-                    }
-
-                }
+                $('#otpExpiry').modal('hide');
 
             }).catch(error => {
                 console.log(error)
             });
 
-        $('#invalidOtp').modal('hide');
-        if (type != 'resend') { $('#otpPopUp').modal('show'); }
-        document.getElementById('otp').value = ''
-        otpTimer();
     }
     $('#otpExpiry').modal('hide');
 
