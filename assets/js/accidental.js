@@ -1093,10 +1093,12 @@ const proceedScan = async (fileObj, button, pageid) => {
 const fileCheck = (file, button, pageid) => {
 
   console.log(button);
+  fileBlurStatus = false;
   var _URL = window.URL || window.webkitURL;
   console.log("FILE OBJECT -> ", file);
   var img = new Image();
   console.log("Before on load --> ");
+
   img.onload = function () {
     console.log("inside image load --> ");
     console.log(this.width + " " + this.height);
@@ -1115,9 +1117,14 @@ const fileCheck = (file, button, pageid) => {
       $(`#file_upload_cancle_${button}`).show();
       $("#upload_warning").text("We noticed that your uploaded documents are unclear and unreadable. Kindly ensure to upload clear copies of your documents to proceed.");
       console.log("Image is bad");
+
+      fileBlurStatus = true;
+
     } else {
       console.log("This is right JPG");
+
       proceedScan(file, button);
+      fileBlurStatus = false;
     }
   };
   img.onerror = function () {
@@ -1125,6 +1132,7 @@ const fileCheck = (file, button, pageid) => {
     alert("not a valid file: " + file.type);
   };
   img.src = _URL.createObjectURL(file);
+  return fileBlurStatus;
 };
 
 const isFileSizeValid = (file) => {
@@ -1134,9 +1142,8 @@ const isFileSizeValid = (file) => {
   return false;
 };
 
-
-
 file1.onchange = async function (e) {
+
   docType = "LIDC001";
   tranType = "CIF-MIN";
   $("#file_upload_cancle_1").hide();
@@ -1150,30 +1157,55 @@ file1.onchange = async function (e) {
       var buttonNum = 1;
       var pageID = 1
       var sizevalid = isFileSizeValid(file, buttonNum);
+
       if (sizevalid) {
         if (ext == "jpg") {
-          fileCheck(file, buttonNum, pageID);
+          var isFileBlur = fileCheck(file, buttonNum, pageID)
+
+          if (isFileBlur == false) {
+
+            let fileName = referenceNumber + "-" + docType + "-" + tranType;
+
+            console.log("setting file data : ");
+            let accident = {};
+            // accident['LIDC001Front'] = {
+            accident['BeneficiaryNo'] = beneficiaryCount,
+              accident["Filename"] = `${fileName}.pdf`,
+              accident["DocType"] = "PDF",
+              accident["DocTypeCode"] = "LIDC001",
+              accident["DocumentDescription"] = "Front copy of doc"
+            // }
+
+            addFileToList(accident, `${fileName}.pdf`);
+            const formData = new FormData()
+            formData.append('file', file, fileName + `.${ext}`);
+            handleFileUpload(formData, fileName);
+          }
+
+          else {
+
+          }
         }
         else {
           proceedScan(file, buttonNum, pageID);
+          let fileName = referenceNumber + "-" + docType + "-" + tranType;
+
+          console.log("setting file data : ");
+          let accident = {};
+          // accident['LIDC001Front'] = {
+          accident['BeneficiaryNo'] = beneficiaryCount,
+            accident["Filename"] = `${fileName}.pdf`,
+            accident["DocType"] = "PDF",
+            accident["DocTypeCode"] = "LIDC001",
+            accident["DocumentDescription"] = "Front copy of doc"
+          // }
+
+          addFileToList(accident, `${fileName}.pdf`);
+          const formData = new FormData()
+          formData.append('file', file, fileName + `.${ext}`);
+          handleFileUpload(formData, fileName);
         }
 
-        let fileName = referenceNumber + "-" + docType + "-" + tranType;
-
-        console.log("setting file data : ");
-        let accident = {};
-        // accident['LIDC001Front'] = {
-        accident['BeneficiaryNo'] = beneficiaryCount,
-          accident["Filename"] = `${fileName}.pdf`,
-          accident["DocType"] = "PDF",
-          accident["DocTypeCode"] = "LIDC001",
-          accident["DocumentDescription"] = "Front copy of doc"
-        // }
-
-        addFileToList(accident, `${fileName}.pdf`);
-        const formData = new FormData()
-        formData.append('file', file, fileName + `.${ext}`);
-        handleFileUpload(formData, fileName);
 
       } else {
         $("#warning_parent").show();
@@ -1210,26 +1242,46 @@ file2.onchange = async function (e) {
       var pageId = 1;
       var sizevalid = isFileSizeValid(file, buttonNum);
       if (sizevalid) {
+
         if (ext == "jpg") {
-          fileCheck(file, buttonNum, pageId);
+          var isFileBlur = fileCheck(file, buttonNum, pageID)
+          if (isFileBlur == false) {
+
+            let fileName = referenceNumber + "-" + docType + "-" + tranType;
+
+            let accident = {};
+            accident['BeneficiaryNo'] = beneficiaryCount,
+              accident["Filename"] = `${fileName}.pdf`,
+              accident["DocType"] = "PDF",
+              accident["DocTypeCode"] = "LIDC001",
+              accident["DocumentDescription"] = "Back copy of doc"
+
+            addFileToList(accident, `${fileName}.pdf`);
+            const formData = new FormData()
+            formData.append('file', file, fileName + `.${ext}`)
+            handleFileUpload(formData, fileName);
+          }
+          else {
+
+          }
         }
         else {
           proceedScan(file, buttonNum, pageId);
+          let fileName = referenceNumber + "-" + docType + "-" + tranType;
+
+          let accident = {};
+          accident['BeneficiaryNo'] = beneficiaryCount,
+            accident["Filename"] = `${fileName}.pdf`,
+            accident["DocType"] = "PDF",
+            accident["DocTypeCode"] = "LIDC001",
+            accident["DocumentDescription"] = "Back copy of doc"
+
+          addFileToList(accident, `${fileName}.pdf`);
+          const formData = new FormData()
+          formData.append('file', file, fileName + `.${ext}`)
+          handleFileUpload(formData, fileName);
         }
 
-        let fileName = referenceNumber + "-" + docType + "-" + tranType;
-
-        let accident = {};
-        accident['BeneficiaryNo'] = beneficiaryCount,
-          accident["Filename"] = `${fileName}.pdf`,
-          accident["DocType"] = "PDF",
-          accident["DocTypeCode"] = "LIDC001",
-          accident["DocumentDescription"] = "Back copy of doc"
-
-        addFileToList(accident, `${fileName}.pdf`);
-        const formData = new FormData()
-        formData.append('file', file, fileName + `.${ext}`)
-        handleFileUpload(formData, fileName);
       } else {
         $("#warning_parent").show();
         $("#file_loader_icon_2").hide();
@@ -1265,26 +1317,44 @@ file3.onchange = async function (e) {
       var pageId = 1;
       var sizevalid = isFileSizeValid(file, buttonNum);
       if (sizevalid) {
+
         if (ext == "jpg") {
-          fileCheck(file, buttonNum, pageId);
+          var isFileBlur = fileCheck(file, buttonNum, pageID)
+          if (isFileBlur == false) {
+            let fileName = referenceNumber + "-" + docType + "-" + tranType;
+
+            let accident = {};
+
+            accident['BeneficiaryNo'] = beneficiaryCount,
+              accident["Filename"] = `${fileName}.pdf`,
+              accident["DocType"] = "PDF",
+              accident["DocTypeCode"] = docType,
+              accident["DocumentDescription"] = "Attending Physician’s Statement"
+
+            addFileToList(accident, `${fileName}.pdf`);
+            const formData = new FormData()
+            formData.append('file', file, fileName + `.${ext}`)
+            handleFileUpload(formData, fileName);
+          }
         }
         else {
           proceedScan(file, buttonNum, pageId);
+          let fileName = referenceNumber + "-" + docType + "-" + tranType;
+
+          let accident = {};
+
+          accident['BeneficiaryNo'] = beneficiaryCount,
+            accident["Filename"] = `${fileName}.pdf`,
+            accident["DocType"] = "PDF",
+            accident["DocTypeCode"] = docType,
+            accident["DocumentDescription"] = "Attending Physician’s Statement"
+
+          addFileToList(accident, `${fileName}.pdf`);
+          const formData = new FormData()
+          formData.append('file', file, fileName + `.${ext}`)
+          handleFileUpload(formData, fileName);
         }
-        let fileName = referenceNumber + "-" + docType + "-" + tranType;
 
-        let accident = {};
-
-        accident['BeneficiaryNo'] = beneficiaryCount,
-          accident["Filename"] = `${fileName}.pdf`,
-          accident["DocType"] = "PDF",
-          accident["DocTypeCode"] = docType,
-          accident["DocumentDescription"] = "Attending Physician’s Statement"
-
-        addFileToList(accident, `${fileName}.pdf`);
-        const formData = new FormData()
-        formData.append('file', file, fileName + `.${ext}`)
-        handleFileUpload(formData, fileName);
       } else {
         $("#warning_parent").show();
         $("#file_loader_icon_3").hide();
@@ -1320,27 +1390,46 @@ file4.onchange = async function (e) {
       var pageId = 1;
       var sizevalid = isFileSizeValid(file, buttonNum);
       if (sizevalid) {
+
         if (ext == "jpg") {
-          fileCheck(file, buttonNum, pageId);
+          var isFileBlur = fileCheck(file, buttonNum, pageID)
+          if (isFileBlur == false) {
+            let fileName = referenceNumber + "-" + docType + "-" + tranType;
+
+            let accident = {};
+
+            accident['BeneficiaryNo'] = beneficiaryCount,
+              accident["Filename"] = `${fileName}.pdf`,
+              accident["DocType"] = "PDF",
+              accident["DocTypeCode"] = docType,
+              accident["DocumentDescription"] = "Police or Narration Report"
+
+            addFileToList(accident, `${fileName}.pdf`);
+            const formData = new FormData()
+            formData.append('file', file, fileName + `.${ext}`)
+            handleFileUpload(formData, fileName);
+          }
+
         }
         else {
           proceedScan(file, buttonNum, pageId);
+          let fileName = referenceNumber + "-" + docType + "-" + tranType;
+
+          let accident = {};
+
+          accident['BeneficiaryNo'] = beneficiaryCount,
+            accident["Filename"] = `${fileName}.pdf`,
+            accident["DocType"] = "PDF",
+            accident["DocTypeCode"] = docType,
+            accident["DocumentDescription"] = "Police or Narration Report"
+
+          addFileToList(accident, `${fileName}.pdf`);
+          const formData = new FormData()
+          formData.append('file', file, fileName + `.${ext}`)
+          handleFileUpload(formData, fileName);
         }
 
-        let fileName = referenceNumber + "-" + docType + "-" + tranType;
 
-        let accident = {};
-
-        accident['BeneficiaryNo'] = beneficiaryCount,
-          accident["Filename"] = `${fileName}.pdf`,
-          accident["DocType"] = "PDF",
-          accident["DocTypeCode"] = docType,
-          accident["DocumentDescription"] = "Police or Narration Report"
-
-        addFileToList(accident, `${fileName}.pdf`);
-        const formData = new FormData()
-        formData.append('file', file, fileName + `.${ext}`)
-        handleFileUpload(formData, fileName);
       } else {
         $("#warning_parent").show();
         $("#file_loader_icon_4").hide();
@@ -1376,28 +1465,48 @@ file5.onchange = async function (e) {
       var pageId = 1;
       var sizevalid = isFileSizeValid(file, buttonNum);
       if (sizevalid) {
+
         if (ext == "jpg") {
-          fileCheck(file, buttonNum, pageId);
+          var isFileBlur = fileCheck(file, buttonNum, pageID)
+          if (isFileBlur == false) {
+            let fileName = referenceNumber + "-" + docType + "-" + tranType;
+
+            let accident = {};
+
+            accident['BeneficiaryNo'] = beneficiaryCount,
+              accident["Filename"] = `${fileName}.pdf`,
+              accident["DocType"] = "PDF",
+              accident["DocTypeCode"] = docType,
+              accident["DocumentDescription"] = "Official Receipts (ORs)"
+
+            addFileToList(accident, `${fileName}.pdf`);
+
+            const formData = new FormData()
+            formData.append('file', file, fileName + `.${ext}`)
+            handleFileUpload(formData, fileName);
+          }
+
         }
         else {
           proceedScan(file, buttonNum, pageId);
+          let fileName = referenceNumber + "-" + docType + "-" + tranType;
+
+          let accident = {};
+
+          accident['BeneficiaryNo'] = beneficiaryCount,
+            accident["Filename"] = `${fileName}.pdf`,
+            accident["DocType"] = "PDF",
+            accident["DocTypeCode"] = docType,
+            accident["DocumentDescription"] = "Official Receipts (ORs)"
+
+          addFileToList(accident, `${fileName}.pdf`);
+
+          const formData = new FormData()
+          formData.append('file', file, fileName + `.${ext}`)
+          handleFileUpload(formData, fileName);
         }
 
-        let fileName = referenceNumber + "-" + docType + "-" + tranType;
 
-        let accident = {};
-
-        accident['BeneficiaryNo'] = beneficiaryCount,
-          accident["Filename"] = `${fileName}.pdf`,
-          accident["DocType"] = "PDF",
-          accident["DocTypeCode"] = docType,
-          accident["DocumentDescription"] = "Official Receipts (ORs)"
-
-        addFileToList(accident, `${fileName}.pdf`);
-
-        const formData = new FormData()
-        formData.append('file', file, fileName + `.${ext}`)
-        handleFileUpload(formData, fileName);
       } else {
         $("#warning_parent").show();
         $("#file_loader_icon_5").hide();
@@ -1433,28 +1542,49 @@ file6.onchange = async function (e) {
       var pageId = 2
       var sizevalid = isFileSizeValid(file, buttonNum);
       if (sizevalid) {
+
         if (ext == "jpg") {
-          fileCheck(file, buttonNum, pageId);
+          var isFileBlur = fileCheck(file, buttonNum, pageID)
+          if (isFileBlur == false) {
+            let fileName = referenceNumber + "-" + docType + "-" + tranType;
+
+            let accident = {};
+
+            accident['BeneficiaryNo'] = beneficiaryCount,
+              accident["Filename"] = `${fileName}.pdf`,
+              accident["DocType"] = "PDF",
+              accident["DocTypeCode"] = docType,
+              accident["DocumentDescription"] = "Proof of Bank Account"
+
+            addFileToList(accident, `${fileName}.pdf`);
+
+            const formData = new FormData()
+            formData.append('file', file, fileName + `.${ext}`)
+            handleFileUpload(formData, fileName);
+          }
+
+
         }
         else {
           proceedScan(file, buttonNum, pageId);
+          let fileName = referenceNumber + "-" + docType + "-" + tranType;
+
+          let accident = {};
+
+          accident['BeneficiaryNo'] = beneficiaryCount,
+            accident["Filename"] = `${fileName}.pdf`,
+            accident["DocType"] = "PDF",
+            accident["DocTypeCode"] = docType,
+            accident["DocumentDescription"] = "Proof of Bank Account"
+
+          addFileToList(accident, `${fileName}.pdf`);
+
+          const formData = new FormData()
+          formData.append('file', file, fileName + `.${ext}`)
+          handleFileUpload(formData, fileName);
         }
 
-        let fileName = referenceNumber + "-" + docType + "-" + tranType;
 
-        let accident = {};
-
-        accident['BeneficiaryNo'] = beneficiaryCount,
-          accident["Filename"] = `${fileName}.pdf`,
-          accident["DocType"] = "PDF",
-          accident["DocTypeCode"] = docType,
-          accident["DocumentDescription"] = "Proof of Bank Account"
-
-        addFileToList(accident, `${fileName}.pdf`);
-
-        const formData = new FormData()
-        formData.append('file', file, fileName + `.${ext}`)
-        handleFileUpload(formData, fileName);
       } else {
         $("#warning_parent_acct").show();
         $("#file_loader_icon_6").hide();
@@ -1487,16 +1617,27 @@ file7.onchange = async function (e) {
       var buttonNum = 7;
       var sizevalid = isFileSizeValid(file, buttonNum);
       if (sizevalid) {
+
         if (ext == "jpg") {
-          fileCheck(file, buttonNum);
+          var isFileBlur = fileCheck(file, buttonNum)
+          if (isFileBlur == false) {
+            file1Buffer = await getBuffer(file);
+            console.log("file buffer : ")
+            console.log(file1Buffer);
+            filesMap["file7"] = file1Buffer;
+          }
+
         }
         else {
           proceedScan(file, buttonNum);
+
+          file1Buffer = await getBuffer(file);
+          console.log("file buffer : ")
+          console.log(file1Buffer);
+          filesMap["file7"] = file1Buffer;
+
         }
-        file1Buffer = await getBuffer(file);
-        console.log("file buffer : ")
-        console.log(file1Buffer);
-        filesMap["file7"] = file1Buffer;
+
       } else {
         $("#warning_parent").show();
         $("#file_loader_icon_7").hide();
@@ -1517,7 +1658,6 @@ file7.onchange = async function (e) {
       this.value = "";
   }
 };
-
 
 
 function buttonSubmitClicked(event) {
