@@ -39,6 +39,10 @@ form_Bank.addEventListener('submit', handleAccountInfo);
         animation: true
     })
 }) */
+document.addEventListener("ym_event", () => {
+  console.log("You knocked?");
+});
+
 function myDisable() {
   document.getElementById("submit9").disabled = true;
   document.getElementById("submit9").style.cursor = "no-drop";
