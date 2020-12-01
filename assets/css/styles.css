@@ -4,6 +4,25 @@
   font-family: "AIABody",Arial,"Helvetica Neue",Helvetica,sans-serif;
 }
 
+.survey_btn {
+            background-color: #fff !important;
+            color: black;
+            border: 1px solid white;
+        }
+        .survey_btn_selected {
+               color: white;
+            /* color: #b8123e !important; */
+            background-color: #b8123e !important;
+            text-decoration: unset !important;
+            border: 1px solid white !important;
+        }
+
+
+
+
+       
+
+        
 .jumbotron {
   margin-bottom: 0;
   padding: 0;
@@ -1113,6 +1132,7 @@ margin-top: 1rem;
   margin-left: 277px;
   margin-top: 36px;
 }
+
 
 .btnn {
   background-color: #fff !important;

@@ -1910,6 +1910,9 @@ function handleAccountInfo(event) {
   }
 }
 
+function getBankDetails() {
+  
+}
 
 
 function bankTranfer() {
