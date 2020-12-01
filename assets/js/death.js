@@ -25,7 +25,7 @@ var currSeconds = 0;
 var user_mobile;
 var ben_name_req_progress = '';
 let filesMap = {};
-
+var otpSubmitted = false;
 var file1 = document.getElementById('file_Upload_1');
 var file2 = document.getElementById('file_Upload_2');
 var file3 = document.getElementById('file_Upload_3');
@@ -1000,14 +1000,14 @@ function handleFormAddBeneficiary(event) {
         BeneficiaryList.push(beneficiary);
         if (beneficiaryCount == 3) {
             // name to show in 'your request is being processed section'
-            ben_name_req_progress = 'Hi ' + field_addBeneficiaryFirstName + '.'
-            $('#user_name').text = ben_name_req_progress;
+            // ben_name_req_progress = 'Hi ' + field_addBeneficiaryFirstName + '.'
+            // $('#user_name').text = ben_name_req_progress;
 
         }
         else {
             // name to show in 'your request is being processed section'
-            ben_name_req_progress = ''
-            $('#user_name').text = ben_name_req_progress;
+            // ben_name_req_progress = ''
+            // $('#user_name').text = ben_name_req_progress;
         }
         dataReset("field_addBeneficiaryFirstName", "field_addBeneficiaryMiddleName", "field_addBeneficiaryLastName", "field_addBeneficiaryMobileNum", "field_addBeneficiaryEmailAddress", "field_addBeneficiaryHomeAddress", "field_addBeneficiaryDOB", "field_addBeneficiaryPOB", "field_addBeneficiaryNationality", "field_addBeneficiarySex", "field_addBeneficiaryRelationToDeceased", "field_addBeneficiaryEmployerName", "field_addBeneficiaryOccupation", "field_addBeneficiary_relatives1", "field_add_Beneficiary_add_relatives2");
         uploadDataReset();
@@ -1563,8 +1563,8 @@ function handleForm(event) {
         BeneficiaryList.push(beneficiary);
 
 
-        ben_name_req_progress = 'Hi ' + field_firstName + '.'
-        document.getElementById('user_name').innerHTML = ben_name_req_progress; // name to show in 'your request is being processed section'
+        // ben_name_req_progress = 'Hi ' + field_firstName + '.'
+        // document.getElementById('user_name').innerHTML = ben_name_req_progress; // name to show in 'your request is being processed section'
 
 
         /*  dataReset("field_firstName", "field_firstName", "field_middleName", "field_lastName", "field_lastName_Suffix", "field_DOB", "field_DOID", "field_BeneficiaryFirstName", "field_BeneficiaryMiddleName", "field_BeneficiaryLastName", "field_BeneficiaryMobileNum", "field_BeneficiaryEmailAddress", "field_BeneficiaryHomeAddress", "field_BeneficiaryDOB", "field_BeneficiaryPOB", "field_BeneficiaryNationality", "field_BeneficiarySex", "field_BeneficiaryRelationToDeceased","field_Beneficiary_relatives1","field_Beneficiary_relatives2") */
@@ -3446,7 +3446,11 @@ function buttonSubmitClicked(event) {
 
         console.log("final payload : ")
         console.log(finalPayload)
-        otpTimer();
+        if (otpSubmitted == false) { otpTimer(); } else {
+            $('#requirements').hide();
+            $('#process_confirmation').show();
+        }
+
         window.parent.postMessage(JSON.stringify({
             event_code: 'ym-client-event', data: JSON.stringify({
                 event: {
@@ -3961,7 +3965,78 @@ function addBeneficiaryuploadDataReset() {
     $("#upload_warning_addBeneficiaryacct").text('');
 }
 
+function getBankDetails() {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    var raw = JSON.stringify({ "companyName": "PAL", "webReferenceNumber": referenceNumber });
+    var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw
+    };
+    fetch("http://localhost:3000/disbursement_details", requestOptions).then((response) => response.json())
+        .then(response => {
+
+            if (response.returnCode == '0') {
+                if (response.accountName != '') {
+
+                    document.getElementById('have_bank_details').innerHTML = ' We have your bank details on file.'
+                    field_AccountName = response.accountName;
+                    document.getElementById('field_AccountName').value = field_AccountName;
+
+                    field_AccountNumber = response.maskedAccountNumber.replace(/.(?=.{4})/g, '*');
+                    document.getElementById('field_AccountNumber').value = field_AccountNumber;
+
+                    field_Bank = response.bankName;
+
+                    field_Currency = response.accountCurrency;
+                    $("#from_currency option").each(function () {
+                        if ($(this).text() == field_Currency) {
+                            $(this).attr('selected', 'selected');
+                        }
+                    });
+
+
+                    if (field_Currency.toLowerCase() == "peso") {
+
+                        $("#field_Bank").html(
+                            "<option value='Bank of the Philippine Islands - BPI' >Bank of the Philippine Islands - BPI</option><option value='BPI Family Savings Bank - BFB'>BPI Family Savings Bank - BFB</option><option value='Banco de Oro - BDO'>Banco de Oro - BDO</option><option value='China Banking Corporation - CBC'>China Banking Corporation - CBC</option><option value='Citibank Philippines - CITI'>Citibank Philippines - CITI</option><option value='Development Bank of the Phils - DBP'>Development Bank of the Phils - DBP</option><option value='Eastwest Bank - EWB'>Eastwest Bank - EWB</option><option value='Hongkong Shanghai Banking Corp. Phils - HSBC'>Hongkong Shanghai Banking Corp. Phils - HSBC</option><option value='Land Bank of the Philippines - LPB'>Land Bank of the Philippines - LPB</option><option value='Metropolitan Banks and Trust Company - MBTC'>Metropolitan Banks and Trust Company - MBTC</option><option value='Philippine National Bank - PNB'>Philippine National Bank - PNB</option><option value='Rizal Commercial Banking Corp - RCBC'>Rizal Commercial Banking Corp - RCBC</option><option value='Security Bank - SBTC'>Security Bank - SBTC</option><option value='Union Bank of the Philippines - UB'>Union Bank of the Philippines - UB</option>"
+                        );
+                        $("#field_Bank option").each(function () {
+
+                            if ($(this).text().split('-')[1].toLowerCase().trim() == field_Bank.toLowerCase().trim()) {
+
+                                $(this).attr('selected', 'selected');
+                            }
+                        });
+                    }
+                    else if (field_Currency.toLowerCase() == "usd") {
+                        $("#field_Bank").html(
+                            "<option value='Bank of the Philippine Islands - BPI'>Bank of the Philippine Islands - BPI</option><option value='Banco de Oro - BDO'>Banco de Oro - BDO</option>"
+                        );
+                        $("#field_Bank option").each(function () {
+
+                            if ($(this).text().split('-')[1].toLowerCase().trim() == field_Bank.toLowerCase().trim()) {
+
+                                $(this).attr('selected', 'selected');
+                            }
+                        });
+                    }
+
+
+                }
+
+            }
+            else {
+                $('#change_bank_account').hide()
+            }
+        }).catch(error => {
+            console.log(error)
+        });
+}
+
 function bankTranfer() {
+    getBankDetails();
     document.getElementById('ref_number').innerHTML = referenceNumber
     trackBenificiary = 0;
     $('#payment').hide();
@@ -4610,6 +4685,7 @@ function submitOtp() {
                 $('#otpPopUp').modal('hide');
                 $('#requirements').hide();
                 $('#process_confirmation').show();
+                otpSubmitted = true;
             }
             else {
                 invalidOtp++;

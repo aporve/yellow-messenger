@@ -23,6 +23,8 @@ let uid = url.searchParams.get('sender');
 let botId = url.searchParams.get('botId');
 var user_mobile;
 var currSeconds = 0;
+var otpSubmitted = false;
+var haveBankDetails = false;
 
 $('#privacy_consent_1').prop('checked', true);
 $('#privacy_consent_2').prop('checked', true);
@@ -1740,8 +1742,11 @@ function buttonSubmitClicked(event) {
     stageTwo: true,
     referenceNumber: referenceNumber
   }
+  if (otpSubmitted == false) { otpTimer(); } else {
 
-  otpTimer();
+    $('#requirements').hide();
+    $('#payment').show();
+  }
   window.parent.postMessage(JSON.stringify({
     event_code: 'ym-client-event', data: JSON.stringify({
       event: {
@@ -1750,8 +1755,6 @@ function buttonSubmitClicked(event) {
       }
     })
   }), '*');
-
-
 
 }
 
@@ -1915,11 +1918,77 @@ function handleAccountInfo(event) {
 }
 
 function getBankDetails() {
-  
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  var raw = JSON.stringify({ "companyName": "PAL", "webReferenceNumber": referenceNumber });
+  var requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body: raw
+  };
+  fetch("http://localhost:3000/disbursement_details", requestOptions).then((response) => response.json())
+    .then(response => {
+
+      if (response.returnCode == '0') {
+        if (response.accountName != '') {
+       
+          document.getElementById('have_bank_details').innerHTML = ' We have your bank details on file.'
+          field_AccountName = response.accountName;
+          document.getElementById('field_AccountName').value = field_AccountName;
+
+          field_AccountNumber = response.maskedAccountNumber.replace(/.(?=.{4})/g, '*');
+          document.getElementById('field_AccountNumber').value = field_AccountNumber;
+
+          field_Bank = response.bankName;
+
+          field_Currency = response.accountCurrency;
+          $("#from_currency option").each(function () {
+            if ($(this).text() == field_Currency) {
+              $(this).attr('selected', 'selected');
+            }
+          });
+
+          if (field_Currency.toLowerCase() == "peso") {
+
+            $("#field_Bank").html(
+              "<option value='Bank of the Philippine Islands - BPI' >Bank of the Philippine Islands - BPI</option><option value='BPI Family Savings Bank - BFB'>BPI Family Savings Bank - BFB</option><option value='Banco de Oro - BDO'>Banco de Oro - BDO</option><option value='China Banking Corporation - CBC'>China Banking Corporation - CBC</option><option value='Citibank Philippines - CITI'>Citibank Philippines - CITI</option><option value='Development Bank of the Phils - DBP'>Development Bank of the Phils - DBP</option><option value='Eastwest Bank - EWB'>Eastwest Bank - EWB</option><option value='Hongkong Shanghai Banking Corp. Phils - HSBC'>Hongkong Shanghai Banking Corp. Phils - HSBC</option><option value='Land Bank of the Philippines - LPB'>Land Bank of the Philippines - LPB</option><option value='Metropolitan Banks and Trust Company - MBTC'>Metropolitan Banks and Trust Company - MBTC</option><option value='Philippine National Bank - PNB'>Philippine National Bank - PNB</option><option value='Rizal Commercial Banking Corp - RCBC'>Rizal Commercial Banking Corp - RCBC</option><option value='Security Bank - SBTC'>Security Bank - SBTC</option><option value='Union Bank of the Philippines - UB'>Union Bank of the Philippines - UB</option>"
+            );
+            $("#field_Bank option").each(function () {
+
+              if ($(this).text().split('-')[1].toLowerCase().trim() == field_Bank.toLowerCase().trim()) {
+
+                $(this).attr('selected', 'selected');
+              }
+            });
+          }
+          else if (field_Currency.toLowerCase() == "usd") {
+            $("#field_Bank").html(
+              "<option value='Bank of the Philippine Islands - BPI'>Bank of the Philippine Islands - BPI</option><option value='Banco de Oro - BDO'>Banco de Oro - BDO</option>"
+            );
+            $("#field_Bank option").each(function () {
+
+              if ($(this).text().split('-')[1].toLowerCase().trim() == field_Bank.toLowerCase().trim()) {
+
+                $(this).attr('selected', 'selected');
+              }
+            });
+          }
+
+
+        }
+        
+      }
+      else {
+        $('#change_bank_account').hide()
+      }
+    }).catch(error => {
+      console.log(error)
+    });
 }
 
 
 function bankTranfer() {
+  getBankDetails();
   document.getElementById('ref_number').innerHTML = referenceNumber
   $('#payment').hide();
   $('#account_details').show();
@@ -2313,6 +2382,7 @@ function submitOtp() {
         $('#otpPopUp').modal('hide');
         $('#requirements').hide();
         $('#payment').show();
+        otpSubmitted = true;
       }
       else {
         invalidOtp++;
