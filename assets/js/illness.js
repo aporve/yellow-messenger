@@ -1805,8 +1805,9 @@ function getBankDetails() {
 
 
 function bankTranfer() {
-    getBankDetails();
+
     document.getElementById('ref_number').innerHTML = referenceNumber
+    getBankDetails();
     $('#payment').hide();
     $('#account_details').show();
     $("#step2").addClass("active");

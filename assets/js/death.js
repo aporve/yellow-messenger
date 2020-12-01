@@ -4036,8 +4036,9 @@ function getBankDetails() {
 }
 
 function bankTranfer() {
-    getBankDetails();
+   
     document.getElementById('ref_number').innerHTML = referenceNumber
+    getBankDetails();
     trackBenificiary = 0;
     $('#payment').hide();
     $('#account_details').show();
