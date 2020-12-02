@@ -326,6 +326,8 @@ const handleImageUpload = (formData, fileName) => {
 const handleFileUpload = (formData, fileName) => {
   console.log("file upload new");
   var myHeaders = new Headers();
+  console.log("form data : ")
+  console.log(formData);
 
   var requestOptions = {
     method: 'POST',
@@ -1154,6 +1156,7 @@ const isFileSizeValid = (file) => {
 
 file1.onchange = async function (e) {
 
+  console.log("file 1 upload ");
   docType = "LIDC001";
   tranType = "CIF-MIN";
   $("#file_upload_cancle_1").hide();
