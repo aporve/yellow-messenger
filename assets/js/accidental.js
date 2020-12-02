@@ -328,7 +328,7 @@ const handleFileUpload = (formData, fileName) => {
   var myHeaders = new Headers();
   console.log("form data : ")
   console.log(formData);
-
+debugger
   var requestOptions = {
     method: 'POST',
     headers: myHeaders,
@@ -2134,7 +2134,7 @@ function handleAddBankInfo(event) {
       field_Bank1,
       field_Branch1,
       field_Currency1: $("select#from_currency1 option").filter(":selected").val(),
-      upload_file_6: file7.value
+      upload_file_7: file7.value
     }
     $("#step3_circle").addClass("md-step-step3-circle ");
     $("#step3_span").addClass("md-step3-span");
@@ -2290,7 +2290,7 @@ function resendOtp(type) {
   //api call for resend otp
   removeTimer();
   resendCount++;
-  if (resendCount > 5) {
+  if (resendCount > 5) { // on reaching max resend (5 times)
     $('#otpPopUp').modal('hide');
     $('#invalidOtp').modal('hide');
     $('#maxResendOtp').modal('show');

@@ -598,7 +598,12 @@ function selectAnswer(quesn_num, id, selectedOption) {
 function submit_survey() {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
-    var raw = JSON.stringify({ "companyName": "PAL", "TIPSReferenceNumber": referenceNumber, 'surveyQuestion1': surveyAns1, 'surveyQuestion2': surveyAns2, 'surveyQuestion3': surveyAns3 });
+    var raw = JSON.stringify({
+        "companyName": "PAL", "TIPSReferenceNumber": referenceNumber,
+        'surveyQuestion1': surveyAns1,
+        'surveyQuestion2': surveyAns2,
+        'surveyQuestion3': surveyAns3
+    });
     var requestOptions = {
         method: 'POST',
         headers: myHeaders,
