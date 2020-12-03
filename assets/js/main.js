@@ -12,10 +12,12 @@ var docsPending;
 var docsReceived;
 var policyNumber;
 var claimantFirstName;
-var denialTag;
+// var denialTag;
 var claimAmount;
 var currency;
 var requirementsList = [];
+var sourceSystem;
+var isFallout;
 var surveyTag;
 var referenceNumber = null;
 
@@ -158,7 +160,9 @@ function trackProgress() {
                 docsReceived = response.docsReceived;
                 policyNumber = response.policyNumber;
                 claimantFirstName = response.claimantFirstName;
-                denialTag = response.denialTag;
+                // denialTag = response.denialTag;
+                sourceSystem = response.sourceSystem;
+                isFallout = response.isFallout;
                 claimAmount = response.claimAmount;
                 currency = response.currency;
                 requirementsList = response.requirementsList;
@@ -600,9 +604,10 @@ function submit_survey() {
     myHeaders.append("Content-Type", "application/json");
     var raw = JSON.stringify({
         "companyName": "PAL", "TIPSReferenceNumber": referenceNumber,
-        'surveyQuestion1': surveyAns1,
-        'surveyQuestion2': surveyAns2,
-        'surveyQuestion3': surveyAns3
+        "sourceSystem": sourceSystem,
+        "surveyQuestion1": surveyAns1,
+        "surveyQuestion2": surveyAns2,
+        "surveyQuestion3": surveyAns3
     });
     var requestOptions = {
         method: 'POST',
