@@ -1006,8 +1006,9 @@ function handleFormAddBeneficiary(event) {
         }
         else {
             // name to show in 'your request is being processed section'
-            // ben_name_req_progress = ''
-            // $('#user_name').text = ben_name_req_progress;
+            ben_name_req_progress = ''
+            $('#user_name').text = ben_name_req_progress;
+            $("#customer_Name").text(`Hang in there as we are now processing your request. Kindly expect an SMS update from us within 1 to 2 working days on the status of your request.`);
         }
         dataReset("field_addBeneficiaryFirstName", "field_addBeneficiaryMiddleName", "field_addBeneficiaryLastName", "field_addBeneficiaryMobileNum", "field_addBeneficiaryEmailAddress", "field_addBeneficiaryHomeAddress", "field_addBeneficiaryDOB", "field_addBeneficiaryPOB", "field_addBeneficiaryNationality", "field_addBeneficiarySex", "field_addBeneficiaryRelationToDeceased", "field_addBeneficiaryEmployerName", "field_addBeneficiaryOccupation", "field_addBeneficiary_relatives1", "field_add_Beneficiary_add_relatives2");
         uploadDataReset();
@@ -1737,7 +1738,7 @@ const fileCheck = (file, button, pageid, formData, fileName) => {
     var img = new Image();
 
     console.log("Before on load --> ");
-    img.onload =async function () {
+    img.onload = async function () {
         console.log("inside image load --> ");
         console.log(this.width + " " + this.height);
         if (this.width < 400 && this.height < 400) {
