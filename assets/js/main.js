@@ -282,7 +282,7 @@ function setAccidentClaimStatusMsg() {
 
     if (sourceSystem.toLowerCase() == 'tips') {
 
-        if (docsPending == 'Y' && (claimStatus.toLowerCase() != 'received' || claimStatus.toLowerCase() != 'approved' || claimStatus.toLowerCase() != 'denied1')) {
+        if (docsPending == 'Y') {
             var finalDocsList = '';
             requirementsList.forEach(function (item) {
                 finalDocsList = finalDocsList + '<div style="display: flex;align-items: center; padding-bottom: 1px;"> <div id="outer-circle"> <div id="inner-circle"></div> </div> <p>' + item.name + '</p> </div>'
@@ -337,7 +337,7 @@ function setAccidentClaimStatusMsg() {
         }
     }
     else if (sourceSystem.toLowerCase() == 'cms') {
-        if (docsPending == 'Y' && (claimStatus.toLowerCase() != 'received' || claimStatus.toLowerCase() != 'approved' || claimStatus.toLowerCase() != 'denied1')) {
+        if (docsPending == 'Y') {
             var finalDocsList = '';
             requirementsList.forEach(function (item) {
                 finalDocsList = finalDocsList + '<div style="display: flex;align-items: center; padding-bottom: 1px;"> <div id="outer-circle"> <div id="inner-circle"></div> </div> <p>' + item.name + '</p> </div>'
@@ -391,29 +391,6 @@ function setAccidentClaimStatusMsg() {
 
         }
     }
-
-
-
-    // if (docsPending == 'Y') {
-    //     var finalDocsList = '';
-    //     requirementsList.forEach(function (item) {
-    //         finalDocsList = finalDocsList + '<div style="display: flex;align-items: center; padding-bottom: 1px;"> <div id="outer-circle"> <div id="inner-circle"></div> </div> <p>' + item.name + '</p> </div>'
-
-    //     });
-    //     document.getElementById('docs-list').innerHTML = finalDocsList
-    //     document.getElementById('claim-msg-text').innerHTML = document.getElementById('A-1').innerHTML;
-    //     document.getElementById("turnaround-time-ref").style.display = "block";
-    //     document.getElementById("payment-ref").style.display = "none";
-    //     twoStepperActive()
-    // }
-    // else if (docsPending == 'N') {
-    //     document.getElementById('claim-msg-text').innerHTML = document.getElementById('A-6').innerHTML;
-    //     document.getElementById("payment-ref").style.display = "block"; // to display payment box
-    //     document.getElementById("turnaround-time-ref").style.display = "none";
-    //     allStepperActive()
-    // }
-
-
 
     //before integration//
     // switch (claim_msg_type) {
@@ -510,7 +487,7 @@ function setIllnessClaimStatusMsg() {
         }
     }
     else if (sourceSystem.toLowerCase() == 'cms') {
-        if (docsPending == 'Y' && (claimStatus.toLowerCase() != 'received' || claimStatus.toLowerCase() != 'approved' || claimStatus.toLowerCase() != 'denied1')) {
+        if (docsPending == 'Y') {
             var finalDocsList = '';
             requirementsList.forEach(function (item) {
                 finalDocsList = finalDocsList + '<div style="display: flex;align-items: center; padding-bottom: 1px;"> <div id="outer-circle"> <div id="inner-circle"></div> </div> <p>' + item.name + '</p> </div>'
@@ -656,7 +633,7 @@ function setDeathClaimStatusMsg() {
         }
     }
     else if (sourceSystem.toLowerCase() == 'cms') {
-        if (docsPending == 'Y' && (claimStatus.toLowerCase() != 'received' || claimStatus.toLowerCase() != 'approved' || claimStatus.toLowerCase() != 'denied1')) {
+        if (docsPending == 'Y') {
             var finalDocsList = '';
             requirementsList.forEach(function (item) {
                 finalDocsList = finalDocsList + '<div style="display: flex;align-items: center; padding-bottom: 1px;"> <div id="outer-circle"> <div id="inner-circle"></div> </div> <p>' + item.name + '</p> </div>'
