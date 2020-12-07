@@ -910,21 +910,21 @@ function submit_survey(event) {
     survey_data['surveyQuestion2'] = surveyAns2;
     survey_data['surveyQuestion3'] = surveyAns3;
 
-    let surveyData = {
-        stageOne: true,
-        type: "survey",
-        referenceNumber: referenceNumber,
-        data: survey_data
-    }
+    // let surveyData = {
+    //     stageOne: true,
+    //     type: "survey",
+    //     referenceNumber: referenceNumber,
+    //     data: survey_data
+    // }
     window.parent.postMessage(JSON.stringify({
         event_code: 'ym-client-event', data: JSON.stringify({
             event: {
                 code: "customer_survey",
-                data: JSON.stringify(surveyData)
+                data: JSON.stringify(survey_data)
             }
         })
     }), '*');
-    
+
     var nodes = document.getElementById("customer_survey").getElementsByTagName('*');
     for (var i = 0; i < nodes.length; i++) {
         nodes[i].disabled = true;
