@@ -780,6 +780,12 @@ function twoStepperActive() {
 /* -------functions for stepper------ */
 
 function trackProgressDropDown(trackMessagesArr) {
+    var final_progress_result = ''
+    final_progress_result = '<div class="step step-active"><div><div class="circle " id="circle2"><i class="fa fa-check" ></i ></div ></div><div><div class="title">' + trackMessagesArr[0]['msg'] + '</div></div></div>' +
+        '<div class="step step-active"><div><div class="circle " id="circle2"><i class="fa fa-check" ></i ></div ></div><div><div class="title">' + trackMessagesArr[1]['msg'] + '</div></div></div>' +
+        '<div class="step step-active"><div><div class="circle " id="circle2"><i class="fa fa-check" ></i ></div ></div><div><div class="title">' + 'You have chosen ' + disbursementType + ' as a preferred payout method' + '</div></div></div>'
+
+
     //to be reomvesd -testing
     if (claim_msg_type == 'A-1') {
         trackMessagesArr = [1, 4, 5, 7, 8] // for testing - to be removed
@@ -796,19 +802,21 @@ function trackProgressDropDown(trackMessagesArr) {
     }
     //to be reomved -testing
 
-    var finaltext = '';
-    trackMessagesArr.forEach(function (item) {
-        progress_msges.forEach(function (msg) {
-            if (item == msg['id']) {
-                finaltext = finaltext + '<div class="step step-active"><div><div class="circle " id="circle2"><i class="fa fa-check" ></i ></div ></div><div><div class="title">' + msg['msg'] + '</div></div></div>'
-                // break;
-            }
+    // var finaltext = '';
+    // trackMessagesArr.forEach(function (item) {
+    //     progress_msges.forEach(function (msg) {
+    //         if (item == msg['id']) {
+    //             finaltext = finaltext + '<div class="step step-active"><div><div class="circle " id="circle2"><i class="fa fa-check" ></i ></div ></div><div><div class="title">' + msg['msg'] + '</div></div></div>'
+    //             // break;
+    //         }
 
-        })
+    //     })
 
-    });
+    // });
+
+
     console.log('finaltext' + finaltext)
-    document.getElementById('progs-status').innerHTML = finaltext // set the populated dropdown details to html
+    document.getElementById('progs-status').innerHTML = final_progress_result // set the populated dropdown details to html
 }
 
 
