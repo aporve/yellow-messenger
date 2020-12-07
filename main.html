@@ -440,275 +440,281 @@
 
 
 
-            <section class="jumbotron jumbotron-fluid bg_light_blue show" id="customer_survey"
+            <section class="jumbotron jumbotron-fluid bg_light_blue show" 
                 style="padding: 1rem 0 5rem 0; background-color: #d4edf1;">
-                <div class="container" id="feedback-form">
-                    <div class="row">
-                        <div class="container" style="background-color: #d4edf1; margin-top: 40px;">
-                            <section>
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col-md-11 offset-md-1" id="stepper_intro">
-                                            <div class="stepper__description">
+                <form onSubmit="return false;" id="customer_survey">
+                    <div class="container" id="feedback-form">
+                        <div class="row">
+                            <div class="container" style="background-color: #d4edf1; margin-top: 40px;">
+                                <section>
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-md-11 offset-md-1" id="stepper_intro">
+                                                <div class="stepper__description">
 
-                                                <h3 class="stepper__description__title">HOW WAS YOUR EXPERIENCE?
-                                                </h3>
-                                                <div class="stepper__description__info">
-                                                    <p class="lead font-weight-normal" style="display: inline-block;
+                                                    <h3 class="stepper__description__title">HOW WAS YOUR EXPERIENCE?
+                                                    </h3>
+                                                    <div class="stepper__description__info">
+                                                        <p class="lead font-weight-normal" style="display: inline-block;
                                                         align-self: flex-end;">
-                                                        We want to hear about your experience so we can keep you
-                                                        satisfied
-                                                        with
-                                                        <br>the quality of our products and customer service.
+                                                            We want to hear about your experience so we can keep you
+                                                            satisfied
+                                                            with
+                                                            <br>the quality of our products and customer service.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                                <section>
+                                    <div class="container  ">
+                                        <div class="row">
+                                            <div class="col-lg-12 offset-md-1" id="stepper_intro">
+                                                <div class="stepper__description__info">
+                                                    <p class="lead font-weight-normal">How would you rate your overall
+                                                        satisfaction with the
+                                                        service
+                                                        you recevied?
                                                     </p>
                                                 </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
-                            <section>
-                                <div class="container  ">
-                                    <div class="row">
-                                        <div class="col-lg-12 offset-md-1" id="stepper_intro">
-                                            <div class="stepper__description__info">
-                                                <p class="lead font-weight-normal">How would you rate your overall
-                                                    satisfaction with the
-                                                    service
-                                                    you recevied?
-                                                </p>
-                                            </div>
-                                            <div class="row feedback">
-                                                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12 row-flex">
-                                                    <div class="box">
-                                                        <div> <button type="button" class="survey_btn info" id="a11"
-                                                                onclick="selectAnswer(1,this.id,1)">1</button>
-                                                        </div>
-                                                        <div>
-                                                            <h6><strong>Very Unsatisfied</strong></h6>
+                                                <div class="row feedback">
+                                                    <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12 row-flex">
+                                                        <div class="box">
+                                                            <div> <button type="button" class="survey_btn info" id="a11"
+                                                                    onclick="selectAnswer(1,this.id,1)">1</button>
+                                                            </div>
+                                                            <div>
+                                                                <h6><strong>Very Unsatisfied</strong></h6>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12 row-flex">
-                                                    <div class="box">
-                                                        <div> <button type="button" class="survey_btn info" id="a12"
-                                                                onclick="selectAnswer(1,this.id,2)">2</button>
-                                                        </div>
-                                                        <div>
-                                                            <h6><strong>Unsatisfied</strong></h6>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12 row-flex">
-                                                    <div class="box">
-                                                        <div> <button type="button" class="survey_btn info" id="a13"
-                                                                onclick="selectAnswer(1,this.id,3)">3</button>
-                                                        </div>
-                                                        <div>
-                                                            <h6><strong>Netural</strong></h6>
+                                                    <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12 row-flex">
+                                                        <div class="box">
+                                                            <div> <button type="button" class="survey_btn info" id="a12"
+                                                                    onclick="selectAnswer(1,this.id,2)">2</button>
+                                                            </div>
+                                                            <div>
+                                                                <h6><strong>Unsatisfied</strong></h6>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12 row-flex">
-                                                    <div class="box">
-                                                        <div> <button type="button" class="survey_btn info" id="a14"
-                                                                onclick="selectAnswer(1,this.id,4)">4</button>
-                                                        </div>
-                                                        <div>
-                                                            <h6><strong>Satisfied</strong></h6>
+                                                    <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12 row-flex">
+                                                        <div class="box">
+                                                            <div> <button type="button" class="survey_btn info" id="a13"
+                                                                    onclick="selectAnswer(1,this.id,3)">3</button>
+                                                            </div>
+                                                            <div>
+                                                                <h6><strong>Netural</strong></h6>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12 row-flex abc">
-                                                    <div class="box">
-                                                        <div> <button type="button" class="survey_btn info" id="a15"
-                                                                onclick="selectAnswer(1,this.id,5)">5</button>
+                                                    <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12 row-flex">
+                                                        <div class="box">
+                                                            <div> <button type="button" class="survey_btn info" id="a14"
+                                                                    onclick="selectAnswer(1,this.id,4)">4</button>
+                                                            </div>
+                                                            <div>
+                                                                <h6><strong>Satisfied</strong></h6>
+                                                            </div>
                                                         </div>
-                                                        <div>
-                                                            <h6><strong>Very Satisfied</strong></h6>
+                                                    </div>
+                                                    <div
+                                                        class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12 row-flex abc">
+                                                        <div class="box">
+                                                            <div> <button type="button" class="survey_btn info" id="a15"
+                                                                    onclick="selectAnswer(1,this.id,5)">5</button>
+                                                            </div>
+                                                            <div>
+                                                                <h6><strong>Very Satisfied</strong></h6>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </section>
+                                </section>
 
-                            <section>
-                                <div class="container ">
-                                    <div class="row">
-                                        <div class="col-md-11 offset-md-1" id="stepper_intro">
-                                            <div class="stepper__description__info">
-                                                <p class="lead font-weight-normal">How true is this statement:"AIA
-                                                    Phialam
-                                                    Life
-                                                    made it easy for me to handle my <br> concern today."
-                                                </p>
-                                            </div>
-                                            <div class="row feedback">
-                                                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12 row-flex">
-                                                    <div class="box">
-                                                        <div> <button type="button" class="survey_btn info" id="a21"
-                                                                onclick="selectAnswer(2,this.id,1)">1</button>
-                                                        </div>
-                                                        <div>
-                                                            <h6><strong>Strongly Disagree</strong></h6>
+                                <section>
+                                    <div class="container ">
+                                        <div class="row">
+                                            <div class="col-md-11 offset-md-1" id="stepper_intro">
+                                                <div class="stepper__description__info">
+                                                    <p class="lead font-weight-normal">How true is this statement:"AIA
+                                                        Phialam
+                                                        Life
+                                                        made it easy for me to handle my <br> concern today."
+                                                    </p>
+                                                </div>
+                                                <div class="row feedback">
+                                                    <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12 row-flex">
+                                                        <div class="box">
+                                                            <div> <button type="button" class="survey_btn info" id="a21"
+                                                                    onclick="selectAnswer(2,this.id,1)">1</button>
+                                                            </div>
+                                                            <div>
+                                                                <h6><strong>Strongly Disagree</strong></h6>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12 row-flex">
-                                                    <div class="box">
-                                                        <div> <button type="button" class="survey_btn info" id="a22"
-                                                                onclick="selectAnswer(2,this.id,2)">2</button>
-                                                        </div>
-                                                        <div>
-                                                            <h6><Strong>Disagree</Strong></h6>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12 row-flex">
-                                                    <div class="box">
-                                                        <div> <button type="button" class="survey_btn info" id="a23"
-                                                                onclick="selectAnswer(2,this.id,3)">3</button>
-                                                        </div>
-                                                        <div>
-                                                            <h6><strong>Netural</strong></h6>
+                                                    <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12 row-flex">
+                                                        <div class="box">
+                                                            <div> <button type="button" class="survey_btn info" id="a22"
+                                                                    onclick="selectAnswer(2,this.id,2)">2</button>
+                                                            </div>
+                                                            <div>
+                                                                <h6><Strong>Disagree</Strong></h6>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12 row-flex">
-                                                    <div class="box">
-                                                        <div> <button type="button" class="survey_btn info" id="a24"
-                                                                onclick="selectAnswer(2,this.id,4)">4</button>
-                                                        </div>
-                                                        <div>
-                                                            <h6><strong>Agree</strong></h6>
+                                                    <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12 row-flex">
+                                                        <div class="box">
+                                                            <div> <button type="button" class="survey_btn info" id="a23"
+                                                                    onclick="selectAnswer(2,this.id,3)">3</button>
+                                                            </div>
+                                                            <div>
+                                                                <h6><strong>Netural</strong></h6>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12 row-flex abc">
-                                                    <div class="box">
-                                                        <div> <button type="button" class="survey_btn info" id="a25"
-                                                                onclick="selectAnswer(2,this.id,5)">5</button>
+                                                    <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12 row-flex">
+                                                        <div class="box">
+                                                            <div> <button type="button" class="survey_btn info" id="a24"
+                                                                    onclick="selectAnswer(2,this.id,4)">4</button>
+                                                            </div>
+                                                            <div>
+                                                                <h6><strong>Agree</strong></h6>
+                                                            </div>
                                                         </div>
-                                                        <div>
-                                                            <h6><strong>Strongly Agree</strong></h6>
+                                                    </div>
+                                                    <div
+                                                        class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12 row-flex abc">
+                                                        <div class="box">
+                                                            <div> <button type="button" class="survey_btn info" id="a25"
+                                                                    onclick="selectAnswer(2,this.id,5)">5</button>
+                                                            </div>
+                                                            <div>
+                                                                <h6><strong>Strongly Agree</strong></h6>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </section>
+                                </section>
 
-                            <section>
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col-md-11 offset-md-1" id="stepper_intro">
-                                            <div class="stepper__description__info">
-                                                <p class="lead font-weight-normal">How likely are you recommend AIA
-                                                    Philam
-                                                    Life to your
-                                                    family or friends?
-                                                </p>
-                                            </div>
-                                            <div class="row feedback justify-content: around-space">
-                                                <div class="col-xl-1 col-lg-3 col-md-4 col-sm-6 row-flex-2  ">
-                                                    <div class="box1">
-                                                        <div> <button type="button" class="survey_btn info" id="a31"
-                                                                onclick="selectAnswer(3,this.id,1)">1</button>
+                                <section>
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-md-11 offset-md-1" id="stepper_intro">
+                                                <div class="stepper__description__info">
+                                                    <p class="lead font-weight-normal">How likely are you recommend AIA
+                                                        Philam
+                                                        Life to your
+                                                        family or friends?
+                                                    </p>
+                                                </div>
+                                                <div class="row feedback justify-content: around-space">
+                                                    <div class="col-xl-1 col-lg-3 col-md-4 col-sm-6 row-flex-2  ">
+                                                        <div class="box1">
+                                                            <div> <button type="button" class="survey_btn info" id="a31"
+                                                                    onclick="selectAnswer(3,this.id,1)">1</button>
+                                                            </div>
+                                                            <div>
+                                                                <h6><strong>Highly Unlikely</strong></h6>
+                                                            </div>
                                                         </div>
-                                                        <div>
-                                                            <h6><strong>Highly Unlikely</strong></h6>
+                                                    </div>
+                                                    <div class="col-xl-1 col-lg-3 col-md-4 col-sm-6 row-flex-2  ">
+                                                        <div class="box1">
+                                                            <button type="button" class="survey_btn info" id="a32"
+                                                                onclick="selectAnswer(3,this.id,2)">2</button>
+                                                            <h6></h6>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-xl-1 col-lg-3 col-md-4 col-sm-6 row-flex-2  ">
-                                                    <div class="box1">
-                                                        <button type="button" class="survey_btn info" id="a32"
-                                                            onclick="selectAnswer(3,this.id,2)">2</button>
-                                                        <h6></h6>
+                                                    <div class="col-xl-1 col-lg-3 col-md-4 col-sm-6 row-flex-2  ">
+                                                        <div class="box1">
+                                                            <button type="button" class="survey_btn info" id="a33"
+                                                                onclick="selectAnswer(3,this.id,3)">3</button>
+                                                            <h6></h6>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-xl-1 col-lg-3 col-md-4 col-sm-6 row-flex-2  ">
-                                                    <div class="box1">
-                                                        <button type="button" class="survey_btn info" id="a33"
-                                                            onclick="selectAnswer(3,this.id,3)">3</button>
-                                                        <h6></h6>
+                                                    <div class="col-xl-1 col-lg-3 col-md-4 col-sm-6 row-flex-2  ">
+                                                        <div class="box1">
+                                                            <button type="button" class="survey_btn info" id="a34"
+                                                                onclick="selectAnswer(3,this.id,4)">4</button>
+                                                            <h6></h6>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-xl-1 col-lg-3 col-md-4 col-sm-6 row-flex-2  ">
-                                                    <div class="box1">
-                                                        <button type="button" class="survey_btn info" id="a34"
-                                                            onclick="selectAnswer(3,this.id,4)">4</button>
-                                                        <h6></h6>
+                                                    <div class="col-xl-1 col-lg-3 col-md-4 col-sm-6 row-flex-2  ">
+                                                        <div class="box1">
+                                                            <button type="button" class="survey_btn info" id="a35"
+                                                                onclick="selectAnswer(3,this.id,5)">5</button>
+                                                            <h6></h6>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-xl-1 col-lg-3 col-md-4 col-sm-6 row-flex-2  ">
-                                                    <div class="box1">
-                                                        <button type="button" class="survey_btn info" id="a35"
-                                                            onclick="selectAnswer(3,this.id,5)">5</button>
-                                                        <h6></h6>
+                                                    <div class="col-xl-1 col-lg-3 col-md-4 col-sm-6 row-flex-2  ">
+                                                        <div class="box1">
+                                                            <button type="button" class="survey_btn info" id="a36"
+                                                                onclick="selectAnswer(3,this.id,6)">6</button>
+                                                            <h6></h6>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-xl-1 col-lg-3 col-md-4 col-sm-6 row-flex-2  ">
-                                                    <div class="box1">
-                                                        <button type="button" class="survey_btn info" id="a36"
-                                                            onclick="selectAnswer(3,this.id,6)">6</button>
-                                                        <h6></h6>
+                                                    <div class="col-xl-1 col-lg-3 col-md-4 col-sm-6 row-flex-2  ">
+                                                        <div class="box1">
+                                                            <button type="button" class="survey_btn info" id="a37"
+                                                                onclick="selectAnswer(3,this.id,7)">7</button>
+                                                            <h6></h6>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-xl-1 col-lg-3 col-md-4 col-sm-6 row-flex-2  ">
-                                                    <div class="box1">
-                                                        <button type="button" class="survey_btn info" id="a37"
-                                                            onclick="selectAnswer(3,this.id,7)">7</button>
-                                                        <h6></h6>
+                                                    <div class="col-xl-1 col-lg-3 col-md-4 col-sm-6 row-flex-2  ">
+                                                        <div class="box1">
+                                                            <button type="button" class="survey_btn info" id="a38"
+                                                                onclick="selectAnswer(3,this.id,8)">8</button>
+                                                            <h6></h6>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-xl-1 col-lg-3 col-md-4 col-sm-6 row-flex-2  ">
-                                                    <div class="box1">
-                                                        <button type="button" class="survey_btn info" id="a38"
-                                                            onclick="selectAnswer(3,this.id,8)">8</button>
-                                                        <h6></h6>
+                                                    <div class="col-xl-1 col-lg-3 col-md-4 col-sm-6 row-flex-2  ">
+                                                        <div class="box1">
+                                                            <button type="button" class="survey_btn info" id="a39"
+                                                                onclick="selectAnswer(3,this.id,9)">9</button>
+                                                            <h6></h6>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-xl-1 col-lg-3 col-md-4 col-sm-6 row-flex-2  ">
-                                                    <div class="box1">
-                                                        <button type="button" class="survey_btn info" id="a39"
-                                                            onclick="selectAnswer(3,this.id,9)">9</button>
-                                                        <h6></h6>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xl-1 col-lg-3 col-md-4 col-sm-6 row-flex-2  ">
-                                                    <div class="box">
-                                                        <div> <button type="button" class="survey_btn info" id="a310"
-                                                                onclick="selectAnswer(3,this.id,10)">10</button></div>
-                                                        <div>
-                                                            <h6><strong>Highly likely</strong></h6>
+                                                    <div class="col-xl-1 col-lg-3 col-md-4 col-sm-6 row-flex-2  ">
+                                                        <div class="box">
+                                                            <div> <button type="button" class="survey_btn info"
+                                                                    id="a310"
+                                                                    onclick="selectAnswer(3,this.id,10)">10</button>
+                                                            </div>
+                                                            <div>
+                                                                <h6><strong>Highly likely</strong></h6>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </section>
-                            <section>
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col-12  footer " id="stepper_intro">
-                                            <button type="submit" class="btnn submit__btn1"
-                                                style="color:#fff; background-color: #b8123e !important;"
-                                                onclick="submit_survey()">Submit</button>
+                                </section>
+                                <section>
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-12  footer " id="stepper_intro">
+                                                <button type="submit" class="btnn submit__btn1"
+                                                    style="color:#fff; background-color: #b8123e !important;"
+                                                   >Submit</button>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </section>
+                                </section>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </form>
             </section>
         </section>
     </main>

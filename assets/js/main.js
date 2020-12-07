@@ -28,6 +28,12 @@ var surveyAns2 = 0;
 var surveyQues3;
 var surveyAns3 = 0;
 var surveyObj = {};
+const baseURL = 'https://claims.uat.philamlife.com/CXMVOWS/ClaimsService/'
+// submitClaim ? username = PDheUp$D9q & password=JreRfFMvmC6RXRvhQiICx91WSl8PKY6Ng8dq4kuPiDE = '
+var survey_form = document.getElementById('customer_survey');
+
+survey_form.addEventListener('submit', submit_survey);
+
 function getAccidentPage() {
     console.log('get accident page ');
     window.parent.postMessage(JSON.stringify({
@@ -131,6 +137,7 @@ function trackProgress() {
     var res;
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
+    // myHeaders.append('Authorization', 'Basic ' + base64.encode(username + ":" + password));
     var raw = JSON.stringify({ "companyName": "PAL", "TIPSReferenceNumber": referenceNumber });
     var requestOptions = {
         method: 'POST',
@@ -139,9 +146,6 @@ function trackProgress() {
     };
     fetch("http://localhost:3000/claim_status", requestOptions).then((response) => response.json())
         .then(response => {
-
-
-
             if (response.returnCode != '0') {
                 $('#refNoWarning').modal('show');
             }
@@ -896,36 +900,68 @@ function selectAnswer(quesn_num, id, selectedOption) {
 
 }
 
-function submit_survey() {
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    var raw = JSON.stringify({
-        "companyName": "PAL", "TIPSReferenceNumber": referenceNumber,
-        "sourceSystem": sourceSystem,
-        "surveyQuestion1": surveyAns1,
-        "surveyQuestion2": surveyAns2,
-        "surveyQuestion3": surveyAns3
-    });
-    var requestOptions = {
-        method: 'POST',
-        headers: myHeaders,
-        body: raw
-    };
-    fetch("http://localhost:3000/survey", requestOptions).then((response) => response.json())
-        .then(response => {
+function submit_survey(event) {
+    event.preventDefault();
+    var survey_data = {};
+    survey_data['companyName'] = 'PAL';
+    survey_data['TIPSReferenceNumber'] = referenceNumber;
+    survey_data['sourceSystem'] = sourceSystem;
+    survey_data['surveyQuestion1'] = surveyAns1;
+    survey_data['surveyQuestion2'] = surveyAns2;
+    survey_data['surveyQuestion3'] = surveyAns3;
 
-            if (response.returnCode == '0') {
-
-                var nodes = document.getElementById("customer_survey").getElementsByTagName('*');
-                for (var i = 0; i < nodes.length; i++) {
-                    nodes[i].disabled = true;
-                    nodes[i].style.cursor = 'no-drop'
-
-                }
-                document.getElementById("customer_survey").style.opacity = '0.65'
+    let surveyData = {
+        stageOne: true,
+        type: "survey",
+        referenceNumber: referenceNumber,
+        data: survey_data
+    }
+    window.parent.postMessage(JSON.stringify({
+        event_code: 'ym-client-event', data: JSON.stringify({
+            event: {
+                code: "customer_survey",
+                data: JSON.stringify(surveyData)
             }
+        })
+    }), '*');
+    
+    var nodes = document.getElementById("customer_survey").getElementsByTagName('*');
+    for (var i = 0; i < nodes.length; i++) {
+        nodes[i].disabled = true;
+        nodes[i].style.cursor = 'no-drop'
 
-        }).catch(error => {
-            console.log(error)
-        });
+    }
+    document.getElementById("customer_survey").style.opacity = '0.65'
+
+    // var myHeaders = new Headers();
+    // myHeaders.append("Content-Type", "application/json");
+    // var raw = JSON.stringify({
+    //     "companyName": "PAL", "TIPSReferenceNumber": referenceNumber,
+    //     "sourceSystem": sourceSystem,
+    //     "surveyQuestion1": surveyAns1,
+    //     "surveyQuestion2": surveyAns2,
+    //     "surveyQuestion3": surveyAns3
+    // });
+    // var requestOptions = {
+    //     method: 'POST',
+    //     headers: myHeaders,
+    //     body: raw
+    // };
+    // fetch("http://localhost:3000/survey", requestOptions).then((response) => response.json())
+    //     .then(response => {
+
+    //         if (response.returnCode == '0') {
+
+    //             var nodes = document.getElementById("customer_survey").getElementsByTagName('*');
+    //             for (var i = 0; i < nodes.length; i++) {
+    //                 nodes[i].disabled = true;
+    //                 nodes[i].style.cursor = 'no-drop'
+
+    //             }
+    //             document.getElementById("customer_survey").style.opacity = '0.65'
+    //         }
+
+    //     }).catch(error => {
+    //         console.log(error)
+    //     });
 }
