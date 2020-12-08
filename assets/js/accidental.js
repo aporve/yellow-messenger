@@ -1734,13 +1734,23 @@ function buttonSubmitClicked(event) {
   $("#step2>div").addClass("active");
 
 
+  let BankDetailsList = [];
+  let filesObject = {};
+  let preSubmitObj = {};
+  filesObject["folderName"] = `/CLAIMS/${referenceNumber}`
+  filesObject["fileList"] = filesList;
 
-
+  preSubmitObj["basicInformation"] = basicInformation;
+  preSubmitObj["insuredInformation"] = InsuredInformation;
+  preSubmitObj["bankDetailsList"] = BankDetailsList;
+  preSubmitObj["filesInformation"] = filesObject;
+  preSubmitObj["beneficiaryList"] = [];
+ 
   console.log('upload data --> ', upload_data);
-  let stageTwoData = {
-    stageTwo: true,
-    referenceNumber: referenceNumber
-  }
+  // let stageTwoData = {
+  //   stageTwo: true,
+  //   referenceNumber: referenceNumber
+  // }
   if (otpSubmitted == false) { otpTimer(); } else {
 
     $('#requirements').hide();
@@ -1750,7 +1760,7 @@ function buttonSubmitClicked(event) {
     event_code: 'ym-client-event', data: JSON.stringify({
       event: {
         code: "preSubmit",
-        data: JSON.stringify(stageTwoData)
+        data: JSON.stringify(preSubmitObj)
       }
     })
   }), '*');
