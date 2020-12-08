@@ -806,7 +806,7 @@ function trackProgressDropDown(trackMessagesArr) {
     document.getElementById('progs-status').innerHTML = final_progress_result
 
     //--before integration--//
-    
+
     //to be reomvesd -testing
     // if (claim_msg_type == 'A-1') {
     //     trackMessagesArr = [1, 4, 5, 7, 8] // for testing - to be removed
@@ -953,14 +953,34 @@ function submit_survey(event) {
             }
         })
     }), '*');
+    window.addEventListener('message', function (event) {
+      
+        console.log("receiving survey event in acc")
+        console.log(event.data.event_code)
+        try {
+            debugger
+            if (JSON.parse(event.data)) {
+                if (event.data.returnCode == '0') { //sucess
+                    var nodes = document.getElementById("customer_survey").getElementsByTagName('*');
+                    for (var i = 0; i < nodes.length; i++) {
+                        nodes[i].disabled = true;
+                        nodes[i].style.cursor = 'no-drop'
 
-    var nodes = document.getElementById("customer_survey").getElementsByTagName('*');
-    for (var i = 0; i < nodes.length; i++) {
-        nodes[i].disabled = true;
-        nodes[i].style.cursor = 'no-drop'
+                    }
+                    document.getElementById("customer_survey").style.opacity = '0.65'
+                }
+                else {
 
-    }
-    document.getElementById("customer_survey").style.opacity = '0.65'
+                }
+            }
+        } catch (error) {
+            console.log(error)
+        }
+
+    })
+
+
+
 
     // var myHeaders = new Headers();
     // myHeaders.append("Content-Type", "application/json");

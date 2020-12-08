@@ -4030,7 +4030,7 @@ function getBankDetails() {
 }
 
 function bankTranfer() {
-   
+
     document.getElementById('ref_number').innerHTML = referenceNumber
     getBankDetails();
     trackBenificiary = 0;
@@ -4588,50 +4588,102 @@ function removeTimer() {
 }
 
 function resendOtp(type) {
-    //api call for resend otp
     removeTimer();
     resendCount++;
-    if (resendCount > 5) {
+    if (resendCount > 5) { // on reaching max resend (5 times)
         $('#otpPopUp').modal('hide');
         $('#invalidOtp').modal('hide');
         $('#maxResendOtp').modal('show');
 
     }
     else {
-        var myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
         var raw = JSON.stringify({
 
             "companyName": "PAL",
             "webReferenceNumber": referenceNumber
 
         });
-        var requestOptions = {
-            method: 'POST',
-            headers: myHeaders,
-            body: raw
-        };
-        fetch("http://localhost:3000/resend_otp", requestOptions).then((response) => response.json())
-            .then(response => {
-                console.log(response)
-                if (response.returnCode == '0') { //sucess
-                    $('#invalidOtp').modal('hide');
-                    if (type != 'resend') { $('#otpPopUp').modal('show'); }
-                    document.getElementById('otp').value = ''
-                    otpTimer();
-                }
-                else {
 
-                    $('#otpExpiry').modal('hide');
+        window.parent.postMessage(JSON.stringify({
+            event_code: 'ym-client-event', data: JSON.stringify({
+                event: {
+                    code: "resetOtp",
+                    data: raw
                 }
+            })
+        }), '*');
 
-            }).catch(error => {
+        window.addEventListener('message', function (event) {
+            console.log("receiving validateOtp event in acc")
+            console.log(event.data.event_code)
+            try {
+                if (JSON.parse(event.data)) {
+                    if (event.data.returnCode == '0') { //sucess
+                        $('#invalidOtp').modal('hide');
+                        if (type != 'resend') { $('#otpPopUp').modal('show'); }
+                        document.getElementById('otp').value = ''
+                        otpTimer();
+                    }
+                    else {
+                        $('#otpExpiry').modal('hide');
+                    }
+                }
+            } catch (error) {
                 console.log(error)
-            });
-
-
+            }
+            $('#invalidOtp').modal('hide');
+            if (type != 'resend') { $('#otpPopUp').modal('show'); }
+            document.getElementById('otp').value = ''
+            otpTimer();
+        })
+        $('#otpExpiry').modal('hide');
     }
-    $('#otpExpiry').modal('hide');
+
+    
+    //api call for resend otp
+    // removeTimer();
+    // resendCount++;
+    // if (resendCount > 5) {
+    //     $('#otpPopUp').modal('hide');
+    //     $('#invalidOtp').modal('hide');
+    //     $('#maxResendOtp').modal('show');
+
+    // }
+    // else {
+    //     var myHeaders = new Headers();
+    //     myHeaders.append("Content-Type", "application/json");
+    //     var raw = JSON.stringify({
+
+    //         "companyName": "PAL",
+    //         "webReferenceNumber": referenceNumber
+
+    //     });
+    //     var requestOptions = {
+    //         method: 'POST',
+    //         headers: myHeaders,
+    //         body: raw
+    //     };
+    //     fetch("http://localhost:3000/resend_otp", requestOptions).then((response) => response.json())
+    //         .then(response => {
+    //             console.log(response)
+    //             if (response.returnCode == '0') { //sucess
+    //                 $('#invalidOtp').modal('hide');
+    //                 if (type != 'resend') { $('#otpPopUp').modal('show'); }
+    //                 document.getElementById('otp').value = ''
+    //                 otpTimer();
+    //             }
+    //             else {
+
+    //                 $('#otpExpiry').modal('hide');
+    //             }
+
+    //         }).catch(error => {
+    //             console.log(error)
+    //         });
+
+
+    // }
+    // $('#otpExpiry').modal('hide');
 
     //--bfre api intgrtn--//
 
@@ -4655,10 +4707,8 @@ function resendOtp(type) {
 
 
 function submitOtp() {
-    //api call fro submit otp
+
     removeTimer();
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
     var raw = JSON.stringify({
         "oneTimePINInformation": {
             "companyName": "PAL",
@@ -4666,38 +4716,88 @@ function submitOtp() {
             "oneTimePIN": document.getElementById('otp').value
         }
     });
-    var requestOptions = {
-        method: 'POST',
-        headers: myHeaders,
-        body: raw
-    };
-
-
-    fetch("http://localhost:3000/otp_verification", requestOptions).then((response) => response.json())
-        .then(response => {
-            console.log(response)
-            if (response.returnCode == '0') { //sucess
-                $('#otpPopUp').modal('hide');
-                $('#requirements').hide();
-                $('#process_confirmation').show();
-                otpSubmitted = true;
+    window.parent.postMessage(JSON.stringify({
+        event_code: 'ym-client-event', data: JSON.stringify({
+            event: {
+                code: "validateOtp",
+                data: raw
             }
-            else {
-                invalidOtp++;
-                if (invalidOtp < 3) {
-                    $('#invalidOtp').modal('show');
+        })
+    }), '*');
+
+    window.addEventListener('message', function (event) {
+        console.log("receiving validateOtp event in dea")
+        console.log(event.data.event_code)
+        try {
+            if (JSON.parse(event.data)) {
+                if (event.data.returnCode == '0') { //sucess
+                    $('#otpPopUp').modal('hide');
+                    $('#requirements').hide();
+                    $('#process_confirmation').show();
+                    otpSubmitted = true;
                 }
                 else {
-                    $('#invalidOtp').modal('hide');
-                    $('#maxInvalidOtp').modal('show');
+                    invalidOtp++;
+                    if (invalidOtp < 3) {
+                        $('#invalidOtp').modal('show');
+                    }
+                    else {
+                        $('#invalidOtp').modal('hide');
+                        $('#maxInvalidOtp').modal('show');
+                    }
                 }
-
             }
-
-        }).catch(error => {
+        } catch (error) {
             console.log(error)
-        });
-    document.getElementById('otp').value = ''
+        }
+        document.getElementById('otp').value = ''
+
+    })
+
+
+    //api call fro submit otp
+    // removeTimer();
+    // var myHeaders = new Headers();
+    // myHeaders.append("Content-Type", "application/json");
+    // var raw = JSON.stringify({
+    //     "oneTimePINInformation": {
+    //         "companyName": "PAL",
+    //         "webReferenceNumber": referenceNumber,
+    //         "oneTimePIN": document.getElementById('otp').value
+    //     }
+    // });
+    // var requestOptions = {
+    //     method: 'POST',
+    //     headers: myHeaders,
+    //     body: raw
+    // };
+
+
+    // fetch("http://localhost:3000/otp_verification", requestOptions).then((response) => response.json())
+    //     .then(response => {
+    //         console.log(response)
+    //         if (response.returnCode == '0') { //sucess
+    //             $('#otpPopUp').modal('hide');
+    //             $('#requirements').hide();
+    //             $('#process_confirmation').show();
+    //             otpSubmitted = true;
+    //         }
+    //         else {
+    //             invalidOtp++;
+    //             if (invalidOtp < 3) {
+    //                 $('#invalidOtp').modal('show');
+    //             }
+    //             else {
+    //                 $('#invalidOtp').modal('hide');
+    //                 $('#maxInvalidOtp').modal('show');
+    //             }
+
+    //         }
+
+    //     }).catch(error => {
+    //         console.log(error)
+    //     });
+    // document.getElementById('otp').value = ''
 
 
     //-before api intgrn -//
