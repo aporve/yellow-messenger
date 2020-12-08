@@ -1104,7 +1104,8 @@
 
                                 <li>
                                     <p style="margin-left: 1rem;">
-                                        Please visit our website, <a href="https://www.philamlife.com"> www.philamlife.com</a> for our Privacy Statement, which
+                                        Please visit our website, <a href="https://www.philamlife.com">
+                                            www.philamlife.com</a> for our Privacy Statement, which
                                         provides further details on why your
                                         personal data is collected, how it is intended to be used, to whom your personal
                                         data may be transferred to, how to
@@ -1818,36 +1819,36 @@
                 </div>
         </section>
         <!-- otp pop up modal (drop-2 ) -->
-        <section class="hide modal fade" id='otpPopUp' tabindex="-1" role="dialog" aria-labelledby="otpPopUp"
-            aria-hidden="true">
-            <!-- <form onSubmit="return false;"  > -->
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <p id="otp-text">We have send a One-Time PIN to your
-                            <br> mobile number <span id="user_mobile"></span>.
-                            <br> Kindly enter the OTP in the space below.</p>
-                        <p id="otp-text">Your OTP expires after two minutes.
-                            <br> Click
-                            <a style="color:#1b89f0 ;cursor: pointer;" onclick="resendOtp('resend')">here</a> to resend
-                            another one.</p>
-                        <p id="otp-text">If your current mobile number does not
-                            <br> match our records, kindly update your
-                            <br> contact details via
-                            <a style="color:#1b89f0 ;cursor: pointer;">ePlan</a> or by calling
-                            <br> our hotline at (02)8528-2000. </p>
-                        <br>
-                        <input type="text" class="input__box" maxlength="25" id="otp" value="" placeholder="OTP"
-                            tabindex="1" />
+        <section class="hide modal fade" tabindex="-1" role="dialog" aria-labelledby="otpPopUp" aria-hidden="true">
+            <form onSubmit="return false;" id='otpPopUp'>
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <p id="otp-text">We have send a One-Time PIN to your
+                                <br> mobile number <span id="user_mobile"></span>.
+                                <br> Kindly enter the OTP in the space below.</p>
+                            <p id="otp-text">Your OTP expires after two minutes.
+                                <br> Click
+                                <a style="color:#1b89f0 ;cursor: pointer;" onclick="resendOtp('resend')">here</a> to
+                                resend
+                                another one.</p>
+                            <p id="otp-text">If your current mobile number does not
+                                <br> match our records, kindly update your
+                                <br> contact details via
+                                <a style="color:#1b89f0 ;cursor: pointer;">ePlan</a> or by calling
+                                <br> our hotline at (02)8528-2000. </p>
+                            <br>
+                            <input type="text" class="input__box" maxlength="25" id="otp" value="" placeholder="OTP"
+                                tabindex="1" />
 
-                        <div align="right">Time left : <span id="otpTimer"></span></div>
+                            <div align="right">Time left : <span id="otpTimer"></span></div>
+                        </div>
+                        <button type="submit" data-dismiss="modal" class="btn btn-danger"
+                            style="width: 50%; margin: 0 auto 3rem auto;">Submit</button>
                     </div>
-                    <button type="submit" data-dismiss="modal" class="btn btn-danger" 
-                        style="width: 50%; margin: 0 auto 3rem auto;">Submit</button>
-                </div>
 
-            </div>
-            <!-- </form> -->
+                </div>
+            </form>
         </section>
         <!-- otp pop up modal (drop-2 ) -->
 
