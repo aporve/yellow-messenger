@@ -28,8 +28,7 @@ var surveyAns2 = 0;
 var surveyQues3;
 var surveyAns3 = 0;
 var surveyObj = {};
-const baseURL = 'https://claims.uat.philamlife.com/CXMVOWS/ClaimsService/'
-// submitClaim ? username = PDheUp$D9q & password=JreRfFMvmC6RXRvhQiICx91WSl8PKY6Ng8dq4kuPiDE = '
+
 var survey_form = document.getElementById('customer_survey');
 
 survey_form.addEventListener('submit', submit_survey);
@@ -804,21 +803,24 @@ function trackProgressDropDown(trackMessagesArr) {
         + (claimStatus == 'approved' && disbursementType == 'CTA' && beneficiaryType.toLowerCase() == 's' ?
             '<div class="step step-active"><div><div class="circle " id="circle2"><i class="fa fa-check" ></i ></div ></div><div><div class="title">' + progress_msges[12]['msg'] + '</div></div></div>'
             : claimStatus == 'approved' && disbursementType == 'PUA' && beneficiaryType.toLowerCase() == 's' ? '<div class="step step-active"><div><div class="circle " id="circle2"><i class="fa fa-check" ></i ></div ></div><div><div class="title">' + progress_msges[9]['msg'] + '</div></div></div>' : '')
+    document.getElementById('progs-status').innerHTML = final_progress_result
 
+    //--before integration--//
+    
     //to be reomvesd -testing
-    if (claim_msg_type == 'A-1') {
-        trackMessagesArr = [1, 4, 5, 7, 8] // for testing - to be removed
-    }
-    if (claim_msg_type == 'I-2') {
-        trackMessagesArr = [2, 4, 6, 7, 8, 9, 11] // for testing - to be removed
-    }
+    // if (claim_msg_type == 'A-1') {
+    //     trackMessagesArr = [1, 4, 5, 7, 8] // for testing - to be removed
+    // }
+    // if (claim_msg_type == 'I-2') {
+    //     trackMessagesArr = [2, 4, 6, 7, 8, 9, 11] // for testing - to be removed
+    // }
 
-    if (claim_msg_type == 'D-2') {
-        trackMessagesArr = [3, 4, 6, 7, 11, 12] // for testing - to be removed
-    }
-    else {
-        trackMessagesArr = [1, 4, 5, 7, 8] // for testing - to be removed
-    }
+    // if (claim_msg_type == 'D-2') {
+    //     trackMessagesArr = [3, 4, 6, 7, 11, 12] // for testing - to be removed
+    // }
+    // else {
+    //     trackMessagesArr = [1, 4, 5, 7, 8] // for testing - to be removed
+    // }
     //to be reomved -testing
 
     // var finaltext = '';
@@ -835,7 +837,7 @@ function trackProgressDropDown(trackMessagesArr) {
 
 
     // console.log('finaltext' + finaltext)
-    document.getElementById('progs-status').innerHTML = final_progress_result // set the populated dropdown details to html
+    // document.getElementById('progs-status').innerHTML = final_progress_result // set the populated dropdown details to html
 }
 
 
