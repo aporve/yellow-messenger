@@ -953,14 +953,17 @@ function submit_survey(event) {
             }
         })
     }), '*');
-    window.addEventListener('message', function (event) {
+    window.addEventListener('message', function (eventData) {
       
         console.log("receiving survey event in acc")
-        console.log(event.data.event_code)
+        // console.log(event.data.event_code)
         try {
             debugger
-            if (JSON.parse(event.data)) {
-                if (event.data.returnCode == '0') { //sucess
+            if (JSON.parse(eventData.data)) {
+                let event = JSON.parse(eventData.data);
+                console.log(event)
+                if (event.data.return_code == 'surveryResponse') { //sucess
+                    console.log(event.data)
                     var nodes = document.getElementById("customer_survey").getElementsByTagName('*');
                     for (var i = 0; i < nodes.length; i++) {
                         nodes[i].disabled = true;
