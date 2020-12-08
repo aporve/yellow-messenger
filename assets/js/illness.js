@@ -1505,53 +1505,55 @@ function buttonSubmitClicked(event) {
     preSubmitObj["filesInformation"] = filesObject;
     preSubmitObj["beneficiaryList"] = [];
 
-    // $("#step2").addClass("active");
-    // $("#step2>div").addClass("active");
-    // if (otpSubmitted == false) { otpTimer(); } else {
-    //     $('#requirements').hide();
-    //     $('#payment').show();
-    // }
+    $("#step2").addClass("active");
+    $("#step2>div").addClass("active");
+    if (otpSubmitted == false) { otpTimer(); } else {
+        $('#requirements').hide();
+        $('#payment').show();
+    }
 
-    window.parent.postMessage(JSON.stringify({
-        event_code: 'ym-client-event', data: JSON.stringify({
-            event: {
-                code: "preSubmit",
-                data: JSON.stringify(preSubmitObj)
-            }
-        })
-    }), '*');
-    window.addEventListener('message', function (eventData) {
+    // window.parent.postMessage(JSON.stringify({
+    //     event_code: 'ym-client-event', data: JSON.stringify({
+    //         event: {
+    //             code: "preSubmit",
+    //             data: JSON.stringify(preSubmitObj)
+    //         }
+    //     })
+    // }), '*');
+    // window.addEventListener('message', function (eventData) {
 
-        console.log("receiving presubmit event in ill")
-        // console.log(event.data.event_code)
-        try {
+    //     console.log("receiving presubmit event in ill")
+    //     // console.log(event.data.event_code)
+    //     try {
 
-            if (eventData.data) {
-                let event = JSON.parse(eventData.data);
-                console.log(event)
-                if (event.event_code == 'preSubmitResponse') { //sucess
-                    if (event.data == '0') {
-                        $("#step2").addClass("active");
-                        $("#step2>div").addClass("active");
-                        if (otpSubmitted == false) { otpTimer(); } else {
-                            $('#requirements').hide();
-                            $('#payment').show();
-                        }
-                    }
-                    else {
+    //         if (eventData.data) {
+    //             let event = JSON.parse(eventData.data);
+    //             console.log(event)
+    //             if (event.event_code == 'preSubmitResponse') { //sucess
+    //                 if (event.data == '0') {
+    //                     $("#step2").addClass("active");
+    //                     $("#step2>div").addClass("active");
+    //                     if (otpSubmitted == false) { otpTimer(); } else {
+    //                         $('#requirements').hide();
+    //                         $('#payment').show();
+    //                     }
+    //                 }
+    //                 else {
 
-                    }
-                }
-                else {
+    //                 }
+    //             }
+    //             else {
 
-                }
-            }
-        } catch (error) {
-            console.log(error)
-        }
+    //             }
+    //         }
+    //     } catch (error) {
+    //         console.log(error)
+    //     }
 
-    })
-    /* $('#payment')[0].scrollIntoView(true); */
+    // })
+    
+
+/* $('#payment')[0].scrollIntoView(true); */
 
     // console.log('upload data --> ', upload_data);
 }
