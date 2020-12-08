@@ -25,7 +25,7 @@ var currSeconds = 0;
 var user_mobile;
 var ben_name_req_progress = '';
 let filesMap = {};
-
+var otpSubmitted = false;
 var file1 = document.getElementById('file_Upload_1');
 var file2 = document.getElementById('file_Upload_2');
 var file3 = document.getElementById('file_Upload_3');
@@ -3440,7 +3440,11 @@ function buttonSubmitClicked(event) {
 
         console.log("final payload : ")
         console.log(finalPayload)
-        otpTimer();
+        if (otpSubmitted == false) { otpTimer(); } else {
+            $('#requirements').hide();
+            $('#process_confirmation').show();
+        }
+        // otpTimer();
         window.parent.postMessage(JSON.stringify({
             event_code: 'ym-client-event', data: JSON.stringify({
                 event: {
@@ -4620,6 +4624,7 @@ function submitOtp() {
                         $('#otpPopUp').modal('hide');
                         $('#requirements').hide();
                         $('#process_confirmation').show();
+                        otpSubmitted = true;
                     }
                     else {
                         invalidOtp++;
