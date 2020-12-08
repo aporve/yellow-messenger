@@ -1751,47 +1751,54 @@ function buttonSubmitClicked(event) {
   //   stageTwo: true,
   //   referenceNumber: referenceNumber
   // }
+  $("#step2").addClass("active");
+  $("#step2>div").addClass("active");
+  if (otpSubmitted == false) { otpTimer(); } else {
 
-  window.parent.postMessage(JSON.stringify({
-    event_code: 'ym-client-event', data: JSON.stringify({
-      event: {
-        code: "preSubmit",
-        data: JSON.stringify(preSubmitObj)
-      }
-    })
-  }), '*');
-  window.addEventListener('message', function (eventData) {
+    $('#requirements').hide();
+    $('#payment').show();
+  }
 
-    console.log("receiving presubmit event in acc")
-    // console.log(event.data.event_code)
-    try {
+  // window.parent.postMessage(JSON.stringify({
+  //   event_code: 'ym-client-event', data: JSON.stringify({
+  //     event: {
+  //       code: "preSubmit",
+  //       data: JSON.stringify(preSubmitObj)
+  //     }
+  //   })
+  // }), '*');
+  // window.addEventListener('message', function (eventData) {
 
-      if (eventData.data) {
-        let event = JSON.parse(eventData.data);
-        console.log(event)
-        if (event.event_code == 'preSubmitResponse') { //sucess
-          if (event.data == '0') {
-            $("#step2").addClass("active");
-            $("#step2>div").addClass("active");
-            if (otpSubmitted == false) { otpTimer(); } else {
+  //   console.log("receiving presubmit event in acc")
+  //   // console.log(event.data.event_code)
+  //   try {
 
-              $('#requirements').hide();
-              $('#payment').show();
-            }
-          }
-          else {
+  //     if (eventData.data) {
+  //       let event = JSON.parse(eventData.data);
+  //       console.log(event)
+  //       if (event.event_code == 'preSubmitResponse') { //sucess
+  //         if (event.data == '0') {
+  //           $("#step2").addClass("active");
+  //           $("#step2>div").addClass("active");
+  //           if (otpSubmitted == false) { otpTimer(); } else {
 
-          }
-        }
-        else {
+  //             $('#requirements').hide();
+  //             $('#payment').show();
+  //           }
+  //         }
+  //         else {
 
-        }
-      }
-    } catch (error) {
-      console.log(error)
-    }
+  //         }
+  //       }
+  //       else {
 
-  })
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+
+  // })
 
 
 }
