@@ -2551,15 +2551,7 @@ function resendOtp(type) {
   // }
   // $('#otpExpiry').modal('hide');
 }
-window.addEventListener('message', function (eventData) {
-  if (eventData.data) {
-    let event = JSON.parse(eventData.data);
-    if (event.event_code == 'resetResponse') {
-      console.log('---reset response recieved---')
-    }
-  }
 
-});
 
 function submitOtp() {
 
