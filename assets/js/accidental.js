@@ -36,8 +36,10 @@ form_addBank.addEventListener('submit', handleAddBankInfo);
 form.addEventListener('submit', handleForm);
 form_Bank.addEventListener('submit', handleAccountInfo);
 
-var otp_form = document.getElementById('otpPopUp');
-otp_form.addEventListener('submit', submitOtp);
+// var otp_form = document.getElementById('otpPopUp');
+// otp_form.addEventListener('submit', submitOtp);
+
+
 /* document.addEventListener('DOMContentLoaded', function () {
     stepperFormEl = document.querySelector('#stepperForm')
     stepperForm = new Stepper(stepperFormEl, {
@@ -342,7 +344,7 @@ const handleFileUpload = (formData, fileName) => {
   var myHeaders = new Headers();
   console.log("form data : ")
   console.log(formData);
-  
+
   var requestOptions = {
     method: 'POST',
     headers: myHeaders,
@@ -2463,8 +2465,8 @@ function resendOtp(type) {
 }
 
 
-function submitOtp(event) {
-  event.preventDefault();
+function submitOtp() {
+
   debugger
   removeTimer();
   var raw = JSON.stringify({
@@ -2489,7 +2491,7 @@ function submitOtp(event) {
     console.log("receiving otp event in acc")
     // console.log(event.data.event_code)
     try {
-debugger
+      debugger
       if (eventData.data) {
         let event = JSON.parse(eventData.data);
         if (event.event_code == 'validationResponse') { //sucess
@@ -2510,7 +2512,7 @@ debugger
               $('#maxInvalidOtp').modal('show');
             }
           }
-          
+
         }
         else {
 
