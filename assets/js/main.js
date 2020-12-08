@@ -959,8 +959,8 @@ function submit_survey(event) {
         // console.log(event.data.event_code)
         try {
            
-            if (JSON.parse(eventData.data)) {
-                let event = JSON.parse(eventData.data);
+            if (eventData.data) {
+                let event =eventData.data;
                 console.log(event)
                 if (event.data.return_code == 'surveryResponse') { //sucess
                     console.log(event.data)
