@@ -36,7 +36,7 @@ form_addBank.addEventListener('submit', handleAddBankInfo);
 form.addEventListener('submit', handleForm);
 form_Bank.addEventListener('submit', handleAccountInfo);
 
-var otp_form = document.getElementById('submit_otp');
+var otp_form = document.getElementById('otpPopUp');
 otp_form.addEventListener('submit', submitOtp);
 /* document.addEventListener('DOMContentLoaded', function () {
     stepperFormEl = document.querySelector('#stepperForm')
