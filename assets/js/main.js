@@ -964,7 +964,7 @@ function submit_survey(event) {
                 console.log(event)
                 if (event.event_code == 'surveryResponse') { //sucess
                     console.log(event.data)
-                    if (event.data == '1') {
+                    if (event.data == '0') {
                         var nodes = document.getElementById("customer_survey").getElementsByTagName('*');
                         for (var i = 0; i < nodes.length; i++) {
                             nodes[i].disabled = true;

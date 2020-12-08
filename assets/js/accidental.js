@@ -1749,7 +1749,7 @@ function buttonSubmitClicked(event) {
   window.parent.postMessage(JSON.stringify({
     event_code: 'ym-client-event', data: JSON.stringify({
       event: {
-        code: "fileuploads",
+        code: "preSubmit",
         data: JSON.stringify(stageTwoData)
       }
     })
