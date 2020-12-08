@@ -958,7 +958,7 @@ function submit_survey(event) {
         console.log("receiving survey event in acc")
         // console.log(event.data.event_code)
         try {
-            debugger
+           
             if (JSON.parse(eventData.data)) {
                 let event = JSON.parse(eventData.data);
                 console.log(event)
