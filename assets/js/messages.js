@@ -2,7 +2,7 @@ var progress_msges = [
     // { 'id': 1, 'msg': "You have completely filled out the form for Accident Claims." },
     // { 'id': 2, 'msg': "You have completely filled out the form for Illness Claims." },
     // { 'id': 3, 'msg': "You have completely filled out the form for Death Claims." },
-    { 'id': 1, 'msg': "You have completely filled out the form for ." },
+    { 'id': 1, 'msg': "You have completely filled out the form for " },
     { 'id': 2, 'msg': "You have submitted all the required documents." },
     { 'id': 3, 'msg': "You have chosen Bank Transfer as a preferred payout method." },
     { 'id': 4, 'msg': "You have chosen Pick Up Anywhere as a preferred payout method." },
