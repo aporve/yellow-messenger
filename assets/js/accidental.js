@@ -340,7 +340,7 @@ const handleFileUpload = (formData, fileName) => {
   var myHeaders = new Headers();
   console.log("form data : ")
   console.log(formData);
-  debugger
+  
   var requestOptions = {
     method: 'POST',
     headers: myHeaders,
@@ -2462,6 +2462,7 @@ function resendOtp(type) {
 
 
 function submitOtp() {
+  debugger
   removeTimer();
   var raw = JSON.stringify({
     "oneTimePINInformation": {
@@ -2485,7 +2486,7 @@ function submitOtp() {
     console.log("receiving otp event in acc")
     // console.log(event.data.event_code)
     try {
-
+debugger
       if (eventData.data) {
         let event = JSON.parse(eventData.data);
         if (event.event_code == 'validationResponse') { //sucess
