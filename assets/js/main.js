@@ -954,15 +954,15 @@ function submit_survey(event) {
         })
     }), '*');
     window.addEventListener('message', function (eventData) {
-      
+
         console.log("receiving survey event in acc")
         // console.log(event.data.event_code)
         try {
-           
+
             if (eventData.data) {
-                let event =eventData.data;
+                let event = JSON.parse(eventData.data);
                 console.log(event)
-                if (event.data.return_code == 'surveryResponse') { //sucess
+                if (event.event_code == 'surveryResponse') { //sucess
                     console.log(event.data)
                     var nodes = document.getElementById("customer_survey").getElementsByTagName('*');
                     for (var i = 0; i < nodes.length; i++) {
