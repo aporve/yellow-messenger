@@ -6,12 +6,14 @@ var transactionNumber;
 var claim_type;
 var subType;
 var disbursementType;
-var beneficiaryType;
+// var beneficiaryType;
 var claimStatus;
 var docsPending;
 var docsReceived;
 var policyNumber;
 var claimantFirstName;
+var beneficiaryCount;
+var lapsationDate;
 // var denialTag;
 var claimAmount;
 var currency;
@@ -157,7 +159,8 @@ function trackProgress() {
                 }
                 transactionNumber = response.transactionNumber;
                 disbursementType = response.disbursementType;
-                beneficiaryType = response.beneficiaryType;
+                beneficiaryCount = response.beneficiaryCount;
+                lapsationDate = response.lapsationDate;
                 claimStatus = response.claimStatus;
                 docsPending = response.docsPending;
                 docsReceived = response.docsReceived;
@@ -594,7 +597,7 @@ function setDeathClaimStatusMsg() {
                 twoStepperActive();
             }
             else if (claimStatus.toLowerCase() == 'approved') {
-                if (beneficiaryType.toLowerCase() == 's') {
+                if (beneficiaryCount < 1) {
                     document.getElementById('claim-msg-text').innerHTML = '<div> <h3>YOUR REQUEST HAS BEEN APPROVED</h3> <br /> <p class="font-weight-justy request-font"> Hi ' + claimantFirstName + '. We would like to let you know that we have approved your claim request for your AIA Philam Life policy no. ' + policyNumber + '. </p> <br /> <p class="font-weight-normal request-font"> Kindly expect to receive ' + currency + ' ' + claimAmount + ' through your chosen payout method. Please expect an update from us on when your benefit will be released. </p> <br /> <p class="font-weight-normal request-font"> We have also sent this information via SMS for your reference. </p> </div>'
                     document.getElementById("turnaround-time-ref").style.display = "none";
                     document.getElementById("payment-ref").style.display = "block";
@@ -656,7 +659,7 @@ function setDeathClaimStatusMsg() {
                 twoStepperActive();
             }
             else if (claimStatus.toLowerCase() == 'approved') {
-                if (beneficiaryType.toLowerCase() == 's') {
+                if (beneficiaryCount < 1 ) {
                     document.getElementById('claim-msg-text').innerHTML = '<div> <h3>YOUR REQUEST HAS BEEN APPROVED</h3> <br /> <p class="font-weight-justy request-font"> Hi ' + claimantFirstName + '. We would like to let you know that we have approved your claim request for your AIA Philam Life policy no. ' + policyNumber + '. </p> <br /> <p class="font-weight-normal request-font"> Kindly expect to receive ' + currency + ' ' + claimAmount + ' through your chosen payout method. Please expect an update from us on when your benefit will be released. </p> <br /> <p class="font-weight-normal request-font"> We have also sent this information via SMS for your reference. </p> </div>'
                     document.getElementById("turnaround-time-ref").style.display = "none";
                     document.getElementById("payment-ref").style.display = "block";
@@ -784,7 +787,7 @@ function trackProgressDropDown(trackMessagesArr) {
         '<div class="step step-active"><div><div class="circle " id="circle2"><i class="fa fa-check" ></i ></div ></div><div><div class="title">' + progress_msges[1]['msg'] + '</div></div></div>' +
         (claim_type == 'Accident' || claim_type == 'Illness' ?
             '<div class="step step-active"><div><div class="circle " id="circle2"><i class="fa fa-check" ></i ></div ></div><div><div class="title">' + 'You have chosen ' + disbursementType + ' as a preferred payout method' + '</div></div></div>' :
-            beneficiaryType == 'S' ?
+            beneficiaryCount < 1 ?
                 '<div class="step step-active"><div><div class="circle " id="circle2"><i class="fa fa-check" ></i ></div ></div><div><div class="title">' + 'You have chosen ' + disbursementType + ' as a preferred payout method' + '</div></div></div>' :
                 '<div class="step step-active"><div><div class="circle " id="circle2"><i class="fa fa-check" ></i ></div ></div><div><div class="title">' + 'You have chosen your preferred payout methods.' + '</div></div></div>')
         + (claimStatus.toLowerCase() == 'received' ?
@@ -800,9 +803,9 @@ function trackProgressDropDown(trackMessagesArr) {
         + (claimStatus == 'approved' ?
             '<div class="step step-active"><div><div class="circle " id="circle2"><i class="fa fa-check" ></i ></div ></div><div><div class="title">' + progress_msges[8]['msg'] + '</div></div></div>' + '<div class="step step-active"><div><div class="circle " id="circle2"><i class="fa fa-check" ></i ></div ></div><div><div class="title">' + progress_msges[11]['msg'] + '</div></div></div>' :
             '')
-        + (claimStatus == 'approved' && disbursementType == 'CTA' && beneficiaryType.toLowerCase() == 's' ?
+        + (claimStatus == 'approved' && disbursementType == 'CTA' && beneficiaryCount < 1  ?
             '<div class="step step-active"><div><div class="circle " id="circle2"><i class="fa fa-check" ></i ></div ></div><div><div class="title">' + progress_msges[12]['msg'] + '</div></div></div>'
-            : claimStatus == 'approved' && disbursementType == 'PUA' && beneficiaryType.toLowerCase() == 's' ? '<div class="step step-active"><div><div class="circle " id="circle2"><i class="fa fa-check" ></i ></div ></div><div><div class="title">' + progress_msges[9]['msg'] + '</div></div></div>' : '')
+        : claimStatus == 'approved' && disbursementType == 'PUA' && beneficiaryCount < 1  ? '<div class="step step-active"><div><div class="circle " id="circle2"><i class="fa fa-check" ></i ></div ></div><div><div class="title">' + progress_msges[9]['msg'] + '</div></div></div>' : '')
     document.getElementById('progs-status').innerHTML = final_progress_result
 
     //--before integration--//

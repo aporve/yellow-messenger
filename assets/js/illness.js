@@ -1505,12 +1505,12 @@ function buttonSubmitClicked(event) {
     preSubmitObj["filesInformation"] = filesObject;
     preSubmitObj["beneficiaryList"] = [];
 
-    $("#step2").addClass("active");
-    $("#step2>div").addClass("active");
-    if (otpSubmitted == false) { otpTimer(); } else {
-        $('#requirements').hide();
-        $('#payment').show();
-    }
+    // $("#step2").addClass("active");
+    // $("#step2>div").addClass("active");
+    // if (otpSubmitted == false) { otpTimer(); } else {
+    //     $('#requirements').hide();
+    //     $('#payment').show();
+    // }
 
     window.parent.postMessage(JSON.stringify({
         event_code: 'ym-client-event', data: JSON.stringify({
@@ -1779,73 +1779,156 @@ function handleAddBankInfo(event) {
     }
 }
 function getBankDetails() {
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
     var raw = JSON.stringify({ "companyName": "PAL", "webReferenceNumber": referenceNumber });
-    var requestOptions = {
-        method: 'POST',
-        headers: myHeaders,
-        body: raw
-    };
-    fetch("http://localhost:3000/disbursement_details", requestOptions).then((response) => response.json())
-        .then(response => {
+    window.parent.postMessage(JSON.stringify({
+        event_code: 'ym-client-event', data: JSON.stringify({
+            event: {
+                code: "getPayloadDetails",
+                data: raw
+            }
+        })
+    }), '*');
 
-            if (response.returnCode == '0') {
-                if (response.accountName != '') {
+    window.addEventListener('message', function (eventData) {
 
-                    document.getElementById('have_bank_details').innerHTML = ' We have your bank details on file.'
-                    field_AccountName = response.accountName;
-                    document.getElementById('field_AccountName').value = field_AccountName;
+        console.log("receiving presubmit event in acc")
+        // console.log(event.data.event_code)
+        try {
 
-                    field_AccountNumber = response.maskedAccountNumber.replace(/.(?=.{4})/g, '*');
-                    document.getElementById('field_AccountNumber').value = field_AccountNumber;
+            if (eventData.data) {
+                let event = JSON.parse(eventData.data);
+                console.log(event)
+                if (event.event_code == 'getPayloadResponse') { //sucess
+                    if (event.data.returnCode == '0') {
 
-                    field_Bank = response.bankName;
+                        document.getElementById('have_bank_details').innerHTML = ' We have your bank details on file.'
+                        field_AccountName = event.data.accountName;
+                        document.getElementById('field_AccountName').value = field_AccountName;
 
-                    field_Currency = response.accountCurrency;
-                    $("#from_currency option").each(function () {
-                        if ($(this).text() == field_Currency) {
-                            $(this).attr('selected', 'selected');
+                        field_AccountNumber = event.data.maskedAccountNumber.replace(/.(?=.{4})/g, '*');
+                        document.getElementById('field_AccountNumber').value = field_AccountNumber;
+
+                        field_Bank = event.data.bankName;
+                        field_Branch = '';
+                        field_Currency = event.data.accountCurrency;
+                        $("#from_currency option").each(function () {
+                            if ($(this).text() == field_Currency) {
+                                $(this).attr('selected', 'selected');
+                            }
+                        });
+
+
+                        if (field_Currency.toLowerCase() == "peso") {
+
+                            $("#field_Bank").html(
+                                "<option value='Bank of the Philippine Islands - BPI' >Bank of the Philippine Islands - BPI</option><option value='BPI Family Savings Bank - BFB'>BPI Family Savings Bank - BFB</option><option value='Banco de Oro - BDO'>Banco de Oro - BDO</option><option value='China Banking Corporation - CBC'>China Banking Corporation - CBC</option><option value='Citibank Philippines - CITI'>Citibank Philippines - CITI</option><option value='Development Bank of the Phils - DBP'>Development Bank of the Phils - DBP</option><option value='Eastwest Bank - EWB'>Eastwest Bank - EWB</option><option value='Hongkong Shanghai Banking Corp. Phils - HSBC'>Hongkong Shanghai Banking Corp. Phils - HSBC</option><option value='Land Bank of the Philippines - LPB'>Land Bank of the Philippines - LPB</option><option value='Metropolitan Banks and Trust Company - MBTC'>Metropolitan Banks and Trust Company - MBTC</option><option value='Philippine National Bank - PNB'>Philippine National Bank - PNB</option><option value='Rizal Commercial Banking Corp - RCBC'>Rizal Commercial Banking Corp - RCBC</option><option value='Security Bank - SBTC'>Security Bank - SBTC</option><option value='Union Bank of the Philippines - UB'>Union Bank of the Philippines - UB</option>"
+                            );
+                            $("#field_Bank option").each(function () {
+
+                                if ($(this).text().split('-')[1].toLowerCase().trim() == field_Bank.toLowerCase().trim()) {
+
+                                    $(this).attr('selected', 'selected');
+                                }
+                            });
                         }
-                    });
+                        else if (field_Currency.toLowerCase() == "usd") {
+                            $("#field_Bank").html(
+                                "<option value='Bank of the Philippine Islands - BPI'>Bank of the Philippine Islands - BPI</option><option value='Banco de Oro - BDO'>Banco de Oro - BDO</option>"
+                            );
+                            $("#field_Bank option").each(function () {
 
+                                if ($(this).text().split('-')[1].toLowerCase().trim() == field_Bank.toLowerCase().trim()) {
 
-                    if (field_Currency.toLowerCase() == "peso") {
-
-                        $("#field_Bank").html(
-                            "<option value='Bank of the Philippine Islands - BPI' >Bank of the Philippine Islands - BPI</option><option value='BPI Family Savings Bank - BFB'>BPI Family Savings Bank - BFB</option><option value='Banco de Oro - BDO'>Banco de Oro - BDO</option><option value='China Banking Corporation - CBC'>China Banking Corporation - CBC</option><option value='Citibank Philippines - CITI'>Citibank Philippines - CITI</option><option value='Development Bank of the Phils - DBP'>Development Bank of the Phils - DBP</option><option value='Eastwest Bank - EWB'>Eastwest Bank - EWB</option><option value='Hongkong Shanghai Banking Corp. Phils - HSBC'>Hongkong Shanghai Banking Corp. Phils - HSBC</option><option value='Land Bank of the Philippines - LPB'>Land Bank of the Philippines - LPB</option><option value='Metropolitan Banks and Trust Company - MBTC'>Metropolitan Banks and Trust Company - MBTC</option><option value='Philippine National Bank - PNB'>Philippine National Bank - PNB</option><option value='Rizal Commercial Banking Corp - RCBC'>Rizal Commercial Banking Corp - RCBC</option><option value='Security Bank - SBTC'>Security Bank - SBTC</option><option value='Union Bank of the Philippines - UB'>Union Bank of the Philippines - UB</option>"
-                        );
-                        $("#field_Bank option").each(function () {
-
-                            if ($(this).text().split('-')[1].toLowerCase().trim() == field_Bank.toLowerCase().trim()) {
-
-                                $(this).attr('selected', 'selected');
-                            }
-                        });
+                                    $(this).attr('selected', 'selected');
+                                }
+                            });
+                        }
                     }
-                    else if (field_Currency.toLowerCase() == "usd") {
-                        $("#field_Bank").html(
-                            "<option value='Bank of the Philippine Islands - BPI'>Bank of the Philippine Islands - BPI</option><option value='Banco de Oro - BDO'>Banco de Oro - BDO</option>"
-                        );
-                        $("#field_Bank option").each(function () {
-
-                            if ($(this).text().split('-')[1].toLowerCase().trim() == field_Bank.toLowerCase().trim()) {
-
-                                $(this).attr('selected', 'selected');
-                            }
-                        });
+                    else {
+                        $('#change_bank_account').hide()
                     }
-
-
                 }
-
+                else {
+                    $('#change_bank_account').hide()
+                }
             }
             else {
                 $('#change_bank_account').hide()
             }
-        }).catch(error => {
+        } catch (error) {
             console.log(error)
-        });
+        }
+
+    })
+
+
+    // var myHeaders = new Headers();
+    // myHeaders.append("Content-Type", "application/json");
+    // var raw = JSON.stringify({ "companyName": "PAL", "webReferenceNumber": referenceNumber });
+    // var requestOptions = {
+    //     method: 'POST',
+    //     headers: myHeaders,
+    //     body: raw
+    // };
+    // fetch("http://localhost:3000/disbursement_details", requestOptions).then((response) => response.json())
+    //     .then(response => {
+
+    //         if (response.returnCode == '0') {
+    //             if (response.accountName != '') {
+
+    //                 document.getElementById('have_bank_details').innerHTML = ' We have your bank details on file.'
+    //                 field_AccountName = response.accountName;
+    //                 document.getElementById('field_AccountName').value = field_AccountName;
+
+    //                 field_AccountNumber = response.maskedAccountNumber.replace(/.(?=.{4})/g, '*');
+    //                 document.getElementById('field_AccountNumber').value = field_AccountNumber;
+
+    //                 field_Bank = response.bankName;
+
+    //                 field_Currency = response.accountCurrency;
+    //                 $("#from_currency option").each(function () {
+    //                     if ($(this).text() == field_Currency) {
+    //                         $(this).attr('selected', 'selected');
+    //                     }
+    //                 });
+
+
+    //                 if (field_Currency.toLowerCase() == "peso") {
+
+    //                     $("#field_Bank").html(
+    //                         "<option value='Bank of the Philippine Islands - BPI' >Bank of the Philippine Islands - BPI</option><option value='BPI Family Savings Bank - BFB'>BPI Family Savings Bank - BFB</option><option value='Banco de Oro - BDO'>Banco de Oro - BDO</option><option value='China Banking Corporation - CBC'>China Banking Corporation - CBC</option><option value='Citibank Philippines - CITI'>Citibank Philippines - CITI</option><option value='Development Bank of the Phils - DBP'>Development Bank of the Phils - DBP</option><option value='Eastwest Bank - EWB'>Eastwest Bank - EWB</option><option value='Hongkong Shanghai Banking Corp. Phils - HSBC'>Hongkong Shanghai Banking Corp. Phils - HSBC</option><option value='Land Bank of the Philippines - LPB'>Land Bank of the Philippines - LPB</option><option value='Metropolitan Banks and Trust Company - MBTC'>Metropolitan Banks and Trust Company - MBTC</option><option value='Philippine National Bank - PNB'>Philippine National Bank - PNB</option><option value='Rizal Commercial Banking Corp - RCBC'>Rizal Commercial Banking Corp - RCBC</option><option value='Security Bank - SBTC'>Security Bank - SBTC</option><option value='Union Bank of the Philippines - UB'>Union Bank of the Philippines - UB</option>"
+    //                     );
+    //                     $("#field_Bank option").each(function () {
+
+    //                         if ($(this).text().split('-')[1].toLowerCase().trim() == field_Bank.toLowerCase().trim()) {
+
+    //                             $(this).attr('selected', 'selected');
+    //                         }
+    //                     });
+    //                 }
+    //                 else if (field_Currency.toLowerCase() == "usd") {
+    //                     $("#field_Bank").html(
+    //                         "<option value='Bank of the Philippine Islands - BPI'>Bank of the Philippine Islands - BPI</option><option value='Banco de Oro - BDO'>Banco de Oro - BDO</option>"
+    //                     );
+    //                     $("#field_Bank option").each(function () {
+
+    //                         if ($(this).text().split('-')[1].toLowerCase().trim() == field_Bank.toLowerCase().trim()) {
+
+    //                             $(this).attr('selected', 'selected');
+    //                         }
+    //                     });
+    //                 }
+
+
+    //             }
+
+    //         }
+    //         else {
+    //             $('#change_bank_account').hide()
+    //         }
+    //     }).catch(error => {
+    //         console.log(error)
+    //     });
 }
 
 
@@ -2094,15 +2177,19 @@ function resendOtp(type) {
                             otpTimer();
                         }
                         else {
-
+                            $('#otpPopUp').modal('hide');
                         }
                     }
                     else {
-
+                        $('#otpPopUp').modal('hide');
                     }
+                }
+                else {
+                    $('#otpPopUp').modal('hide');
                 }
             } catch (error) {
                 console.log(error)
+                $('#otpPopUp').modal('hide');
             }
 
         })
