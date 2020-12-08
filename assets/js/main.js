@@ -964,13 +964,15 @@ function submit_survey(event) {
                 console.log(event)
                 if (event.event_code == 'surveryResponse') { //sucess
                     console.log(event.data)
-                    var nodes = document.getElementById("customer_survey").getElementsByTagName('*');
-                    for (var i = 0; i < nodes.length; i++) {
-                        nodes[i].disabled = true;
-                        nodes[i].style.cursor = 'no-drop'
+                    if (event.data == '1') {
+                        var nodes = document.getElementById("customer_survey").getElementsByTagName('*');
+                        for (var i = 0; i < nodes.length; i++) {
+                            nodes[i].disabled = true;
+                            nodes[i].style.cursor = 'no-drop'
 
+                        }
+                        document.getElementById("customer_survey").style.opacity = '0.65'
                     }
-                    document.getElementById("customer_survey").style.opacity = '0.65'
                 }
                 else {
 
