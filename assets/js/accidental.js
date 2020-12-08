@@ -36,6 +36,8 @@ form_addBank.addEventListener('submit', handleAddBankInfo);
 form.addEventListener('submit', handleForm);
 form_Bank.addEventListener('submit', handleAccountInfo);
 
+var otp_form = document.getElementById('submit_otp');
+otp_form.addEventListener('submit', submitOtp);
 /* document.addEventListener('DOMContentLoaded', function () {
     stepperFormEl = document.querySelector('#stepperForm')
     stepperForm = new Stepper(stepperFormEl, {
@@ -2461,7 +2463,8 @@ function resendOtp(type) {
 }
 
 
-function submitOtp() {
+function submitOtp(event) {
+  event.preventDefault();
   debugger
   removeTimer();
   var raw = JSON.stringify({
@@ -2507,6 +2510,7 @@ debugger
               $('#maxInvalidOtp').modal('show');
             }
           }
+          
         }
         else {
 
