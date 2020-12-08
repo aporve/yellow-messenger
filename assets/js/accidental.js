@@ -1730,8 +1730,8 @@ function buttonSubmitClicked(event) {
     insurance_Checkbox: $('#upload_invalidCheck_2').is(':checked')
   }
 
-  $("#step2").addClass("active");
-  $("#step2>div").addClass("active");
+  // $("#step2").addClass("active");
+  // $("#step2>div").addClass("active");
 
 
   let BankDetailsList = [];
@@ -1745,17 +1745,13 @@ function buttonSubmitClicked(event) {
   preSubmitObj["bankDetailsList"] = BankDetailsList;
   preSubmitObj["filesInformation"] = filesObject;
   preSubmitObj["beneficiaryList"] = [];
- 
+
   console.log('upload data --> ', upload_data);
   // let stageTwoData = {
   //   stageTwo: true,
   //   referenceNumber: referenceNumber
   // }
-  if (otpSubmitted == false) { otpTimer(); } else {
 
-    $('#requirements').hide();
-    $('#payment').show();
-  }
   window.parent.postMessage(JSON.stringify({
     event_code: 'ym-client-event', data: JSON.stringify({
       event: {
@@ -1764,6 +1760,39 @@ function buttonSubmitClicked(event) {
       }
     })
   }), '*');
+  window.addEventListener('message', function (eventData) {
+
+    console.log("receiving presubmit event in acc")
+    // console.log(event.data.event_code)
+    try {
+
+      if (eventData.data) {
+        let event = JSON.parse(eventData.data);
+        console.log(event)
+        if (event.event_code == 'preSubmitResponse') { //sucess
+          if (event.data == '0') {
+            $("#step2").addClass("active");
+            $("#step2>div").addClass("active");
+            if (otpSubmitted == false) { otpTimer(); } else {
+
+              $('#requirements').hide();
+              $('#payment').show();
+            }
+          }
+          else {
+
+          }
+        }
+        else {
+
+        }
+      }
+    } catch (error) {
+      console.log(error)
+    }
+
+  })
+
 
 }
 
@@ -2318,34 +2347,35 @@ function resendOtp(type) {
       })
     }), '*');
 
-    window.addEventListener('message', function (event) {
-      console.log("receiving validateOtp event in acc")
-      console.log(event.data.event_code)
+    window.addEventListener('message', function (eventData) {
+
+      console.log("receiving otp event in acc")
+      // console.log(event.data.event_code)
       try {
-        if (JSON.parse(event.data)) {
-          if (event.data.returnCode == '0') { //sucess
-            $('#otpPopUp').modal('hide');
-            $('#requirements').hide();
-            $('#payment').show();
-          }
-          else {
-            invalidOtp++;
-            if (invalidOtp <= 3) {
-              $('#invalidOtp').modal('show');
+
+        if (eventData.data) {
+          let event = JSON.parse(eventData.data);
+          if (event.event_code == 'resetResponse') { //sucess
+            $('#invalidOtp').modal('hide');
+            console.log(event.data)
+            if (event.data == '0') {
+
+              if (type != 'resend') { $('#otpPopUp').modal('show'); }
+              document.getElementById('otp').value = ''
+              otpTimer();
             }
             else {
-              $('#invalidOtp').modal('hide');
-              $('#maxInvalidOtp').modal('show');
+
             }
+          }
+          else {
+
           }
         }
       } catch (error) {
         console.log(error)
       }
-      $('#invalidOtp').modal('hide');
-      if (type != 'resend') { $('#otpPopUp').modal('show'); }
-      document.getElementById('otp').value = ''
-      otpTimer();
+
     })
     $('#otpExpiry').modal('hide');
   }
@@ -2443,26 +2473,35 @@ function submitOtp() {
     })
   }), '*');
 
-  window.addEventListener('message', function (event) {
-    console.log("receiving validateOtp event in acc")
-    console.log(event.data.event_code)
+  window.addEventListener('message', function (eventData) {
+
+    console.log("receiving otp event in acc")
+    // console.log(event.data.event_code)
     try {
-      if (JSON.parse(event.data)) {
-        if (event.data.returnCode == '0') { //sucess
-          $('#otpPopUp').modal('hide');
-          $('#requirements').hide();
-          $('#payment').show();
-          otpSubmitted = true;
-        }
-        else {
-          invalidOtp++;
-          if (invalidOtp < 3) {
-            $('#invalidOtp').modal('show');
+
+      if (eventData.data) {
+        let event = JSON.parse(eventData.data);
+        if (event.event_code == 'validationResponse') { //sucess
+          console.log(event.data)
+          if (event.data == '0') {
+            $('#otpPopUp').modal('hide');
+            $('#requirements').hide();
+            $('#payment').show();
+            otpSubmitted = true;
           }
           else {
-            $('#invalidOtp').modal('hide');
-            $('#maxInvalidOtp').modal('show');
+            invalidOtp++;
+            if (invalidOtp < 3) {
+              $('#invalidOtp').modal('show');
+            }
+            else {
+              $('#invalidOtp').modal('hide');
+              $('#maxInvalidOtp').modal('show');
+            }
           }
+        }
+        else {
+
         }
       }
     } catch (error) {

@@ -25,7 +25,7 @@ var currSeconds = 0;
 var user_mobile;
 var ben_name_req_progress = '';
 let filesMap = {};
-var otpSubmitted = false;
+
 var file1 = document.getElementById('file_Upload_1');
 var file2 = document.getElementById('file_Upload_2');
 var file3 = document.getElementById('file_Upload_3');
@@ -1000,8 +1000,8 @@ function handleFormAddBeneficiary(event) {
         BeneficiaryList.push(beneficiary);
         if (beneficiaryCount == 3) {
             // name to show in 'your request is being processed section'
-            // ben_name_req_progress = 'Hi ' + field_addBeneficiaryFirstName + '.'
-            // $('#user_name').text = ben_name_req_progress;
+            ben_name_req_progress = 'Hi ' + field_addBeneficiaryFirstName + '.'
+            $('#user_name').text = ben_name_req_progress;
 
         }
         else {
@@ -1564,8 +1564,8 @@ function handleForm(event) {
         BeneficiaryList.push(beneficiary);
 
 
-        // ben_name_req_progress = 'Hi ' + field_firstName + '.'
-        // document.getElementById('user_name').innerHTML = ben_name_req_progress; // name to show in 'your request is being processed section'
+        ben_name_req_progress = 'Hi ' + field_firstName + '.'
+        document.getElementById('user_name').innerHTML = ben_name_req_progress; // name to show in 'your request is being processed section'
 
 
         /*  dataReset("field_firstName", "field_firstName", "field_middleName", "field_lastName", "field_lastName_Suffix", "field_DOB", "field_DOID", "field_BeneficiaryFirstName", "field_BeneficiaryMiddleName", "field_BeneficiaryLastName", "field_BeneficiaryMobileNum", "field_BeneficiaryEmailAddress", "field_BeneficiaryHomeAddress", "field_BeneficiaryDOB", "field_BeneficiaryPOB", "field_BeneficiaryNationality", "field_BeneficiarySex", "field_BeneficiaryRelationToDeceased","field_Beneficiary_relatives1","field_Beneficiary_relatives2") */
@@ -3440,11 +3440,7 @@ function buttonSubmitClicked(event) {
 
         console.log("final payload : ")
         console.log(finalPayload)
-        if (otpSubmitted == false) { otpTimer(); } else {
-            $('#requirements').hide();
-            $('#process_confirmation').show();
-        }
-
+        otpTimer();
         window.parent.postMessage(JSON.stringify({
             event_code: 'ym-client-event', data: JSON.stringify({
                 event: {
@@ -3470,6 +3466,8 @@ function buttonSubmitClicked(event) {
 }
 
 function addBeneficiaryButtonClicked(event) {
+
+
     event.preventDefault();
 
     if (screenCount !== 0 && traverse == 0) {
@@ -3959,80 +3957,8 @@ function addBeneficiaryuploadDataReset() {
     $("#upload_warning_addBeneficiaryacct").text('');
 }
 
-function getBankDetails() {
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    var raw = JSON.stringify({ "companyName": "PAL", "webReferenceNumber": referenceNumber });
-    var requestOptions = {
-        method: 'POST',
-        headers: myHeaders,
-        body: raw
-    };
-    fetch("http://localhost:3000/disbursement_details", requestOptions).then((response) => response.json())
-        .then(response => {
-
-            if (response.returnCode == '0') {
-                if (response.accountName != '') {
-
-                    document.getElementById('have_bank_details').innerHTML = ' We have your bank details on file.'
-                    field_AccountName = response.accountName;
-                    document.getElementById('field_AccountName').value = field_AccountName;
-
-                    field_AccountNumber = response.maskedAccountNumber.replace(/.(?=.{4})/g, '*');
-                    document.getElementById('field_AccountNumber').value = field_AccountNumber;
-
-                    field_Bank = response.bankName;
-
-                    field_Currency = response.accountCurrency;
-                    $("#from_currency option").each(function () {
-                        if ($(this).text() == field_Currency) {
-                            $(this).attr('selected', 'selected');
-                        }
-                    });
-
-
-                    if (field_Currency.toLowerCase() == "peso") {
-
-                        $("#field_Bank").html(
-                            "<option value='Bank of the Philippine Islands - BPI' >Bank of the Philippine Islands - BPI</option><option value='BPI Family Savings Bank - BFB'>BPI Family Savings Bank - BFB</option><option value='Banco de Oro - BDO'>Banco de Oro - BDO</option><option value='China Banking Corporation - CBC'>China Banking Corporation - CBC</option><option value='Citibank Philippines - CITI'>Citibank Philippines - CITI</option><option value='Development Bank of the Phils - DBP'>Development Bank of the Phils - DBP</option><option value='Eastwest Bank - EWB'>Eastwest Bank - EWB</option><option value='Hongkong Shanghai Banking Corp. Phils - HSBC'>Hongkong Shanghai Banking Corp. Phils - HSBC</option><option value='Land Bank of the Philippines - LPB'>Land Bank of the Philippines - LPB</option><option value='Metropolitan Banks and Trust Company - MBTC'>Metropolitan Banks and Trust Company - MBTC</option><option value='Philippine National Bank - PNB'>Philippine National Bank - PNB</option><option value='Rizal Commercial Banking Corp - RCBC'>Rizal Commercial Banking Corp - RCBC</option><option value='Security Bank - SBTC'>Security Bank - SBTC</option><option value='Union Bank of the Philippines - UB'>Union Bank of the Philippines - UB</option>"
-                        );
-                        $("#field_Bank option").each(function () {
-
-                            if ($(this).text().split('-')[1].toLowerCase().trim() == field_Bank.toLowerCase().trim()) {
-
-                                $(this).attr('selected', 'selected');
-                            }
-                        });
-                    }
-                    else if (field_Currency.toLowerCase() == "usd") {
-                        $("#field_Bank").html(
-                            "<option value='Bank of the Philippine Islands - BPI'>Bank of the Philippine Islands - BPI</option><option value='Banco de Oro - BDO'>Banco de Oro - BDO</option>"
-                        );
-                        $("#field_Bank option").each(function () {
-
-                            if ($(this).text().split('-')[1].toLowerCase().trim() == field_Bank.toLowerCase().trim()) {
-
-                                $(this).attr('selected', 'selected');
-                            }
-                        });
-                    }
-
-
-                }
-
-            }
-            else {
-                $('#change_bank_account').hide()
-            }
-        }).catch(error => {
-            console.log(error)
-        });
-}
-
 function bankTranfer() {
-
     document.getElementById('ref_number').innerHTML = referenceNumber
-    getBankDetails();
     trackBenificiary = 0;
     $('#payment').hide();
     $('#account_details').show();
@@ -4613,79 +4539,38 @@ function resendOtp(type) {
             })
         }), '*');
 
-        window.addEventListener('message', function (event) {
-            console.log("receiving validateOtp event in acc")
-            console.log(event.data.event_code)
+        window.addEventListener('message', function (eventData) {
+
+            console.log("receiving otp event in acc")
+            // console.log(event.data.event_code)
             try {
-                if (JSON.parse(event.data)) {
-                    if (event.data.returnCode == '0') { //sucess
+
+                if (eventData.data) {
+                    let event = JSON.parse(eventData.data);
+                    if (event.event_code == 'resetResponse') { //sucess
+                        console.log(event.data)
                         $('#invalidOtp').modal('hide');
-                        if (type != 'resend') { $('#otpPopUp').modal('show'); }
-                        document.getElementById('otp').value = ''
-                        otpTimer();
+                        if (event.data == '0') {
+                          
+                            if (type != 'resend') { $('#otpPopUp').modal('show'); }
+                            document.getElementById('otp').value = ''
+                            otpTimer();
+                        }
+                        
                     }
                     else {
-                        $('#otpExpiry').modal('hide');
+
                     }
                 }
             } catch (error) {
                 console.log(error)
             }
-            $('#invalidOtp').modal('hide');
-            if (type != 'resend') { $('#otpPopUp').modal('show'); }
-            document.getElementById('otp').value = ''
-            otpTimer();
+            
         })
         $('#otpExpiry').modal('hide');
     }
 
-    
     //api call for resend otp
-    // removeTimer();
-    // resendCount++;
-    // if (resendCount > 5) {
-    //     $('#otpPopUp').modal('hide');
-    //     $('#invalidOtp').modal('hide');
-    //     $('#maxResendOtp').modal('show');
-
-    // }
-    // else {
-    //     var myHeaders = new Headers();
-    //     myHeaders.append("Content-Type", "application/json");
-    //     var raw = JSON.stringify({
-
-    //         "companyName": "PAL",
-    //         "webReferenceNumber": referenceNumber
-
-    //     });
-    //     var requestOptions = {
-    //         method: 'POST',
-    //         headers: myHeaders,
-    //         body: raw
-    //     };
-    //     fetch("http://localhost:3000/resend_otp", requestOptions).then((response) => response.json())
-    //         .then(response => {
-    //             console.log(response)
-    //             if (response.returnCode == '0') { //sucess
-    //                 $('#invalidOtp').modal('hide');
-    //                 if (type != 'resend') { $('#otpPopUp').modal('show'); }
-    //                 document.getElementById('otp').value = ''
-    //                 otpTimer();
-    //             }
-    //             else {
-
-    //                 $('#otpExpiry').modal('hide');
-    //             }
-
-    //         }).catch(error => {
-    //             console.log(error)
-    //         });
-
-
-    // }
-    // $('#otpExpiry').modal('hide');
-
-    //--bfre api intgrtn--//
 
     // removeTimer();
     // resendCount++;
@@ -4707,14 +4592,10 @@ function resendOtp(type) {
 
 
 function submitOtp() {
-
     removeTimer();
     var raw = JSON.stringify({
-        "oneTimePINInformation": {
-            "companyName": "PAL",
-            "webReferenceNumber": referenceNumber,
-            "oneTimePIN": document.getElementById('otp').value
-        }
+        "companyName": "PAL",
+        "webReferenceNumber": referenceNumber
     });
     window.parent.postMessage(JSON.stringify({
         event_code: 'ym-client-event', data: JSON.stringify({
@@ -4725,82 +4606,45 @@ function submitOtp() {
         })
     }), '*');
 
-    window.addEventListener('message', function (event) {
-        console.log("receiving validateOtp event in dea")
-        console.log(event.data.event_code)
+    window.addEventListener('message', function (eventData) {
+
+        console.log("receiving otp event in death")
+        // console.log(event.data.event_code)
         try {
-            if (JSON.parse(event.data)) {
-                if (event.data.returnCode == '0') { //sucess
-                    $('#otpPopUp').modal('hide');
-                    $('#requirements').hide();
-                    $('#process_confirmation').show();
-                    otpSubmitted = true;
-                }
-                else {
-                    invalidOtp++;
-                    if (invalidOtp < 3) {
-                        $('#invalidOtp').modal('show');
+
+            if (eventData.data) {
+                let event = JSON.parse(eventData.data);
+                if (event.event_code == 'validationResponse') { //sucess
+                    console.log(event.data)
+                    if (event.data == '0') {
+                        $('#otpPopUp').modal('hide');
+                        $('#requirements').hide();
+                        $('#process_confirmation').show();
                     }
                     else {
-                        $('#invalidOtp').modal('hide');
-                        $('#maxInvalidOtp').modal('show');
+                        invalidOtp++;
+                        if (invalidOtp < 3) {
+                            $('#invalidOtp').modal('show');
+                        }
+                        else {
+                            $('#invalidOtp').modal('hide');
+                            $('#maxInvalidOtp').modal('show');
+                        }
                     }
+                }
+                else {
+
                 }
             }
         } catch (error) {
             console.log(error)
         }
-        document.getElementById('otp').value = ''
-
+        document.getElementById('otp').value = '';
     })
 
 
     //api call fro submit otp
-    // removeTimer();
-    // var myHeaders = new Headers();
-    // myHeaders.append("Content-Type", "application/json");
-    // var raw = JSON.stringify({
-    //     "oneTimePINInformation": {
-    //         "companyName": "PAL",
-    //         "webReferenceNumber": referenceNumber,
-    //         "oneTimePIN": document.getElementById('otp').value
-    //     }
-    // });
-    // var requestOptions = {
-    //     method: 'POST',
-    //     headers: myHeaders,
-    //     body: raw
-    // };
 
-
-    // fetch("http://localhost:3000/otp_verification", requestOptions).then((response) => response.json())
-    //     .then(response => {
-    //         console.log(response)
-    //         if (response.returnCode == '0') { //sucess
-    //             $('#otpPopUp').modal('hide');
-    //             $('#requirements').hide();
-    //             $('#process_confirmation').show();
-    //             otpSubmitted = true;
-    //         }
-    //         else {
-    //             invalidOtp++;
-    //             if (invalidOtp < 3) {
-    //                 $('#invalidOtp').modal('show');
-    //             }
-    //             else {
-    //                 $('#invalidOtp').modal('hide');
-    //                 $('#maxInvalidOtp').modal('show');
-    //             }
-
-    //         }
-
-    //     }).catch(error => {
-    //         console.log(error)
-    //     });
-    // document.getElementById('otp').value = ''
-
-
-    //-before api intgrn -//
     // var dummy_otp = '1234'
     // removeTimer();
 

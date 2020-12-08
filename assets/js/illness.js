@@ -1493,6 +1493,18 @@ function buttonSubmitClicked(event) {
         insurance_Checkbox: $('#upload_invalidCheck_2').is(':checked')
     }
 
+    let BankDetailsList = [];
+    let filesObject = {};
+    let preSubmitObj = {};
+    filesObject["folderName"] = `/CLAIMS/${referenceNumber}`
+    filesObject["fileList"] = filesList;
+
+    preSubmitObj["basicInformation"] = basicInformation;
+    preSubmitObj["insuredInformation"] = InsuredInformation;
+    preSubmitObj["bankDetailsList"] = BankDetailsList;
+    preSubmitObj["filesInformation"] = filesObject;
+    preSubmitObj["beneficiaryList"] = [];
+
     $("#step2").addClass("active");
     $("#step2>div").addClass("active");
     if (otpSubmitted == false) { otpTimer(); } else {
@@ -1500,10 +1512,48 @@ function buttonSubmitClicked(event) {
         $('#payment').show();
     }
 
+    window.parent.postMessage(JSON.stringify({
+        event_code: 'ym-client-event', data: JSON.stringify({
+            event: {
+                code: "preSubmit",
+                data: JSON.stringify(preSubmitObj)
+            }
+        })
+    }), '*');
+    window.addEventListener('message', function (eventData) {
 
+        console.log("receiving presubmit event in ill")
+        // console.log(event.data.event_code)
+        try {
+
+            if (eventData.data) {
+                let event = JSON.parse(eventData.data);
+                console.log(event)
+                if (event.event_code == 'preSubmitResponse') { //sucess
+                    if (event.data == '0') {
+                        $("#step2").addClass("active");
+                        $("#step2>div").addClass("active");
+                        if (otpSubmitted == false) { otpTimer(); } else {
+                            $('#requirements').hide();
+                            $('#payment').show();
+                        }
+                    }
+                    else {
+
+                    }
+                }
+                else {
+
+                }
+            }
+        } catch (error) {
+            console.log(error)
+        }
+
+    })
     /* $('#payment')[0].scrollIntoView(true); */
 
-    console.log('upload data --> ', upload_data);
+    // console.log('upload data --> ', upload_data);
 }
 
 function handleAccountInfo(event) {
@@ -2002,46 +2052,103 @@ function removeTimer() {
 }
 
 function resendOtp(type) {
-    // //api call for resend otp
     removeTimer();
     resendCount++;
-    if (resendCount > 5) {
+    if (resendCount > 5) { // on reaching max resend (5 times)
         $('#otpPopUp').modal('hide');
         $('#invalidOtp').modal('hide');
         $('#maxResendOtp').modal('show');
 
     }
     else {
-        var myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
         var raw = JSON.stringify({
 
             "companyName": "PAL",
             "webReferenceNumber": referenceNumber
 
         });
-        var requestOptions = {
-            method: 'POST',
-            headers: myHeaders,
-            body: raw
-        };
-        fetch("http://localhost:3000/resend_otp", requestOptions).then((response) => response.json())
-            .then(response => {
-                console.log(response)
-                if (response.returnCode == '0') { //sucess
-                    $('#invalidOtp').modal('hide');
-                    if (type != 'resend') { $('#otpPopUp').modal('show'); }
-                    document.getElementById('otp').value = ''
-                    otpTimer();
+
+        window.parent.postMessage(JSON.stringify({
+            event_code: 'ym-client-event', data: JSON.stringify({
+                event: {
+                    code: "resetOtp",
+                    data: raw
                 }
-                $('#otpExpiry').modal('hide');
+            })
+        }), '*');
 
-            }).catch(error => {
+        window.addEventListener('message', function (eventData) {
+
+            console.log("receiving otp event in acc")
+            // console.log(event.data.event_code)
+            try {
+
+                if (eventData.data) {
+                    let event = JSON.parse(eventData.data);
+                    if (event.event_code == 'resetResponse') { //sucess
+                        $('#invalidOtp').modal('hide');
+                        console.log(event.data)
+                        if (event.data == '0') {
+                            if (type != 'resend') { $('#otpPopUp').modal('show'); }
+                            document.getElementById('otp').value = ''
+                            otpTimer();
+                        }
+                        else {
+
+                        }
+                    }
+                    else {
+
+                    }
+                }
+            } catch (error) {
                 console.log(error)
-            });
+            }
 
+        })
+        $('#otpExpiry').modal('hide');
     }
-    $('#otpExpiry').modal('hide');
+
+    // //api call for resend otp
+    // removeTimer();
+    // resendCount++;
+    // if (resendCount > 5) {
+    //     $('#otpPopUp').modal('hide');
+    //     $('#invalidOtp').modal('hide');
+    //     $('#maxResendOtp').modal('show');
+
+    // }
+    // else {
+    //     var myHeaders = new Headers();
+    //     myHeaders.append("Content-Type", "application/json");
+    //     var raw = JSON.stringify({
+
+    //         "companyName": "PAL",
+    //         "webReferenceNumber": referenceNumber
+
+    //     });
+    //     var requestOptions = {
+    //         method: 'POST',
+    //         headers: myHeaders,
+    //         body: raw
+    //     };
+    //     fetch("http://localhost:3000/resend_otp", requestOptions).then((response) => response.json())
+    //         .then(response => {
+    //             console.log(response)
+    //             if (response.returnCode == '0') { //sucess
+    //                 $('#invalidOtp').modal('hide');
+    //                 if (type != 'resend') { $('#otpPopUp').modal('show'); }
+    //                 document.getElementById('otp').value = ''
+    //                 otpTimer();
+    //             }
+    //             $('#otpExpiry').modal('hide');
+
+    //         }).catch(error => {
+    //             console.log(error)
+    //         });
+
+    // }
+    // $('#otpExpiry').modal('hide');
 
 
     //-befre api intgrtn--//
@@ -2066,6 +2173,61 @@ function resendOtp(type) {
 
 
 function submitOtp() {
+
+    removeTimer();
+    var raw = JSON.stringify({
+        "oneTimePINInformation": {
+            "companyName": "PAL",
+            "webReferenceNumber": referenceNumber,
+            "oneTimePIN": document.getElementById('otp').value
+        }
+    });
+
+    window.parent.postMessage(JSON.stringify({
+        event_code: 'ym-client-event', data: JSON.stringify({
+            event: {
+                code: "validateOtp",
+                data: raw
+            }
+        })
+    }), '*');
+
+    window.addEventListener('message', function (eventData) {
+
+        console.log("receiving otp event in acc")
+        // console.log(event.data.event_code)
+        try {
+
+            if (eventData.data) {
+                let event = JSON.parse(eventData.data);
+                if (event.event_code == 'validationResponse') { //sucess
+                    console.log(event.data)
+                    if (event.data == '0') {
+                        $('#otpPopUp').modal('hide');
+                        $('#requirements').hide();
+                        $('#payment').show();
+                        otpSubmitted = true;
+                    }
+                    else {
+                        invalidOtp++;
+                        if (invalidOtp <= 3) {
+                            $('#invalidOtp').modal('show');
+                        }
+                        else {
+                            $('#invalidOtp').modal('hide');
+                            $('#maxInvalidOtp').modal('show');
+                        }
+                    }
+                }
+                else {
+
+                }
+            }
+        } catch (error) {
+            console.log(error)
+        }
+        document.getElementById('otp').value = '';
+    })
     //api call fro submit otp
     removeTimer();
     var myHeaders = new Headers();
