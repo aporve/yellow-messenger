@@ -134,11 +134,12 @@ function trackUser() {
 // }
 
 function trackProgress() {
+    debugger
     var raw = JSON.stringify({ "companyName": "PAL", "TIPSReferenceNumber": referenceNumber });
     window.parent.postMessage(JSON.stringify({
         event_code: 'ym-client-event', data: JSON.stringify({
             event: {
-                code: "customerSurvey",
+                code: "getClaimStatus",
                 data: raw
             }
         })
