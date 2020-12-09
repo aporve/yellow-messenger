@@ -1824,7 +1824,7 @@
         </section>
         <!-- otp pop up modal (drop-2 ) -->
         <section class="hide modal fade" tabindex="-1" id='otpPopUp' role="dialog" aria-labelledby="otpPopUp"
-            aria-hidden="true">
+            aria-hidden="true" data-backdrop="static" data-keyboard="false">
 
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
@@ -1846,12 +1846,15 @@
                         <input type="text" class="input__box" maxlength="25" id="otp" value="" placeholder="OTP"
                             tabindex="1" />
 
-                        <div align="right">Time left : <span id="otpTimer"></span></div>
+                        <div align="right" id='time-left'>Time left : <span id="otpTimer"></span></div>
                     </div>
-                    <button id='otp-submit-btn' type="button" data-dismiss="modal" class="btn btn-danger"
+                    <button id='otp-btn' type="button"  class="btn btn-danger"
                         style="width: 50%; margin: 0 auto 3rem auto;" onclick="submitOtp()">Submit</button>
-                    <button id='three-dot-loader' type="button" data-dismiss="modal" class="btn btn-danger"
-                        style="width: 50%; margin: 0 auto 3rem auto;"><span class="dot-flashing"></span></button>
+                    <button id='loader-btn' type="button"  class="btn btn-danger"
+                        style="width: 50%; margin: 0 auto 3rem auto;padding: 0;display: none"><span class="loading"></span></button>
+                    <!-- <div  class="dot-flashing"></div> -->
+                    <!-- <button id='three-dot-loader' type="button" data-dismiss="modal" class="btn btn-danger"
+                        style="width: 50%; margin: 0 auto 3rem auto;"><div class="dot-flashing"></div></button> -->
                 </div>
 
             </div>

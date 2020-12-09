@@ -2026,7 +2026,7 @@ function handleAccountInfo(event) {
 function getBankDetails() {
   var finalPayload = {};
   var source = 'Accident';
-
+  $('#cover-spin').show(0)
 
   var raw = JSON.stringify({ "companyName": "PAL", "webReferenceNumber": referenceNumber });
   finalPayload['source'] = source;
@@ -2051,6 +2051,7 @@ function getBankDetails() {
         console.log(event)
         if (event.event_code == 'payoutDetails') { //sucess
           if (event.data.returnCode == '0') {
+            $('#cover-spin').hide(0)
             if (event.data.accountName != null) {
               $('#proof_BAO_display').hide();
               haveBankDetails = true;
@@ -2906,9 +2907,10 @@ function resendOtp(type) {
 
 
 function submitOtp() {
+  document.getElementById('otp-btn').style.display = 'none'
+  document.getElementById('loader-btn').style.display = 'block'
   removeTimer();
-  $('#otp-submit-btn').hide(0)
-  $('#three-dot-loader').show(0)
+  // $('#three-dot-loader').show()
   var source = 'Accident'
   var raw = JSON.stringify({
     "oneTimePINInformation": {
@@ -2932,7 +2934,7 @@ function submitOtp() {
       }
     })
   }), '*');
-
+  // document.getElementById('time-left').style.display = 'none'
   window.addEventListener('message', function (eventData) {
 
     console.log("receiving otp event in acc")
@@ -2943,16 +2945,17 @@ function submitOtp() {
         let event = JSON.parse(eventData.data);
         if (event.event_code == 'validationResponse') { //sucess
           console.log(event.data)
-          if (event.data.returnCode == '1') {
+          if (event.data.returnCode == '0') {
             // $('#cover-spin').hide(0)
-            $('#three-dot-loader').hide(0)
+
             $('#otpPopUp').modal('hide');
             $('#requirements').hide();
             $('#payment').show();
             otpSubmitted = true;
+            document.getElementById('otp').value = '';
           }
           else {
-            $('#three-dot-loader').hide(0)
+
             invalidOtp++;
             if (invalidOtp < 3) {
               $('#invalidOtp').modal('show');
@@ -2961,7 +2964,8 @@ function submitOtp() {
               $('#invalidOtp').modal('hide');
               $('#maxInvalidOtp').modal('show');
             }
-            $('#cover-spin').hide(0)
+            document.getElementById('otp').value = '';
+            // $('#cover-spin').hide(0)
           }
 
         }
@@ -2972,7 +2976,7 @@ function submitOtp() {
     } catch (error) {
       console.log(error)
     }
-    document.getElementById('otp').value = '';
+
   })
 
 
@@ -3048,12 +3052,12 @@ function submitOtp() {
 }
 
 // When the user clicks anywhere outside of the modal, close it and remove timer 
-window.onclick = function (event) {
-  if (event.target == otpModal || event.target == otpExpModal || event.target == invalidOtpModal || event.target == maxResendOtp) {
-    console.log(event.target)
-    removeTimer();
-  }
-}
+// window.onclick = function (event) {
+//   if (event.target == otpModal || event.target == otpExpModal || event.target == invalidOtpModal || event.target == maxResendOtp) {
+//     console.log(event.target)
+//     removeTimer();
+//   }
+// }
 
 // when user clicks exit button from OTP pop up
 function backToFileClaim() {
