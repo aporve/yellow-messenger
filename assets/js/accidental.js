@@ -2955,7 +2955,7 @@ function submitOtp() {
             document.getElementById('otp').value = '';
           }
           else {
-
+            $('#otpPopUp').modal('hide');
             invalidOtp++;
             if (invalidOtp < 3) {
               $('#invalidOtp').modal('show');

@@ -7359,7 +7359,7 @@
 
 		<!-- otp pop up modal (drop-2 ) -->
 		<section class="hide modal fade" id="otpPopUp" tabindex="-1" role="dialog" aria-labelledby="otpPopUp"
-			aria-hidden="true">
+			aria-hidden="true" data-backdrop="static" data-keyboard="false">
 			<div class="modal-dialog modal-dialog-centered" role="document">
 				<div class="modal-content">
 					<div class="modal-body">
@@ -7382,8 +7382,10 @@
 
 						<div align="right">Time left : <span id="otpTimer"></span></div>
 					</div>
-					<button type="button" data-dismiss="modal" class="btn btn-danger" onclick="submitOtp(event)"
+					<button type="button" id='otp-btn'  class="btn btn-danger" onclick="submitOtp(event)"
 						style="width: 50%; margin: 0 auto 3rem auto;">Submit</button>
+							<button id='loader-btn' type="button" class="btn btn-danger"
+								style="width: 50%; margin: 0 auto 3rem auto;padding: 0;display: none"><span class="loading"></span></button>
 				</div>
 
 			</div>

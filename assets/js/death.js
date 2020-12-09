@@ -3975,7 +3975,7 @@ function bankTranfer() {
 function getBankDetails() {
     var finalPayload = {};
     var source = 'Death';
-
+    $('#cover-spin').show(0)
     var raw = JSON.stringify({ "companyName": "PAL", "webReferenceNumber": referenceNumber });
     finalPayload['source'] = source;
     finalPayload['data'] = raw;
@@ -3999,7 +3999,7 @@ function getBankDetails() {
                 console.log(event)
                 if (event.event_code == 'payoutDetails') { //sucess
                     if (event.data.returnCode == '0') {
-
+                        $('#cover-spin').hide(0)
                         document.getElementById('have_bank_details').innerHTML = ' We have your bank details on file.'
                         field_AccountName = event.data.accountName;
                         document.getElementById('field_AccountName').value = field_AccountName;
@@ -4764,7 +4764,8 @@ function resendOtp(type) {
 
 
 function submitOtp() {
-
+    document.getElementById('otp-btn').style.display = 'none'
+    document.getElementById('loader-btn').style.display = 'block'
     var source = 'Death'
     var validateOtpPayload = {}
     removeTimer();
@@ -4798,6 +4799,7 @@ function submitOtp() {
                         $('#requirements').hide();
                         $('#process_confirmation').show();
                         otpSubmitted = true;
+                        document.getElementById('otp').value = '';
                     }
                     else {
                         invalidOtp++;
@@ -4808,6 +4810,7 @@ function submitOtp() {
                             $('#invalidOtp').modal('hide');
                             $('#maxInvalidOtp').modal('show');
                         }
+                        document.getElementById('otp').value = '';
                     }
                 }
                 else {
@@ -4817,7 +4820,7 @@ function submitOtp() {
         } catch (error) {
             console.log(error)
         }
-        document.getElementById('otp').value = '';
+        // document.getElementById('otp').value = '';
     })
 
 
