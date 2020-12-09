@@ -1510,7 +1510,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-12 col-md-6">
+                                        <div class="col-12 col-md-6" id="proof_BAO_display">
                                             <div class="form-row">
                                                 <div style="padding: 0; margin: 1.5rem 0;">
                                                     <p class="upload_btn_title">Proof of Bank Account Ownership</p>
@@ -1575,22 +1575,26 @@
                                                                 <div class="loader-bg">
                                                                     <div class="text"></div>
                                                                 </div>
-                                                                <div class="spiner-holder-one animate-0-25-a">
-                                                                    <div class="spiner-holder-two animate-0-25-b">
+                                                                <div id="spin1"
+                                                                    class="spiner-holder-one animate-0-10-a">
+                                                                    <div class="spiner-holder-two animate-0-10-b">
                                                                         <div class="loader-spiner"></div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="spiner-holder-one animate-25-50-a">
-                                                                    <div class="spiner-holder-two animate-25-50-b">
+                                                                <div id="spin2"
+                                                                    class="spiner-holder-one animate-30-50-a">
+                                                                    <div class="spiner-holder-two animate-30-50-b">
                                                                         <div class="loader-spiner"></div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="spiner-holder-one animate-50-75-a">
+                                                                <div id="spin3"
+                                                                    class="spiner-holder-one animate-50-75-a">
                                                                     <div class="spiner-holder-two animate-50-75-b">
                                                                         <div class="loader-spiner"></div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="spiner-holder-one animate-75-100-a">
+                                                                <div id="spin4"
+                                                                    class="spiner-holder-one animate-75-100-a">
                                                                     <div class="spiner-holder-two animate-75-100-b">
                                                                         <div class="loader-spiner"></div>
                                                                     </div>
@@ -1725,11 +1729,11 @@
                                                 <div style="padding: 0; margin: 1.5rem 0;">
                                                     <p class="upload_btn_title">Proof of Bank Account Ownership</p>
                                                     <span class="btn btn-file" tabindex="22">
-                                                        Upload<input type="file" id="proof_addBAO" />
-                                                        <span id="file_Upload_Tick_7"
+                                                        Upload<input type="file" id="proof_BAO" />
+                                                        <span id="file_Upload_Tick_6"
                                                             class="upload_btn_span">&#10004;</span>
-                                                        <span id="file_loader_icon_7" class="loader"></span>
-                                                        <span id="file_upload_cancle_7"
+                                                        <span id="file_loader_icon_6" class="loader"></span>
+                                                        <span id="file_upload_cancle_6"
                                                             class="upload_btn_span">&#10006;</span>
                                                     </span>
                                                     <small class="form-text text-muted">
@@ -1844,8 +1848,10 @@
 
                         <div align="right">Time left : <span id="otpTimer"></span></div>
                     </div>
-                    <button type="button" data-dismiss="modal" class="btn btn-danger"
+                    <button id='otp-submit-btn' type="button" data-dismiss="modal" class="btn btn-danger"
                         style="width: 50%; margin: 0 auto 3rem auto;" onclick="submitOtp()">Submit</button>
+                    <button id='three-dot-loader' type="button" data-dismiss="modal" class="btn btn-danger"
+                        style="width: 50%; margin: 0 auto 3rem auto;"><span class="dot-flashing"></span></button>
                 </div>
 
             </div>
@@ -1976,7 +1982,7 @@
                 </div>
         </section>
 
-<div id="cover-spin"></div>
+        <div id="cover-spin"></div>
     </main>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
