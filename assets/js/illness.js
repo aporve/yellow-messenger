@@ -1551,9 +1551,9 @@ function buttonSubmitClicked(event) {
     //     }
 
     // })
-    
 
-/* $('#payment')[0].scrollIntoView(true); */
+
+    /* $('#payment')[0].scrollIntoView(true); */
 
     // console.log('upload data --> ', upload_data);
 }
@@ -1781,12 +1781,16 @@ function handleAddBankInfo(event) {
     }
 }
 function getBankDetails() {
+    var finalPayload = {};
+    var source = 'Illness';
     var raw = JSON.stringify({ "companyName": "PAL", "webReferenceNumber": referenceNumber });
+    finalPayload['source'] = source;
+    finalPayload['data'] = raw;
     window.parent.postMessage(JSON.stringify({
         event_code: 'ym-client-event', data: JSON.stringify({
             event: {
-                code: "getPayloadDetails",
-                data: raw
+                code: "getPayoutDetails",
+                data: finalPayload
             }
         })
     }), '*');
@@ -1800,7 +1804,7 @@ function getBankDetails() {
             if (eventData.data) {
                 let event = JSON.parse(eventData.data);
                 console.log(event)
-                if (event.event_code == 'getPayloadResponse') { //sucess
+                if (event.event_code == 'payoutDetails') { //sucess
                     if (event.data.returnCode == '0') {
 
                         document.getElementById('have_bank_details').innerHTML = ' We have your bank details on file.'
@@ -2146,18 +2150,22 @@ function resendOtp(type) {
 
     }
     else {
+        var source = 'Illness'
+        var validateOtpPayload = {}
+        removeTimer();
         var raw = JSON.stringify({
 
             "companyName": "PAL",
             "webReferenceNumber": referenceNumber
 
         });
-
+        validateOtpPayload['source'] = source;
+        validateOtpPayload['data'] = raw;
         window.parent.postMessage(JSON.stringify({
             event_code: 'ym-client-event', data: JSON.stringify({
                 event: {
                     code: "resetOtp",
-                    data: raw
+                    data: validateOtpPayload
                 }
             })
         }), '*');
@@ -2262,7 +2270,8 @@ function resendOtp(type) {
 
 
 function submitOtp() {
-
+    var source = 'Illness'
+    var validateOtpPayload = {}
     removeTimer();
     var raw = JSON.stringify({
         "oneTimePINInformation": {
@@ -2271,12 +2280,13 @@ function submitOtp() {
             "oneTimePIN": document.getElementById('otp').value
         }
     });
-
+    validateOtpPayload['source'] = source;
+    validateOtpPayload['data'] = raw;
     window.parent.postMessage(JSON.stringify({
         event_code: 'ym-client-event', data: JSON.stringify({
             event: {
                 code: "validateOtp",
-                data: raw
+                data: validateOtpPayload
             }
         })
     }), '*');

@@ -1967,28 +1967,32 @@ function handleAccountInfo(event) {
 }
 
 function getBankDetails() {
+  var finalPayload = {};
+  var source = 'Accident';
 
 
   var raw = JSON.stringify({ "companyName": "PAL", "webReferenceNumber": referenceNumber });
+  finalPayload['source'] = source;
+  finalPayload['data'] = raw;
   window.parent.postMessage(JSON.stringify({
     event_code: 'ym-client-event', data: JSON.stringify({
       event: {
-        code: "getPayloadDetails",
-        data: raw
+        code: "getPayoutDetails",
+        data: finalPayload
       }
     })
   }), '*');
 
   window.addEventListener('message', function (eventData) {
 
-    console.log("receiving presubmit event in acc")
+    console.log("receiving payout  event in acc")
     // console.log(event.data.event_code)
     try {
 
       if (eventData.data) {
         let event = JSON.parse(eventData.data);
         console.log(event)
-        if (event.event_code == 'getPayloadResponse') { //sucess
+        if (event.event_code == 'payoutDetails') { //sucess
           if (event.data.returnCode == '0') {
 
             document.getElementById('have_bank_details').innerHTML = ' We have your bank details on file.'
@@ -2425,21 +2429,27 @@ function resendOtp(type) {
 
   }
   else {
-    var raw = JSON.stringify({
+    var source = 'Accident'
+    var validateOtpPayload = {}
 
+    var raw = JSON.stringify({
       "companyName": "PAL",
       "webReferenceNumber": referenceNumber
 
     });
 
+    validateOtpPayload['source'] = source;
+    validateOtpPayload['data'] = raw;
     window.parent.postMessage(JSON.stringify({
       event_code: 'ym-client-event', data: JSON.stringify({
         event: {
           code: "resetOtp",
-          data: raw
+          data: validateOtpPayload
         }
       })
     }), '*');
+
+
 
     window.addEventListener('message', function (eventData) {
 
@@ -2555,6 +2565,7 @@ function resendOtp(type) {
 
 function submitOtp() {
   removeTimer();
+  $('#cover-spin').show(0)
   var source = 'Accident'
   var raw = JSON.stringify({
     "oneTimePINInformation": {
@@ -2584,12 +2595,14 @@ function submitOtp() {
     console.log("receiving otp event in acc")
     // console.log(event.data.event_code)
     try {
-      debugger
       if (eventData.data) {
+      
         let event = JSON.parse(eventData.data);
         if (event.event_code == 'validationResponse') { //sucess
           console.log(event.data)
           if (event.data.returnCode == '0') {
+            $('#cover-spin').hide(0)
+
             $('#otpPopUp').modal('hide');
             $('#requirements').hide();
             $('#payment').show();
@@ -2604,6 +2617,7 @@ function submitOtp() {
               $('#invalidOtp').modal('hide');
               $('#maxInvalidOtp').modal('show');
             }
+            $('#cover-spin').hide(0)
           }
 
         }
