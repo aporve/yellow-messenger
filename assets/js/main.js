@@ -134,13 +134,16 @@ function trackUser() {
 // }
 
 function trackProgress() {
-    debugger
+    var finalPayload = {}
+    var source = 'main';
     var raw = JSON.stringify({ "companyName": "PAL", "TIPSReferenceNumber": referenceNumber });
+    finalPayload['source'] = source;
+    finalPayload['data'] = raw;
     window.parent.postMessage(JSON.stringify({
         event_code: 'ym-client-event', data: JSON.stringify({
             event: {
                 code: "getClaimStatus",
-                data: raw
+                data: finalPayload
             }
         })
     }), '*');
@@ -1041,11 +1044,17 @@ function submit_survey(event) {
     //     referenceNumber: referenceNumber,
     //     data: survey_data
     // }
+    var finalPayload= {}
+    var raw = JSON.stringify(survey_data)
+         
+    var source = 'main';
+    finalPayload['source'] = source;
+    finalPayload['data'] = raw;
     window.parent.postMessage(JSON.stringify({
         event_code: 'ym-client-event', data: JSON.stringify({
             event: {
                 code: "customerSurvey",
-                data: JSON.stringify(survey_data)
+                data: finalPayload
             }
         })
     }), '*');
