@@ -1850,6 +1850,10 @@ function getBankDetails() {
                                 }
                             });
                         }
+                        $('#payment').hide();
+                        $('#account_details').show();
+                        $("#step2").addClass("active");
+                        $("#step2>div").addClass("active");
                     }
                     else {
                         $('#change_bank_account').hide()
@@ -1943,10 +1947,7 @@ function bankTranfer() {
 
     document.getElementById('ref_number').innerHTML = referenceNumber
     getBankDetails();
-    $('#payment').hide();
-    $('#account_details').show();
-    $("#step2").addClass("active");
-    $("#step2>div").addClass("active");
+   
 }
 
 function pickUp() {

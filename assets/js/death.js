@@ -3964,12 +3964,7 @@ function addBeneficiaryuploadDataReset() {
 function bankTranfer() {
     document.getElementById('ref_number').innerHTML = referenceNumber
     getBankDetails();
-    trackBenificiary = 0;
-    $('#payment').hide();
-    $('#account_details').show();
-    $("#step1").addClass("done");
-    $("#step2").addClass("active");
-    $("#step2>div").addClass("active");
+    
 }
 
 function getBankDetails() {
@@ -4041,6 +4036,12 @@ function getBankDetails() {
                                 }
                             });
                         }
+                        trackBenificiary = 0;
+                        $('#payment').hide();
+                        $('#account_details').show();
+                        $("#step1").addClass("done");
+                        $("#step2").addClass("active");
+                        $("#step2>div").addClass("active");
                     }
                     else {
                         $('#change_bank_account').hide()
