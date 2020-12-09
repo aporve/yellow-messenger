@@ -2270,6 +2270,7 @@ function resendOtp(type) {
 
 
 function submitOtp() {
+    debugger
     var source = 'Illness'
     var validateOtpPayload = {}
     removeTimer();
@@ -2301,7 +2302,7 @@ function submitOtp() {
                 let event = JSON.parse(eventData.data);
                 if (event.event_code == 'validationResponse') { //sucess
                     console.log(event.data)
-                    if (event.data == '0') {
+                    if (event.data.returnCode == '0') {
                         $('#otpPopUp').modal('hide');
                         $('#requirements').hide();
                         $('#payment').show();
@@ -2328,46 +2329,46 @@ function submitOtp() {
         document.getElementById('otp').value = '';
     })
     //api call fro submit otp
-    removeTimer();
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    var raw = JSON.stringify({
-        "oneTimePINInformation": {
-            "companyName": "PAL",
-            "webReferenceNumber": referenceNumber,
-            "oneTimePIN": document.getElementById('otp').value
-        }
-    });
-    var requestOptions = {
-        method: 'POST',
-        headers: myHeaders,
-        body: raw
-    };
-    fetch("http://localhost:3000/otp_verification", requestOptions).then((response) => response.json())
-        .then(response => {
-            console.log(response)
-            if (response.returnCode == '0') { //sucess
-                $('#otpPopUp').modal('hide');
-                $('#requirements').hide();
-                $('#payment').show();
-                otpSubmitted = true;
-            }
-            else {
-                invalidOtp++;
-                if (invalidOtp <= 3) {
-                    $('#invalidOtp').modal('show');
-                }
-                else {
-                    $('#invalidOtp').modal('hide');
-                    $('#maxInvalidOtp').modal('show');
-                }
+    // removeTimer();
+    // var myHeaders = new Headers();
+    // myHeaders.append("Content-Type", "application/json");
+    // var raw = JSON.stringify({
+    //     "oneTimePINInformation": {
+    //         "companyName": "PAL",
+    //         "webReferenceNumber": referenceNumber,
+    //         "oneTimePIN": document.getElementById('otp').value
+    //     }
+    // });
+    // var requestOptions = {
+    //     method: 'POST',
+    //     headers: myHeaders,
+    //     body: raw
+    // };
+    // fetch("http://localhost:3000/otp_verification", requestOptions).then((response) => response.json())
+    //     .then(response => {
+    //         console.log(response)
+    //         if (response.returnCode == '0') { //sucess
+    //             $('#otpPopUp').modal('hide');
+    //             $('#requirements').hide();
+    //             $('#payment').show();
+    //             otpSubmitted = true;
+    //         }
+    //         else {
+    //             invalidOtp++;
+    //             if (invalidOtp <= 3) {
+    //                 $('#invalidOtp').modal('show');
+    //             }
+    //             else {
+    //                 $('#invalidOtp').modal('hide');
+    //                 $('#maxInvalidOtp').modal('show');
+    //             }
 
-            }
+    //         }
 
-        }).catch(error => {
-            console.log(error)
-        });
-    document.getElementById('otp').value = ''
+    //     }).catch(error => {
+    //         console.log(error)
+    //     });
+    // document.getElementById('otp').value = ''
 
 
     //----before api  intgrtn---//
