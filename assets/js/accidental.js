@@ -2554,22 +2554,27 @@ function resendOtp(type) {
 
 
 function submitOtp() {
-
-  debugger
   removeTimer();
+  var source = 'Accident'
   var raw = JSON.stringify({
     "oneTimePINInformation": {
       "companyName": "PAL",
       "webReferenceNumber": referenceNumber,
       "oneTimePIN": document.getElementById('otp').value
     }
+
   });
+
+  var validateOtpPayload = {}
+  validateOtpPayload['source'] = source;
+  validateOtpPayload['data'] = raw;
 
   window.parent.postMessage(JSON.stringify({
     event_code: 'ym-client-event', data: JSON.stringify({
       event: {
         code: "validateOtp",
-        data: raw
+        data: validateOtpPayload,
+
       }
     })
   }), '*');
