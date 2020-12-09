@@ -2600,7 +2600,7 @@ function submitOtp() {
         let event = JSON.parse(eventData.data);
         if (event.event_code == 'validationResponse') { //sucess
           console.log(event.data)
-          if (event.data.returnCode == '0') {
+          if (event.data.returnCode == '1') {
             $('#cover-spin').hide(0)
 
             $('#otpPopUp').modal('hide');
