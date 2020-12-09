@@ -2554,8 +2554,8 @@ function resendOtp(type) {
 
 
 function submitOtp() {
-  $('#loader').show();
-  debugger
+  // $('#loader').show();
+
   removeTimer();
   var source='Accident'
   var raw = JSON.stringify({
@@ -2586,7 +2586,7 @@ function submitOtp() {
     console.log("receiving otp event in acc")
     // console.log(event.data.event_code)
     try {
-      debugger
+     
       if (eventData.data) {
         let event = JSON.parse(eventData.data);
         if (event.event_code == 'validationResponse') { //sucess
@@ -2596,7 +2596,7 @@ function submitOtp() {
             $('#requirements').hide();
             $('#payment').show();
             otpSubmitted = true;
-            $('#loader').hide();
+            // $('#loader').hide();
           }
           else {
             invalidOtp++;
