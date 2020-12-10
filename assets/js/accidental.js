@@ -2139,7 +2139,12 @@ function getBankDetails() {
             $("#step2").addClass("active");
             $("#step2>div").addClass("active");
           }
-          else {
+          else if (event.data.returnCode == '1') {
+            $('#cover-spin').hide(0)
+            $('#payment').hide();
+            $('#account_details').show();
+            $("#step2").addClass("active");
+            $("#step2>div").addClass("active");
             $('#change_bank_account').hide()
           }
         }
