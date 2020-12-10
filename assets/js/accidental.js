@@ -1781,7 +1781,7 @@ function buttonSubmitClicked(event) {
   //     }
   //   })
   // }), '*');
-
+ 
   // window.addEventListener('message', function (eventData) {
 
   //   console.log("receiving presubmit event in acc")
@@ -2003,7 +2003,7 @@ function handleAccountInfo(event) {
     //   }
 
     // })
-    //
+//
 
 
     myDisable()
@@ -2061,7 +2061,7 @@ function getBankDetails() {
         if (event.event_code == 'payoutDetails') { //sucess
           if (event.data.returnCode == '1') {
             $('#cover-spin').hide(0)
-            {
+            if (event.data.accountName != null) {
               $('#proof_BAO_display').hide();
               haveBankDetails = true;
               document.getElementById('have_bank_details').innerHTML = ' We have your bank details on file.'
@@ -2069,7 +2069,7 @@ function getBankDetails() {
               document.getElementById('field_AccountName').value = field_AccountName;
               document.getElementById('field_AccountName1').value = field_AccountName;
 
-              field_AccountNumber = event.data.maskedAccountNumber.replace(/.(?=.{4})/g, '*');
+              field_AccountNumber = event.data?.maskedAccountNumber?.replace(/.(?=.{4})/g, '*');
               document.getElementById('field_AccountNumber').value = field_AccountNumber;
               document.getElementById('field_AccountNumber1').value = field_AccountNumber;
 
@@ -2077,7 +2077,7 @@ function getBankDetails() {
               document.getElementById('field_Branch1').value = field_Branch;
 
 
-              field_Bank = event.data.bankName;
+              field_Bank = event.data?.bankName;
 
               field_Currency = event.data.accountCurrency;
               $("#from_currency option").each(function () {
@@ -2830,7 +2830,7 @@ function resendOtp(type) {
         if (eventData.data) {
           let event = JSON.parse(eventData.data);
           if (event.event_code == 'resetResponse') { //sucess
-
+          
             console.log(event.data)
             if (event.data.returnCode == '0') {
               $('#invalidOtp').modal('hide');
@@ -2962,7 +2962,7 @@ function submitOtp() {
       }
     })
   }), '*');
-
+  
   // document.getElementById('time-left').style.display = 'none'
   window.addEventListener('message', function (eventData) {
 
