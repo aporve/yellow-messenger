@@ -4781,8 +4781,12 @@ function submitOtp() {
     var validateOtpPayload = {}
     removeTimer();
     var raw = JSON.stringify({
-        "companyName": "PAL",
-        "webReferenceNumber": referenceNumber
+        "oneTimePINInformation": {
+            "companyName": "PAL",
+            "webReferenceNumber": referenceNumber,
+            "oneTimePIN": document.getElementById('otp').value
+        }
+
     });
     validateOtpPayload['source'] = source;
     validateOtpPayload['data'] = raw;
