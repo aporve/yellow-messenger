@@ -4717,9 +4717,9 @@ function resendOtp(type) {
                     let event = JSON.parse(eventData.data);
                     if (event.event_code == 'resetResponse') { //sucess
                         console.log(event.data)
-                        $('#invalidOtp').modal('hide');
-                        if (event.data == '0') {
-
+                     
+                        if (event.data.returnCode == '0') {
+                            $('#invalidOtp').modal('hide');
                             if (type != 'resend') { $('#otpPopUp').modal('show'); }
                             document.getElementById('otp').value = ''
                             otpTimer();

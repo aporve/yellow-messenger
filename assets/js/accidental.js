@@ -2775,6 +2775,8 @@ function resendOtp(type) {
 
   }
   else {
+    document.getElementById('otp-btn').style.display = 'none'
+    document.getElementById('loader-btn').style.display = 'block'
     var source = 'Accident'
     var validateOtpPayload = {}
 
@@ -2806,10 +2808,10 @@ function resendOtp(type) {
         if (eventData.data) {
           let event = JSON.parse(eventData.data);
           if (event.event_code == 'resetResponse') { //sucess
-            $('#invalidOtp').modal('hide');
+          
             console.log(event.data)
             if (event.data.returnCode == '0') {
-
+              $('#invalidOtp').modal('hide');
               if (type != 'resend') { $('#otpPopUp').modal('show'); }
               document.getElementById('otp').value = ''
               otpTimer();

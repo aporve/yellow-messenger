@@ -2183,9 +2183,10 @@ function resendOtp(type) {
                 if (eventData.data) {
                     let event = JSON.parse(eventData.data);
                     if (event.event_code == 'resetResponse') { //sucess
-                        $('#invalidOtp').modal('hide');
+                    
                         console.log(event.data)
                         if (event.data.returnCode == '0') {
+                            $('#invalidOtp').modal('hide');
                             if (type != 'resend') { $('#otpPopUp').modal('show'); }
                             document.getElementById('otp').value = ''
                             otpTimer();
