@@ -1947,7 +1947,7 @@ function bankTranfer() {
 
     document.getElementById('ref_number').innerHTML = referenceNumber
     getBankDetails();
-   
+
 }
 
 function pickUp() {
@@ -2272,7 +2272,7 @@ function resendOtp(type) {
 
 
 function submitOtp() {
-    
+
     document.getElementById('otp-btn').style.display = 'none'
     document.getElementById('loader-btn').style.display = 'block'
     var source = 'Illness'
@@ -2314,17 +2314,17 @@ function submitOtp() {
                         document.getElementById('otp').value = '';
                     }
                     else {
-                        // $('#otpPopUp').modal('hide');
-                        //     $('#otpPopUp').modal('hide');
-                        // invalidOtp++;
-                        // if (invalidOtp <= 3) {
-                        //     $('#invalidOtp').modal('show');
-                        // }
-                        // else {
-                        //     $('#invalidOtp').modal('hide');
-                        //     $('#maxInvalidOtp').modal('show');
-                        // }
-                        // document.getElementById('otp').value = '';
+                        $('#otpPopUp').modal('hide');
+
+                        invalidOtp++;
+                        if (invalidOtp <= 3) {
+                            $('#invalidOtp').modal('show');
+                        }
+                        else {
+                            $('#invalidOtp').modal('hide');
+                            $('#maxInvalidOtp').modal('show');
+                        }
+                        document.getElementById('otp').value = '';
                     }
                 }
                 else {

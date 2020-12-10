@@ -4803,16 +4803,16 @@ function submitOtp() {
                         document.getElementById('otp').value = '';
                     }
                     else {
-                        // $('#otpPopUp').modal('hide');
-                        // invalidOtp++;
-                        // if (invalidOtp < 3) {
-                        //     $('#invalidOtp').modal('show');
-                        // }
-                        // else {
-                        //     $('#invalidOtp').modal('hide');
-                        //     $('#maxInvalidOtp').modal('show');
-                        // }
-                        // document.getElementById('otp').value = '';
+                        $('#otpPopUp').modal('hide');
+                        invalidOtp++;
+                        if (invalidOtp < 3) {
+                            $('#invalidOtp').modal('show');
+                        }
+                        else {
+                            $('#invalidOtp').modal('hide');
+                            $('#maxInvalidOtp').modal('show');
+                        }
+                        document.getElementById('otp').value = '';
                     }
                 }
                 else {
