@@ -1001,13 +1001,13 @@ function handleFormAddBeneficiary(event) {
         if (beneficiaryCount == 3) {
             // name to show in 'your request is being processed section'
             ben_name_req_progress = 'Hi ' + field_addBeneficiaryFirstName + '.'
-            $('#user_name').text = ben_name_req_progress;
+            // $('#user_name').text = ben_name_req_progress;
 
         }
         else {
             // name to show in 'your request is being processed section'
             ben_name_req_progress = ''
-            $('#user_name').text = ben_name_req_progress;
+            // $('#user_name').text = ben_name_req_progress;
             $("#customer_Name").text(`Hang in there as we are now processing your request. Kindly expect an SMS update from us within 1 to 2 working days on the status of your request.`);
         }
         dataReset("field_addBeneficiaryFirstName", "field_addBeneficiaryMiddleName", "field_addBeneficiaryLastName", "field_addBeneficiaryMobileNum", "field_addBeneficiaryEmailAddress", "field_addBeneficiaryHomeAddress", "field_addBeneficiaryDOB", "field_addBeneficiaryPOB", "field_addBeneficiaryNationality", "field_addBeneficiarySex", "field_addBeneficiaryRelationToDeceased", "field_addBeneficiaryEmployerName", "field_addBeneficiaryOccupation", "field_addBeneficiary_relatives1", "field_add_Beneficiary_add_relatives2");
@@ -1565,7 +1565,7 @@ function handleForm(event) {
 
 
         ben_name_req_progress = 'Hi ' + field_firstName + '.'
-        document.getElementById('user_name').innerHTML = ben_name_req_progress; // name to show in 'your request is being processed section'
+        // document.getElementById('user_name').innerHTML = ben_name_req_progress; // name to show in 'your request is being processed section'
 
 
         /*  dataReset("field_firstName", "field_firstName", "field_middleName", "field_lastName", "field_lastName_Suffix", "field_DOB", "field_DOID", "field_BeneficiaryFirstName", "field_BeneficiaryMiddleName", "field_BeneficiaryLastName", "field_BeneficiaryMobileNum", "field_BeneficiaryEmailAddress", "field_BeneficiaryHomeAddress", "field_BeneficiaryDOB", "field_BeneficiaryPOB", "field_BeneficiaryNationality", "field_BeneficiarySex", "field_BeneficiaryRelationToDeceased","field_Beneficiary_relatives1","field_Beneficiary_relatives2") */
