@@ -2061,7 +2061,7 @@ function getBankDetails() {
         if (event.event_code == 'payoutDetails') { //sucess
           if (event.data.returnCode == '1') {
             $('#cover-spin').hide(0)
-            if (event.data.accountName != null) {
+            {
               $('#proof_BAO_display').hide();
               haveBankDetails = true;
               document.getElementById('have_bank_details').innerHTML = ' We have your bank details on file.'
