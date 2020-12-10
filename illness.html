@@ -1769,7 +1769,7 @@
 
         <!-- Empty mobile number  modal (drop-2 ) -->
         <section class="hide modal fade" id="emptyMobileNumPopUp" tabindex="-1" role="dialog"
-            aria-labelledby="emptyMobileNumPopUp" aria-hidden="true">
+            aria-labelledby="emptyMobileNumPopUp" aria-hidden="true" data-backdrop="static" data-keyboard="false">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
@@ -1793,7 +1793,7 @@
 
         <!-- Invalid Otp modal (drop-2 ) -->
         <section class="hide modal fade" id="invalidOtp" tabindex="-1" role="dialog" aria-labelledby="invalidOtp"
-            aria-hidden="true">
+            aria-hidden="true" data-backdrop="static" data-keyboard="false">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
@@ -1816,7 +1816,7 @@
 
         <!--Otp expiry modal (drop-2 ) -->
         <section class="hide modal fade" id="otpExpiry" tabindex="-1" role="dialog" aria-labelledby="otpExpiry"
-            aria-hidden="true">
+            aria-hidden="true" data-backdrop="static" data-keyboard="false">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
@@ -1838,7 +1838,7 @@
 
         <!--Resend otp max number exceed (drop-2 ) -->
         <section class="hide modal fade" id="maxResendOtp" tabindex="-1" role="dialog" aria-labelledby="maxResendOtp"
-            aria-hidden="true">
+            aria-hidden="true" data-backdrop="static" data-keyboard="false">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
@@ -1852,46 +1852,47 @@
                     <button type="button" class="btn btn-danger" data-dismiss="modal"
                         style="width: 50%; margin: 0 auto 3rem auto;" onclick="backToFileClaim()">Exit</button>
                 </div>
+            </div>
+        </section>
+        <section class="hide modal fade" id="popUp_DOB" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <p id="p1">We’re sorry, the date of birth keyed in is invalid and does not match the
+                            date of incident / loss reported. Please double check all information before
+                            proceeding.
+                        </p>
+                    </div>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"
+                        style="width: 50%; margin: 0 auto 3rem auto;">Ok</button>
+                </div>
+        </section>
 
-                <section class="hide modal fade" id="popUp_DOB" tabindex="-1" role="dialog"
-                    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                            <div class="modal-body">
-                                <p id="p1">We’re sorry, the date of birth keyed in is invalid and does not match the
-                                    date of incident / loss reported. Please double check all information before
-                                    proceeding.
-                                </p>
-                            </div>
-                            <button type="button" class="btn btn-danger" data-dismiss="modal"
-                                style="width: 50%; margin: 0 auto 3rem auto;">Ok</button>
-                        </div>
-                </section>
+        <!-- Max Invalid Otp  modal (drop-2 ) -->
+        <section class="hide modal fade" id="maxInvalidOtp" tabindex="-1" role="dialog" aria-labelledby="maxInvalidOtp"
+            aria-hidden="true" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <p id="modal-text" style="text-align:center;">Sorry, you have entered an invalid
+                            One-Time PIN.
+                            After 3 attempts, we will no longer be able to generate a new PIN for
+                            you. Kindly seek assistance from your financial advisor.
+                        </p>
 
-                <!-- Max Invalid Otp  modal (drop-2 ) -->
-                <section class="hide modal fade" id="maxInvalidOtp" tabindex="-1" role="dialog"
-                    aria-labelledby="maxInvalidOtp" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                            <div class="modal-body">
-                                <p id="modal-text" style="text-align:center;">Sorry, you have entered an invalid
-                                    One-Time PIN.
-                                    After 3 attempts, we will no longer be able to generate a new PIN for
-                                    you. Kindly seek assistance from your financial advisor.
-                                </p>
+                        <br>
 
-                                <br>
-
-
-                            </div>
-                            <button type="button" class="btn btn-danger" data-dismiss="modal"
-                                style="width: 50%; margin: 0 auto 3rem auto;" onclick="backToFileClaim()">Exit</button>
-                        </div>
 
                     </div>
-                </section>
-                <!-- Max Invalid Otp modal (drop-2 ) -->
-                <div id="cover-spin"></div>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"
+                        style="width: 50%; margin: 0 auto 3rem auto;" onclick="backToFileClaim()">Exit</button>
+                </div>
+
+            </div>
+        </section>
+        <!-- Max Invalid Otp modal (drop-2 ) -->
+        <div id="cover-spin"></div>
     </main>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
