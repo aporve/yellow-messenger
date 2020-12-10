@@ -1781,7 +1781,7 @@ function buttonSubmitClicked(event) {
   //     }
   //   })
   // }), '*');
- 
+
   // window.addEventListener('message', function (eventData) {
 
   //   console.log("receiving presubmit event in acc")
@@ -2003,7 +2003,7 @@ function handleAccountInfo(event) {
     //   }
 
     // })
-//
+    //
 
 
     myDisable()
@@ -2022,6 +2022,14 @@ function handleAccountInfo(event) {
   } else {
     $("#popUp").modal("show");
   }
+}
+
+function disableBankDetailsOnHavingData() {
+  document.getElementById('field_AccountName').disabled = true;
+  document.getElementById('field_AccountNumber').disabled = true;
+  document.getElementById('field_Branch').disabled = true;
+  document.getElementById('from_currency option').disabled = true;
+  document.getElementById('field_Bank').disabled = true;
 }
 
 function getBankDetails() {
@@ -2134,12 +2142,7 @@ function getBankDetails() {
                   }
                 });
               }
-              var nodes = document.getElementById("bank_data").getElementsByTagName('*');
-              for (var i = 0; i < nodes.length; i++) {
-                nodes[i].disabled = true;
-                nodes[i].style.cursor = 'no-drop'
-
-              }
+              disableBankDetailsOnHavingData()
             }
             $('#payment').hide();
             $('#account_details').show();
@@ -2827,7 +2830,7 @@ function resendOtp(type) {
         if (eventData.data) {
           let event = JSON.parse(eventData.data);
           if (event.event_code == 'resetResponse') { //sucess
-          
+
             console.log(event.data)
             if (event.data.returnCode == '0') {
               $('#invalidOtp').modal('hide');
@@ -2959,7 +2962,7 @@ function submitOtp() {
       }
     })
   }), '*');
-  
+
   // document.getElementById('time-left').style.display = 'none'
   window.addEventListener('message', function (eventData) {
 
