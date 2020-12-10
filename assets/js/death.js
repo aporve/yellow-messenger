@@ -990,7 +990,7 @@ function handleFormAddBeneficiary(event) {
             beneficiary["Nationality"] = field_addBeneficiaryNationality,
             beneficiary["Sex"] = field_addBeneficiarySex,
             beneficiary["Relationship"] = field_addBeneficiaryRelationToDeceased,
-            beneficiary["DocumentFolder"] = `/CLAIMS/${referenceNumber}`,
+            beneficiary["DocumentFolder"] = `PAL/CLAIMS/${referenceNumber}`,
             beneficiary["PayoutOption"] = "CTA",
             beneficiary["Employer"] = field_addBeneficiaryEmployerName,
             beneficiary["GovernmentOfficial"] = field_addBeneficiary_relatives1,
@@ -1555,7 +1555,7 @@ function handleForm(event) {
             beneficiary["Nationality"] = field_BeneficiaryNationality,
             beneficiary["Sex"] = $("select#field_BeneficiarySex option").filter(":selected").val(),
             beneficiary["Relationship"] = field_BeneficiaryRelationToDeceased,
-            beneficiary["DocumentFolder"] = `/CLAIMS/${referenceNumber}`,
+            beneficiary["DocumentFolder"] = `PAL/CLAIMS/${referenceNumber}`,
             beneficiary["PayoutOption"] = "CTA",
             beneficiary["Employer"] = field_BeneficiaryEmployerName,
             beneficiary["GovernmentOfficial"] = $("select#field_Beneficiary_relatives1 option").filter(":selected").val(),
@@ -3429,7 +3429,7 @@ function buttonSubmitClicked(event) {
             insurance_Checkbox: $('#upload_invalidCheck_2').is(':checked')
         }
         let FilesInformation = {};
-        FilesInformation["FolderName"] = `/CLAIMS/${referenceNumber}`
+        FilesInformation["FolderName"] = `PAL/CLAIMS/${referenceNumber}`
         FilesInformation["FileList"] = filesList;
 
         finalPayload["BasicInformation"] = basicInformation;
@@ -3468,7 +3468,13 @@ function buttonSubmitClicked(event) {
         console.log('upload data --> ', upload_data);
     }
 }
+function closeModal() {
+    removeTimer();
+    document.getElementById('otp').value = ''
+    $('#otpPopUp').modal('hide');
+    $('#otpExpiry').modal('hide');
 
+}
 function addBeneficiaryButtonClicked(event) {
 
 
@@ -3536,7 +3542,7 @@ function addBeneficiaryButtonClicked(event) {
 
             //build final payload here
             let FilesInformation = {};
-            FilesInformation["FolderName"] = `/CLAIMS/${referenceNumber}`
+            FilesInformation["FolderName"] = `PAL/CLAIMS/${referenceNumber}`
             FilesInformation["FileList"] = filesList;
 
             finalPayload["BasicInformation"] = basicInformation;
@@ -4816,7 +4822,7 @@ function submitOtp() {
                         otpSubmitted = true;
                         document.getElementById('otp').value = '';
                     }
-                    else if (event.data.returnCode == '1') {
+                    else if (event.data.returnCode == '1' || event.data.returnCode == '2') {
 
                         invalidOtp++;
                         if (invalidOtp < 3) {

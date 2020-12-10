@@ -1751,7 +1751,7 @@ function buttonSubmitClicked(event) {
   let BankDetailsList = [];
   let filesObject = {};
   let preSubmitObj = {};
-  filesObject["folderName"] = `/CLAIMS/${referenceNumber}`
+  filesObject["folderName"] = `PAL/CLAIMS/${referenceNumber}`
   filesObject["fileList"] = filesList;
 
   preSubmitObj["basicInformation"] = basicInformation;
@@ -1781,6 +1781,7 @@ function buttonSubmitClicked(event) {
   //     }
   //   })
   // }), '*');
+ 
   // window.addEventListener('message', function (eventData) {
 
   //   console.log("receiving presubmit event in acc")
@@ -1939,7 +1940,7 @@ function handleAccountInfo(event) {
     BankDetailsList.push(BankDetails);
 
     let filesObject = {};
-    filesObject["FolderName"] = `/CLAIMS/${referenceNumber}`
+    filesObject["FolderName"] = `PAL/CLAIMS/${referenceNumber}`
     filesObject["FileList"] = filesList;
 
     // InsuredInformation["PayoutOption"] = "CTA";
@@ -2050,7 +2051,7 @@ function getBankDetails() {
         let event = JSON.parse(eventData.data);
         console.log(event)
         if (event.event_code == 'payoutDetails') { //sucess
-          if (event.data.returnCode == '0') {
+          if (event.data.returnCode == '1') {
             $('#cover-spin').hide(0)
             if (event.data.accountName != null) {
               $('#proof_BAO_display').hide();
@@ -2133,13 +2134,19 @@ function getBankDetails() {
                   }
                 });
               }
+              var nodes = document.getElementById("bank_data").getElementsByTagName('*');
+              for (var i = 0; i < nodes.length; i++) {
+                nodes[i].disabled = true;
+                nodes[i].style.cursor = 'no-drop'
+
+              }
             }
             $('#payment').hide();
             $('#account_details').show();
             $("#step2").addClass("active");
             $("#step2>div").addClass("active");
           }
-          else if (event.data.returnCode == '1') {
+          else if (event.data.returnCode == '0') {
             $('#cover-spin').hide(0)
             $('#payment').hide();
             $('#account_details').show();
@@ -2241,7 +2248,7 @@ function bankTranfer() {
 function pickUp() {
   document.getElementById('ref_number').innerHTML = referenceNumber
   let filesObject = {};
-  filesObject["FolderName"] = `/CLAIMS/${referenceNumber}`
+  filesObject["FolderName"] = `PAL/CLAIMS/${referenceNumber}`
   filesObject["FileList"] = filesList;
   let BankDetailsList = [];
   BankDetailsList.push(BankDetails);
@@ -2278,7 +2285,7 @@ function pickup_Bpi() {
   var source = 'Accident';
   var raw = {};
   let filesObject = {};
-  filesObject["FolderName"] = `/CLAIMS/${referenceNumber}`
+  filesObject["FolderName"] = `PAL/CLAIMS/${referenceNumber}`
   filesObject["FileList"] = filesList;
   let BankDetailsList = [];
   let BeneficiaryList = [];
@@ -2483,7 +2490,7 @@ function handleAddBankInfo(event) {
 
 
     let filesObject = {};
-    filesObject["FolderName"] = `/CLAIMS/${referenceNumber}`
+    filesObject["FolderName"] = `PAL/CLAIMS/${referenceNumber}`
     filesObject["FileList"] = filesList;
 
     // InsuredInformation["PayoutOption"] = "CTA";
@@ -2566,6 +2573,13 @@ function handleAddBankInfo(event) {
     });
   }
 }
+function closeModal() {
+  removeTimer();
+  document.getElementById('otp').value = ''
+  $('#otpPopUp').modal('hide');
+  $('#otpExpiry').modal('hide');
+
+}
 
 function openlink() {
   window.open("https://www.google.com/maps/search/bpi+branch+locator/@14.6079731,120.9860096,14z/data=!3m1!4b1");
@@ -2573,7 +2587,7 @@ function openlink() {
 
 function finalSubmitCall() {
   let filesObject = {};
-  filesObject["FolderName"] = `/CLAIMS/${referenceNumber}`
+  filesObject["FolderName"] = `PAL/CLAIMS/${referenceNumber}`
   filesObject["FileList"] = filesList;
 
   // InsuredInformation["PayoutOption"] = "CTA";
@@ -2590,52 +2604,52 @@ function finalSubmitCall() {
   finalData['source'] = source;
   finalData['data'] = JSON.stringify(raw);
 
-  window.parent.postMessage(JSON.stringify({
-    event_code: 'ym-client-event', data: JSON.stringify({
-      event: {
-        code: "finalSubmit",
-        data: finalData
-      }
-    })
-  }), '*');
-  window.addEventListener('message', function (eventData) {
+  // window.parent.postMessage(JSON.stringify({
+  //   event_code: 'ym-client-event', data: JSON.stringify({
+  //     event: {
+  //       code: "finalSubmit",
+  //       data: finalData
+  //     }
+  //   })
+  // }), '*');
+  // window.addEventListener('message', function (eventData) {
 
-    console.log("receiving final event in acc")
-    // console.log(event.data.event_code)
-    try {
+  //   console.log("receiving final event in acc")
+  //   // console.log(event.data.event_code)
+  //   try {
 
-      if (eventData.data) {
-        let event = JSON.parse(eventData.data);
-        console.log(event)
-        if (event.event_code == 'finalSubmitResponse') { //sucess
-          if (event.data.returnCode == '0') {
-            myDisable()
-            timer().then(async () => {
-              $("#step2").addClass("done");
-              /*  $("#step3").addClass("active");
-               $("#step3>div").addClass("active"); */
-              /* $("#step3").addClass("done"); */
-              $("#step3_circle").addClass("md-step-step3-circle ");
-              $("#step3_span").addClass("md-step3-span");
-              $("#step3_reference").addClass("md-step3-span")
-              $("#account_details").hide();
-              $("#process_confirmation").show();
-              console.log("Data -> ", data);
-            });
-          }
-          else {
-            $("#popUp").modal("show");
-          }
-        }
-        else {
-          $("#popUp").modal("show");
-        }
-      }
-    } catch (error) {
-      console.log(error)
-    }
+  //     if (eventData.data) {
+  //       let event = JSON.parse(eventData.data);
+  //       console.log(event)
+  //       if (event.event_code == 'finalSubmitResponse') { //sucess
+  //         if (event.data.returnCode == '0') {
+  //           myDisable()
+  //           timer().then(async () => {
+  //             $("#step2").addClass("done");
+  //             /*  $("#step3").addClass("active");
+  //              $("#step3>div").addClass("active"); */
+  //             /* $("#step3").addClass("done"); */
+  //             $("#step3_circle").addClass("md-step-step3-circle ");
+  //             $("#step3_span").addClass("md-step3-span");
+  //             $("#step3_reference").addClass("md-step3-span")
+  //             $("#account_details").hide();
+  //             $("#process_confirmation").show();
+  //             console.log("Data -> ", data);
+  //           });
+  //         }
+  //         else {
+  //           $("#popUp").modal("show");
+  //         }
+  //       }
+  //       else {
+  //         $("#popUp").modal("show");
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
 
-  })
+  // })
 
 
 
@@ -2770,7 +2784,7 @@ function removeTimer() {
 }
 
 function resendOtp(type) {
-  debugger
+
   removeTimer();
   resendCount++;
   if (resendCount > 5) { // on reaching max resend (5 times)
@@ -2966,7 +2980,7 @@ function submitOtp() {
             otpSubmitted = true;
             document.getElementById('otp').value = '';
           }
-          else if (event.data.returnCode == '1') {
+          else if (event.data.returnCode == '1' || event.data.returnCode == '2') {
             invalidOtp++;
             if (invalidOtp < 3) {
               $('#otpPopUp').modal('hide');

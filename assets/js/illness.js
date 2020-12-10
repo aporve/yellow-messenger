@@ -1496,7 +1496,7 @@ function buttonSubmitClicked(event) {
     let BankDetailsList = [];
     let filesObject = {};
     let preSubmitObj = {};
-    filesObject["folderName"] = `/CLAIMS/${referenceNumber}`
+    filesObject["folderName"] = `PAL/CLAIMS/${referenceNumber}`
     filesObject["fileList"] = filesList;
 
     preSubmitObj["basicInformation"] = basicInformation;
@@ -1557,7 +1557,13 @@ function buttonSubmitClicked(event) {
 
     // console.log('upload data --> ', upload_data);
 }
+function closeModal() {
+    removeTimer();
+    document.getElementById('otp').value = ''
+    $('#otpPopUp').modal('hide');
+    $('#otpExpiry').modal('hide');
 
+}
 function handleAccountInfo(event) {
     event.preventDefault();
     var field_AccountName = $("#field_AccountName").val();
@@ -1658,7 +1664,7 @@ function handleAccountInfo(event) {
             BankDetailsList.push(BankDetails);
 
             let filesObject = {};
-            filesObject["FolderName"] = `/CLAIMS/${referenceNumber}`
+            filesObject["FolderName"] = `PAL/CLAIMS/${referenceNumber}`
             filesObject["FileList"] = filesList;
 
             // filesMap["Accident"] = accident
@@ -1958,7 +1964,7 @@ function bankTranfer() {
 function pickUp() {
     document.getElementById('ref_number').innerHTML = referenceNumber
     let filesObject = {};
-    filesObject["FolderName"] = `/CLAIMS/${referenceNumber}`
+    filesObject["FolderName"] = `PAL/CLAIMS/${referenceNumber}`
     filesObject["FileList"] = filesList;
     let BankDetailsList = [];
     BankDetailsList.push(BankDetails);
@@ -2322,7 +2328,7 @@ function submitOtp() {
                         otpSubmitted = true;
                         document.getElementById('otp').value = '';
                     }
-                    else if (event.data.returnCode == '1') {
+                    else if (event.data.returnCode == '1' || event.data.returnCode == '2') {
 
 
                         invalidOtp++;

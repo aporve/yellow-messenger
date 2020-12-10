@@ -164,12 +164,15 @@
                                     placeholder="Reference Number" aria-label="Recipient's username"
                                     aria-describedby="basic-addon2" style=" max-width: 602px; height: 62px;">
                                 <div class="input-group-append">
-                                    <button onclick="captcha()" class="input-group-text" id="basic-addon2"
+                                    <button onclick="captcha()" class="input-group-text" id="go-btn"
                                         style="width: 82px; background-color: #b8123e !important; cursor: pointer;justify-content: center;">
                                         <div>
                                             <p style=" color:#fff;font-size: 26px;">GO</p>
                                         </div>
                                     </button>
+                                    <button id='loader-btn' type="button" class="btn btn-danger"
+                                        style="display: none;width: 82px; background-color: #b8123e !important; cursor: pointer;justify-content: center;"><span
+                                            class="loading"></span></button>
                                 </div>
                             </div>
                         </div>
@@ -440,7 +443,7 @@
 
 
 
-            <section class="jumbotron jumbotron-fluid bg_light_blue show" 
+            <section class="jumbotron jumbotron-fluid bg_light_blue show"
                 style="padding: 1rem 0 5rem 0; background-color: #d4edf1;">
                 <form onSubmit="return false;" id="customer_survey">
                     <div class="container" id="feedback-form">
@@ -705,8 +708,7 @@
                                         <div class="row">
                                             <div class="col-12  footer " id="stepper_intro">
                                                 <button type="submit" class="btnn submit__btn1"
-                                                    style="color:#fff; background-color: #b8123e !important;"
-                                                   >Submit</button>
+                                                    style="color:#fff; background-color: #b8123e !important;">Submit</button>
                                             </div>
                                         </div>
                                     </div>
@@ -720,13 +722,13 @@
     </main>
     <!-- warning pop up for wrong reference number -->
     <section class="hide modal fade" id="refNoWarning" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-dialog-centered" role="document">
 
             <div class="modal-content">
 
                 <div class="modal-body">
-                    <button type="button" class="close" data-dismiss="modal">
+                    <button type="button" class="close" onclick="closeModal()">
                         ×
                     </button>
                     <p id="p1">We’re sorry, it seems like the reference number you placed does not match what we

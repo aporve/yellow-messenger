@@ -134,6 +134,8 @@ function trackUser() {
 // }
 
 function trackProgress() {
+    document.getElementById('go-btn').style.display = 'none'
+    document.getElementById('loader-btn').style.display = 'block'
     var finalPayload = {}
     var source = 'main';
     var raw = JSON.stringify({ "companyName": "PAL", "TIPSReferenceNumber": referenceNumber });
@@ -160,6 +162,8 @@ function trackProgress() {
                 if (event.event_code == 'claimStatusResponse') { //sucess
                     console.log(event.data)
                     if (event.data.returnCode == '0') {
+                        document.getElementById('go-btn').style.display = 'block'
+                        document.getElementById('loader-btn').style.display = 'none'
                         if (event.data.type.toLowerCase() == 'death') {
                             claim_type = event.data.type
                         }
@@ -213,23 +217,25 @@ function trackProgress() {
                     }
                     else {
                         $('#refNoWarning').modal('show');
+                      
                     }
                 }
                 else {
                     $('#refNoWarning').modal('show');
+                  
                 }
             } else {
                 $('#refNoWarning').modal('show');
+              
             }
         } catch (error) {
-            console.log(error)
-            $('#refNoWarning').modal('show');
+            alert(error)
+        
         }
 
     })
 
-
-
+  
 
     // api call on clicking GO button from claim status screen
     // var res;
@@ -1044,9 +1050,9 @@ function submit_survey(event) {
     //     referenceNumber: referenceNumber,
     //     data: survey_data
     // }
-    var finalPayload= {}
+    var finalPayload = {}
     var raw = JSON.stringify(survey_data)
-         
+
     var source = 'main';
     finalPayload['source'] = source;
     finalPayload['data'] = raw;
@@ -1123,4 +1129,7 @@ function submit_survey(event) {
     //     }).catch(error => {
     //         console.log(error)
     //     });
+}
+function closeModal() {
+    location.reload();
 }

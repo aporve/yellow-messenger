@@ -1370,3 +1370,18 @@ padding-bottom: 10px;
     text-shadow:
       .25em 0 0 white,
       .5em 0 0 white;}}
+
+.modal-header {
+    padding-right: 14px;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: start;
+    align-items: flex-start;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    /* padding: 23px; */
+    /* border-bottom: 1px solid #dee2e6; */
+    border-top-left-radius: .3rem;
+    border-top-right-radius: .3rem;
+    padding-top: 7px;
+}
