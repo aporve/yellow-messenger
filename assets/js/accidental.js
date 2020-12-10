@@ -2959,9 +2959,7 @@ function submitOtp() {
             otpSubmitted = true;
             document.getElementById('otp').value = '';
           }
-          else {
-        
-           
+          else if (event.data.returnCode == '1') {
             invalidOtp++;
             if (invalidOtp < 3) {
               $('#otpPopUp').modal('hide');
@@ -2974,6 +2972,9 @@ function submitOtp() {
             }
             document.getElementById('otp').value = '';
             $('#cover-spin').hide(0)
+          }
+          else {
+            alert(event.data.returnMessage);
           }
 
         }
