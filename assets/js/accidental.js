@@ -2059,7 +2059,7 @@ function getBankDetails() {
         let event = JSON.parse(eventData.data);
         console.log(event)
         if (event.event_code == 'payoutDetails') { //sucess
-          if (event.data.returnCode == '1') {
+          if (event.data.returnCode == '0') {
             $('#cover-spin').hide(0)
             if (event.data.accountName != null) {
               $('#proof_BAO_display').hide();
