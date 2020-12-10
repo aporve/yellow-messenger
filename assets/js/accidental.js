@@ -2728,7 +2728,8 @@ function goBack1() {
 
 // otp timer function
 function otpTimer() {
-  debugger
+  document.getElementById('otp-btn').style.display = 'block'
+  document.getElementById('loader-btn').style.display = 'none'
   if (resendCount <= 5) {
     $('#otpPopUp').modal('show');
     if (remaining == 120) {
@@ -2764,6 +2765,7 @@ function removeTimer() {
 }
 
 function resendOtp(type) {
+  debugger
   removeTimer();
   resendCount++;
   if (resendCount > 5) { // on reaching max resend (5 times)
@@ -2806,27 +2808,28 @@ function resendOtp(type) {
           if (event.event_code == 'resetResponse') { //sucess
             $('#invalidOtp').modal('hide');
             console.log(event.data)
-            if (event.data == '0') {
+            if (event.data.returnCode == '0') {
 
               if (type != 'resend') { $('#otpPopUp').modal('show'); }
               document.getElementById('otp').value = ''
               otpTimer();
             }
             else {
-              $('#otpPopUp').modal('hide');
+              // $('#otpPopUp').modal('hide');
 
             }
           }
           else {
-            $('#otpPopUp').modal('hide');
+            // $('#otpPopUp').modal('hide');
           }
         }
         else {
-          $('#otpPopUp').modal('hide');
+          // $('#otpPopUp').modal('hide');
         }
       } catch (error) {
         console.log(error)
-        $('#otpPopUp').modal('hide');
+        alert(error);
+        // $('#otpPopUp').modal('hide');
       }
 
     })
@@ -2958,12 +2961,14 @@ function submitOtp() {
           }
           else {
         
-            $('#otpPopUp').modal('hide');
+           
             invalidOtp++;
             if (invalidOtp < 3) {
+              $('#otpPopUp').modal('hide');
               $('#invalidOtp').modal('show');
             }
             else {
+              $('#otpPopUp').modal('hide');
               $('#invalidOtp').modal('hide');
               $('#maxInvalidOtp').modal('show');
             }

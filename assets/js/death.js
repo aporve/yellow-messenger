@@ -4640,6 +4640,8 @@ var invalidOtp = 0;
 
 // otp timer function
 function otpTimer() {
+    document.getElementById('otp-btn').style.display = 'block'
+    document.getElementById('loader-btn').style.display = 'none'
     if (resendCount <= 5) {
         $('#otpPopUp').modal('show');
         if (remaining == 120) {
@@ -4723,20 +4725,21 @@ function resendOtp(type) {
                             otpTimer();
                         }
                         else {
-                            $('#otpPopUp').modal('hide');
+                            // $('#otpPopUp').modal('hide');
                         }
 
                     }
                     else {
-                        $('#otpPopUp').modal('hide');
+                        // $('#otpPopUp').modal('hide');
                     }
                 }
                 else {
-                    $('#otpPopUp').modal('hide');
+                    // $('#otpPopUp').modal('hide');
                 }
             } catch (error) {
                 console.log(error)
-                $('#otpPopUp').modal('hide');
+                alert(error)
+                // $('#otpPopUp').modal('hide');
             }
 
         })
@@ -4803,12 +4806,14 @@ function submitOtp() {
                         document.getElementById('otp').value = '';
                     }
                     else {
-                        $('#otpPopUp').modal('hide');
+                       
                         invalidOtp++;
                         if (invalidOtp < 3) {
+                            $('#otpPopUp').modal('hide');
                             $('#invalidOtp').modal('show');
                         }
                         else {
+                            $('#otpPopUp').modal('hide');
                             $('#invalidOtp').modal('hide');
                             $('#maxInvalidOtp').modal('show');
                         }
