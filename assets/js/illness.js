@@ -1838,6 +1838,11 @@ function getBankDetails() {
                                 $(this).attr('selected', 'selected');
                             }
                         });
+                        $("#from_currency1 option").each(function () {
+                            if ($(this).text() == field_Currency) {
+                                $(this).attr('selected', 'selected');
+                            }
+                        });
 
 
                         if (field_Currency.toLowerCase() == "peso") {
@@ -1852,12 +1857,33 @@ function getBankDetails() {
                                     $(this).attr('selected', 'selected');
                                 }
                             });
+
+                            $("#field_Bank1").html(
+                                "<option value='Bank of the Philippine Islands - BPI' >Bank of the Philippine Islands - BPI</option><option value='BPI Family Savings Bank - BFB'>BPI Family Savings Bank - BFB</option><option value='Banco de Oro - BDO'>Banco de Oro - BDO</option><option value='China Banking Corporation - CBC'>China Banking Corporation - CBC</option><option value='Citibank Philippines - CITI'>Citibank Philippines - CITI</option><option value='Development Bank of the Phils - DBP'>Development Bank of the Phils - DBP</option><option value='Eastwest Bank - EWB'>Eastwest Bank - EWB</option><option value='Hongkong Shanghai Banking Corp. Phils - HSBC'>Hongkong Shanghai Banking Corp. Phils - HSBC</option><option value='Land Bank of the Philippines - LPB'>Land Bank of the Philippines - LPB</option><option value='Metropolitan Banks and Trust Company - MBTC'>Metropolitan Banks and Trust Company - MBTC</option><option value='Philippine National Bank - PNB'>Philippine National Bank - PNB</option><option value='Rizal Commercial Banking Corp - RCBC'>Rizal Commercial Banking Corp - RCBC</option><option value='Security Bank - SBTC'>Security Bank - SBTC</option><option value='Union Bank of the Philippines - UB'>Union Bank of the Philippines - UB</option>"
+                            );
+                            $("#field_Bank1 option").each(function () {
+
+                                if ($(this).text().split('-')[1].toLowerCase().trim() == field_Bank.toLowerCase().trim()) {
+
+                                    $(this).attr('selected', 'selected');
+                                }
+                            });
                         }
                         else if (field_Currency.toLowerCase() == "usd") {
                             $("#field_Bank").html(
                                 "<option value='Bank of the Philippine Islands - BPI'>Bank of the Philippine Islands - BPI</option><option value='Banco de Oro - BDO'>Banco de Oro - BDO</option>"
                             );
                             $("#field_Bank option").each(function () {
+
+                                if ($(this).text().split('-')[1].toLowerCase().trim() == field_Bank.toLowerCase().trim()) {
+
+                                    $(this).attr('selected', 'selected');
+                                }
+                            });
+                            $("#field_Bank1").html(
+                                "<option value='Bank of the Philippine Islands - BPI'>Bank of the Philippine Islands - BPI</option><option value='Banco de Oro - BDO'>Banco de Oro - BDO</option>"
+                            );
+                            $("#field_Bank1 option").each(function () {
 
                                 if ($(this).text().split('-')[1].toLowerCase().trim() == field_Bank.toLowerCase().trim()) {
 

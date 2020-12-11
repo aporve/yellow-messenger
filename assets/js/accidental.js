@@ -2989,6 +2989,7 @@ function submitOtp() {
             }
             else {
               $('#invalidOtp').modal('hide');
+              $('#otpExpiry').modal('hide');
               $('#maxResendOtp').modal('hide');
               $('#otpPopUp').modal('hide');
               $('#maxInvalidOtp').modal('show');

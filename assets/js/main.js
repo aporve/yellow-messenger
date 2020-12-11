@@ -221,7 +221,7 @@ function trackProgress() {
                     }
                 }
                 else {
-                    $('#refNoWarning').modal('show');
+                    // $('#refNoWarning').modal('show');
                   
                 }
             } else {
@@ -1033,6 +1033,7 @@ function selectAnswer(quesn_num, id, selectedOption) {
 
 
 }
+debugger
 
 function submit_survey(event) {
     event.preventDefault();
@@ -1075,7 +1076,7 @@ function submit_survey(event) {
                 console.log(event)
                 if (event.event_code == 'surveryResponse') { //sucess
                     console.log(event.data)
-                    if (event.data == '0') {
+                    if (event.data.returnCode == '0') {
                         var nodes = document.getElementById("customer_survey").getElementsByTagName('*');
                         for (var i = 0; i < nodes.length; i++) {
                             nodes[i].disabled = true;
