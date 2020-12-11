@@ -1061,7 +1061,7 @@ function submit_survey(event) {
         event_code: 'ym-client-event', data: JSON.stringify({
             event: {
                 code: "customerSurvey",
-                data: JSON.stringify( finalPayload)
+                data: finalPayload
             }
         })
     }), '*');
