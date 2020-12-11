@@ -1781,7 +1781,7 @@ function buttonSubmitClicked(event) {
   //     }
   //   })
   // }), '*');
-
+ 
   // window.addEventListener('message', function (eventData) {
 
   //   console.log("receiving presubmit event in acc")
@@ -2003,7 +2003,7 @@ function handleAccountInfo(event) {
     //   }
 
     // })
-    //
+//
 
 
     myDisable()
@@ -2044,7 +2044,7 @@ function getBankDetails() {
     event_code: 'ym-client-event', data: JSON.stringify({
       event: {
         code: "getPayoutDetails",
-        data: JSON.stringify(finalPayload)
+        data: finalPayload
       }
     })
   }), '*');
@@ -2828,7 +2828,7 @@ function resendOtp(type) {
         if (eventData.data) {
           let event = JSON.parse(eventData.data);
           if (event.event_code == 'resetResponse') { //sucess
-
+          
             console.log(event.data)
             if (event.data.returnCode == '0') {
               $('#invalidOtp').modal('hide');
@@ -2960,7 +2960,7 @@ function submitOtp() {
       }
     })
   }), '*');
-
+  
   // document.getElementById('time-left').style.display = 'none'
   window.addEventListener('message', function (eventData) {
 
