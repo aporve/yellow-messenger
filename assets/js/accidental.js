@@ -2831,6 +2831,7 @@ function resendOtp(type) {
           
             console.log(event.data)
             if (event.data.returnCode == '0') {
+              debugger
               $('#invalidOtp').modal('hide');
               if (type != 'resend') { $('#otpPopUp').modal('show'); }
               document.getElementById('otp').value = ''
