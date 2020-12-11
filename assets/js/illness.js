@@ -1786,6 +1786,15 @@ function handleAddBankInfo(event) {
         console.log('bank data -> ', data)
     }
 }
+
+function disableBankDetailsOnHavingData() {
+    document.getElementById('field_AccountName').disabled = true;
+    document.getElementById('field_AccountNumber').disabled = true;
+    document.getElementById('field_Branch').disabled = true;
+    document.getElementById('from_currency').disabled = true;
+    document.getElementById('field_Bank').disabled = true;
+}
+
 function getBankDetails() {
     var finalPayload = {};
     var source = 'Illness';
@@ -1856,6 +1865,7 @@ function getBankDetails() {
                                 }
                             });
                         }
+                        disableBankDetailsOnHavingData()
                         $('#payment').hide();
                         $('#account_details').show();
                         $("#step2").addClass("active");
