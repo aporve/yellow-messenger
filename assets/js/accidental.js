@@ -2028,7 +2028,7 @@ function disableBankDetailsOnHavingData() {
   document.getElementById('field_AccountName').disabled = true;
   document.getElementById('field_AccountNumber').disabled = true;
   document.getElementById('field_Branch').disabled = true;
-  document.getElementById('from_currency option').disabled = true;
+  document.getElementById('from_currency').disabled = true;
   document.getElementById('field_Bank').disabled = true;
 }
 
