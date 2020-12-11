@@ -2059,9 +2059,9 @@ function getBankDetails() {
         let event = JSON.parse(eventData.data);
         console.log(event)
         if (event.event_code == 'payoutDetails') { //sucess
-          if (event.data.returnCode == '1') {
+          if (event.data.returnCode == '0') {
             $('#cover-spin').hide(0)
-            // if (event.data.accountName != null) {
+            if (event.data.accountName != null) {
               $('#proof_BAO_display').hide();
               haveBankDetails = true;
               document.getElementById('have_bank_details').innerHTML = ' We have your bank details on file.'
@@ -2143,7 +2143,7 @@ function getBankDetails() {
                 });
               }
               disableBankDetailsOnHavingData()
-            // }
+            }
             $('#payment').hide();
             $('#account_details').show();
             $("#step2").addClass("active");
