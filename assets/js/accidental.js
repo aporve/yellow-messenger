@@ -1957,68 +1957,98 @@ function handleAccountInfo(event) {
     finalData['source'] = source;
     finalData['data'] = JSON.stringify(raw);
 
-    // window.parent.postMessage(JSON.stringify({
-    //   event_code: 'ym-client-event', data: JSON.stringify({
-    //     event: {
-    //       code: "preSubmit",
-    //       data: finalData
-    //     }
-    //   })
-    // }), '*');
-    // $('#spin1').show()
-    // window.addEventListener('message', function (eventData) {
+    renderProgress(10)
 
-    //   console.log("receiving presubmit event in acc")
-    //   // console.log(event.data.event_code)
-    //   try {
-    //     if (eventData.data) {
-    //       let event = JSON.parse(eventData.data);
-    //       console.log(event)
-    //       if (event.event_code == 'preSubmitResponse') { //sucess
-    //         if (event.data.returnCode == '0') {
-    //           myDisable()
-    //           timer().then(async () => {
-    //             $("#step2").addClass("done");
-    //             /*  $("#step3").addClass("active");
-    //              $("#step3>div").addClass("active"); */
-    //             /* $("#step3").addClass("done"); */
-    //             $("#step3_circle").addClass("md-step-step3-circle ");
-    //             $("#step3_span").addClass("md-step3-span");
-    //             $("#step3_reference").addClass("md-step3-span")
-    //             $("#account_details").hide();
-    //             $("#process_confirmation").show();
-    //             console.log("Data -> ", data);
-    //           });
-    //         }
-    //         else {
-    //           $("#popUp").modal("show");
-    //         }
-    //       }
-    //       else {
-    //         $("#popUp").modal("show");
-    //       }
-    //     }
-    //   } catch (error) {
-    //     console.log(error)
-    //   }
+    window.parent.postMessage(JSON.stringify({
+      event_code: 'ym-client-event', data: JSON.stringify({
+        event: {
+          code: "finalEvent",
+          data: JSON.stringify(finalPayload)
+        }
+      })
+    }), '*');
 
-    // })
-//
+    window.addEventListener('message', function (eventData) {
+
+      console.log("receiving final event  event in acc")
+      // console.log(event.data.event_code)
+      try {
+
+        if (eventData.data) {
+          let event = JSON.parse(eventData.data);
+          console.log(event)
+          if (event.event_code == 'uploadSuccess') { //sucess
+            renderProgress(50)
+          }
 
 
-    myDisable()
-    timer().then(async () => {
-      $("#step2").addClass("done");
-      /*  $("#step3").addClass("active");
-       $("#step3>div").addClass("active"); */
-      /* $("#step3").addClass("done"); */
-      $("#step3_circle").addClass("md-step-step3-circle ");
-      $("#step3_span").addClass("md-step3-span");
-      $("#step3_reference").addClass("md-step3-span")
-      $("#account_details").hide();
-      $("#process_confirmation").show();
-      console.log("Data -> ", data);
-    });
+        }
+        else {
+
+        }
+      } catch (error) {
+        console.log(error)
+      }
+
+    })
+
+    window.addEventListener('message', function (eventData) {
+
+      console.log("receiving final event  event in acc")
+      // console.log(event.data.event_code)
+      try {
+
+        if (eventData.data) {
+          let event = JSON.parse(eventData.data);
+          console.log(event)
+          if (event.event_code == 'submitSuccess') {
+            setTimeout(function () {
+              renderProgress(100)
+            }, 2000);
+
+
+            setTimeout(function () {
+              myDisable()
+              // timer().then(async () => {
+              $("#step2").addClass("done");
+              /*  $("#step3").addClass("active");
+               $("#step3>div").addClass("active"); */
+              /* $("#step3").addClass("done"); */
+              $("#step3_circle").addClass("md-step-step3-circle ");
+              $("#step3_span").addClass("md-step3-span");
+              $("#step3_reference").addClass("md-step3-span")
+              $("#account_details").hide();
+              $("#process_confirmation").show();
+              console.log("Data -> ", data);
+            }, 2000);
+
+
+          }
+
+
+        }
+        else {
+
+        }
+      } catch (error) {
+        console.log(error)
+      }
+
+    })
+
+    // myDisable()
+    // // timer().then(async () => {
+    //   $("#step2").addClass("done");
+    //   /*  $("#step3").addClass("active");
+    //    $("#step3>div").addClass("active"); */
+    //   /* $("#step3").addClass("done"); */
+    //   $("#step3_circle").addClass("md-step-step3-circle ");
+    //   $("#step3_span").addClass("md-step3-span");
+    //   $("#step3_reference").addClass("md-step3-span")
+    //   $("#account_details").hide();
+    //   $("#process_confirmation").show();
+    //   console.log("Data -> ", data);
+    // });
   } else {
     $("#popUp").modal("show");
   }
@@ -2267,14 +2297,14 @@ function pickUp() {
 
   console.log("pick up payload : ")
   console.log(finalPayload)
-  window.parent.postMessage(JSON.stringify({
-    event_code: 'ym-client-event', data: JSON.stringify({
-      event: {
-        code: "finalEvent",
-        data: JSON.stringify(finalPayload)
-      }
-    })
-  }), '*');
+  // window.parent.postMessage(JSON.stringify({
+  //   event_code: 'ym-client-event', data: JSON.stringify({
+  //     event: {
+  //       code: "finalEvent",
+  //       data: JSON.stringify(finalPayload)
+  //     }
+  //   })
+  // }), '*');
   $('#payment').hide();
   /* $('#process_confirmation').show(); */
   $("#pickUp").show();
@@ -2301,30 +2331,102 @@ function pickup_Bpi() {
   raw["beneficiaryList"] = BeneficiaryList;
   finalData['source'] = source;
   finalData['data'] = JSON.stringify(raw);
+  window.parent.postMessage(JSON.stringify({
+    event_code: 'ym-client-event', data: JSON.stringify({
+      event: {
+        code: "finalEvent",
+        data: JSON.stringify(finalPayload)
+      }
+    })
+  }), '*');
 
-  myDisable()
-  timer().then(async () => {
-    // $("#step2").addClass("done");
-    // /*  $("#step3").addClass("active");
-    //  $("#step3>div").addClass("active"); */
-    // /* $("#step3").addClass("done"); */
-    // $("#step3_circle").addClass("md-step-step3-circle ");
-    // $("#step3_span").addClass("md-step3-span");
-    // $("#step3_reference").addClass("md-step3-span")
-    // $("#account_details").hide();
-    // $("#process_confirmation").show();
-    // console.log("Data -> ", data);
+  window.addEventListener('message', function (eventData) {
 
-    $("#pickUp").hide();
-    $('#process_confirmation').show();
-    $("#step2").addClass("done");
-    $("#step3_circle").addClass("md-step-step3-circle ");
-    $("#step3_span").addClass("md-step3-span");
-    $("#step3_reference").addClass("md-step3-span")
-    /*  $("#step3").addClass("active");
-     $("#step3>div").addClass("active"); */
-    /*  $("#step3").addClass("done"); */
-  });
+    console.log("receiving final event  event in acc")
+    // console.log(event.data.event_code)
+    try {
+
+      if (eventData.data) {
+        let event = JSON.parse(eventData.data);
+        console.log(event)
+        if (event.event_code == 'uploadSuccess') { //sucess
+          renderProgress(50)
+        }
+
+
+      }
+      else {
+
+      }
+    } catch (error) {
+      console.log(error)
+    }
+
+  })
+
+  window.addEventListener('message', function (eventData) {
+
+    console.log("receiving final event  event in acc")
+    // console.log(event.data.event_code)
+    try {
+
+      if (eventData.data) {
+        let event = JSON.parse(eventData.data);
+        console.log(event)
+        if (event.event_code == 'submitSuccess') {
+          setTimeout(function () {
+            renderProgress(100)
+          }, 2000);
+
+
+          setTimeout(function () {
+            myDisable()
+            $("#pickUp").hide();
+            $('#process_confirmation').show();
+            $("#step2").addClass("done");
+            $("#step3_circle").addClass("md-step-step3-circle ");
+            $("#step3_span").addClass("md-step3-span");
+            $("#step3_reference").addClass("md-step3-span")
+            console.log("Data -> ", data);
+          }, 2000);
+
+
+        }
+
+
+      }
+      else {
+
+      }
+    } catch (error) {
+      console.log(error)
+    }
+
+  })
+
+  // myDisable()
+  // timer().then(async () => {
+  //   // $("#step2").addClass("done");
+  //   // /*  $("#step3").addClass("active");
+  //   //  $("#step3>div").addClass("active"); */
+  //   // /* $("#step3").addClass("done"); */
+  //   // $("#step3_circle").addClass("md-step-step3-circle ");
+  //   // $("#step3_span").addClass("md-step3-span");
+  //   // $("#step3_reference").addClass("md-step3-span")
+  //   // $("#account_details").hide();
+  //   // $("#process_confirmation").show();
+  //   // console.log("Data -> ", data);
+
+  //   $("#pickUp").hide();
+  //   $('#process_confirmation').show();
+  //   $("#step2").addClass("done");
+  //   $("#step3_circle").addClass("md-step-step3-circle ");
+  //   $("#step3_span").addClass("md-step3-span");
+  //   $("#step3_reference").addClass("md-step3-span")
+  //   /*  $("#step3").addClass("active");
+  //    $("#step3>div").addClass("active"); */
+  //   /*  $("#step3").addClass("done"); */
+  // });
   // window.parent.postMessage(JSON.stringify({
   //   event_code: 'ym-client-event', data: JSON.stringify({
   //     event: {
