@@ -229,7 +229,7 @@ function trackProgress() {
               
             }
         } catch (error) {
-            alert(error)
+            // alert(error)
         
         }
 
