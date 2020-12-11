@@ -4839,7 +4839,7 @@ function submitOtp() {
                     else if (event.data.returnCode == '1' || event.data.returnCode == '2') {
 
                         invalidOtp++;
-                        if (invalidOtp < 3) {
+                        if (invalidOtp <= 3) {
                             $('#otpPopUp').modal('hide');
                             $('#invalidOtp').modal('show');
                         }
