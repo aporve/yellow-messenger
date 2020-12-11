@@ -1131,6 +1131,6 @@ function submit_survey(event) {
     //         console.log(error)
     //     });
 }
-function closeModal() {
-    location.reload();
-}
+// function closeModal() {
+//     location.reload();
+// }
