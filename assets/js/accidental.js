@@ -2149,7 +2149,7 @@ function getBankDetails() {
             $("#step2").addClass("active");
             $("#step2>div").addClass("active");
           }
-          else if (event.data.returnCode == '0') {
+          else if (event.data.returnCode == '1') {
             $('#cover-spin').hide(0)
             $('#payment').hide();
             $('#account_details').show();
