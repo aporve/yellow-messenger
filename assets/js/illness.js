@@ -2166,6 +2166,7 @@ function removeTimer() {
 }
 
 function resendOtp(type) {
+    debugger
     removeTimer();
     resendCount++;
     if (resendCount > 5) { // on reaching max resend (5 times)

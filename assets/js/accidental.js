@@ -2819,8 +2819,6 @@ function resendOtp(type) {
       })
     }), '*');
 
-
-
     window.addEventListener('message', function (eventData) {
 
       console.log("receiving otp event in acc")
@@ -2990,8 +2988,9 @@ function submitOtp() {
               $('#invalidOtp').modal('show');
             }
             else {
-              $('#otpPopUp').modal('hide');
               $('#invalidOtp').modal('hide');
+              $('#maxResendOtp').modal('hide');
+              $('#otpPopUp').modal('hide');
               $('#maxInvalidOtp').modal('show');
             }
             document.getElementById('otp').value = '';
@@ -3099,7 +3098,7 @@ function backToFileClaim() {
 
 
 }
-
+debugger
 
 
 
