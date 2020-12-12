@@ -2838,6 +2838,7 @@ function resendOtp(type) {
               otpTimer();
             }
             else {
+              $('#invalidOtp').modal('hide');
               // $('#otpPopUp').modal('hide');
 
             }
@@ -2975,7 +2976,7 @@ function submitOtp() {
           console.log(event.data)
           if (event.data.returnCode == '0') {
             // $('#cover-spin').hide(0)
-
+            $('#invalidOtp').modal('hide');
             $('#otpPopUp').modal('hide');
             $('#requirements').hide();
             $('#payment').show();
@@ -2984,7 +2985,7 @@ function submitOtp() {
           }
           else if (event.data.returnCode == '1' || event.data.returnCode == '2') {
             invalidOtp++;
-            if (invalidOtp < 3) {
+            if (invalidOtp <= 3) {
               $('#otpPopUp').modal('hide');
               $('#invalidOtp').modal('show');
             }
@@ -2999,6 +3000,7 @@ function submitOtp() {
             $('#cover-spin').hide(0)
           }
           else {
+            $('#invalidOtp').modal('hide');
             alert(event.data.returnMessage);
           }
 
