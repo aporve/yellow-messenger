@@ -174,15 +174,13 @@ function trackProgress() {
                         disbursementType = event.data.disbursementType;
                         beneficiaryCount = event.data.beneficiaryCount;
                         lapsationDate = event.data.lapsationDate;
-                        // claimStatus = event.data.claimStatus;
-                        claimStatus = 'denied4';
+                        claimStatus = event.data.claimStatus;
                         docsPending = event.data.docsPending;
                         docsReceived = event.data.docsReceived;
                         policyNumber = event.data.policyNumber;
                         claimantFirstName = event.data.claimantFirstName;
                       
-                        // sourceSystem = event.data.sourceSystem;
-                          sourceSystem = 'tips';
+                        sourceSystem = event.data.sourceSystem;
                         isFallout = event.data.isFallout;
                         claimAmount = event.data.claimAmount;
                         currency = event.data.currency;
