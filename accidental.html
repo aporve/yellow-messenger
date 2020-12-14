@@ -1556,8 +1556,8 @@
                                             <!-- <button type="submit" class="btn submit__btn"
                                                 style="width: 50%; margin: 3rem 0;">Submit</button> -->
                                         </div>
-                                      
-                                        <div class="col-12 col-md-12" >
+
+                                        <div class="col-12 col-md-12">
                                             <div class="row">
                                                 <div class="col-12 col-md-6">
                                                     <button id="change_bank_account" type="submit"
@@ -1797,7 +1797,7 @@
                                         <button type="submit" onclick="pickup_Bpi()" class="btn"
                                             style="width: 100%;">YES, I WOULD LIKE TO PICK UP MY BENEFIT THROUGH
                                             BPI</button>
-                                            <!-- <div class="loader1" id="file_loader_icon_9">
+                                        <!-- <div class="loader1" id="file_loader_icon_9">
                                                 <div class="loader-bg">
                                                     <div class="text"></div>
                                                 </div>
@@ -1863,17 +1863,20 @@
                                 onclick="closeModal()">&times;</span></button><br>
                         <p id="otp-text">We have send a One-Time PIN to your
                             <br> mobile number <span id="user_mobile"></span>.
-                            <br> Kindly enter the OTP in the space below.</p>
+                            <br> Kindly enter the OTP in the space below.
+                        </p>
                         <p id="otp-text">Your OTP expires after two minutes.
                             <br> Click
                             <a style="color:#1b89f0 ;cursor: pointer;" onclick="resendOtp('resend')">here</a> to
                             resend
-                            another one.</p>
+                            another one.
+                        </p>
                         <p id="otp-text">If your current mobile number does not
                             <br> match our records, kindly update your
                             <br> contact details via
                             <a style="color:#1b89f0 ;cursor: pointer;">ePlan</a> or by calling
-                            <br> our hotline at (02)8528-2000. </p>
+                            <br> our hotline at (02)8528-2000.
+                        </p>
                         <br>
                         <input type="text" class="input__box" maxlength="25" id="otp" value="" placeholder="OTP"
                             tabindex="1" />
@@ -1933,8 +1936,11 @@
 
 
                     </div>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal"
+                    <button id="otp-invalid-btn" type="button" class="btn btn-danger" data-dismiss="modal"
                         style="width: 50%; margin: 0 auto 3rem auto;" onclick="backToFileClaim()">Exit</button>
+                    <button id='loader-btn' type="button" class="btn btn-danger"
+                        style="width: 50%; margin: 0 auto 3rem auto;padding: 0;display: none"><span
+                            class="loading"></span></button>
                 </div>
 
             </div>
@@ -1954,8 +1960,12 @@
 
                     </div>
                     <br>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal"
+                    <button id="otp-expiry-btn" type="button" class="btn btn-danger" data-dismiss="modal"
                         style="width: 50%; margin: 0 auto 3rem auto;" onclick="backToFileClaim()">Exit</button>
+                    <button id='loader-btn' type="button" class="btn btn-danger"
+                        style="width: 50%; margin: 0 auto 3rem auto;padding: 0;display: none"><span
+                            class="loading"></span></button>
+
                 </div>
 
             </div>
@@ -1970,7 +1980,8 @@
                     <div class="modal-body">
                         <p id="modal-text">Sorry, you have reached the maximum
                             <br> allowable number to resend the OTP to <br> your mobile number. Please try again <br> in
-                            24 hours.</p>
+                            24 hours.
+                        </p>
 
                     </div>
                     <br>

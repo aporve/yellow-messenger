@@ -2825,6 +2825,8 @@ function goBack1() {
 // otp timer function
 function otpTimer() {
   document.getElementById('otp-btn').style.display = 'block'
+  document.getElementById('otp-invalid-btn').style.display = 'block'
+  document.getElementById('otp-expiry-btn').style.display = 'block'
   document.getElementById('loader-btn').style.display = 'none'
   if (resendCount <= 5) {
     $('#otpPopUp').modal('show');
@@ -2871,6 +2873,13 @@ function resendOtp(type) {
 
   }
   else {
+    if (type == 'otpExpire') {
+      document.getElementById('otp-expiry-btn').style.display = 'none'
+    }
+    else if (type == 'invalidInput') {
+      document.getElementById('otp-invalid-btn').style.display = 'none'
+
+    }
     document.getElementById('otp-btn').style.display = 'none'
     document.getElementById('loader-btn').style.display = 'block'
     var source = 'Accident'
