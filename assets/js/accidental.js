@@ -3067,6 +3067,7 @@ function submitOtp() {
             $('#payment').show();
             otpSubmitted = true;
             document.getElementById('otp').value = '';
+            // document.getElementById('otp-btn').style.display = 'block'
           }
           else if (event.data.returnCode == '1' || event.data.returnCode == '2') {
             invalidOtp++;
