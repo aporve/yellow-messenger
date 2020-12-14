@@ -35,8 +35,8 @@ var maxResendOtp = document.getElementById('maxResendOtp');
 var invalidOtp = 0;
 var scanDoc = false;
 var payoutOption;
-var isChangeInBankDetails='N';
-var isChangeInPayoutOption='N';
+var isChangeInBankDetails = 'N';
+var isChangeInPayoutOption = 'N';
 $('#privacy_consent_1').prop('checked', true);
 $('#privacy_consent_2').prop('checked', true);
 $('#privacy_consent_3').prop('checked', true);
@@ -1902,7 +1902,7 @@ function finalSubmitCall() {
     "bankDetails": BankDetailsList,
     "isChangeInPayoutOption": isChangeInPayoutOption,
     "isChangeInBankDetails": isChangeInBankDetails,
-    "filesInformation":filesObject,  
+    "filesInformation": filesObject,
   });
   finalData['source'] = source;
   finalData['data'] = JSON.stringify(raw);
@@ -2203,7 +2203,7 @@ function getBankDetails() {
             if (event.data.accountName != null) {
               $('#proof_BAO_display').hide();
               haveBankDetails = true;
-              isChangeInPayoutOption='Y';
+              isChangeInPayoutOption = 'Y';
               document.getElementById('have_bank_details').innerHTML = ' We have your bank details on file.'
               field_AccountName = event.data?.accountName;
               document.getElementById('field_AccountName').value = field_AccountName;
@@ -2212,12 +2212,14 @@ function getBankDetails() {
               field_AccountNumber = event.data?.maskedAccountNumber?.replace(/.(?=.{4})/g, '*');
               document.getElementById('field_AccountNumber').value = field_AccountNumber;
               document.getElementById('field_AccountNumber1').value = field_AccountNumber;
-
+              field_Branch = ''
               document.getElementById('field_Branch').value = field_Branch;
               document.getElementById('field_Branch1').value = field_Branch;
 
 
               field_Bank = event.data?.bankName;
+              document.getElementById('field_Bank').value = field_Bank;
+              document.getElementById('field_Bank1').value = field_Bank;
 
               field_Currency = event.data?.accountCurrency;
               $("#from_currency option").each(function () {
@@ -2384,14 +2386,14 @@ function getBankDetails() {
 function bankTranfer() {
 
   document.getElementById('ref_number').innerHTML = referenceNumber;
-  payoutOption='CTA';
+  payoutOption = 'CTA';
   getBankDetails();
 
 }
 
 function pickUp() {
   document.getElementById('ref_number').innerHTML = referenceNumber;
-  payoutOption='PUA';
+  payoutOption = 'PUA';
   let filesObject = {};
   filesObject["FolderName"] = `CLAIMS/PAL/${referenceNumber}`
   filesObject["FileList"] = filesList;
@@ -2542,7 +2544,7 @@ function addBank(event) {
 
 function handleAddBankInfo(event) {
   event.preventDefault();
-  isChangeInBankDetails='Y';
+  isChangeInBankDetails = 'Y';
   var field_AccountName1 = $("#field_AccountName1").val();
   var field_AccountNumber1 = $("#field_AccountNumber1").val();
   var field_currency1 = $("#from_currency1").val();
@@ -2631,7 +2633,7 @@ function handleAddBankInfo(event) {
     BankDetails["accountName"] = field_AccountName1;
     BankDetails["accountNumber"] = field_AccountNumber1;
     BankDetails["accountCurrency"] = $("select#from_currency1 option").filter(":selected").val(),
-    BankDetailsList.push(BankDetails);
+      BankDetailsList.push(BankDetails);
 
 
 

@@ -1835,11 +1835,12 @@ function getBankDetails() {
                 let event = JSON.parse(eventData.data);
                 console.log(event)
                 if (event.event_code == 'payoutDetails') { //sucess
-                    if (event.data.returnCode == '0') {
+                    if (event.data?.returnCode == '0') {
                         $('#cover-spin').hide(0)
-                        if (event.data.accountName != null) {
+                        if (event.data?.accountName != null) {
                             isChangeInPayoutOption = 'Y';
                             document.getElementById('have_bank_details').innerHTML = ' We have your bank details on file.'
+                            field_AccountName = event.data?.accountName;
                             document.getElementById('field_AccountName').value = field_AccountName;
                             document.getElementById('field_AccountName1').value = field_AccountName;
 
@@ -1847,13 +1848,14 @@ function getBankDetails() {
 
                             document.getElementById('field_AccountNumber').value = field_AccountNumber;
                             document.getElementById('field_AccountNumber1').value = field_AccountNumber;
-
+                            field_Branch = ''
                             document.getElementById('field_Branch').value = field_Branch;
                             document.getElementById('field_Branch1').value = field_Branch;
-
                             field_Bank = event.data.bankName;
+                            document.getElementById('field_Bank').value = field_Bank;
+                            document.getElementById('field_Bank1').value = field_Bank;
                             // field_Branch = '';
-                            field_Currency = event.data.accountCurrency;
+                            field_Currency = event.data?.accountCurrency;
                             $("#from_currency option").each(function () {
                                 if ($(this).text() == field_Currency) {
                                     $(this).attr('selected', 'selected');
