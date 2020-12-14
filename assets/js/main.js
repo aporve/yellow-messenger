@@ -180,8 +180,9 @@ function trackProgress() {
                         docsReceived = event.data.docsReceived;
                         policyNumber = event.data.policyNumber;
                         claimantFirstName = event.data.claimantFirstName;
-                        // denialTag = response.denialTag;
-                        sourceSystem = event.data.sourceSystem;
+                      
+                        // sourceSystem = event.data.sourceSystem;
+                          sourceSystem = 'tips';
                         isFallout = event.data.isFallout;
                         claimAmount = event.data.claimAmount;
                         currency = event.data.currency;
