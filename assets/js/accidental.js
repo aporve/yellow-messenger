@@ -1747,77 +1747,17 @@ function buttonSubmitClicked(event) {
     insurance_Checkbox: $('#upload_invalidCheck_2').is(':checked')
   }
 
+
+
   // $("#step2").addClass("active");
   // $("#step2>div").addClass("active");
+  // if (otpSubmitted == false) { otpTimer(); } else {
 
+  //   $('#requirements').hide();
+  //   $('#payment').show();
+  // }
 
-  // // let BankDetailsList = [];
-  // // let filesObject = {};
-  // let preSubmitObj = {};
-  // // filesObject["folderName"] = `CLAIMS/PAL/${referenceNumber}`
-  // // filesObject["fileList"] = filesList;
-
-  // preSubmitObj["basicInformation"] = basicInformation;
-  // preSubmitObj["insuredInformation"] = InsuredInformation;
-  // // preSubmitObj["bankDetailsList"] = BankDetailsList;
-  // // preSubmitObj["filesInformation"] = filesObject;
-  // preSubmitObj["beneficiaryList"] = [];
-
-  console.log('upload data --> ', upload_data);
-
-
-
-
-  $("#step2").addClass("active");
-  $("#step2>div").addClass("active");
-  if (otpSubmitted == false) { otpTimer(); } else {
-
-    $('#requirements').hide();
-    $('#payment').show();
-  }
-
-  // window.parent.postMessage(JSON.stringify({
-  //   event_code: 'ym-client-event', data: JSON.stringify({
-  //     event: {
-  //       code: "preSubmit",
-  //       data: JSON.stringify(preSubmitObj)
-  //     }
-  //   })
-  // }), '*');
-
-  // window.addEventListener('message', function (eventData) {
-
-  //   console.log("receiving presubmit event in acc")
-  //   // console.log(event.data.event_code)
-  //   try {
-
-  //     if (eventData.data) {
-  //       let event = JSON.parse(eventData.data);
-  //       console.log(event)
-  //       if (event.event_code == 'preSubmitResponse') { //sucess
-  //         if (event.data == '0') {
-  //           $("#step2").addClass("active");
-  //           $("#step2>div").addClass("active");
-  //           if (otpSubmitted == false) { otpTimer(); } else {
-
-  //             $('#requirements').hide();
-  //             $('#payment').show();
-  //           }
-  //         }
-  //         else {
-
-  //         }
-  //       }
-  //       else {
-
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-
-  // })
-
+  preSubmitCall()
 
 }
 
@@ -1836,7 +1776,7 @@ function preSubmitCall() {
   var preSubmitPayload = {}
   preSubmitPayload['source'] = source;
   preSubmitPayload['data'] = raw;
-
+  timer(0, 50)
   window.parent.postMessage(JSON.stringify({
     event_code: 'ym-client-event', data: JSON.stringify({
       event: {
@@ -1857,13 +1797,14 @@ function preSubmitCall() {
         console.log(event)
         if (event.event_code == 'preSubmitResponse') { //sucess
           if (event.data.returnCode == '0') {
-            // $("#step2").addClass("active");
-            // $("#step2>div").addClass("active");
-            // if (otpSubmitted == false) { otpTimer(); } else {
+            timer(50, 100)
+            $("#step2").addClass("active");
+            $("#step2>div").addClass("active");
+            if (otpSubmitted == false) { otpTimer(); } else {
 
-            //   $('#requirements').hide();
-            //   $('#payment').show();
-            // }
+              $('#requirements').hide();
+              $('#payment').show();
+            }
           }
           else {
 
