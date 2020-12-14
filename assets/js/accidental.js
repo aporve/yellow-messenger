@@ -2875,11 +2875,11 @@ function resendOtp(type) {
   else {
     if (type == 'otpExpire') {
       document.getElementById('otp-expiry-btn').style.display = 'none'
-      document.getElementById('loader-btn').style.display = 'block'
+      document.getElementById('loader-btn-expiry').style.display = 'block'
     }
     else if (type == 'invalidInput') {
       document.getElementById('otp-invalid-btn').style.display = 'none'
-      document.getElementById('loader-btn').style.display = 'block'
+      document.getElementById('loader-btn-invalid').style.display = 'block'
 
     }
     document.getElementById('otp-btn').style.display = 'none'
