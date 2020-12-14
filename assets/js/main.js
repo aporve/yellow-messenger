@@ -174,7 +174,8 @@ function trackProgress() {
                         disbursementType = event.data.disbursementType;
                         beneficiaryCount = event.data.beneficiaryCount;
                         lapsationDate = event.data.lapsationDate;
-                        claimStatus = event.data.claimStatus;
+                        // claimStatus = event.data.claimStatus;
+                        claimStatus = 'denied4';
                         docsPending = event.data.docsPending;
                         docsReceived = event.data.docsReceived;
                         policyNumber = event.data.policyNumber;
@@ -188,7 +189,7 @@ function trackProgress() {
                         surveyTag = event.data.surveyTag;
 
                         //for customer survey
-                        if (claimStatus.toLowerCase() == 'denied' || claimStatus.toLowerCase() == 'approved' && surveyTag == 'N') {
+                        if ((claimStatus.toLowerCase() == 'denied1' || claimStatus.toLowerCase() == 'denied2' || claimStatus.toLowerCase() == 'denied3' || claimStatus.toLowerCase() == 'denied4'  || claimStatus.toLowerCase() == 'approved') && surveyTag == 'N') {
                             $('#customer_survey').show()
                         }
                         else {
