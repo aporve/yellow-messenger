@@ -3385,9 +3385,10 @@
 										rest assured that this will not affect our ability to provide quality service in
 										relation to your existing policies.</p>
 								</li>
-							
+
 								<li>
-									<p style="margin-left: 1rem;">Please visit our website,<a href="https://www.philamlife.com"> www.philamlife.com</a> for
+									<p style="margin-left: 1rem;">Please visit our website,<a
+											href="https://www.philamlife.com"> www.philamlife.com</a> for
 										our Privacy Statement, which
 										provides further details on why your
 										personal data is collected, how it is intended to be used, to whom your
@@ -7359,20 +7360,23 @@
 
 		<!-- otp pop up modal (drop-2 ) -->
 		<section class="hide modal fade" id="otpPopUp" tabindex="-1" role="dialog" aria-labelledby="otpPopUp"
-			aria-hidden="true" data-backdrop="static" data-keyboard="false" >
+			aria-hidden="true" data-backdrop="static" data-keyboard="false">
 			<div class="modal-dialog modal-dialog-centered" role="document">
 				<div class="modal-content">
 					<div class="modal-body">
-						<button type="button" class="close" aria-label="Close" style="text-align: right;padding:12px"><span aria-hidden="true"
+						<button type="button" class="close" aria-label="Close"
+							style="text-align: right;padding:12px"><span aria-hidden="true"
 								onclick="closeModal()">&times;</span></button><br>
 						<p id="otp-text">We have send a One-Time PIN to the
 							<br> mobile number <span id="user_mobile"></span>.
-							<br> Kindly enter the OTP in the space below.</p>
+							<br> Kindly enter the OTP in the space below.
+						</p>
 						<p id="otp-text">Your OTP expires after two minutes.
 							<br> Click
 							<a style="color:#1b89f0 ;cursor: pointer;" onclick="resendOtp('resend')">here</a> to resend
 							another
-							one.</p>
+							one.
+						</p>
 						<!-- <p id="otp-text">If your current mobile number does not
 							<br> match our records, kindly update your
 							<br> contact details via
@@ -7384,10 +7388,11 @@
 
 						<div align="right">Time left : <span id="otpTimer"></span></div>
 					</div>
-					<button type="button" id='otp-btn'  class="btn btn-danger" onclick="submitOtp(event)"
+					<button type="button" id='otp-btn' class="btn btn-danger" onclick="submitOtp(event)"
 						style="width: 50%; margin: 0 auto 3rem auto;">Submit</button>
-							<button id='loader-btn' type="button" class="btn btn-danger"
-								style="width: 50%; margin: 0 auto 3rem auto;padding: 0;display: none"><span class="loading"></span></button>
+					<button id='loader-btn' type="button" class="btn btn-danger"
+						style="width: 50%; margin: 0 auto 3rem auto;padding: 0;display: none"><span
+							class="loading"></span></button>
 				</div>
 
 			</div>
@@ -7433,8 +7438,13 @@
 
 
 					</div>
-					<button type="button" class="btn btn-danger" data-dismiss="modal"
+					<button id="otp-invalid-btn" type="button" class="btn btn-danger" data-dismiss="modal"
 						style="width: 50%; margin: 0 auto 3rem auto;" onclick="backToFileClaim()">Exit</button>
+
+
+					<button id='loader-btn-invalid' type="button" class="btn btn-danger"
+						style="width: 50%; margin: 0 auto 3rem auto;padding: 0;display: none"><span
+							class="loading"></span></button>
 				</div>
 
 			</div>
@@ -7455,8 +7465,11 @@
 
 					</div>
 					<br>
-					<button type="button" class="btn btn-danger" data-dismiss="modal"
+					<button id="otp-expiry-btn" type="button" class="btn btn-danger" data-dismiss="modal"
 						style="width: 50%; margin: 0 auto 3rem auto;" onclick="backToFileClaim()">Exit</button>
+					<button id='loader-btn-expiry' type="button" class="btn btn-danger"
+						style="width: 50%; margin: 0 auto 3rem auto;padding: 0;display: none"><span
+							class="loading"></span></button>
 				</div>
 
 			</div>
@@ -7472,7 +7485,8 @@
 						<p id="modal-text">Sorry, you have reached the maximum
 							<br> allowable number to resend the OTP to <br> your mobile number. Please try again <br> in
 							24
-							hours.</p>
+							hours.
+						</p>
 
 					</div>
 					<br>

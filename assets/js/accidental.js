@@ -3059,7 +3059,7 @@ function submitOtp() {
         let event = JSON.parse(eventData.data);
         if (event.event_code == 'validationResponse') { //sucess
           console.log(event.data)
-          if (event.data.returnCode == '1') {
+          if (event.data.returnCode == '0') {
             // $('#cover-spin').hide(0)
             $('#invalidOtp').modal('hide');
             $('#otpPopUp').modal('hide');
@@ -3068,7 +3068,7 @@ function submitOtp() {
             otpSubmitted = true;
             document.getElementById('otp').value = '';
           }
-          else if (event.data.returnCode == '0' || event.data.returnCode == '2') {
+          else if (event.data.returnCode == '1' || event.data.returnCode == '2') {
             invalidOtp++;
             if (invalidOtp <= 3) {
               $('#otpPopUp').modal('hide');
