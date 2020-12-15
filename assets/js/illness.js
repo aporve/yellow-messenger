@@ -16,6 +16,7 @@ var file5 = document.getElementById('illness_file_Upload_5');
 var file6 = document.getElementById('proof_BAO');
 var file7 = document.getElementById('proof_addBAO');
 var scanDoc = false;
+haveBankDetails = false;
 $('#privacy_consent_1').prop('checked', true);
 $('#privacy_consent_2').prop('checked', true);
 $('#privacy_consent_3').prop('checked', true);
@@ -1533,66 +1534,67 @@ function handleAccountInfo(event) {
     var field_AccountNumber = $("#field_AccountNumber").val();
     var field_Bank = $("#field_Bank").val();
     var field_Branch = $("#field_Branch").val();
+    if (haveBankDetails == false) {
+        var speCharAccountName = specialcharacterValidation(field_AccountName);
+        var numAccountName = numberValidation(field_AccountName);
+        var numAccountNumber = onlyNumberValidate(field_AccountNumber);
+        /*  var specCharBank = specialcharacterValidation(field_Bank);
+         var numBank = numberValidation(field_Bank); */
+        /*   var specCharBRANCH = specialcharacterValidation(field_Branch);
+          var numBranch = numberValidation(field_Branch); */
 
-    var speCharAccountName = specialcharacterValidation(field_AccountName);
-    var numAccountName = numberValidation(field_AccountName);
-    var numAccountNumber = onlyNumberValidate(field_AccountNumber);
-    /*  var specCharBank = specialcharacterValidation(field_Bank);
-     var numBank = numberValidation(field_Bank); */
-    /*   var specCharBRANCH = specialcharacterValidation(field_Branch);
-      var numBranch = numberValidation(field_Branch); */
+        if (field_AccountName.length === 0) {
+            $("#err_field_AccountName").text('Field is empty');
+            $("#err_field_AccountName").show();
+        } else if (speCharAccountName) {
+            $("#err_field_AccountName").text('special character is not allowed');
+            $("#err_field_AccountName").show();
+        } else if (numAccountName) {
+            $("#err_field_AccountName").text('Number not allowed');
+            $("#err_field_AccountName").show();
+        } else {
+            $("#err_field_AccountName").text('');
+            $("#err_field_AccountName").hide();
+        }
 
-    if (field_AccountName.length === 0) {
-        $("#err_field_AccountName").text('Field is empty');
-        $("#err_field_AccountName").show();
-    } else if (speCharAccountName) {
-        $("#err_field_AccountName").text('special character is not allowed');
-        $("#err_field_AccountName").show();
-    } else if (numAccountName) {
-        $("#err_field_AccountName").text('Number not allowed');
-        $("#err_field_AccountName").show();
-    } else {
-        $("#err_field_AccountName").text('');
-        $("#err_field_AccountName").hide();
-    }
-
-    if (field_AccountNumber.length === 0) {
-        $("#err_field_AccountNumber").text('Field is empty');
-        $("#err_field_AccountNumber").show();
-    } else if (!numAccountNumber) {
-        $("#err_field_AccountNumber").text('Only number is allowed');
-        $("#err_field_AccountNumber").show();
-    } else {
-        $("#err_field_AccountNumber").text('');
-        $("#err_field_AccountNumber").hide();
-    }
+        if (field_AccountNumber.length === 0) {
+            $("#err_field_AccountNumber").text('Field is empty');
+            $("#err_field_AccountNumber").show();
+        } else if (!numAccountNumber) {
+            $("#err_field_AccountNumber").text('Only number is allowed');
+            $("#err_field_AccountNumber").show();
+        } else {
+            $("#err_field_AccountNumber").text('');
+            $("#err_field_AccountNumber").hide();
+        }
 
 
-    if (field_Bank.length <= 0) {
-        $("#err_field_Bank").text('Field is empty');
-        $("#err_field_Bank").show();
-    } else {
-        $("#err_field_Bank").text('');
-        $("#err_field_Bank").hide();
-    }
+        if (field_Bank.length <= 0) {
+            $("#err_field_Bank").text('Field is empty');
+            $("#err_field_Bank").show();
+        } else {
+            $("#err_field_Bank").text('');
+            $("#err_field_Bank").hide();
+        }
 
-    if (field_Branch.length === 0) {
-        $("#err_field_Branch").text('Field is empty');
-        $("#err_field_Branch").show();
-    }/*  else if(specCharBRANCH) {
+        if (field_Branch.length === 0) {
+            $("#err_field_Branch").text('Field is empty');
+            $("#err_field_Branch").show();
+        }/*  else if(specCharBRANCH) {
         $("#err_field_Branch").text('special character is not allowed');
         $("#err_field_Branch").show();
     } else if(numBranch) {
         $("#err_field_Branch").text('Number is not allowed');
         $("#err_field_Branch").show();
     }  */else {
-        $("#err_field_Branch").text('');
-        $("#err_field_Branch").hide();
-    }
+            $("#err_field_Branch").text('');
+            $("#err_field_Branch").hide();
+        }
 
-    if (!file6.value) {
-        $('#upload_feedback_label').show();
-        $('#upload_feedback_label').text('Please upload your Bank Account Ownership');
+        if (!file6.value) {
+            $('#upload_feedback_label').show();
+            $('#upload_feedback_label').text('Please upload your Bank Account Ownership');
+        }
     }
 
     if (field_AccountName.length !== 0 && field_AccountNumber.length !== 0 && field_Bank.length !== 0 && field_Branch.length !== 0 && file6.length !== 0 && (speCharAccountName == false) && (numAccountName == false) && (numAccountNumber == true) && (file6.value && (!$('#file_Upload_Tick_6').is(":hidden")))) {
@@ -1801,6 +1803,7 @@ function getBankDetails() {
                         $('#cover-spin').hide(0)
                         if (event.data?.accountName != null) {
                             isChangeInPayoutOption = 'Y';
+                            haveBankDetails = true;
                             document.getElementById('have_bank_details').innerHTML = ' We have your bank details on file.'
                             field_AccountName = event.data?.accountName;
                             document.getElementById('field_AccountName').value = field_AccountName;

@@ -115,7 +115,7 @@ function timer(lowerVal, UpperVal) {
         i = UpperVal;
         renderProgress(i)
       }
-      if (i == 100) {
+      if (i == UpperVal) {
 
         console.log("cleartime");
         clearTimeout(cleartime);
@@ -1923,79 +1923,81 @@ function handleAccountInfo(event) {
   var field_Bank = $("#field_Bank").val();
   var field_currency = $("from_currency").val();
   var field_Branch = $("#field_Branch").val();
-  var speCharAccountName = specialcharacterValidation(field_AccountName);
-  var numAccountName = numberValidation(field_AccountName);
-  var specAccountNumber = specialcharacterValidation(field_AccountNumber);
-  var numAccountNumber = onlyNumberValidate(field_AccountNumber);
+  if (haveBankDetails == true) {
+    var speCharAccountName = specialcharacterValidation(field_AccountName);
+    var numAccountName = numberValidation(field_AccountName);
+    var specAccountNumber = specialcharacterValidation(field_AccountNumber);
+    var numAccountNumber = onlyNumberValidate(field_AccountNumber);
 
-  var lenAccountName = fieldCheckLength(field_AccountName, 90);
-  var lenAccountNumber = fieldCheckLength(field_AccountNumber, 20);
-  var lenBranch = fieldCheckLength(field_Branch, 50);
+    var lenAccountName = fieldCheckLength(field_AccountName, 90);
+    var lenAccountNumber = fieldCheckLength(field_AccountNumber, 20);
+    var lenBranch = fieldCheckLength(field_Branch, 50);
 
-  if (field_AccountName.length === 0) {
-    $("#err_field_AccountName").text('Field is empty');
-    $("#err_field_AccountName").show();
-  } else if (lenAccountName) {
-    $("#err_field_AccountName").text("Maximum 90 characters allowed!");
-    $("#err_field_AccountName").show();
-  } else if (speCharAccountName) {
-    $("#err_field_AccountName").text('special character is not allowed');
-    $("#err_field_AccountName").show();
-  } else if (numAccountName) {
-    $("#err_field_AccountName").text('Number not allowed');
-    $("#err_field_AccountName").show();
-  } else {
-    $("#err_field_AccountName").text('');
-    $("#err_field_AccountName").hide();
-  }
+    if (field_AccountName.length === 0) {
+      $("#err_field_AccountName").text('Field is empty');
+      $("#err_field_AccountName").show();
+    } else if (lenAccountName) {
+      $("#err_field_AccountName").text("Maximum 90 characters allowed!");
+      $("#err_field_AccountName").show();
+    } else if (speCharAccountName) {
+      $("#err_field_AccountName").text('special character is not allowed');
+      $("#err_field_AccountName").show();
+    } else if (numAccountName) {
+      $("#err_field_AccountName").text('Number not allowed');
+      $("#err_field_AccountName").show();
+    } else {
+      $("#err_field_AccountName").text('');
+      $("#err_field_AccountName").hide();
+    }
 
-  if (field_AccountNumber.length === 0) {
-    $("#err_field_AccountNumber").text('Field is empty');
-    $("#err_field_AccountNumber").show();
-  } else if (lenAccountNumber) {
-    $("#err_field_AccountNumber").text("Maximum 20 characters allowed!");
-    $("#err_field_AccountNumber").show();
-  } else if (!numAccountNumber || specAccountNumber) {
-    $("#err_field_AccountNumber").text("Only number is allowed");
-    $("#err_field_AccountNumber").show();
-  } else {
-    $("#err_field_AccountNumber").text('');
-    $("#err_field_AccountNumber").hide();
-  }
+    if (field_AccountNumber.length === 0) {
+      $("#err_field_AccountNumber").text('Field is empty');
+      $("#err_field_AccountNumber").show();
+    } else if (lenAccountNumber) {
+      $("#err_field_AccountNumber").text("Maximum 20 characters allowed!");
+      $("#err_field_AccountNumber").show();
+    } else if (!numAccountNumber || specAccountNumber) {
+      $("#err_field_AccountNumber").text("Only number is allowed");
+      $("#err_field_AccountNumber").show();
+    } else {
+      $("#err_field_AccountNumber").text('');
+      $("#err_field_AccountNumber").hide();
+    }
 
-  if (field_Bank.length <= 0) {
-    $("#err_field_Bank").text('Field is empty');
-    $("#err_field_Bank").show();
-  } else {
-    $("#err_field_Bank").text('');
-    $("#err_field_Bank").hide();
-  }
+    if (field_Bank.length <= 0) {
+      $("#err_field_Bank").text('Field is empty');
+      $("#err_field_Bank").show();
+    } else {
+      $("#err_field_Bank").text('');
+      $("#err_field_Bank").hide();
+    }
 
-  if (field_Branch.length === 0) {
-    $("#err_field_Branch").text('Field is empty');
-    $("#err_field_Branch").show();
-  } else if (lenBranch) {
-    $("#err_field_Branch").text("Maximum 50 characters allowed!");
-    $("#err_field_Branch").show();
-  } else {
-    $("#err_field_Branch").text("");
-    $("#err_field_Branch").hide();
-  }
+    if (field_Branch.length === 0) {
+      $("#err_field_Branch").text('Field is empty');
+      $("#err_field_Branch").show();
+    } else if (lenBranch) {
+      $("#err_field_Branch").text("Maximum 50 characters allowed!");
+      $("#err_field_Branch").show();
+    } else {
+      $("#err_field_Branch").text("");
+      $("#err_field_Branch").hide();
+    }
 
-  if (field_currency <= 0) {
-    $("#err_field_Currency").text('Field is empty');
-    $("#err_field_Currency").show();
-  } else {
-    $("#err_field_Currency").text('');
-    $("#err_field_Currency").show();
-  }
+    if (field_currency <= 0) {
+      $("#err_field_Currency").text('Field is empty');
+      $("#err_field_Currency").show();
+    } else {
+      $("#err_field_Currency").text('');
+      $("#err_field_Currency").show();
+    }
 
-  if (!file6.value) {
-    $('#upload_feedback_label').show();
-    $('#upload_feedback_label').text('Please upload your Bank Account Ownership');
-  } else {
-    $('#upload_feedback_label').hide();
-    $('#upload_feedback_label').text('');
+    if (!file6.value) {
+      $('#upload_feedback_label').show();
+      $('#upload_feedback_label').text('Please upload your Bank Account Ownership');
+    } else {
+      $('#upload_feedback_label').hide();
+      $('#upload_feedback_label').text('');
+    }
   }
 
   if (
