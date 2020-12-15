@@ -116,23 +116,23 @@ function timer(lowerVal, UpperVal) {
         i = UpperVal;
         renderProgress(i)
       }
-      // if (i == UpperVal) {
-
-      //   console.log("cleartime");
-      //   clearTimeout(cleartime);
-      //   // document.getElementsByClassName('loader1').style.display='none'
-      //   resolve("cleartime")
-      // }
-      if (i > UpperVal) {
+      if (i == UpperVal) {
 
         console.log("cleartime");
-        clearInterval(cleartime);
-
+        clearTimeout(cleartime);
+        // document.getElementsByClassName('loader1').style.display='none'
         resolve("cleartime")
-        if (i > 100) {
-          renderProgress(0);
-        }
       }
+      // if (i > UpperVal) {
+
+      //   console.log("cleartime");
+      //   clearInterval(cleartime);
+
+      //   resolve("cleartime")
+      //   if (i > 100) {
+      //     renderProgress(0);
+      //   }
+      // }
       //  i++;
     }, 500);
   })
@@ -161,9 +161,9 @@ function renderProgress(progress) {
       .css("transform", "rotate(0deg)");
     $(".animate-75-100-b").css("transform", "rotate(" + angle + "deg)");
   }
-  if (progress != 0) {
+  // if (progress != 0) {
     $(".text").html(progress + "%");
-  }
+  // }
 
 }
 
