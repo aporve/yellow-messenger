@@ -161,7 +161,10 @@ function renderProgress(progress) {
       .css("transform", "rotate(0deg)");
     $(".animate-75-100-b").css("transform", "rotate(" + angle + "deg)");
   }
-  $(".text").html(progress + "%");
+  if (progress != 0) {
+    $(".text").html(progress + "%");
+  }
+
 }
 
 let finalPayload = {};
@@ -1224,7 +1227,7 @@ file1.onchange = async function (e) {
           console.log("setting file data : ");
           let accident = {};
           // accident['LIDC001Front'] = {
-            accident['beneficiaryNo'] = beneficiaryCount,
+          accident['beneficiaryNo'] = beneficiaryCount,
             accident["filename"] = `${fileName}.pdf`,
             accident["docType"] = "PDF",
             accident["docTypeCode"] = "LIDC001",
