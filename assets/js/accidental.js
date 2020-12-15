@@ -108,6 +108,7 @@ function timer(lowerVal, UpperVal) {
   var random = Math.floor(Math.random() * 5) + 1
   return new Promise((resolve, reject) => {
     var i = lowerVal
+    // document.getElementsByClassName('loader1').style.display = 'block'
     let cleartime = setInterval(() => {
       i = random + i;
       renderProgress(i)
