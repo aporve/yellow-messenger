@@ -1925,7 +1925,7 @@ function handleAccountInfo(event) {
   var field_Bank = $("#field_Bank").val();
   var field_currency = $("from_currency").val();
   var field_Branch = $("#field_Branch").val();
-  if (haveBankDetails == true) {
+  if (haveBankDetails == false) {
     var speCharAccountName = specialcharacterValidation(field_AccountName);
     var numAccountName = numberValidation(field_AccountName);
     var specAccountNumber = specialcharacterValidation(field_AccountNumber);
