@@ -89,8 +89,7 @@ function myDisable() {
   document.getElementById("back_btn1").style.cursor = "no-drop";
   document.getElementById("back_btn1").style.pointerEvents = "none";
   document.getElementById("bank_form").style.cursor = "no-drop";
-  document.getElementById("upload_docs_btn").disabled = true;
-  document.getElementById("upload_docs_btn").style.cursor = "no-drop";
+
   
 }
 
@@ -1802,7 +1801,8 @@ function preSubmitCall() {
         console.log(event)
         if (event.event_code == 'preSubmitResponse') { //sucess
           if (event.data.returnCode == '0') {
-            myDisable();
+            document.getElementById("upload_docs_btn").disabled = true;
+            document.getElementById("upload_docs_btn").style.cursor = "no-drop";
             timer(50, 100).then(async () => {
               $("#step2").addClass("active");
               $("#step2>div").addClass("active");
