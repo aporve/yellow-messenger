@@ -119,6 +119,7 @@ function timer(lowerVal, UpperVal) {
 
         console.log("cleartime");
         clearTimeout(cleartime);
+        document.getElementsByClassName('loader1').style.display='none'
         resolve("cleartime")
       }
       //  i++;
