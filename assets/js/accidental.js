@@ -151,7 +151,7 @@ function renderProgress(progress, id) {
       .css("transform", "rotate(0deg)");
     $("#" + id + ".animate-75-100-b").css("transform", "rotate(" + angle + "deg)");
   }
-  $(".text").html(progress + "%");
+  $("#" + id +".text").html(progress + "%");
 }
 
 let finalPayload = {};
