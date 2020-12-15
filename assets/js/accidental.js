@@ -116,12 +116,22 @@ function timer(lowerVal, UpperVal) {
         i = UpperVal;
         renderProgress(i)
       }
-      if (i == UpperVal) {
+      // if (i == UpperVal) {
+
+      //   console.log("cleartime");
+      //   clearTimeout(cleartime);
+      //   // document.getElementsByClassName('loader1').style.display='none'
+      //   resolve("cleartime")
+      // }
+      if (i > UpperVal) {
 
         console.log("cleartime");
-        clearTimeout(cleartime);
-        // document.getElementsByClassName('loader1').style.display='none'
+        clearInterval(cleartime);
+
         resolve("cleartime")
+        if (i > 100) {
+          renderProgress(0);
+        }
       }
       //  i++;
     }, 500);
