@@ -789,7 +789,7 @@ function finalSubmitCall() {
         "BeneficiaryList": BeneficiaryList
     });
     finalData['source'] = source;
-    finalData['data'] = JSON.stringify(raw);
+    finalData['data'] = raw;
     timer(50, 75)
     window.parent.postMessage(JSON.stringify({
         event_code: 'ym-client-event', data: JSON.stringify({
