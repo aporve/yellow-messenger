@@ -101,18 +101,19 @@ function addFileToList(fileObject, fileName) {
   }
 }
 
-function timer() {
+function timer(lowerVal, UpperVal) {
+
   var random = Math.floor(Math.random() * 5) + 1
   return new Promise((resolve, reject) => {
-    var i = 0
+    var i = lowerVal
     let cleartime = setInterval(() => {
       i = random + i;
       renderProgress(i)
-      if (i == 99) {
-        i = 100;
+      if (i == (UpperVal - 1)) {
+        i = UpperVal;
         renderProgress(i)
       }
-      if (i == 100) {
+      if (i == UpperVal) {
 
         console.log("cleartime");
         clearTimeout(cleartime);
@@ -122,6 +123,7 @@ function timer() {
     }, 500);
   })
 }
+
 
 function renderProgress(progress) {
   progress = Math.floor(progress);
@@ -1747,77 +1749,17 @@ function buttonSubmitClicked(event) {
     insurance_Checkbox: $('#upload_invalidCheck_2').is(':checked')
   }
 
+
+
   // $("#step2").addClass("active");
   // $("#step2>div").addClass("active");
+  // if (otpSubmitted == false) { otpTimer(); } else {
 
+  //   $('#requirements').hide();
+  //   $('#payment').show();
+  // }
 
-  // // let BankDetailsList = [];
-  // // let filesObject = {};
-  // let preSubmitObj = {};
-  // // filesObject["folderName"] = `CLAIMS/PAL/${referenceNumber}`
-  // // filesObject["fileList"] = filesList;
-
-  // preSubmitObj["basicInformation"] = basicInformation;
-  // preSubmitObj["insuredInformation"] = InsuredInformation;
-  // // preSubmitObj["bankDetailsList"] = BankDetailsList;
-  // // preSubmitObj["filesInformation"] = filesObject;
-  // preSubmitObj["beneficiaryList"] = [];
-
-  console.log('upload data --> ', upload_data);
-
-
-
-
-  $("#step2").addClass("active");
-  $("#step2>div").addClass("active");
-  if (otpSubmitted == false) { otpTimer(); } else {
-
-    $('#requirements').hide();
-    $('#payment').show();
-  }
-
-  // window.parent.postMessage(JSON.stringify({
-  //   event_code: 'ym-client-event', data: JSON.stringify({
-  //     event: {
-  //       code: "preSubmit",
-  //       data: JSON.stringify(preSubmitObj)
-  //     }
-  //   })
-  // }), '*');
-
-  // window.addEventListener('message', function (eventData) {
-
-  //   console.log("receiving presubmit event in acc")
-  //   // console.log(event.data.event_code)
-  //   try {
-
-  //     if (eventData.data) {
-  //       let event = JSON.parse(eventData.data);
-  //       console.log(event)
-  //       if (event.event_code == 'preSubmitResponse') { //sucess
-  //         if (event.data == '0') {
-  //           $("#step2").addClass("active");
-  //           $("#step2>div").addClass("active");
-  //           if (otpSubmitted == false) { otpTimer(); } else {
-
-  //             $('#requirements').hide();
-  //             $('#payment').show();
-  //           }
-  //         }
-  //         else {
-
-  //         }
-  //       }
-  //       else {
-
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-
-  // })
-
+  preSubmitCall()
 
 }
 
@@ -1836,7 +1778,7 @@ function preSubmitCall() {
   var preSubmitPayload = {}
   preSubmitPayload['source'] = source;
   preSubmitPayload['data'] = raw;
-
+  timer(0, 50)
   window.parent.postMessage(JSON.stringify({
     event_code: 'ym-client-event', data: JSON.stringify({
       event: {
@@ -1857,21 +1799,25 @@ function preSubmitCall() {
         console.log(event)
         if (event.event_code == 'preSubmitResponse') { //sucess
           if (event.data.returnCode == '0') {
-            // $("#step2").addClass("active");
-            // $("#step2>div").addClass("active");
-            // if (otpSubmitted == false) { otpTimer(); } else {
+            timer(50, 100).then(async () => {
+              $("#step2").addClass("active");
+              $("#step2>div").addClass("active");
+              if (otpSubmitted == false) { otpTimer(); } else {
 
-            //   $('#requirements').hide();
-            //   $('#payment').show();
-            // }
-          }
-          else {
-
+                $('#requirements').hide();
+                $('#payment').show();
+              }
+            })
           }
         }
+
         else {
 
         }
+      }
+      else {
+
+
       }
     } catch (error) {
       console.log(error)
@@ -1906,7 +1852,7 @@ function finalSubmitCall() {
   });
   finalData['source'] = source;
   finalData['data'] = JSON.stringify(raw);
-
+  timer(0, 50)
   window.parent.postMessage(JSON.stringify({
     event_code: 'ym-client-event', data: JSON.stringify({
       event: {
@@ -1927,19 +1873,22 @@ function finalSubmitCall() {
         console.log(event)
         if (event.event_code == 'finalSubmitResponse') { //sucess
           if (event.data.returnCode == '0') {
-            // myDisable()
-            // timer().then(async () => {
-            //   $("#step2").addClass("done");
-            //   /*  $("#step3").addClass("active");
-            //    $("#step3>div").addClass("active"); */
-            //   /* $("#step3").addClass("done"); */
-            //   $("#step3_circle").addClass("md-step-step3-circle ");
-            //   $("#step3_span").addClass("md-step3-span");
-            //   $("#step3_reference").addClass("md-step3-span")
-            //   $("#account_details").hide();
-            //   $("#process_confirmation").show();
-            //   console.log("Data -> ", data);
-            // });
+            myDisable()
+            timer(50, 100).then(async () => {
+              $("#step2").addClass("done");
+              /*  $("#step3").addClass("active");
+               $("#step3>div").addClass("active"); */
+              /* $("#step3").addClass("done"); */
+              $("#step3_circle").addClass("md-step-step3-circle ");
+              $("#step3_span").addClass("md-step3-span");
+              $("#step3_reference").addClass("md-step3-span")
+              $("#account_details").hide();
+              $("#account_details1").hide();
+              $("#pickUp").hide();
+              $("#process_confirmation").show();
+
+            });
+
           }
           else {
             $("#popUp").modal("show");
@@ -2085,79 +2034,35 @@ function handleAccountInfo(event) {
     // InsuredInformation["PayoutOption"] = "CTA";
     BeneficiaryList['payoutOption'] = 'CTA';
 
-    var finalData = {}
-    var source = 'Accident';
-    var raw = {};
-    raw['basicInformation'] = basicInformation;
-    raw['insuredInformation'] = InsuredInformation;
-    raw['bankDetailsList'] = BankDetailsList;
-    raw['filesInformation'] = filesObject;
-    raw["beneficiaryList"] = BeneficiaryList;
-    finalData['source'] = source;
-    finalData['data'] = JSON.stringify(raw);
-
-    // window.parent.postMessage(JSON.stringify({
-    //   event_code: 'ym-client-event', data: JSON.stringify({
-    //     event: {
-    //       code: "preSubmit",
-    //       data: finalData
-    //     }
-    //   })
-    // }), '*');
-    // $('#spin1').show()
-    // window.addEventListener('message', function (eventData) {
-
-    //   console.log("receiving presubmit event in acc")
-    //   // console.log(event.data.event_code)
-    //   try {
-    //     if (eventData.data) {
-    //       let event = JSON.parse(eventData.data);
-    //       console.log(event)
-    //       if (event.event_code == 'preSubmitResponse') { //sucess
-    //         if (event.data.returnCode == '0') {
-    //           myDisable()
-    //           timer().then(async () => {
-    //             $("#step2").addClass("done");
-    //             /*  $("#step3").addClass("active");
-    //              $("#step3>div").addClass("active"); */
-    //             /* $("#step3").addClass("done"); */
-    //             $("#step3_circle").addClass("md-step-step3-circle ");
-    //             $("#step3_span").addClass("md-step3-span");
-    //             $("#step3_reference").addClass("md-step3-span")
-    //             $("#account_details").hide();
-    //             $("#process_confirmation").show();
-    //             console.log("Data -> ", data);
-    //           });
-    //         }
-    //         else {
-    //           $("#popUp").modal("show");
-    //         }
-    //       }
-    //       else {
-    //         $("#popUp").modal("show");
-    //       }
-    //     }
-    //   } catch (error) {
-    //     console.log(error)
-    //   }
-
-    // })
-    //
+    // var finalData = {}
+    // var source = 'Accident';
+    // var raw = {};
+    // raw['basicInformation'] = basicInformation;
+    // raw['insuredInformation'] = InsuredInformation;
+    // raw['bankDetailsList'] = BankDetailsList;
+    // raw['filesInformation'] = filesObject;
+    // raw["beneficiaryList"] = BeneficiaryList;
+    // finalData['source'] = source;
+    // finalData['data'] = JSON.stringify(raw);
 
 
-    myDisable()
-    timer().then(async () => {
-      $("#step2").addClass("done");
-      /*  $("#step3").addClass("active");
-       $("#step3>div").addClass("active"); */
-      /* $("#step3").addClass("done"); */
-      $("#step3_circle").addClass("md-step-step3-circle ");
-      $("#step3_span").addClass("md-step3-span");
-      $("#step3_reference").addClass("md-step3-span")
-      $("#account_details").hide();
-      $("#process_confirmation").show();
-      console.log("Data -> ", data);
-    });
+
+
+    // myDisable()
+    // timer().then(async () => {
+    //   $("#step2").addClass("done");
+    //   /*  $("#step3").addClass("active");
+    //    $("#step3>div").addClass("active"); */
+    //   /* $("#step3").addClass("done"); */
+    //   $("#step3_circle").addClass("md-step-step3-circle ");
+    //   $("#step3_span").addClass("md-step3-span");
+    //   $("#step3_reference").addClass("md-step3-span")
+    //   $("#account_details").hide();
+    //   $("#process_confirmation").show();
+    //   console.log("Data -> ", data);
+    // });
+    finalSubmitCall()
+
   } else {
     $("#popUp").modal("show");
   }
@@ -2409,16 +2314,16 @@ function pickUp() {
   // finalPayload["stageThree"] = true;
   // finalPayload["referenceNumber"] = referenceNumber;
 
-  console.log("pick up payload : ")
-  console.log(finalPayload)
-  window.parent.postMessage(JSON.stringify({
-    event_code: 'ym-client-event', data: JSON.stringify({
-      event: {
-        code: "finalEvent",
-        data: JSON.stringify(finalPayload)
-      }
-    })
-  }), '*');
+  // console.log("pick up payload : ")
+  // console.log(finalPayload)
+  // window.parent.postMessage(JSON.stringify({
+  //   event_code: 'ym-client-event', data: JSON.stringify({
+  //     event: {
+  //       code: "finalEvent",
+  //       data: JSON.stringify(finalPayload)
+  //     }
+  //   })
+  // }), '*');
   $('#payment').hide();
   /* $('#process_confirmation').show(); */
   $("#pickUp").show();
@@ -2428,110 +2333,30 @@ function pickUp() {
 }
 
 function pickup_Bpi() {
-  var finalData = {}
-  var source = 'Accident';
-  var raw = {};
-  let filesObject = {};
-  filesObject["FolderName"] = `CLAIMS/PAL/${referenceNumber}`
-  filesObject["FileList"] = filesList;
-  let BankDetailsList = [];
-  let BeneficiaryList = [];
-  BeneficiaryList['payoutOption'] = 'PUA'
-  // BankDetailsList.push(BankDetails);
-  raw['basicInformation'] = basicInformation;
-  raw['insuredInformation'] = InsuredInformation;
-  raw['bankDetailsList'] = BankDetailsList;
-  raw['filesInformation'] = filesObject;
-  raw["beneficiaryList"] = BeneficiaryList;
-  finalData['source'] = source;
-  finalData['data'] = JSON.stringify(raw);
+  finalSubmitCall()
 
-  myDisable()
-  timer().then(async () => {
-    // $("#step2").addClass("done");
-    // /*  $("#step3").addClass("active");
-    //  $("#step3>div").addClass("active"); */
-    // /* $("#step3").addClass("done"); */
-    // $("#step3_circle").addClass("md-step-step3-circle ");
-    // $("#step3_span").addClass("md-step3-span");
-    // $("#step3_reference").addClass("md-step3-span")
-    // $("#account_details").hide();
-    // $("#process_confirmation").show();
-    // console.log("Data -> ", data);
-
-    $("#pickUp").hide();
-    $('#process_confirmation').show();
-    $("#step2").addClass("done");
-    $("#step3_circle").addClass("md-step-step3-circle ");
-    $("#step3_span").addClass("md-step3-span");
-    $("#step3_reference").addClass("md-step3-span")
-    /*  $("#step3").addClass("active");
-     $("#step3>div").addClass("active"); */
-    /*  $("#step3").addClass("done"); */
-  });
-  // window.parent.postMessage(JSON.stringify({
-  //   event_code: 'ym-client-event', data: JSON.stringify({
-  //     event: {
-  //       code: "preSubmit",
-  //       data: finalData
-  //     }
-  //   })
-  // }), '*');
-  // window.addEventListener('message', function (eventData) {
-
-  //   console.log("receiving presubmit event in acc")
-  //   // console.log(event.data.event_code)
-  //   try {
-
-  //     if (eventData.data) {
-  //       let event = JSON.parse(eventData.data);
-  //       console.log(event)
-  //       if (event.event_code == 'preSubmitResponse') { //sucess
-  //         if (event.data.returnCode == '0') {
-  //           myDisable()
-  //           timer().then(async () => {
-  //             $("#step2").addClass("done");
-  //             /*  $("#step3").addClass("active");
-  //              $("#step3>div").addClass("active"); */
-  //             /* $("#step3").addClass("done"); */
-  //             $("#step3_circle").addClass("md-step-step3-circle ");
-  //             $("#step3_span").addClass("md-step3-span");
-  //             $("#step3_reference").addClass("md-step3-span")
-  //             $("#account_details").hide();
-  //             $("#process_confirmation").show();
-  //             console.log("Data -> ", data);
-  //           });
-  //         }
-  //         else {
-  //           $("#popUp").modal("show");
-  //         }
-  //       }
-  //       else {
-  //         $("#popUp").modal("show");
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-
-  // })
+  // var finalData = {}
+  // var source = 'Accident';
+  // var raw = {};
+  // let filesObject = {};
+  // filesObject["FolderName"] = `CLAIMS/PAL/${referenceNumber}`
+  // filesObject["FileList"] = filesList;
+  // let BankDetailsList = [];
+  // let BeneficiaryList = [];
+  // BeneficiaryList['payoutOption'] = 'PUA'
+  // // BankDetailsList.push(BankDetails);
+  // raw['basicInformation'] = basicInformation;
+  // raw['insuredInformation'] = InsuredInformation;
+  // raw['bankDetailsList'] = BankDetailsList;
+  // raw['filesInformation'] = filesObject;
+  // raw["beneficiaryList"] = BeneficiaryList;
+  // finalData['source'] = source;
+  // finalData['data'] = JSON.stringify(raw);
 
 
 
 
 
-
-
-
-  // $("#pickUp").hide();
-  // $('#process_confirmation').show();
-  // $("#step2").addClass("done");
-  // $("#step3_circle").addClass("md-step-step3-circle ");
-  // $("#step3_span").addClass("md-step3-span");
-  // $("#step3_reference").addClass("md-step3-span")
-  /*  $("#step3").addClass("active");
-   $("#step3>div").addClass("active"); */
-  /*  $("#step3").addClass("done"); */
 }
 
 function addBank(event) {
@@ -2624,7 +2449,7 @@ function handleAddBankInfo(event) {
       field_Currency1: $("select#from_currency1 option").filter(":selected").val(),
       upload_file_6: file6.value
     }
-    // var BankDetails = {}
+    var BankDetails = {}
     let BankDetailsList = [];
     let BeneficiaryList = [];
     BankDetails["beneficiaryNo"] = 1
@@ -2637,88 +2462,26 @@ function handleAddBankInfo(event) {
 
 
 
-    let filesObject = {};
-    filesObject["FolderName"] = `CLAIMS/PAL/${referenceNumber}`
-    filesObject["FileList"] = filesList;
+    // let filesObject = {};
+    // filesObject["FolderName"] = `CLAIMS/PAL/${referenceNumber}`
+    // filesObject["FileList"] = filesList;
 
-    // InsuredInformation["PayoutOption"] = "CTA";
-    BeneficiaryList['payoutOption'] = 'CTA';
+    // // InsuredInformation["PayoutOption"] = "CTA";
+    // BeneficiaryList['payoutOption'] = 'CTA';
 
-    var finalData = {}
-    var source = 'Accident';
-    var raw = {};
-    raw['basicInformation'] = basicInformation;
-    raw['insuredInformation'] = InsuredInformation;
-    raw['bankDetailsList'] = BankDetailsList;
-    raw['filesInformation'] = filesObject;
-    raw["beneficiaryList"] = BeneficiaryList;
-    finalData['source'] = source;
-    finalData['data'] = JSON.stringify(raw);
+    // var finalData = {}
+    // var source = 'Accident';
+    // var raw = {};
+    // raw['basicInformation'] = basicInformation;
+    // raw['insuredInformation'] = InsuredInformation;
+    // raw['bankDetailsList'] = BankDetailsList;
+    // raw['filesInformation'] = filesObject;
+    // raw["beneficiaryList"] = BeneficiaryList;
+    // finalData['source'] = source;
+    // finalData['data'] = JSON.stringify(raw);
 
-    // window.parent.postMessage(JSON.stringify({
-    //   event_code: 'ym-client-event', data: JSON.stringify({
-    //     event: {
-    //       code: "preSubmit",
-    //       data: finalData
-    //     }
-    //   })
-    // }), '*');
-    // window.addEventListener('message', function (eventData) {
+    finalSubmitCall()
 
-    //   console.log("receiving presubmit event in acc")
-    //   // console.log(event.data.event_code)
-    //   try {
-
-    //     if (eventData.data) {
-    //       let event = JSON.parse(eventData.data);
-    //       console.log(event)
-    //       if (event.event_code == 'preSubmitResponse') { //sucess
-    //         if (event.data.returnCode == '0') {
-    //           myDisable()
-    //           timer().then(async () => {
-    //             $("#step2").addClass("done");
-    //             /*  $("#step3").addClass("active");
-    //              $("#step3>div").addClass("active"); */
-    //             /* $("#step3").addClass("done"); */
-    //             $("#step3_circle").addClass("md-step-step3-circle ");
-    //             $("#step3_span").addClass("md-step3-span");
-    //             $("#step3_reference").addClass("md-step3-span")
-    //             $("#account_details").hide();
-    //             $("#process_confirmation").show();
-    //             console.log("Data -> ", data);
-    //           });
-    //         }
-    //         else {
-    //           $("#popUp").modal("show");
-    //         }
-    //       }
-    //       else {
-    //         $("#popUp").modal("show");
-    //       }
-    //     }
-    //   } catch (error) {
-    //     console.log(error)
-    //   }
-
-    // })
-
-
-
-
-
-    myDisable()
-    timer().then(async () => {
-      $("#step2").addClass("done");
-      /*  $("#step3").addClass("active");
-       $("#step3>div").addClass("active"); */
-      /* $("#step3").addClass("done"); */
-      $("#step3_circle").addClass("md-step-step3-circle ");
-      $("#step3_span").addClass("md-step3-span");
-      $("#step3_reference").addClass("md-step3-span")
-      $("#account_details").hide();
-      $("#process_confirmation").show();
-      console.log("Data -> ", data);
-    });
   }
 }
 function closeModal() {
