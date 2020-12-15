@@ -116,13 +116,16 @@ function timer(lowerVal, UpperVal) {
         i = UpperVal;
         renderProgress(i)
       }
-      if (i == 100) {
+      if (i == UpperVal) {
 
         console.log("cleartime");
+        if (UpperVal == 100) {
+          i = 0;
+          renderProgress(i)
+        }
         clearTimeout(cleartime);
         
-        i = 0;
-        renderProgress(i)
+      
         // document.getElementsByClassName('loader1').style.display='none'
         resolve("cleartime")
       }
