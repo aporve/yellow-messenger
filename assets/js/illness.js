@@ -1595,8 +1595,8 @@ function handleAccountInfo(event) {
             $('#upload_feedback_label').show();
             $('#upload_feedback_label').text('Please upload your Bank Account Ownership');
         }
-    }
-    if (haveBankDetails == false) {
+    
+
         if (field_AccountName.length !== 0 && field_AccountNumber.length !== 0
             && field_Bank.length !== 0 && field_Branch.length !== 0 &&
             file6.length !== 0 && (speCharAccountName == false) && (numAccountName == false)
@@ -1663,6 +1663,7 @@ function handleAccountInfo(event) {
             $('#popUp').modal('show');
         }
     }
+
     else {
         finalSubmitCall();
     }

@@ -2000,8 +2000,8 @@ function handleAccountInfo(event) {
       $('#upload_feedback_label').hide();
       $('#upload_feedback_label').text('');
     }
-  }
-  if (haveBankDetails == false) {
+
+
     if (
       field_AccountName.length !== 0 &&
       field_AccountNumber.length !== 0 &&
@@ -2078,6 +2078,7 @@ function handleAccountInfo(event) {
     } else {
       $("#popUp").modal("show");
     }
+
   }
   else {
     let BankDetailsList = [];
