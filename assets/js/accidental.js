@@ -1851,7 +1851,7 @@ function finalSubmitCall() {
     "companyName": "PAL",
     "webReferenceNumber": referenceNumber,
     "payoutOption": payoutOption,
-    "bankDetails": BankDetailsList,
+    "bankDetailsList": BankDetailsList,
     "isChangeInPayoutOption": isChangeInPayoutOption,
     "isChangeInBankDetails": isChangeInBankDetails,
     "filesInformation": filesObject,
