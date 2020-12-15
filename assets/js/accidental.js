@@ -103,7 +103,7 @@ function addFileToList(fileObject, fileName) {
   }
 }
 
-function timer(lowerVal, UpperVal) {
+function timer(lowerVal, UpperVal, screen) {
 
   var random = Math.floor(Math.random() * 5) + 1
   return new Promise((resolve, reject) => {
@@ -111,10 +111,10 @@ function timer(lowerVal, UpperVal) {
     // document.getElementsByClassName('loader1').style.display = 'block'
     let cleartime = setInterval(() => {
       i = random + i;
-      renderProgress(i)
+      renderProgress(i, screen)
       if (i == (UpperVal - 1)) {
         i = UpperVal;
-        renderProgress(i)
+        renderProgress(i, screen)
       }
       if (i == UpperVal) {
 
@@ -129,27 +129,27 @@ function timer(lowerVal, UpperVal) {
 }
 
 
-function renderProgress(progress) {
+function renderProgress(progress, id) {
   progress = Math.floor(progress);
   if (progress < 25) {
     var angle = -90 + (progress / 100) * 360;
-    $(".animate-0-25-b").css("transform", "rotate(" + angle + "deg)");
+    $("#" + id + " .animate-0-25-b").css("transform", "rotate(" + angle + "deg)");
   }
   else if (progress >= 25 && progress < 50) {
     var angle = -90 + ((progress - 25) / 100) * 360;
-    $(".animate-0-25-b").css("transform", "rotate(0deg)");
-    $(".animate-25-50-b").css("transform", "rotate(" + angle + "deg)");
+    $("#" + id + ".animate-0-25-b").css("transform", "rotate(0deg)");
+    $("#" + id + ".animate-25-50-b").css("transform", "rotate(" + angle + "deg)");
   }
   else if (progress >= 50 && progress < 75) {
     var angle = -90 + ((progress - 50) / 100) * 360;
-    $(".animate-25-50-b, .animate-0-25-b").css("transform", "rotate(0deg)");
-    $(".animate-50-75-b").css("transform", "rotate(" + angle + "deg)");
+    $("#" + id + ".animate-25-50-b, .animate-0-25-b").css("transform", "rotate(0deg)");
+    $("#" + id + ".animate-50-75-b").css("transform", "rotate(" + angle + "deg)");
   }
   else if (progress >= 75 && progress <= 100) {
     var angle = -90 + ((progress - 75) / 100) * 360;
-    $(".animate-50-75-b, .animate-25-50-b, .animate-0-25-b")
+    $("#" + id + ".animate-50-75-b, .animate-25-50-b, .animate-0-25-b")
       .css("transform", "rotate(0deg)");
-    $(".animate-75-100-b").css("transform", "rotate(" + angle + "deg)");
+    $("#" + id + ".animate-75-100-b").css("transform", "rotate(" + angle + "deg)");
   }
   $(".text").html(progress + "%");
 }
@@ -1784,7 +1784,7 @@ function preSubmitCall() {
   preSubmitPayload['data'] = raw;
   document.getElementById("upload_docs_btn").disabled = true;
   document.getElementById("upload_docs_btn").style.cursor = "no-drop";
-  timer(0, 50)
+  timer(0, 50, 'spin_loader_2')
   window.parent.postMessage(JSON.stringify({
     event_code: 'ym-client-event', data: JSON.stringify({
       event: {
@@ -1805,7 +1805,7 @@ function preSubmitCall() {
         console.log(event)
         if (event.event_code == 'preSubmitResponse') { //sucess
           if (event.data.returnCode == '0') {
-            timer(50, 100).then(async () => {
+            timer(50, 100, 'spin_loader_2').then(async () => {
               $("#step2").addClass("active");
               $("#step2>div").addClass("active");
               if (otpSubmitted == false) { otpTimer(); } else {
