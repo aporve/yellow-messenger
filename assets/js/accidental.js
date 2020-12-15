@@ -90,7 +90,7 @@ function myDisable() {
   document.getElementById("back_btn1").style.pointerEvents = "none";
   document.getElementById("bank_form").style.cursor = "no-drop";
 
-  
+
 }
 
 function addFileToList(fileObject, fileName) {
@@ -1853,6 +1853,10 @@ function finalSubmitCall() {
     "isChangeInPayoutOption": isChangeInPayoutOption,
     "isChangeInBankDetails": isChangeInBankDetails,
     "filesInformation": filesObject,
+
+    "BasicInformation": basicInformation,
+    "InsuredInformation": InsuredInformation,
+    "BeneficiaryList": []
   });
   finalData['source'] = source;
   finalData['data'] = JSON.stringify(raw);
