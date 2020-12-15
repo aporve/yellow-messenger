@@ -119,13 +119,7 @@ function timer(lowerVal, UpperVal) {
       if (i == UpperVal) {
 
         console.log("cleartime");
-        if (UpperVal == 100) {
-          i = 0;
-          renderProgress(i)
-        }
         clearTimeout(cleartime);
-        
-      
         // document.getElementsByClassName('loader1').style.display='none'
         resolve("cleartime")
       }
@@ -157,7 +151,7 @@ function renderProgress(progress) {
       .css("transform", "rotate(0deg)");
     $(".animate-75-100-b").css("transform", "rotate(" + angle + "deg)");
   }
-  $("#" + id +".text").html(progress + "%");
+  $(".text").html(progress + "%");
 }
 
 let finalPayload = {};
