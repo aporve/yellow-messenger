@@ -116,7 +116,7 @@ function timer(lowerVal, UpperVal) {
         i = UpperVal;
         renderProgress(i)
       }
-      if (i == UpperVal) {
+      if (i == 100) {
 
         console.log("cleartime");
         clearTimeout(cleartime);
