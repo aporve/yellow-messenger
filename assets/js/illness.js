@@ -1596,67 +1596,75 @@ function handleAccountInfo(event) {
             $('#upload_feedback_label').text('Please upload your Bank Account Ownership');
         }
     }
+    if (haveBankDetails == false) {
+        if (field_AccountName.length !== 0 && field_AccountNumber.length !== 0
+            && field_Bank.length !== 0 && field_Branch.length !== 0 &&
+            file6.length !== 0 && (speCharAccountName == false) && (numAccountName == false)
+            && (numAccountNumber == true) &&
+            (file6.value && (!$('#file_Upload_Tick_6').is(":hidden")))) {
+            const data = {
+                field_AccountName,
+                field_AccountNumber,
+                field_Bank,
+                field_Branch,
+                field_Currency: $("select#from_currency option").filter(":selected").val(),
+                upload_file_6: file6.value
+            }
+            finalSubmitCall();
+            // myDisable()
+            // timer().then(async () => {
+            //     $("#step2").addClass("done");
+            //     $("#step3_circle").addClass("md-step-step3-circle ");
+            //     $("#step3_span").addClass("md-step3-span");
+            //     $("#step3_reference").addClass("md-step3-span")
+            //     /* $("#step3").addClass("active");
+            //     $("#step3>div").addClass("active");
+            //     $("#step3").addClass("done"); */
+            //     $('#account_details').hide();
+            //     $('#process_confirmation').show();
+            //     console.log('Data -> ', data)
 
-    if (field_AccountName.length !== 0 && field_AccountNumber.length !== 0 && field_Bank.length !== 0 && field_Branch.length !== 0 && file6.length !== 0 && (speCharAccountName == false) && (numAccountName == false) && (numAccountNumber == true) && (file6.value && (!$('#file_Upload_Tick_6').is(":hidden")))) {
-        const data = {
-            field_AccountName,
-            field_AccountNumber,
-            field_Bank,
-            field_Branch,
-            field_Currency: $("select#from_currency option").filter(":selected").val(),
-            upload_file_6: file6.value
+            //     BankDetails["BeneficiaryNo"] = 1;
+            //     BankDetails["BankName"] = field_Bank;
+            //     BankDetails["BankBranch"] = field_Branch;
+            //     BankDetails["AccountName"] = field_AccountName;
+            //     BankDetails["AccountNumber"] = field_AccountNumber;
+            //     BankDetails["AccountCurrency"] = $("select#from_currency option").filter(":selected").val();
+            //     let BankDetailsList = [];
+            //     BankDetailsList.push(BankDetails);
+
+            //     let filesObject = {};
+            //     filesObject["FolderName"] = `CLAIMS/PAL/${referenceNumber}`
+            //     filesObject["FileList"] = filesList;
+
+            //     // filesMap["Accident"] = accident
+            //     InsuredInformation["PayoutOption"] = "CTA";
+
+
+            //     finalPayload["BasicInformation"] = basicInformation;
+            //     finalPayload["InsuredInformation"] = InsuredInformation;
+            //     finalPayload["BankDetailsList"] = BankDetailsList;
+            //     finalPayload["FilesInformation"] = filesObject;
+            //     // finalPayload["stageThree"] = true;
+            //     // finalPayload["referenceNumber"] = referenceNumber;
+
+            //     console.log("FPB : ")
+            //     console.log(finalPayload)
+            //     window.parent.postMessage(JSON.stringify({
+            //         event_code: 'ym-client-event', data: JSON.stringify({
+            //             event: {
+            //                 code: "finalEvent",
+            //                 data: JSON.stringify(finalPayload)
+            //             }
+            //         })
+            //     }), '*');
+            // });
+        } else {
+            $('#popUp').modal('show');
         }
+    }
+    else {
         finalSubmitCall();
-        // myDisable()
-        // timer().then(async () => {
-        //     $("#step2").addClass("done");
-        //     $("#step3_circle").addClass("md-step-step3-circle ");
-        //     $("#step3_span").addClass("md-step3-span");
-        //     $("#step3_reference").addClass("md-step3-span")
-        //     /* $("#step3").addClass("active");
-        //     $("#step3>div").addClass("active");
-        //     $("#step3").addClass("done"); */
-        //     $('#account_details').hide();
-        //     $('#process_confirmation').show();
-        //     console.log('Data -> ', data)
-
-        //     BankDetails["BeneficiaryNo"] = 1;
-        //     BankDetails["BankName"] = field_Bank;
-        //     BankDetails["BankBranch"] = field_Branch;
-        //     BankDetails["AccountName"] = field_AccountName;
-        //     BankDetails["AccountNumber"] = field_AccountNumber;
-        //     BankDetails["AccountCurrency"] = $("select#from_currency option").filter(":selected").val();
-        //     let BankDetailsList = [];
-        //     BankDetailsList.push(BankDetails);
-
-        //     let filesObject = {};
-        //     filesObject["FolderName"] = `CLAIMS/PAL/${referenceNumber}`
-        //     filesObject["FileList"] = filesList;
-
-        //     // filesMap["Accident"] = accident
-        //     InsuredInformation["PayoutOption"] = "CTA";
-
-
-        //     finalPayload["BasicInformation"] = basicInformation;
-        //     finalPayload["InsuredInformation"] = InsuredInformation;
-        //     finalPayload["BankDetailsList"] = BankDetailsList;
-        //     finalPayload["FilesInformation"] = filesObject;
-        //     // finalPayload["stageThree"] = true;
-        //     // finalPayload["referenceNumber"] = referenceNumber;
-
-        //     console.log("FPB : ")
-        //     console.log(finalPayload)
-        //     window.parent.postMessage(JSON.stringify({
-        //         event_code: 'ym-client-event', data: JSON.stringify({
-        //             event: {
-        //                 code: "finalEvent",
-        //                 data: JSON.stringify(finalPayload)
-        //             }
-        //         })
-        //     }), '*');
-        // });
-    } else {
-        $('#popUp').modal('show');
     }
 }
 

@@ -2001,32 +2001,85 @@ function handleAccountInfo(event) {
       $('#upload_feedback_label').text('');
     }
   }
+  if (haveBankDetails == false) {
+    if (
+      field_AccountName.length !== 0 &&
+      field_AccountNumber.length !== 0 &&
+      field_Bank.length !== 0 &&
+      field_Branch.length !== 0 &&
+      file6.length !== 0 &&
+      speCharAccountName == false &&
+      numAccountName == false &&
+      numAccountNumber == true &&
+      lenAccountName == false &&
+      lenAccountNumber == false &&
+      lenBranch == false &&
+      file6.value &&
+      !$("#file_Upload_Tick_6").is(":hidden")
+    ) {
+      const data = {
+        field_AccountName,
+        field_AccountNumber,
+        field_Bank,
+        field_Branch,
+        field_Currency: $("select#from_currency option")
+          .filter(":selected")
+          .val(),
+        upload_file_6: file6.value,
+      };
+      let BankDetailsList = [];
+      let BeneficiaryList = [];
+      BankDetails["beneficiaryNo"] = 1;
+      BankDetails["bankName"] = field_Bank;
+      BankDetails["bankBranch"] = field_Branch;
+      BankDetails["accountName"] = field_AccountName;
+      BankDetails["accountNumber"] = field_AccountNumber;
+      BankDetails["accountCurrency"] = field_currency ? field_Currency : $("select#from_currency option").filter(":selected").val();
 
-  if (
-    field_AccountName.length !== 0 &&
-    field_AccountNumber.length !== 0 &&
-    field_Bank.length !== 0 &&
-    field_Branch.length !== 0 &&
-    file6.length !== 0 &&
-    speCharAccountName == false &&
-    numAccountName == false &&
-    numAccountNumber == true &&
-    lenAccountName == false &&
-    lenAccountNumber == false &&
-    lenBranch == false &&
-    file6.value &&
-    !$("#file_Upload_Tick_6").is(":hidden")
-  ) {
-    const data = {
-      field_AccountName,
-      field_AccountNumber,
-      field_Bank,
-      field_Branch,
-      field_Currency: $("select#from_currency option")
-        .filter(":selected")
-        .val(),
-      upload_file_6: file6.value,
-    };
+
+      BankDetailsList.push(BankDetails);
+
+      let filesObject = {};
+      filesObject["FolderName"] = `CLAIMS/PAL/${referenceNumber}`
+      filesObject["FileList"] = filesList;
+
+      // InsuredInformation["PayoutOption"] = "CTA";
+      BeneficiaryList['payoutOption'] = 'CTA';
+
+      // var finalData = {}
+      // var source = 'Accident';
+      // var raw = {};
+      // raw['basicInformation'] = basicInformation;
+      // raw['insuredInformation'] = InsuredInformation;
+      // raw['bankDetailsList'] = BankDetailsList;
+      // raw['filesInformation'] = filesObject;
+      // raw["beneficiaryList"] = BeneficiaryList;
+      // finalData['source'] = source;
+      // finalData['data'] = JSON.stringify(raw);
+
+
+
+
+      // myDisable()
+      // timer().then(async () => {
+      //   $("#step2").addClass("done");
+      //   /*  $("#step3").addClass("active");
+      //    $("#step3>div").addClass("active"); */
+      //   /* $("#step3").addClass("done"); */
+      //   $("#step3_circle").addClass("md-step-step3-circle ");
+      //   $("#step3_span").addClass("md-step3-span");
+      //   $("#step3_reference").addClass("md-step3-span")
+      //   $("#account_details").hide();
+      //   $("#process_confirmation").show();
+      //   console.log("Data -> ", data);
+      // });
+      finalSubmitCall()
+
+    } else {
+      $("#popUp").modal("show");
+    }
+  }
+  else {
     let BankDetailsList = [];
     let BeneficiaryList = [];
     BankDetails["beneficiaryNo"] = 1;
@@ -2046,37 +2099,7 @@ function handleAccountInfo(event) {
     // InsuredInformation["PayoutOption"] = "CTA";
     BeneficiaryList['payoutOption'] = 'CTA';
 
-    // var finalData = {}
-    // var source = 'Accident';
-    // var raw = {};
-    // raw['basicInformation'] = basicInformation;
-    // raw['insuredInformation'] = InsuredInformation;
-    // raw['bankDetailsList'] = BankDetailsList;
-    // raw['filesInformation'] = filesObject;
-    // raw["beneficiaryList"] = BeneficiaryList;
-    // finalData['source'] = source;
-    // finalData['data'] = JSON.stringify(raw);
-
-
-
-
-    // myDisable()
-    // timer().then(async () => {
-    //   $("#step2").addClass("done");
-    //   /*  $("#step3").addClass("active");
-    //    $("#step3>div").addClass("active"); */
-    //   /* $("#step3").addClass("done"); */
-    //   $("#step3_circle").addClass("md-step-step3-circle ");
-    //   $("#step3_span").addClass("md-step3-span");
-    //   $("#step3_reference").addClass("md-step3-span")
-    //   $("#account_details").hide();
-    //   $("#process_confirmation").show();
-    //   console.log("Data -> ", data);
-    // });
     finalSubmitCall()
-
-  } else {
-    $("#popUp").modal("show");
   }
 }
 
