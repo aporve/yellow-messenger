@@ -1780,6 +1780,8 @@ function preSubmitCall() {
   var preSubmitPayload = {}
   preSubmitPayload['source'] = source;
   preSubmitPayload['data'] = raw;
+  document.getElementById("upload_docs_btn").disabled = true;
+  document.getElementById("upload_docs_btn").style.cursor = "no-drop";
   timer(0, 50)
   window.parent.postMessage(JSON.stringify({
     event_code: 'ym-client-event', data: JSON.stringify({
@@ -1801,8 +1803,6 @@ function preSubmitCall() {
         console.log(event)
         if (event.event_code == 'preSubmitResponse') { //sucess
           if (event.data.returnCode == '0') {
-            document.getElementById("upload_docs_btn").disabled = true;
-            document.getElementById("upload_docs_btn").style.cursor = "no-drop";
             timer(50, 100).then(async () => {
               $("#step2").addClass("active");
               $("#step2>div").addClass("active");
