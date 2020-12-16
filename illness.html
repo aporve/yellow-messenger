@@ -1213,31 +1213,31 @@
                                             style="align-self: flex-end; color: #b8123e; padding: 0 1rem; margin: 0 0">Back</a>
                                         <button style="width: 50%;" type="submit" onclick="buttonSubmitClicked(event)"
                                             class="btn submit__btn">Submit
-                                        <div class="loader1" id="file_loader_icon_9">
-                                            <div class="loader-bg">
-                                                <div class="text"></div>
-                                            </div>
-                                            <div class="spiner-holder-one animate-0-25-a">
-                                                <div class="spiner-holder-two animate-0-25-b">
-                                                    <div class="loader-spiner"></div>
+                                            <div class="loader1" id="file_loader_icon_9">
+                                                <div class="loader-bg">
+                                                    <div class="text"></div>
+                                                </div>
+                                                <div class="spiner-holder-one animate-0-25-a">
+                                                    <div class="spiner-holder-two animate-0-25-b">
+                                                        <div class="loader-spiner"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="spiner-holder-one animate-25-50-a">
+                                                    <div class="spiner-holder-two animate-25-50-b">
+                                                        <div class="loader-spiner"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="spiner-holder-one animate-50-75-a">
+                                                    <div class="spiner-holder-two animate-50-75-b">
+                                                        <div class="loader-spiner"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="spiner-holder-one animate-75-100-a">
+                                                    <div class="spiner-holder-two animate-75-100-b">
+                                                        <div class="loader-spiner"></div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="spiner-holder-one animate-25-50-a">
-                                                <div class="spiner-holder-two animate-25-50-b">
-                                                    <div class="loader-spiner"></div>
-                                                </div>
-                                            </div>
-                                            <div class="spiner-holder-one animate-50-75-a">
-                                                <div class="spiner-holder-two animate-50-75-b">
-                                                    <div class="loader-spiner"></div>
-                                                </div>
-                                            </div>
-                                            <div class="spiner-holder-one animate-75-100-a">
-                                                <div class="spiner-holder-two animate-75-100-b">
-                                                    <div class="loader-spiner"></div>
-                                                </div>
-                                            </div>
-                                        </div>
                                         </button>
                                     </div>
                                 </div>
@@ -1507,7 +1507,8 @@
                                                         ACCOUNT</button>
                                                 </div>
                                                 <div class="col-12 col-md-6"
-                                                    style="display: flex; justify-content: flex-end;">
+                                                    style="display: flex; justify-content: flex-end;"
+                                                    id='account_details_btn'>
                                                     <a href="#" onclick="goBack1()" id="back_btn1"
                                                         style="align-self: flex-end; color: #b8123e; padding: 0 1rem; margin: 55px 0.5rem;">Back</a>
                                                     <div style="width: 50%;">
@@ -1669,9 +1670,11 @@
                                                     <p class="upload_btn_title">Proof of Bank Account Ownership</p>
                                                     <span class="btn btn-file" tabindex="22">
                                                         Upload<input type="file" id="proof_BAO" />
-                                                        <span id="file_Upload_Tick_6" class="upload_btn_span">&#10004;</span>
+                                                        <span id="file_Upload_Tick_6"
+                                                            class="upload_btn_span">&#10004;</span>
                                                         <span id="file_loader_icon_6" class="loader"></span>
-                                                        <span id="file_upload_cancle_6" class="upload_btn_span">&#10006;</span>
+                                                        <span id="file_upload_cancle_6"
+                                                            class="upload_btn_span">&#10006;</span>
                                                     </span>
                                                     <small class="form-text text-muted">
                                                         Acceptable format .jpg .pdf & 2MB size
@@ -1680,7 +1683,7 @@
                                                 </div>
                                             </div>
                                             <button type="submit" class="btn submit__btn"
-                                                style="width: 50%; margin: 3rem 0;">Submit
+                                                style="width: 50%; margin: 3rem 0;" id='account_details1_btn'>Submit
 
                                                 <div class="loader1" id="file_loader_icon_9">
                                                     <div class="loader-bg">
@@ -1757,8 +1760,8 @@
                                     <a href="#" onclick="goBackPickup()"
                                         style="align-self: flex-end; color: #b8123e; padding: 0 1rem; margin: 0 0.5rem 0.7rem 0.5rem;">Back</a>
                                     <div class="popup">
-                                        <button type="submit" onclick="pickup_Bpi()" class="btn"
-                                            style="width: 100%;">YES, I WOULD LIKE TO PICK UP MY BENEFIT THROUGH
+                                        <button type="submit" onclick="pickup_Bpi()" class="btn" style="width: 100%;"
+                                            id=" pick_up_btn">YES, I WOULD LIKE TO PICK UP MY BENEFIT THROUGH
                                             BPI
                                             <div class="loader1" id="file_loader_icon_9">
                                                 <div class="loader-bg">

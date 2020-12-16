@@ -1610,6 +1610,8 @@ function handleAccountInfo(event) {
                 field_Currency: $("select#from_currency option").filter(":selected").val(),
                 upload_file_6: file6.value
             }
+            document.getElementById("account_details_btn").disabled = true;
+            document.getElementById("account_details_btn").style.cursor = "no-drop";
             finalSubmitCall();
             // myDisable()
             // timer().then(async () => {
@@ -1665,6 +1667,8 @@ function handleAccountInfo(event) {
     }
 
     else {
+        document.getElementById("account_details_btn").disabled = true;
+        document.getElementById("account_details_btn").style.cursor = "no-drop";
         finalSubmitCall();
     }
 }
@@ -1760,6 +1764,8 @@ function handleAddBankInfo(event) {
         BankDetails["accountNumber"] = field_AccountNumber1;
         BankDetails["accountCurrency"] = $("select#from_currency1 option").filter(":selected").val(),
             BankDetailsList.push(BankDetails);
+        document.getElementById("account_details1_btn").disabled = true;
+        document.getElementById("account_details1_btn").style.cursor = "no-drop";
         finalSubmitCall();
 
         // $("#step3_circle").addClass("md-step-step3-circle ");
@@ -2183,6 +2189,8 @@ function pickUp() {
 }
 
 function pickup_Bpi() {
+    document.getElementById("pick_up_btn").disabled = true;
+    document.getElementById("pick_up_btn").style.cursor = "no-drop";
     finalSubmitCall();
 
     // $("#pickUp").hide();

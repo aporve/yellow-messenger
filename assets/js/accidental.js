@@ -162,7 +162,7 @@ function renderProgress(progress) {
     $(".animate-75-100-b").css("transform", "rotate(" + angle + "deg)");
   }
   // if (progress != 0) {
-    $(".text").html(progress + "%");
+  $(".text").html(progress + "%");
   // }
 
 }
@@ -1227,7 +1227,7 @@ file1.onchange = async function (e) {
           console.log("setting file data : ");
           let accident = {};
           // accident['LIDC001Front'] = {
-            accident["beneficiaryNo"] = beneficiaryCount,
+          accident["beneficiaryNo"] = beneficiaryCount,
             accident["filename"] = `${fileName}.pdf`,
             accident["docType"] = "PDF",
             accident["docTypeCode"] = "LIDC001",
@@ -1798,15 +1798,15 @@ function preSubmitCall() {
   document.getElementById("upload_docs_btn").disabled = true;
   document.getElementById("upload_docs_btn").style.cursor = "no-drop";
   // timer(0, 50)
-    window.parent.postMessage(JSON.stringify({
-      event_code: 'ym-client-event', data: JSON.stringify({
-        event: {
-          code: "preSubmit",
-          data: preSubmitPayload
-        }
-      })
-    }), '*');
-  
+  window.parent.postMessage(JSON.stringify({
+    event_code: 'ym-client-event', data: JSON.stringify({
+      event: {
+        code: "preSubmit",
+        data: preSubmitPayload
+      }
+    })
+  }), '*');
+
 
   window.addEventListener('message', function (eventData) {
 
@@ -1820,13 +1820,13 @@ function preSubmitCall() {
         if (event.event_code == 'preSubmitResponse') { //sucess
           if (event.data.returnCode == '0') {
             // timer(50, 100).then(async () => {
-              $("#step2").addClass("active");
-              $("#step2>div").addClass("active");
-              if (otpSubmitted == false) { otpTimer(); } else {
+            $("#step2").addClass("active");
+            $("#step2>div").addClass("active");
+            if (otpSubmitted == false) { otpTimer(); } else {
 
-                $('#requirements').hide();
-                $('#payment').show();
-              }
+              $('#requirements').hide();
+              $('#payment').show();
+            }
             // })
           }
         }
@@ -1899,16 +1899,17 @@ function finalSubmitCall() {
           console.log('finalsubmit event received')
           if (event.data.returnCode == '0') {
             myDisable()
-            // timer(50, 100).then(async () => {
-              $("#step2").addClass("done");
             
-              $("#step3_circle").addClass("md-step-step3-circle ");
-              $("#step3_span").addClass("md-step3-span");
-              $("#step3_reference").addClass("md-step3-span")
-              $("#account_details").hide();
-              $("#account_details1").hide();
-              $("#pickUp").hide();
-              $("#process_confirmation").show();
+            // timer(50, 100).then(async () => {
+            $("#step2").addClass("done");
+
+            $("#step3_circle").addClass("md-step-step3-circle ");
+            $("#step3_span").addClass("md-step3-span");
+            $("#step3_reference").addClass("md-step3-span")
+            $("#account_details").hide();
+            $("#account_details1").hide();
+            $("#pickUp").hide();
+            $("#process_confirmation").show();
 
             // });
 
@@ -2086,6 +2087,8 @@ function handleAccountInfo(event) {
       //   $("#process_confirmation").show();
       //   console.log("Data -> ", data);
       // });
+      document.getElementById("account_details_btn").disabled = true;
+      document.getElementById("account_details_btn").style.cursor = "no-drop";
       finalSubmitCall()
 
     } else {
@@ -2112,7 +2115,8 @@ function handleAccountInfo(event) {
 
     // InsuredInformation["PayoutOption"] = "CTA";
     BeneficiaryList['payoutOption'] = 'CTA';
-
+    document.getElementById("account_details_btn").disabled = true;
+    document.getElementById("account_details_btn").style.cursor = "no-drop";
     finalSubmitCall()
   }
 }
@@ -2350,6 +2354,7 @@ function bankTranfer() {
 
 function pickUp() {
   document.getElementById('ref_number').innerHTML = referenceNumber;
+
   payoutOption = 'PUA';
   let filesObject = {};
   filesObject["folderName"] = `CLAIMS/PAL/${referenceNumber}`
@@ -2385,6 +2390,8 @@ function pickUp() {
 }
 
 function pickup_Bpi() {
+  document.getElementById("pick_up_btn").disabled = true;
+  document.getElementById("pick_up_btn").style.cursor = "no-drop";
   finalSubmitCall()
 
   // var finalData = {}
@@ -2531,7 +2538,8 @@ function handleAddBankInfo(event) {
     // raw["beneficiaryList"] = BeneficiaryList;
     // finalData['source'] = source;
     // finalData['data'] = JSON.stringify(raw);
-
+    document.getElementById("account_details1_btn").disabled = true;
+    document.getElementById("account_details1_btn").style.cursor = "no-drop";
     finalSubmitCall()
 
   }
