@@ -4349,6 +4349,7 @@ function disableBankDetailsOnHavingData() {
 // }
 
 function addBeneficiarybankTranfer() {
+    payoutOption = 'CTA'
     trackaddBenificiary = 0;
     if (buttonCount == 1) {
         trackaddBenificiary1 = trackaddBenificiary;
