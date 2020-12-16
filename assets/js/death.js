@@ -69,9 +69,9 @@ let filesList = [];
 
 let beneficiaryCount = 1;
 let docType, tranType;
-basicInformation["WebReferenceNumber"] = referenceNumber;
-basicInformation["CompanyCode"] = "PAL";
-basicInformation["ClaimType"] = "Death";
+basicInformation["webReferenceNumber"] = referenceNumber;
+basicInformation["companyCode"] = "PAL";
+basicInformation["claimType"] = "Death";
 
 form.addEventListener('submit', handleForm);
 death__form_addBeneficiary.addEventListener('submit', handleFormAddBeneficiary);
@@ -1711,36 +1711,36 @@ function handleForm(event) {
             privacy_consent_1: $("#privacy_consent_1").is(":checked"),
             privacy_consent_2: $("#privacy_consent_2").is(":checked")
         }
-        InsuredInformation["FirstName"] = field_firstName;
-        InsuredInformation["MiddleName"] = field_middleName;
-        InsuredInformation["LastName"] = field_lastName;
-        InsuredInformation["Suffix"] = field_lastName_Suffix;
-        InsuredInformation["DateOfBirth"] = field_DOB.split('-')[1] + "/" + field_DOB.split('-')[2] + "/" + field_DOB.split('-')[0];
-        InsuredInformation["InsuredsDeath"] = field_DOID.split('-')[1] + "/" + field_DOID.split('-')[2] + "/" + field_DOID.split('-')[0];
+        InsuredInformation["firstName"] = field_firstName;
+        InsuredInformation["middleName"] = field_middleName;
+        InsuredInformation["lastName"] = field_lastName;
+        InsuredInformation["suffix"] = field_lastName_Suffix;
+        InsuredInformation["dateOfBirth"] = field_DOB.split('-')[1] + "/" + field_DOB.split('-')[2] + "/" + field_DOB.split('-')[0];
+        InsuredInformation["insuredsDeath"] = field_DOID.split('-')[1] + "/" + field_DOID.split('-')[2] + "/" + field_DOID.split('-')[0];
         document.getElementById('user_mobile').innerHTML = field_BeneficiaryMobileNum.replace(/.(?=.{4})/g, '*')
-        basicInformation["CauseOfLoss"] = field_NatureLoss;
+        basicInformation["causeOfLoss"] = field_NatureLoss;
 
         let beneficiary = {};
 
-        beneficiary["BeneficiaryNo"] = beneficiaryCount.toString(),
-            beneficiary["FirstName"] = field_BeneficiaryFirstName,
-            beneficiary["MiddleName"] = field_BeneficiaryMiddleName,
-            beneficiary["LastName"] = field_BeneficiaryLastName,
-            beneficiary["DateOfBirth"] = field_BeneficiaryDOB.split('-')[1] + "/" + field_BeneficiaryDOB.split('-')[2] + "/" + field_BeneficiaryDOB.split('-')[0],
-            beneficiary["CountryCode"] = $("select#field_BeneficiaryMobileNumberSelect option").filter(":selected").val(),
-            beneficiary["PhoneNumber"] = field_BeneficiaryMobileNum,
-            beneficiary["EmailAddress"] = field_BeneficiaryEmailAddress,
-            beneficiary["HomeAddress"] = field_BeneficiaryHomeAddress,
-            beneficiary["PlaceOfBirth"] = field_BeneficiaryPOB,
-            beneficiary["Nationality"] = field_BeneficiaryNationality,
-            beneficiary["Sex"] = $("select#field_BeneficiarySex option").filter(":selected").val(),
-            beneficiary["Relationship"] = field_BeneficiaryRelationToDeceased,
-            beneficiary["DocumentFolder"] = `CLAIMS/PAL/${referenceNumber}`,
-            beneficiary["PayoutOption"] = "CTA",
-            beneficiary["Employer"] = field_BeneficiaryEmployerName,
-            beneficiary["GovernmentOfficial"] = $("select#field_Beneficiary_relatives1 option").filter(":selected").val(),
-            beneficiary["GovernmentOfficialRelative"] = $("select#field_Beneficiary_relatives2 option").filter(":selected").val(),
-            beneficiary["Occupation"] = field_BenificiaryOccupation
+        beneficiary["beneficiaryNo"] = beneficiaryCount.toString(),
+            beneficiary["firstName"] = field_BeneficiaryFirstName,
+            beneficiary["middleName"] = field_BeneficiaryMiddleName,
+            beneficiary["lastName"] = field_BeneficiaryLastName,
+            beneficiary["dateOfBirth"] = field_BeneficiaryDOB.split('-')[1] + "/" + field_BeneficiaryDOB.split('-')[2] + "/" + field_BeneficiaryDOB.split('-')[0],
+            beneficiary["countryCode"] = $("select#field_BeneficiaryMobileNumberSelect option").filter(":selected").val(),
+            beneficiary["phoneNumber"] = field_BeneficiaryMobileNum,
+            beneficiary["emailAddress"] = field_BeneficiaryEmailAddress,
+            beneficiary["homeAddress"] = field_BeneficiaryHomeAddress,
+            beneficiary["placeOfBirth"] = field_BeneficiaryPOB,
+            beneficiary["nationality"] = field_BeneficiaryNationality,
+            beneficiary["sex"] = $("select#field_BeneficiarySex option").filter(":selected").val(),
+            beneficiary["relationship"] = field_BeneficiaryRelationToDeceased,
+            beneficiary["documentFolder"] = `CLAIMS/PAL/${referenceNumber}`,
+            beneficiary["payoutOption"] = "CTA",
+            beneficiary["employer"] = field_BeneficiaryEmployerName,
+            beneficiary["governmentOfficial"] = $("select#field_Beneficiary_relatives1 option").filter(":selected").val(),
+            beneficiary["governmentOfficialRelative"] = $("select#field_Beneficiary_relatives2 option").filter(":selected").val(),
+            beneficiary["occupation"] = field_BenificiaryOccupation
         BeneficiaryList.push(beneficiary);
 
 
