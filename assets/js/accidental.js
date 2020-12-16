@@ -2021,7 +2021,7 @@ function finalSubmitCall() {
           }
           else {
             // alert(event.data.returnMessage + 'returnCode not 0 ')
-            document.getElementById('returnMessage').value = event.data.returnMessage;
+            document.getElementById('returnMessage').innerHTML = event.data.returnMessage;
             $("#invalidReturnCode").modal("show");
           }
         }
@@ -3028,7 +3028,7 @@ function submitOtp() {
           }
           else {
             $('#invalidOtp').modal('hide');
-            document.getElementById('returnMessage').value = event.data.returnMessage;
+            document.getElementById('returnMessage').innerHTML = event.data.returnMessage;
             $("#invalidReturnCode").modal("show");
           }
 
