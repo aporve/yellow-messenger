@@ -729,18 +729,18 @@ function preSubmitCall() {
 
 
                         // timer(25, 50).then(async () => {
-                            $("#step2").addClass("done");
-                            $("#step3_circle").addClass("md-step-step3-circle ");
-                            $("#step3_span").addClass("md-step3-span");
-                            $("#step3_reference").addClass("md-step3-span")
-                            if (otpSubmitted == false) { otpTimer(); } else {
-                                $('#requirements').hide();
-                                $('#process_confirmation').show();
-                            }
+                        $("#step2").addClass("done");
+                        $("#step3_circle").addClass("md-step-step3-circle ");
+                        $("#step3_span").addClass("md-step3-span");
+                        $("#step3_reference").addClass("md-step3-span")
+                        if (otpSubmitted == false) { otpTimer(); } else {
+                            $('#requirements').hide();
+                            $('#process_confirmation').show();
+                        }
 
-                            /*  $("#step3").addClass("active");
-                            $("#step3>div").addClass("active"); */
-                            /*  $("#step3").addClass("done"); */
+                        /*  $("#step3").addClass("active");
+                        $("#step3>div").addClass("active"); */
+                        /*  $("#step3").addClass("done"); */
 
 
                         // });
@@ -813,17 +813,18 @@ function finalSubmitCall() {
                     if (event.data.returnCode == '0') {
                         myDisable()
                         // timer(75, 100).then(async () => {
-                            $("#step2").addClass("done");
-                            /*  $("#step3").addClass("active");
-                             $("#step3>div").addClass("active"); */
-                            /* $("#step3").addClass("done"); */
-                            $("#step3_circle").addClass("md-step-step3-circle ");
-                            $("#step3_span").addClass("md-step3-span");
-                            $("#step3_reference").addClass("md-step3-span")
-                            $("#account_details").hide();
-                            $('#addBeneficiaryRequirements').hide();
-                            $("#process_confirmation").show();
-                            console.log("Data -> ", data);
+                        $("#step2").addClass("done");
+                        /*  $("#step3").addClass("active");
+                         $("#step3>div").addClass("active"); */
+                        /* $("#step3").addClass("done"); */
+                        $("#step3_circle").addClass("md-step-step3-circle ");
+                        $("#step3_span").addClass("md-step3-span");
+                        $("#step3_reference").addClass("md-step3-span")
+                        $("#account_details").hide();
+                        $('#requirements').hide();
+                        $('#addBeneficiaryRequirements').hide();
+                        $("#process_confirmation").show();
+                        console.log("Data -> ", data);
                         // });
                     }
                     else {
@@ -1743,7 +1744,7 @@ function handleForm(event) {
             // beneficiary["governmentOfficial"] = $("select#field_Beneficiary_relatives1 option").filter(":selected").val(),
             // beneficiary["governmentOfficialRelative"] = $("select#field_Beneficiary_relatives2 option").filter(":selected").val(),
             // beneficiary["occupation"] = field_BenificiaryOccupation
-        BeneficiaryList.push(beneficiary);
+            BeneficiaryList.push(beneficiary);
 
 
         ben_name_req_progress = 'Hi ' + field_firstName + '.'
@@ -4165,7 +4166,7 @@ function bankTranfer() {
     document.getElementById('ref_number').innerHTML = referenceNumber;
     payoutOption = 'CTA';
     // beneficiary["payoutOption"] = "CTA",
-        $('#payment').hide();
+    $('#payment').hide();
     $('#account_details').show();
     $("#step1").addClass("done");
     $("#step2").addClass("active");
@@ -4399,7 +4400,7 @@ function pickUp() {
 }
 
 function addBeneficiaryPickup() {
-    payoutOption='PUA'
+    payoutOption = 'PUA'
     let index = BeneficiaryList.findIndex(ele => ele["BeneficiaryNo"] == (beneficiaryCount.toString()))
     let benObject = BeneficiaryList[index]
     // benObject["payoutOption"] = "PUA";
@@ -5045,8 +5046,7 @@ function submitOtp() {
                     if (event.data.returnCode == '0') {
                         $('#otpPopUp').modal('hide');
                         $('#invalidOtp').modal('hide');
-                        $('#requirements').hide();
-                        $('#process_confirmation').show();
+
                         otpSubmitted = true;
                         document.getElementById('otp').value = '';
                         finalSubmitCall();
