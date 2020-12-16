@@ -3853,12 +3853,12 @@ function handleAccountInfo(event) {
             upload_file_7: file7.value
         }
 
-        beneficiaryAccount["BeneficiaryNo"] = beneficiaryCount,
-            beneficiaryAccount["BankName"] = field_Bank,
-            beneficiaryAccount["BankBranch"] = field_Branch,
-            beneficiaryAccount["AccountNumber"] = field_AccountNumber,
-            beneficiaryAccount["AccountName"] = field_AccountName,
-            beneficiaryAccount["AccountCurrency"] = $("select#from_currency option").filter(":selected").val(),
+        beneficiaryAccount["beneficiaryNo"] = beneficiaryCount,
+            beneficiaryAccount["bankName"] = field_Bank,
+            beneficiaryAccount["bankBranch"] = field_Branch,
+            beneficiaryAccount["accountNumber"] = field_AccountNumber,
+            beneficiaryAccount["accountName"] = field_AccountName,
+            beneficiaryAccount["accountCurrency"] = $("select#from_currency option").filter(":selected").val(),
 
             BankDetailsList.push(beneficiaryAccount);
         $("#step1").addClass("done");
@@ -4136,12 +4136,12 @@ function addBenificiaryAccountInfo(event) {
             $('#addBeneficiaryRequirements').show();
 
             let beneficiaryAccount = {};
-            beneficiaryAccount["BeneficiaryNo"] = beneficiaryCount,
-                beneficiaryAccount["BankName"] = field_addBenificiaryBank,
-                beneficiaryAccount["BankBranch"] = field_addBeneficiaryBranch,
-                beneficiaryAccount["AccountNumber"] = field_addBenificiaryAccountNumber,
-                beneficiaryAccount["AccountName"] = field_addBenificiaryAccountName,
-                beneficiaryAccount["AccountCurrency"] = $("select#from_addBeneficiarycurrency option").filter(":selected").val(),
+            beneficiaryAccount["beneficiaryNo"] = beneficiaryCount,
+                beneficiaryAccount["bankName"] = field_addBenificiaryBank,
+                beneficiaryAccount["bankBranch"] = field_addBeneficiaryBranch,
+                beneficiaryAccount["accountNumber"] = field_addBenificiaryAccountNumber,
+                beneficiaryAccount["accountName"] = field_addBenificiaryAccountName,
+                beneficiaryAccount["accountCurrency"] = $("select#from_addBeneficiarycurrency option").filter(":selected").val(),
 
                 BankDetailsList.push(beneficiaryAccount);
             /*  console.log('Data -> ', addBenAccountInfo) */
