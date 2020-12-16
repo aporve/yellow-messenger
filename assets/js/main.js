@@ -182,8 +182,8 @@ function trackProgress() {
                             claimantFirstName = event.data.claimantFirstName;
 
                             sourceSystem = event.data.sourceSystem;
-                            if (sourceSystem.trim().toLowerCase() == 'iserve') {
-                                sourceSystem='TIPS'
+                            if (sourceSystem.trim().toLowerCase() != 'tips' && sourceSystem.trim().toLowerCase() != 'cms') {
+                                sourceSystem='cms'
                             }
                             isFallout = event.data.isFallout;
                             claimAmount = event.data.claimAmount;
