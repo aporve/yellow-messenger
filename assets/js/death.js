@@ -695,6 +695,10 @@ function preSubmitCall() {
     //Basic Information
     //Insured information
     //Beneficiary list
+    document.getElementById("submit9").disabled = true;
+    document.getElementById("submit9").style.cursor = "no-drop";
+    document.getElementById("submit10").disabled = true;
+    document.getElementById("submit10").style.cursor = "no-drop";
     var source = 'Death'
     var raw = JSON.stringify({
         "basicInformation": basicInformation,
