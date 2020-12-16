@@ -4162,7 +4162,7 @@ function addBeneficiaryuploadDataReset() {
 function bankTranfer() {
     document.getElementById('ref_number').innerHTML = referenceNumber;
     payoutOption = 'CTA';
-    beneficiary["payoutOption"] = "CTA",
+    // beneficiary["payoutOption"] = "CTA",
         $('#payment').hide();
     $('#account_details').show();
     $("#step1").addClass("done");
@@ -4382,7 +4382,7 @@ function pickUp() {
     // BeneficiaryList.filter(bens => bens[BeneficiaryNo])
     document.getElementById('ref_number').innerHTML = referenceNumber;
     payoutOption = 'PUA';
-    beneficiary["payoutOption"] = "PUA";
+    // beneficiary["payoutOption"] = "PUA";
     let index = BeneficiaryList.findIndex(ele => ele["BeneficiaryNo"] == "1")
     let benObject = BeneficiaryList[index]
     benObject["payoutOption"] = "PUA";

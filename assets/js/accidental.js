@@ -1227,7 +1227,7 @@ file1.onchange = async function (e) {
           console.log("setting file data : ");
           let accident = {};
           // accident['LIDC001Front'] = {
-          accident['beneficiaryNo'] = beneficiaryCount,
+            accident["beneficiaryNo"] = beneficiaryCount,
             accident["filename"] = `${fileName}.pdf`,
             accident["docType"] = "PDF",
             accident["docTypeCode"] = "LIDC001",
@@ -2053,8 +2053,8 @@ function handleAccountInfo(event) {
       BankDetailsList.push(BankDetails);
 
       let filesObject = {};
-      filesObject["FolderName"] = `CLAIMS/PAL/${referenceNumber}`
-      filesObject["FileList"] = filesList;
+      filesObject["folderName"] = `CLAIMS/PAL/${referenceNumber}`
+      filesObject["filesList"] = filesList;
 
       // InsuredInformation["PayoutOption"] = "CTA";
       BeneficiaryList['payoutOption'] = 'CTA';
@@ -2108,7 +2108,7 @@ function handleAccountInfo(event) {
 
     let filesObject = {};
     filesObject["FolderName"] = `CLAIMS/PAL/${referenceNumber}`
-    filesObject["FileList"] = filesList;
+    filesObject["fileList"] = filesList;
 
     // InsuredInformation["PayoutOption"] = "CTA";
     BeneficiaryList['payoutOption'] = 'CTA';
@@ -2352,8 +2352,8 @@ function pickUp() {
   document.getElementById('ref_number').innerHTML = referenceNumber;
   payoutOption = 'PUA';
   let filesObject = {};
-  filesObject["FolderName"] = `CLAIMS/PAL/${referenceNumber}`
-  filesObject["FileList"] = filesList;
+  filesObject["folderName"] = `CLAIMS/PAL/${referenceNumber}`
+  filesObject["fileList"] = filesList;
   let BankDetailsList = [];
   BankDetailsList.push(BankDetails);
 
