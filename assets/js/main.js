@@ -224,9 +224,12 @@ function trackProgress() {
 
                         }
                     }
-                    else {
+                    else if (event.data.returnCode == '1') {
                         $('#refNoWarning').modal('show');
 
+                    }
+                    else {
+                        $('#noDataModal').modal('show'); //
                     }
                 }
                 else {
