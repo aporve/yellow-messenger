@@ -405,7 +405,7 @@ function setAccidentClaimStatusMsg() {
         if (docsPending == 'Y') {
             var finalDocsList = '';
             requirementsList.forEach(function (item) {
-                finalDocsList = finalDocsList + '<div style="display: flex;align-items: center; padding-bottom: 1px;"> <div id="outer-circle"> <div id="inner-circle"></div> </div> <p>' +' '+ item.name + '</p> </div>'
+                finalDocsList = finalDocsList + '<div style="display: flex;align-items: center; padding-bottom: 1px;"> <div id="outer-circle"> <div id="inner-circle"></div> </div> <p style="padding-left:7px">' +' '+ item.name + '</p> </div>'
 
             });
 
@@ -460,7 +460,7 @@ function setAccidentClaimStatusMsg() {
         if (docsPending == 'Y') {
             var finalDocsList = '';
             requirementsList.forEach(function (item) {
-                finalDocsList = finalDocsList + '<div style="display: flex;align-items: center; padding-bottom: 1px;"> <div id="outer-circle"> <div id="inner-circle"></div> </div> <p>' + ' ' + item.name + '</p> </div>'
+                finalDocsList = finalDocsList + '<div style="display: flex;align-items: center; padding-bottom: 1px;"> <div id="outer-circle"> <div id="inner-circle"></div> </div> <p style="padding-left:7px">' + ' ' + item.name + '</p> </div>'
 
             });
 
@@ -558,7 +558,7 @@ function setIllnessClaimStatusMsg() {
             twoStepperActive();
             var finalDocsList = '';
             requirementsList.forEach(function (item) {
-                finalDocsList = finalDocsList + '<div style="display: flex;align-items: center; padding-bottom: 1px;"> <div id="outer-circle"> <div id="inner-circle"></div> </div> <p>' + ' ' + item.name + '</p> </div>'
+                finalDocsList = finalDocsList + '<div style="display: flex;align-items: center; padding-bottom: 1px;"> <div id="outer-circle"> <div id="inner-circle"></div> </div> <p style="padding-left:7px">' + ' ' + item.name + '</p> </div>'
 
             });
             document.getElementById('claim-msg-text').innerHTML = '<div> <h3>YOUR OTHER CLAIMS DOCUMENTS</h3> <br /> <p class="font-weight-justy request-font"> Hi ' + claimantFirstName + '.We have reviewed your initial claim request submission and identified that we may need the following documents for us to proceed: </p > <br /> <p class="font-weight-normal request-font"> <div style="padding-left: 10px;"> ' + finalDocsList + '</div> </p> <br /> <p class="font-weight-normal request-font"> Don&#39;t worry, you can easily submit these documents to your Financial Advisor so we can proceed with your claim request.You may also submit your documents to any AIA Philam Life Customer Service Center near you.To find the nearest branch, please click <a href = "https://wwwuat.philamlife.com/en/help-support/locate-us.html"> here </a>. </p> </div>';
@@ -610,7 +610,7 @@ function setIllnessClaimStatusMsg() {
         if (docsPending == 'Y') {
             var finalDocsList = '';
             requirementsList.forEach(function (item) {
-                finalDocsList = finalDocsList + '<div style="display: flex;align-items: center; padding-bottom: 1px;"> <div id="outer-circle"> <div id="inner-circle"></div> </div> <p>' + ' ' + item.name + '</p> </div>'
+                finalDocsList = finalDocsList + '<div style="display: flex;align-items: center; padding-bottom: 1px;"> <div id="outer-circle"> <div id="inner-circle"></div> </div> <p style="padding-left:7px">' + ' ' + item.name + '</p> </div>'
 
             });
 
@@ -695,7 +695,7 @@ function setDeathClaimStatusMsg() {
         if (docsPending == 'Y') {
             var finalDocsList = '';
             requirementsList.forEach(function (item) {
-                finalDocsList = finalDocsList + '<div style="display: flex;align-items: center; padding-bottom: 1px;"> <div id="outer-circle"> <div id="inner-circle"></div> </div> <p>' + ' ' + item.name + '</p> </div>'
+                finalDocsList = finalDocsList + '<div style="display: flex;align-items: center; padding-bottom: 1px;"> <div id="outer-circle"> <div id="inner-circle"></div> </div> <p style="padding-left:7px">' + ' ' + item.name + '</p> </div>'
 
             });
             document.getElementById('claim-msg-text').innerHTML = '<div> <h3>YOUR OTHER CLAIMS DOCUMENTS</h3> <br /> <p class="font-weight-justy request-font"> Hi ' + claimantFirstName + '.We have reviewed your initial claim request submission and identified that we may need the following documents for us to proceed: </p > <br /> <p class="font-weight-normal request-font"> <div style="padding-left: 10px;"> ' + finalDocsList + '</div> </p> <br /> <p class="font-weight-normal request-font"> Don&#39;t worry, you can easily submit these documents to your Financial Advisor so we can proceed with your claim request.You may also submit your documents to any AIA Philam Life Customer Service Center near you.To find the nearest branch, please click <a href = "https://wwwuat.philamlife.com/en/help-support/locate-us.html"> here </a>. </p> </div>';
@@ -756,7 +756,7 @@ function setDeathClaimStatusMsg() {
         if (docsPending == 'Y') {
             var finalDocsList = '';
             requirementsList.forEach(function (item) {
-                finalDocsList = finalDocsList + '<div style="display: flex;align-items: center; padding-bottom: 1px;"> <div id="outer-circle"> <div id="inner-circle"></div> </div> <p>' + ' ' + item.name + '</p> </div>'
+                finalDocsList = finalDocsList + '<div style="display: flex;align-items: center; padding-bottom: 1px;"> <div id="outer-circle"> <div id="inner-circle"></div> </div> <p style="padding-left:7px">' + ' ' + item.name + '</p> </div>'
 
             });
 
