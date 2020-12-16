@@ -1989,7 +1989,7 @@ function finalSubmitCall() {
 
           }
           else {
-            alert(event.data.returnMessage);
+            alert(event.data.returnMessage + 'returnCode not 0 ')
             // $("#popUp").modal("show");
           }
         }
