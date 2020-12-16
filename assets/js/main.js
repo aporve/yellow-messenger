@@ -217,7 +217,7 @@ function trackProgress() {
                             trackProgressDropDown() // f}or tracking progress dropdown
                         }
                         else {
-                            $('#noDataModal').modal('show');
+                            $('#noDataModal').modal('show'); //
 
                         }
                     }
