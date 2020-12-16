@@ -182,6 +182,9 @@ function trackProgress() {
                             claimantFirstName = event.data.claimantFirstName;
 
                             sourceSystem = event.data.sourceSystem;
+                            if (sourceSystem.toLowerCase() == 'iserve') {
+                                sourceSystem='TIPS'
+                            }
                             isFallout = event.data.isFallout;
                             claimAmount = event.data.claimAmount;
                             currency = event.data.currency;
