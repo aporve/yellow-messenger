@@ -1797,15 +1797,16 @@ function preSubmitCall() {
   preSubmitPayload['data'] = raw;
   document.getElementById("upload_docs_btn").disabled = true;
   document.getElementById("upload_docs_btn").style.cursor = "no-drop";
-  timer(0, 50)
-  window.parent.postMessage(JSON.stringify({
-    event_code: 'ym-client-event', data: JSON.stringify({
-      event: {
-        code: "preSubmit",
-        data: preSubmitPayload
-      }
-    })
-  }), '*');
+  timer(0, 50).then(async () => {
+    window.parent.postMessage(JSON.stringify({
+      event_code: 'ym-client-event', data: JSON.stringify({
+        event: {
+          code: "preSubmit",
+          data: preSubmitPayload
+        }
+      })
+    }), '*');
+  })
 
   window.addEventListener('message', function (eventData) {
 
