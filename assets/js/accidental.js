@@ -1989,6 +1989,7 @@ function finalSubmitCall() {
 
           }
           else {
+            alert(event.data.returnMessage);
             // $("#popUp").modal("show");
           }
         }
@@ -2573,7 +2574,7 @@ function handleAddBankInfo(event) {
     $("#err_field_Branch1").hide();
   }
 
-  if (!file6.value) {
+  if (!file7.value) {
     $('#upload_feedback_label1').show();
     $('#upload_feedback_label1').text('Please upload your Bank Account Ownership');
   }
