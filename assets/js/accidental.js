@@ -1858,7 +1858,7 @@ function finalSubmitCall() {
   // var field_Branch = $("#field_Branch").val();
   let BankDetailsList = [];
   BankDetailsList.push(BankDetails);
-
+  InsuredInformation['payoutOption'] = payoutOption;
   var finalData = {}
   var source = 'Accident';
   var raw = JSON.stringify({
@@ -1913,11 +1913,11 @@ function finalSubmitCall() {
 
           }
           else {
-            $("#popUp").modal("show");
+            // $("#popUp").modal("show");
           }
         }
         else {
-          $("#popUp").modal("show");
+          // $("#popUp").modal("show");
         }
       }
     } catch (error) {

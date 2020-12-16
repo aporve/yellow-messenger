@@ -772,7 +772,7 @@ function finalSubmitCall() {
     // var field_Branch = $("#field_Branch").val();
     // let BankDetailsList = [];
     // BankDetailsList.push(BankDetails);
-
+    InsuredInformation["payoutOption"] = payoutOption;
     var finalData = {}
     var source = 'Death';
     var raw = JSON.stringify({
@@ -1157,25 +1157,25 @@ function handleFormAddBeneficiary(event) {
         }
         let beneficiary = {};
 
-        beneficiary["BeneficiaryNo"] = beneficiaryCount.toString(),
-            beneficiary["FirstName"] = field_addBeneficiaryFirstName,
-            beneficiary["MiddleName"] = field_addBeneficiaryMiddleName,
-            beneficiary["LastName"] = field_addBeneficiaryLastName,
-            beneficiary["DateOfBirth"] = field_addBeneficiaryDOB.split('-')[1] + "/" + field_addBeneficiaryDOB.split('-')[2] + "/" + field_addBeneficiaryDOB.split('-')[0],
-            beneficiary["CountryCode"] = $("select#field_addBeneficiaryMobileNumberSelect option").filter(":selected").val(),
-            beneficiary["PhoneNumber"] = field_addBeneficiaryMobileNum,
-            beneficiary["EmailAddress"] = field_addBeneficiaryEmailAddress,
-            beneficiary["HomeAddress"] = field_addBeneficiaryHomeAddress,
-            beneficiary["PlaceOfBirth"] = field_addBeneficiaryPOB,
-            beneficiary["Nationality"] = field_addBeneficiaryNationality,
-            beneficiary["Sex"] = field_addBeneficiarySex,
-            beneficiary["Relationship"] = field_addBeneficiaryRelationToDeceased,
-            beneficiary["DocumentFolder"] = `CLAIMS/PAL/${referenceNumber}`,
-            beneficiary["PayoutOption"] = "CTA",
-            beneficiary["Employer"] = field_addBeneficiaryEmployerName,
-            beneficiary["GovernmentOfficial"] = field_addBeneficiary_relatives1,
-            beneficiary["GovernmentOfficialRelative"] = field_add_Beneficiary_add_relatives2,
-            beneficiary["Occupation"] = field_addBeneficiaryOccupation,
+        beneficiary["beneficiaryNo"] = beneficiaryCount.toString(),
+            beneficiary["firstName"] = field_addBeneficiaryFirstName,
+            beneficiary["middleName"] = field_addBeneficiaryMiddleName,
+            beneficiary["lastName"] = field_addBeneficiaryLastName,
+            beneficiary["dateOfBirth"] = field_addBeneficiaryDOB.split('-')[1] + "/" + field_addBeneficiaryDOB.split('-')[2] + "/" + field_addBeneficiaryDOB.split('-')[0],
+            beneficiary["countryCode"] = $("select#field_addBeneficiaryMobileNumberSelect option").filter(":selected").val(),
+            beneficiary["phoneNumber"] = field_addBeneficiaryMobileNum,
+            beneficiary["emailAddress"] = field_addBeneficiaryEmailAddress,
+            beneficiary["homeAddress"] = field_addBeneficiaryHomeAddress,
+            beneficiary["placeOfBirth"] = field_addBeneficiaryPOB,
+            beneficiary["nationality"] = field_addBeneficiaryNationality,
+            beneficiary["sex"] = field_addBeneficiarySex,
+            beneficiary["relationship"] = field_addBeneficiaryRelationToDeceased,
+            beneficiary["documentFolder"] = `CLAIMS/PAL/${referenceNumber}`,
+            beneficiary["payoutOption"] = "CTA",
+            beneficiary["employer"] = field_addBeneficiaryEmployerName,
+            beneficiary["governmentOfficial"] = field_addBeneficiary_relatives1,
+            beneficiary["governmentOfficialRelative"] = field_add_Beneficiary_add_relatives2,
+            beneficiary["occupation"] = field_addBeneficiaryOccupation,
 
             BeneficiaryList.push(beneficiary);
         if (beneficiaryCount == 3) {
@@ -4162,7 +4162,7 @@ function addBeneficiaryuploadDataReset() {
 function bankTranfer() {
     document.getElementById('ref_number').innerHTML = referenceNumber;
     payoutOption = 'CTA';
-    beneficiary["PayoutOption"] = "CTA",
+    beneficiary["payoutOption"] = "CTA",
         $('#payment').hide();
     $('#account_details').show();
     $("#step1").addClass("done");
@@ -4382,10 +4382,10 @@ function pickUp() {
     // BeneficiaryList.filter(bens => bens[BeneficiaryNo])
     document.getElementById('ref_number').innerHTML = referenceNumber;
     payoutOption = 'PUA';
-    beneficiary["PayoutOption"] = "PUA";
+    beneficiary["payoutOption"] = "PUA";
     let index = BeneficiaryList.findIndex(ele => ele["BeneficiaryNo"] == "1")
     let benObject = BeneficiaryList[index]
-    benObject["PayoutOption"] = "PUA";
+    benObject["payoutOption"] = "PUA";
     BeneficiaryList[index] = benObject;
 
     $('#payment').hide();
@@ -4398,7 +4398,7 @@ function pickUp() {
 function addBeneficiaryPickup() {
     let index = BeneficiaryList.findIndex(ele => ele["BeneficiaryNo"] == (beneficiaryCount.toString()))
     let benObject = BeneficiaryList[index]
-    benObject["PayoutOption"] = "PUA";
+    benObject["payoutOption"] = "PUA";
     BeneficiaryList[index] = benObject;
 
     trackaddBenificiary = 1;

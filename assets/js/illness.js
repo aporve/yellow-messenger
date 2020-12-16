@@ -1996,6 +1996,7 @@ function preSubmitCall() {
     //Basic Information
     //Insured information
     //Beneficiary list
+
     var source = 'Illness'
     var raw = JSON.stringify({
         "basicInformation": basicInformation,
@@ -2063,7 +2064,7 @@ function finalSubmitCall() {
     // var field_Branch = $("#field_Branch").val();
     let BankDetailsList = [];
     BankDetailsList.push(BankDetails);
-
+    InsuredInformation["payoutOption"] = payoutOption;
     var finalData = {}
     var source = 'Illness';
     var raw = JSON.stringify({
@@ -2154,7 +2155,7 @@ function pickUp() {
     BankDetailsList.push(BankDetails);
 
     // filesMap["Accident"] = accident
-    InsuredInformation["PayoutOption"] = "PUA";
+    // InsuredInformation["PayoutOption"] = "PUA";
 
     finalPayload["BasicInformation"] = basicInformation;
     finalPayload["InsuredInformation"] = InsuredInformation;
