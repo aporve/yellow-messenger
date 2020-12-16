@@ -49,10 +49,10 @@ var isChangeInBankDetails = 'N';
 var isChangeInPayoutOption = 'N';
 let claimType, causeOfLoss, govIdFront, govIdBack, apsFile, narrationReport, officialReceipts;
 let file1Buffer, file2Buffer, file3Buffer, file4Buffer, file5Buffer, file6Buffer, file7Buffer, file8Buffer;
-basicInformation["WebReferenceNumber"] = referenceNumber;
-basicInformation["CompanyCode"] = "PAL";
-basicInformation["ClaimType"] = "Living";
-basicInformation["CauseOfLoss"] = "Illness";
+basicInformation["webReferenceNumber"] = referenceNumber;
+basicInformation["companyCode"] = "PAL";
+basicInformation["claimType"] = "Living";
+basicInformation["causeOfLoss"] = "Illness";
 
 /* document.addEventListener('DOMContentLoaded', function () {
     stepperFormEl = document.querySelector('#stepperForm')
@@ -924,19 +924,19 @@ function handleForm(event) {
         /* $('#requirements')[0].scrollIntoView(true); */
 
         console.log("Data -> ", data);
-        InsuredInformation["FirstName"] = field_firstName;
-        InsuredInformation["MiddleName"] = field_middleName;
-        InsuredInformation["LastName"] = field_lastName;
-        InsuredInformation["Suffix"] = field_lastName_Suffix;
-        InsuredInformation["DateOfBirth"] = field_DOB.split('-')[1] + '/' + field_DOB.split('-')[2] + '/' + field_DOB.split('-')[0];
-        InsuredInformation["CountryCode"] = $("select#inlineFormCustomSelect option").filter(":selected").val();
-        InsuredInformation["PhoneNumber"] = field_mobileNum;
-        InsuredInformation["EmailAddress"] = field_emailAddress;
-        InsuredInformation["HomeAddress"] = field_homeAddress;
-        InsuredInformation["FirstSymptomsDate"] = field_DOA.split('-')[1] + '/' + field_DOA.split('-')[2] + '/' + field_DOA.split('-')[0];
-        InsuredInformation["AccidentDate"] = field_TOA.split('-')[1] + '/' + field_TOA.split('-')[2] + '/' + field_TOA.split('-')[0];
-        InsuredInformation["FirstConsultationDate"] = field_POA.split('-')[1] + '/' + field_POA.split('-')[2] + '/' + field_POA.split('-')[0];
-        InsuredInformation["InjuryDetails"] = field_MedicalConsultation;
+        InsuredInformation["firstName"] = field_firstName;
+        InsuredInformation["middleName"] = field_middleName;
+        InsuredInformation["lastName"] = field_lastName;
+        InsuredInformation["suffix"] = field_lastName_Suffix;
+        InsuredInformation["dateOfBirth"] = field_DOB.split('-')[1] + '/' + field_DOB.split('-')[2] + '/' + field_DOB.split('-')[0];
+        InsuredInformation["countryCode"] = $("select#inlineFormCustomSelect option").filter(":selected").val();
+        InsuredInformation["phoneNumber"] = field_mobileNum;
+        InsuredInformation["emailAddress"] = field_emailAddress;
+        InsuredInformation["homeAddress"] = field_homeAddress;
+        InsuredInformation["firstSymptomsDate"] = field_DOA.split('-')[1] + '/' + field_DOA.split('-')[2] + '/' + field_DOA.split('-')[0];
+        InsuredInformation["accidentDate"] = field_TOA.split('-')[1] + '/' + field_TOA.split('-')[2] + '/' + field_TOA.split('-')[0];
+        InsuredInformation["firstConsultationDate"] = field_POA.split('-')[1] + '/' + field_POA.split('-')[2] + '/' + field_POA.split('-')[0];
+        InsuredInformation["injuryDetails"] = field_MedicalConsultation;
         // for otp screen
         document.getElementById('user_mobile').innerHTML = field_mobileNum.replace(/.(?=.{4})/g, '*')
         // for otp screen
