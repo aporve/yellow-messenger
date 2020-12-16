@@ -1858,6 +1858,12 @@ function disableBankDetailsOnHavingData() {
     document.getElementById('field_Branch').disabled = true;
     document.getElementById('from_currency').disabled = true;
     document.getElementById('field_Bank').disabled = true;
+
+    document.getElementById("field_AccountName").style.cursor = "no-drop";
+    document.getElementById("field_AccountNumber").style.cursor = "no-drop";
+    document.getElementById("field_Branch").style.cursor = "no-drop";
+    document.getElementById("from_currency").style.cursor = "no-drop";
+    document.getElementById("field_Bank").style.cursor = "no-drop";
 }
 
 function getBankDetails() {
