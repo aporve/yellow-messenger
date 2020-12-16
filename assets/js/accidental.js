@@ -1896,6 +1896,7 @@ function finalSubmitCall() {
         let event = JSON.parse(eventData.data);
         console.log(event)
         if (event.event_code == 'finalSubmitResponse') { //sucess
+          console.log('finalsubmit event received')
           if (event.data.returnCode == '0') {
             myDisable()
             // timer(50, 100).then(async () => {
@@ -2491,7 +2492,7 @@ function handleAddBankInfo(event) {
     $('#upload_feedback_label1').text('Please upload your Bank Account Ownership');
   }
 
-  if (field_AccountName1.length !== 0 && field_AccountNumber1.length !== 0 && field_currency1.length !== 0 && field_Bank1.length !== 0 && field_Branch1.length !== 0 && file7.length !== 0 && (speCharAddAccountName == false) && (numAddAccountName == false) && (numAddAccountNumber == true)) {
+  if (field_AccountName1.length !== 0 && field_AccountNumber1.length !== 0 && field_currency1.length !== 0 && field_Bank1.length !== 0 && field_Branch1.length !== 0 && file6.length !== 0 && (speCharAddAccountName == false) && (numAddAccountName == false) && (numAddAccountNumber == true)) {
     const data = {
       field_AccountName1,
       field_AccountNumber1,

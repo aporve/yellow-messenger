@@ -1742,14 +1742,14 @@ function handleAddBankInfo(event) {
         $('#upload_feedback_label1').text('Please upload your Bank Account Ownership');
     }
 
-    if (field_AccountName1.length !== 0 && field_AccountNumber1.length !== 0 && field_currency1.length !== 0 && field_Bank1.length !== 0 && field_Branch1.length !== 0 && file7.length !== 0 && (speCharAddAccountName == false) && (numAddAccountName == false) && (numAddAccountNumber == true)) {
+    if (field_AccountName1.length !== 0 && field_AccountNumber1.length !== 0 && field_currency1.length !== 0 && field_Bank1.length !== 0 && field_Branch1.length !== 0 && file6.length !== 0 && (speCharAddAccountName == false) && (numAddAccountName == false) && (numAddAccountNumber == true)) {
         const data = {
             field_AccountName1,
             field_AccountNumber1,
             field_Bank1,
             field_Branch1,
             field_Currency1: $("select#from_currency1 option").filter(":selected").val(),
-            upload_file_7: file7.value
+            upload_file_6: file6.value
         }
         // var BankDetails = {}
         let BankDetailsList = [];
