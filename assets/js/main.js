@@ -182,6 +182,9 @@ function trackProgress() {
                             claimantFirstName = event.data.claimantFirstName;
 
                             sourceSystem = event.data.sourceSystem;
+                            if (sourceSystem.trim().toLowerCase() != 'tips' && sourceSystem.trim().toLowerCase() != 'cms') {
+                                sourceSystem='cms'
+                            }
                             isFallout = event.data.isFallout;
                             claimAmount = event.data.claimAmount;
                             currency = event.data.currency;
@@ -189,7 +192,7 @@ function trackProgress() {
                             surveyTag = event.data.surveyTag;
 
                             //for customer survey
-                            if ((claimStatus.toLowerCase() == 'denied1' || claimStatus.toLowerCase() == 'denied2' || claimStatus.toLowerCase() == 'denied3' || claimStatus.toLowerCase() == 'denied4' || claimStatus.toLowerCase() == 'approved') && surveyTag == 'N') {
+                            if ((claimStatus.toLowerCase() == 'denied1' || claimStatus.toLowerCase() == 'denied2' || claimStatus.toLowerCase() == 'denied3' || claimStatus.toLowerCase() == 'denied4' || claimStatus.toLowerCase() == 'approved') && (surveyTag == 'N' || surveyTag == null)) {
                                 $('#customer_survey').show()
                             }
                             else {
@@ -198,7 +201,7 @@ function trackProgress() {
                             }
                             //for customer survey
 
-
+                            document.getElementById('original_ref_no').innerHTML = document.getElementById('reference_number').value;
                             document.getElementById('payment_amount').innerHTML = currency + ' ' + claimAmount;
 
                             displayDateForClaimStatus()
@@ -221,9 +224,12 @@ function trackProgress() {
 
                         }
                     }
-                    else {
+                    else if (event.data.returnCode == '1') {
                         $('#refNoWarning').modal('show');
 
+                    }
+                    else {
+                        $('#noDataModal').modal('show'); //
                     }
                 }
                 else {
