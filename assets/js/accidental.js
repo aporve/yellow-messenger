@@ -1973,7 +1973,7 @@ function finalSubmitCall() {
           console.log('finalsubmit event received')
           if (event.data.returnCode == '0') {
             myDisable()
-            
+
             // timer(50, 100).then(async () => {
             $("#step2").addClass("done");
 
@@ -1989,8 +1989,9 @@ function finalSubmitCall() {
 
           }
           else {
-            alert(event.data.returnMessage + 'returnCode not 0 ')
-            // $("#popUp").modal("show");
+            // alert(event.data.returnMessage + 'returnCode not 0 ')
+            document.getElementById('returnMessage').value = event.data.returnMessage;
+            $("#invalidReturnCode").modal("show");
           }
         }
         else {
@@ -2502,7 +2503,7 @@ function addBank(event) {
   $('#account_details').hide();
   $('#requirements').hide();
   $('#account_details1').show();
-  event.target.value=''
+  event.target.value = ''
   /*   $('#account_details1')[0].scrollIntoView(true); */
 }
 
@@ -2990,7 +2991,8 @@ function submitOtp() {
           }
           else {
             $('#invalidOtp').modal('hide');
-            alert(event.data.returnMessage);
+            document.getElementById('returnMessage').value = event.data.returnMessage;
+            $("#invalidReturnCode").modal("show");
           }
 
         }
