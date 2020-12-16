@@ -2003,7 +2003,8 @@ function preSubmitCall() {
     //Basic Information
     //Insured information
     //Beneficiary list
-
+    document.getElementById("upload_docs_btn").disabled = true;
+    document.getElementById("upload_docs_btn").style.cursor = "no-drop";
     var source = 'Illness'
     var raw = JSON.stringify({
         "basicInformation": basicInformation,
