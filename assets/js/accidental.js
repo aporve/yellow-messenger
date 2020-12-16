@@ -181,10 +181,10 @@ let beneficiaryCount = 1;
 let filesMap = {};
 let claimType, causeOfLoss, govIdFront, govIdBack, apsFile, narrationReport, officialReceipts;
 let file1Buffer, file2Buffer, file3Buffer, file4Buffer, file5Buffer, file6Buffer, file7Buffer, file8Buffer;
-basicInformation["WebReferenceNumber"] = referenceNumber;
-basicInformation["CompanyCode"] = "PAL";
-basicInformation["ClaimType"] = "Living";
-basicInformation["CauseOfLoss"] = "Accident";
+basicInformation["webReferenceNumber"] = referenceNumber;
+basicInformation["companyCode"] = "PAL";
+basicInformation["claimType"] = "Living";
+basicInformation["causeOfLoss"] = "Accident";
 
 $(document).ready(function (event) {
   disableFutureDates();
@@ -737,20 +737,20 @@ function handleForm(event) {
 
   var comapareDates = compareFun(field_DOB, field_DOA);
 
-  InsuredInformation["FirstName"] = field_firstName;
-  InsuredInformation["MiddleName"] = field_firstName;
-  InsuredInformation["LastName"] = field_firstName;
-  InsuredInformation["Suffix"] = field_firstName;
-  InsuredInformation["DateOfBirth"] = field_firstName;
-  InsuredInformation["CountryCode"] = field_firstName;
-  InsuredInformation["PhoneNumber"] = field_firstName;
-  InsuredInformation["EmailAddress"] = field_firstName;
-  InsuredInformation["HomeAddress"] = field_firstName;
-  InsuredInformation["InjuryDetails"] = field_firstName;
-  InsuredInformation["AccidentDate"] = field_firstName;
-  InsuredInformation["AccidentTime"] = field_firstName;
-  InsuredInformation["AccidentPlace"] = field_firstName;
-  InsuredInformation["FirstName"] = field_firstName;
+  InsuredInformation["firstName"] = field_firstName;
+  InsuredInformation["middleName"] = field_firstName;
+  InsuredInformation["lastName"] = field_firstName;
+  InsuredInformation["suffix"] = field_firstName;
+  InsuredInformation["dateOfBirth"] = field_firstName;
+  InsuredInformation["countryCode"] = field_firstName;
+  InsuredInformation["phoneNumber"] = field_firstName;
+  InsuredInformation["emailAddress"] = field_firstName;
+  InsuredInformation["homeAddress"] = field_firstName;
+  InsuredInformation["injuryDetails"] = field_firstName;
+  InsuredInformation["accidentDate"] = field_firstName;
+  InsuredInformation["accidentTime"] = field_firstName;
+  InsuredInformation["accidentPlace"] = field_firstName;
+  InsuredInformation["firstName"] = field_firstName;
 
   var specFirstName = specialcharacterValidation(field_firstName);
   var specMiddleName = specialcharacterValidation(field_middleName);
@@ -1044,19 +1044,19 @@ function handleForm(event) {
     $("#customer_Name").text(`Hi ${field_firstName}, Hang in there as we are now processing your request. Kindly expect an SMS update from us within 1 to 2 working days on the status of your request.`);
     console.log('Data -> ', data)
 
-    InsuredInformation["FirstName"] = field_firstName;
-    InsuredInformation["MiddleName"] = field_middleName;
-    InsuredInformation["LastName"] = field_lastName;
-    InsuredInformation["Suffix"] = field_lastName_Suffix;
-    InsuredInformation["DateOfBirth"] = field_DOB.split('-')[1] + '/' + field_DOB.split('-')[2] + '/' + field_DOB.split('-')[0];
-    InsuredInformation["CountryCode"] = $("select#inlineFormCustomSelect option").filter(":selected").val();
-    InsuredInformation["PhoneNumber"] = field_mobileNum;
-    InsuredInformation["EmailAddress"] = field_emailAddress;
-    InsuredInformation["HomeAddress"] = field_homeAddress;
-    InsuredInformation["InjuryDetails"] = field_injury;
-    InsuredInformation["AccidentDate"] = field_DOA.split('-')[1] + '/' + field_DOA.split('-')[2] + '/' + field_DOA.split('-')[0];
-    InsuredInformation["AccidentTime"] = full_TOA;
-    InsuredInformation["AccidentPlace"] = field_POA;
+    InsuredInformation["firstName"] = field_firstName;
+    InsuredInformation["middleName"] = field_middleName;
+    InsuredInformation["lastName"] = field_lastName;
+    InsuredInformation["suffix"] = field_lastName_Suffix;
+    InsuredInformation["dateOfBirth"] = field_DOB.split('-')[1] + '/' + field_DOB.split('-')[2] + '/' + field_DOB.split('-')[0];
+    InsuredInformation["countryCode"] = $("select#inlineFormCustomSelect option").filter(":selected").val();
+    InsuredInformation["phoneNumber"] = field_mobileNum;
+    InsuredInformation["emailAddress"] = field_emailAddress;
+    InsuredInformation["homeAddress"] = field_homeAddress;
+    InsuredInformation["injuryDetails"] = field_injury;
+    InsuredInformation["accidentDate"] = field_DOA.split('-')[1] + '/' + field_DOA.split('-')[2] + '/' + field_DOA.split('-')[0];
+    InsuredInformation["accidentTime"] = full_TOA;
+    InsuredInformation["accidentPlace"] = field_POA;
     // for otp screen
     document.getElementById('user_mobile').innerHTML = field_mobileNum.replace(/.(?=.{4})/g, '*')
     // for otp screen
