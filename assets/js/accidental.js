@@ -1651,81 +1651,81 @@ file6.onchange = async function (e) {
       this.value = "";
   }
 };
-// file7.onchange = async function (e) {
-//   docType = "LIBA001";
-//   tranType = "BA-MIN";
-//   $("#file_upload_cancle_7").hide();
-//   $("#file_Upload_Tick_7").hide();
-//   var ext = this.value.match(/\.([^\.]+)$/)[1];
-//   switch (ext) {
-//     case "jpg":
-//     case "pdf":
-//       var file = this.files[0];
-//       var buttonNum = 7;
-//       var pageId = 2
-//       var sizevalid = isFileSizeValid(file, buttonNum);
-//       if (sizevalid) {
+file7.onchange = async function (e) {
+  docType = "LIBA001";
+  tranType = "BA-MIN";
+  $("#file_upload_cancle_7").hide();
+  $("#file_Upload_Tick_7").hide();
+  var ext = this.value.match(/\.([^\.]+)$/)[1];
+  switch (ext) {
+    case "jpg":
+    case "pdf":
+      var file = this.files[0];
+      var buttonNum = 7;
+      var pageId = 2
+      var sizevalid = isFileSizeValid(file, buttonNum);
+      if (sizevalid) {
 
-//         if (ext == "jpg") {
+        if (ext == "jpg") {
 
-//           let fileName = referenceNumber + "-" + docType + "-" + tranType;
+          let fileName = referenceNumber + "-" + docType + "-" + tranType;
 
-//           let accident = {};
+          let accident = {};
 
-//           accident['beneficiaryNo'] = beneficiaryCount,
-//             accident["filename"] = `${fileName}.pdf`,
-//             accident["docType"] = "PDF",
-//             accident["docTypeCode"] = docType,
-//             accident["documentDescription"] = "Proof of Bank Account"
+          accident['beneficiaryNo'] = beneficiaryCount,
+            accident["filename"] = `${fileName}.pdf`,
+            accident["docType"] = "PDF",
+            accident["docTypeCode"] = docType,
+            accident["documentDescription"] = "Proof of Bank Account"
 
-//           addFileToList(accident, `${fileName}.pdf`);
+          addFileToList(accident, `${fileName}.pdf`);
 
-//           const formData = new FormData()
-//           formData.append('file', file, fileName + `.${ext}`)
-//           fileCheck(file, buttonNum, pageId, formData, fileName)
-
-
-//         }
-//         else {
-//           proceedScan(file, buttonNum, pageId);
-//           let fileName = referenceNumber + "-" + docType + "-" + tranType;
-
-//           let accident = {};
-
-//           accident['beneficiaryNo'] = beneficiaryCount,
-//             accident["filename"] = `${fileName}.pdf`,
-//             accident["docType"] = "PDF",
-//             accident["docTypeCode"] = docType,
-//             accident["documentDescription"] = "Proof of Bank Account"
-
-//           addFileToList(accident, `${fileName}.pdf`);
-
-//           const formData = new FormData()
-//           formData.append('file', file, fileName + `.${ext}`)
-//           handleFileUpload(formData, fileName);
-//         }
+          const formData = new FormData()
+          formData.append('file', file, fileName + `.${ext}`)
+          fileCheck(file, buttonNum, pageId, formData, fileName)
 
 
-//       } else {
-//         $("#warning_parent_acct").show();
-//         $("#file_loader_icon_7").hide();
-//         $("#file_Upload_Tick_7").hide();
-//         $("#file_upload_cancle_7").show();
-//         $("#upload_warning_acct").text(
-//           "You may only upload documents not exceeding 2MB in file size. Please re-upload in the correct format and file size proceed."
-//         );
-//       }
-//       break;
-//     default:
-//       $("#warning_parent_acct").show();
-//       $("#file_Upload_Tick_7").hide();
-//       $("#file_upload_cancle_7").show();
-//       $("#upload_warning_acct").text(
-//         "You may only upload documents that are in .jpg, .pdf formats and must not exceed 2MB in file size. Please re-upload in the correct format and file size to proceed."
-//       );
-//       this.value = "";
-//   }
-// };
+        }
+        else {
+          proceedScan(file, buttonNum, pageId);
+          let fileName = referenceNumber + "-" + docType + "-" + tranType;
+
+          let accident = {};
+
+          accident['beneficiaryNo'] = beneficiaryCount,
+            accident["filename"] = `${fileName}.pdf`,
+            accident["docType"] = "PDF",
+            accident["docTypeCode"] = docType,
+            accident["documentDescription"] = "Proof of Bank Account"
+
+          addFileToList(accident, `${fileName}.pdf`);
+
+          const formData = new FormData()
+          formData.append('file', file, fileName + `.${ext}`)
+          handleFileUpload(formData, fileName);
+        }
+
+
+      } else {
+        $("#warning_parent_acct").show();
+        $("#file_loader_icon_7").hide();
+        $("#file_Upload_Tick_7").hide();
+        $("#file_upload_cancle_7").show();
+        $("#upload_warning_acct").text(
+          "You may only upload documents not exceeding 2MB in file size. Please re-upload in the correct format and file size proceed."
+        );
+      }
+      break;
+    default:
+      $("#warning_parent_acct").show();
+      $("#file_Upload_Tick_7").hide();
+      $("#file_upload_cancle_7").show();
+      $("#upload_warning_acct").text(
+        "You may only upload documents that are in .jpg, .pdf formats and must not exceed 2MB in file size. Please re-upload in the correct format and file size to proceed."
+      );
+      this.value = "";
+  }
+};
 // file7.onchange = async function (e) {
 //   $("#file_upload_cancle_7").hide();
 //   $("#file_Upload_Tick_7").hide();
