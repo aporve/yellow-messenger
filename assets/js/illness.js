@@ -50,7 +50,7 @@ var isChangeInPayoutOption = 'N';
 let claimType, causeOfLoss, govIdFront, govIdBack, apsFile, narrationReport, officialReceipts;
 let file1Buffer, file2Buffer, file3Buffer, file4Buffer, file5Buffer, file6Buffer, file7Buffer, file8Buffer;
 basicInformation["webReferenceNumber"] = referenceNumber;
-basicInformation["companyCode"] = "PAL";
+basicInformation["companyName"] = "PAL";
 basicInformation["claimType"] = "Living";
 basicInformation["causeOfLoss"] = "Illness";
 

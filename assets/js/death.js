@@ -70,7 +70,7 @@ let filesList = [];
 let beneficiaryCount = 1;
 let docType, tranType;
 basicInformation["webReferenceNumber"] = referenceNumber;
-basicInformation["companyCode"] = "PAL";
+basicInformation["companyName"] = "PAL";
 basicInformation["claimType"] = "Death";
 
 form.addEventListener('submit', handleForm);
