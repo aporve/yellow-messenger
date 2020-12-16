@@ -162,80 +162,86 @@ function trackProgress() {
                 if (event.event_code == 'claimStatusResponse') { //sucess
                     console.log(event.data)
                     if (event.data.returnCode == '0') {
-                        document.getElementById('go-btn').style.display = 'block'
-                        document.getElementById('loader-btn').style.display = 'none'
-                        if (event.data.type.toLowerCase() == 'death') {
-                            claim_type = event.data.type
+                        if (event.data.type != null) {
+                            document.getElementById('go-btn').style.display = 'block'
+                            document.getElementById('loader-btn').style.display = 'none'
+                            if (event.data.type.toLowerCase() == 'death') {
+                                claim_type = event.data.type
+                            }
+                            else {
+                                claim_type = event.data.subType
+                            }
+                            transactionNumber = event.data.transactionNumber;
+                            disbursementType = event.data.disbursementType;
+                            beneficiaryCount = event.data.beneficiaryCount;
+                            lapsationDate = event.data.lapsationDate;
+                            claimStatus = event.data.claimStatus;
+                            docsPending = event.data.docsPending;
+                            docsReceived = event.data.docsReceived;
+                            policyNumber = event.data.policyNumber;
+                            claimantFirstName = event.data.claimantFirstName;
+
+                            sourceSystem = event.data.sourceSystem;
+                            isFallout = event.data.isFallout;
+                            claimAmount = event.data.claimAmount;
+                            currency = event.data.currency;
+                            requirementsList = event.data.requirementsList;
+                            surveyTag = event.data.surveyTag;
+
+                            //for customer survey
+                            if ((claimStatus.toLowerCase() == 'denied1' || claimStatus.toLowerCase() == 'denied2' || claimStatus.toLowerCase() == 'denied3' || claimStatus.toLowerCase() == 'denied4' || claimStatus.toLowerCase() == 'approved') && surveyTag == 'N') {
+                                $('#customer_survey').show()
+                            }
+                            else {
+
+                                $('#customer_survey').hide()
+                            }
+                            //for customer survey
+
+
+                            document.getElementById('payment_amount').innerHTML = currency + ' ' + claimAmount;
+
+                            displayDateForClaimStatus()
+                            $("#img_claim").hide();
+                            $("#claim").hide();
+                            $("#reference_No").hide();
+
+                            // document.getElementById('text').innerHTML = document.getElementById('payout-pickup-ill').innerHTML;
+                            // activeProcess()
+                            // activeProcessCircle()
+                            $("#err_recaptcha").text('');
+                            $("#err_recaptcha").hide();
+                            $("#reference-divider").show();
+                            $("#process_confirmation1").show();
+                            setClaimProgressScreen(); // to set header title and image for claim status screen
+                            trackProgressDropDown() // f}or tracking progress dropdown
                         }
                         else {
-                            claim_type = event.data.subType
+                            $('#noDataModal').modal('show');
+
                         }
-                        transactionNumber = event.data.transactionNumber;
-                        disbursementType = event.data.disbursementType;
-                        beneficiaryCount = event.data.beneficiaryCount;
-                        lapsationDate = event.data.lapsationDate;
-                        claimStatus = event.data.claimStatus;
-                        docsPending = event.data.docsPending;
-                        docsReceived = event.data.docsReceived;
-                        policyNumber = event.data.policyNumber;
-                        claimantFirstName = event.data.claimantFirstName;
-                      
-                        sourceSystem = event.data.sourceSystem;
-                        isFallout = event.data.isFallout;
-                        claimAmount = event.data.claimAmount;
-                        currency = event.data.currency;
-                        requirementsList = event.data.requirementsList;
-                        surveyTag = event.data.surveyTag;
-
-                        //for customer survey
-                        if ((claimStatus.toLowerCase() == 'denied1' || claimStatus.toLowerCase() == 'denied2' || claimStatus.toLowerCase() == 'denied3' || claimStatus.toLowerCase() == 'denied4'  || claimStatus.toLowerCase() == 'approved') && surveyTag == 'N') {
-                            $('#customer_survey').show()
-                        }
-                        else {
-
-                            $('#customer_survey').hide()
-                        }
-                        //for customer survey
-
-
-                        document.getElementById('payment_amount').innerHTML = currency + ' ' + claimAmount;
-
-                        displayDateForClaimStatus()
-                        $("#img_claim").hide();
-                        $("#claim").hide();
-                        $("#reference_No").hide();
-
-                        // document.getElementById('text').innerHTML = document.getElementById('payout-pickup-ill').innerHTML;
-                        // activeProcess()
-                        // activeProcessCircle()
-                        $("#err_recaptcha").text('');
-                        $("#err_recaptcha").hide();
-                        $("#reference-divider").show();
-                        $("#process_confirmation1").show();
-                        setClaimProgressScreen(); // to set header title and image for claim status screen
-                        trackProgressDropDown() // for tracking progress dropdown
                     }
                     else {
                         $('#refNoWarning').modal('show');
-                      
+
                     }
                 }
                 else {
                     // $('#refNoWarning').modal('show');
-                  
+
                 }
             } else {
                 $('#refNoWarning').modal('show');
-              
+
             }
         } catch (error) {
             // alert(error)
-        
+
         }
 
     })
 
-  
+
 
     // api call on clicking GO button from claim status screen
     // var res;
