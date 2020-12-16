@@ -44,6 +44,7 @@ $('#privacy_consent_3').prop('checked', true);
 document.getElementById('upload_waiting_btn').style.display = 'none'
 document.getElementById('account_details1_btn_waiting').style.display = 'none'
 document.getElementById('pick_up_btn_waiting').style.display = 'none'
+document.getElementById('submit9_waiting_btn').style.display = 'none'
 
 var form_addBank = document.getElementById("addbank_form");
 form_addBank.addEventListener('submit', handleAddBankInfo);
@@ -1869,6 +1870,10 @@ function enableDottedLoader() {
 
   document.getElementById('pick_up_btn').style.display = 'none'
   document.getElementById('pick_up_btn_waiting').style.display = 'block'
+
+  document.getElementById('submit9').style.display = 'none'
+  document.getElementById('submit9_waiting_btn').style.display = 'block'
+
 }
 function disableDottedLoader() {
   document.getElementById('upload_docs_btn').style.display = 'block'
@@ -1879,6 +1884,9 @@ function disableDottedLoader() {
 
   document.getElementById('pick_up_btn').style.display = 'block'
   document.getElementById('pick_up_btn_waiting').style.display = 'none'
+
+  document.getElementById('submit9').style.display = 'block'
+  document.getElementById('submit9_waiting_btn').style.display = 'none'
 }
 
 //to call preSubmit api
