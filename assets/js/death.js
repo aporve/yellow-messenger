@@ -1161,6 +1161,7 @@ function handleFormAddBeneficiary(event) {
             beneficiary["firstName"] = field_addBeneficiaryFirstName,
             beneficiary["middleName"] = field_addBeneficiaryMiddleName,
             beneficiary["lastName"] = field_addBeneficiaryLastName,
+            // beneficiary["suffix"] = field_lastName_Suffix,
             beneficiary["dateOfBirth"] = field_addBeneficiaryDOB.split('-')[1] + "/" + field_addBeneficiaryDOB.split('-')[2] + "/" + field_addBeneficiaryDOB.split('-')[0],
             beneficiary["countryCode"] = $("select#field_addBeneficiaryMobileNumberSelect option").filter(":selected").val(),
             beneficiary["phoneNumber"] = field_addBeneficiaryMobileNum,
@@ -1170,12 +1171,12 @@ function handleFormAddBeneficiary(event) {
             beneficiary["nationality"] = field_addBeneficiaryNationality,
             beneficiary["sex"] = field_addBeneficiarySex,
             beneficiary["relationship"] = field_addBeneficiaryRelationToDeceased,
-            beneficiary["documentFolder"] = `CLAIMS/PAL/${referenceNumber}`,
+            // beneficiary["documentFolder"] = `CLAIMS/PAL/${referenceNumber}`,
             beneficiary["payoutOption"] = payoutOption,
-            beneficiary["employer"] = field_addBeneficiaryEmployerName,
-            beneficiary["governmentOfficial"] = field_addBeneficiary_relatives1,
-            beneficiary["governmentOfficialRelative"] = field_add_Beneficiary_add_relatives2,
-            beneficiary["occupation"] = field_addBeneficiaryOccupation,
+            // beneficiary["employer"] = field_addBeneficiaryEmployerName,
+            // beneficiary["governmentOfficial"] = field_addBeneficiary_relatives1,
+            // beneficiary["governmentOfficialRelative"] = field_add_Beneficiary_add_relatives2,
+            // beneficiary["occupation"] = field_addBeneficiaryOccupation,
 
             BeneficiaryList.push(beneficiary);
         if (beneficiaryCount == 3) {
@@ -1726,6 +1727,7 @@ function handleForm(event) {
             beneficiary["firstName"] = field_BeneficiaryFirstName,
             beneficiary["middleName"] = field_BeneficiaryMiddleName,
             beneficiary["lastName"] = field_BeneficiaryLastName,
+            // beneficiary["suffix"] = field_,
             beneficiary["dateOfBirth"] = field_BeneficiaryDOB.split('-')[1] + "/" + field_BeneficiaryDOB.split('-')[2] + "/" + field_BeneficiaryDOB.split('-')[0],
             beneficiary["countryCode"] = $("select#field_BeneficiaryMobileNumberSelect option").filter(":selected").val(),
             beneficiary["phoneNumber"] = field_BeneficiaryMobileNum,
@@ -1735,12 +1737,12 @@ function handleForm(event) {
             beneficiary["nationality"] = field_BeneficiaryNationality,
             beneficiary["sex"] = $("select#field_BeneficiarySex option").filter(":selected").val(),
             beneficiary["relationship"] = field_BeneficiaryRelationToDeceased,
-            beneficiary["documentFolder"] = `CLAIMS/PAL/${referenceNumber}`,
+            // beneficiary["documentFolder"] = `CLAIMS/PAL/${referenceNumber}`,
             beneficiary["payoutOption"] = payoutOption,
-            beneficiary["employer"] = field_BeneficiaryEmployerName,
-            beneficiary["governmentOfficial"] = $("select#field_Beneficiary_relatives1 option").filter(":selected").val(),
-            beneficiary["governmentOfficialRelative"] = $("select#field_Beneficiary_relatives2 option").filter(":selected").val(),
-            beneficiary["occupation"] = field_BenificiaryOccupation
+            // beneficiary["employer"] = field_BeneficiaryEmployerName,
+            // beneficiary["governmentOfficial"] = $("select#field_Beneficiary_relatives1 option").filter(":selected").val(),
+            // beneficiary["governmentOfficialRelative"] = $("select#field_Beneficiary_relatives2 option").filter(":selected").val(),
+            // beneficiary["occupation"] = field_BenificiaryOccupation
         BeneficiaryList.push(beneficiary);
 
 
