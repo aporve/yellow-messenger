@@ -1900,9 +1900,7 @@ function finalSubmitCall() {
             myDisable()
             // timer(50, 100).then(async () => {
               $("#step2").addClass("done");
-              /*  $("#step3").addClass("active");
-               $("#step3>div").addClass("active"); */
-              /* $("#step3").addClass("done"); */
+            
               $("#step3_circle").addClass("md-step-step3-circle ");
               $("#step3_span").addClass("md-step3-span");
               $("#step3_reference").addClass("md-step3-span")
