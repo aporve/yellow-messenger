@@ -14,7 +14,7 @@ var file2 = document.getElementById('illness_file_Upload_2');
 var file3 = document.getElementById('illness_file_Upload_3');
 var file5 = document.getElementById('illness_file_Upload_5');
 var file6 = document.getElementById('proof_BAO');
-var file7 = document.getElementById('proof_addBAO');
+// var file7 = document.getElementById('proof_addBAO');
 var scanDoc = false;
 haveBankDetails = false;
 $('#privacy_consent_1').prop('checked', true);
@@ -1737,7 +1737,7 @@ function handleAddBankInfo(event) {
         $("#err_field_Branch1").hide();
     }
 
-    if (!file7.value) {
+    if (!file6.value) {
         $('#upload_feedback_label1').show();
         $('#upload_feedback_label1').text('Please upload your Bank Account Ownership');
     }
