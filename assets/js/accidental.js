@@ -1661,7 +1661,7 @@ file7.onchange = async function (e) {
     case "jpg":
     case "pdf":
       var file = this.files[0];
-      var buttonNum = 6;
+      var buttonNum = 7;
       var pageId = 2
       var sizevalid = isFileSizeValid(file, buttonNum);
       if (sizevalid) {
