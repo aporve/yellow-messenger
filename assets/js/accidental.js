@@ -123,6 +123,16 @@ function timer(lowerVal, UpperVal) {
         // document.getElementsByClassName('loader1').style.display='none'
         resolve("cleartime")
       }
+      // if (i > UpperVal) {
+
+      //   console.log("cleartime");
+      //   clearInterval(cleartime);
+
+      //   resolve("cleartime")
+      //   if (i > 100) {
+      //     renderProgress(0);
+      //   }
+      // }
       //  i++;
     }, 500);
   })
@@ -151,7 +161,10 @@ function renderProgress(progress) {
       .css("transform", "rotate(0deg)");
     $(".animate-75-100-b").css("transform", "rotate(" + angle + "deg)");
   }
-  $(".text").html(progress + "%");
+  // if (progress != 0) {
+    $(".text").html(progress + "%");
+  // }
+
 }
 
 let finalPayload = {};
@@ -1214,11 +1227,11 @@ file1.onchange = async function (e) {
           console.log("setting file data : ");
           let accident = {};
           // accident['LIDC001Front'] = {
-          accident['BeneficiaryNo'] = beneficiaryCount,
-            accident["Filename"] = `${fileName}.pdf`,
-            accident["DocType"] = "PDF",
-            accident["DocTypeCode"] = "LIDC001",
-            accident["DocumentDescription"] = "Front copy of doc"
+          accident['beneficiaryNo'] = beneficiaryCount,
+            accident["filename"] = `${fileName}.pdf`,
+            accident["docType"] = "PDF",
+            accident["docTypeCode"] = "LIDC001",
+            accident["documentDescription"] = "Front copy of doc"
           // }
 
           addFileToList(accident, `${fileName}.pdf`);
@@ -1233,11 +1246,11 @@ file1.onchange = async function (e) {
           console.log("setting file data : ");
           let accident = {};
           // accident['LIDC001Front'] = {
-          accident['BeneficiaryNo'] = beneficiaryCount,
-            accident["Filename"] = `${fileName}.pdf`,
-            accident["DocType"] = "PDF",
-            accident["DocTypeCode"] = "LIDC001",
-            accident["DocumentDescription"] = "Front copy of doc"
+          accident['beneficiaryNo'] = beneficiaryCount,
+            accident["filename"] = `${fileName}.pdf`,
+            accident["docType"] = "PDF",
+            accident["docTypeCode"] = "LIDC001",
+            accident["documentDescription"] = "Front copy of doc"
           // }
 
           addFileToList(accident, `${fileName}.pdf`);
@@ -1290,11 +1303,11 @@ file2.onchange = async function (e) {
           let fileName = referenceNumber + "-" + docType + "-" + tranType;
 
           let accident = {};
-          accident['BeneficiaryNo'] = beneficiaryCount,
-            accident["Filename"] = `${fileName}.pdf`,
-            accident["DocType"] = "PDF",
-            accident["DocTypeCode"] = "LIDC001",
-            accident["DocumentDescription"] = "Back copy of doc"
+          accident['beneficiaryNo'] = beneficiaryCount,
+            accident["filename"] = `${fileName}.pdf`,
+            accident["docType"] = "PDF",
+            accident["docTypeCode"] = "LIDC001",
+            accident["documentDescription"] = "Back copy of doc"
 
           addFileToList(accident, `${fileName}.pdf`);
           const formData = new FormData()
@@ -1308,11 +1321,11 @@ file2.onchange = async function (e) {
           let fileName = referenceNumber + "-" + docType + "-" + tranType;
 
           let accident = {};
-          accident['BeneficiaryNo'] = beneficiaryCount,
-            accident["Filename"] = `${fileName}.pdf`,
-            accident["DocType"] = "PDF",
-            accident["DocTypeCode"] = "LIDC001",
-            accident["DocumentDescription"] = "Back copy of doc"
+          accident['beneficiaryNo'] = beneficiaryCount,
+            accident["filename"] = `${fileName}.pdf`,
+            accident["docType"] = "PDF",
+            accident["docTypeCode"] = "LIDC001",
+            accident["documentDescription"] = "Back copy of doc"
 
           addFileToList(accident, `${fileName}.pdf`);
           const formData = new FormData()
@@ -1362,11 +1375,11 @@ file3.onchange = async function (e) {
 
           let accident = {};
 
-          accident['BeneficiaryNo'] = beneficiaryCount,
-            accident["Filename"] = `${fileName}.pdf`,
-            accident["DocType"] = "PDF",
-            accident["DocTypeCode"] = docType,
-            accident["DocumentDescription"] = "Attending Physician’s Statement"
+          accident['beneficiaryNo'] = beneficiaryCount,
+            accident["filename"] = `${fileName}.pdf`,
+            accident["docType"] = "PDF",
+            accident["docTypeCode"] = docType,
+            accident["documentDescription"] = "Attending Physician’s Statement"
 
           addFileToList(accident, `${fileName}.pdf`);
           const formData = new FormData()
@@ -1380,11 +1393,11 @@ file3.onchange = async function (e) {
 
           let accident = {};
 
-          accident['BeneficiaryNo'] = beneficiaryCount,
-            accident["Filename"] = `${fileName}.pdf`,
-            accident["DocType"] = "PDF",
-            accident["DocTypeCode"] = docType,
-            accident["DocumentDescription"] = "Attending Physician’s Statement"
+          accident['beneficiaryNo'] = beneficiaryCount,
+            accident["filename"] = `${fileName}.pdf`,
+            accident["docType"] = "PDF",
+            accident["docTypeCode"] = docType,
+            accident["documentDescription"] = "Attending Physician’s Statement"
 
           addFileToList(accident, `${fileName}.pdf`);
           const formData = new FormData()
@@ -1434,11 +1447,11 @@ file4.onchange = async function (e) {
 
           let accident = {};
 
-          accident['BeneficiaryNo'] = beneficiaryCount,
-            accident["Filename"] = `${fileName}.pdf`,
-            accident["DocType"] = "PDF",
-            accident["DocTypeCode"] = docType,
-            accident["DocumentDescription"] = "Police or Narration Report"
+          accident['beneficiaryNo'] = beneficiaryCount,
+            accident["filename"] = `${fileName}.pdf`,
+            accident["docType"] = "PDF",
+            accident["docTypeCode"] = docType,
+            accident["documentDescription"] = "Police or Narration Report"
 
           addFileToList(accident, `${fileName}.pdf`);
           const formData = new FormData()
@@ -1453,11 +1466,11 @@ file4.onchange = async function (e) {
 
           let accident = {};
 
-          accident['BeneficiaryNo'] = beneficiaryCount,
-            accident["Filename"] = `${fileName}.pdf`,
-            accident["DocType"] = "PDF",
-            accident["DocTypeCode"] = docType,
-            accident["DocumentDescription"] = "Police or Narration Report"
+          accident['beneficiaryNo'] = beneficiaryCount,
+            accident["filename"] = `${fileName}.pdf`,
+            accident["docType"] = "PDF",
+            accident["docTypeCode"] = docType,
+            accident["documentDescription"] = "Police or Narration Report"
 
           addFileToList(accident, `${fileName}.pdf`);
           const formData = new FormData()
@@ -1508,11 +1521,11 @@ file5.onchange = async function (e) {
 
           let accident = {};
 
-          accident['BeneficiaryNo'] = beneficiaryCount,
-            accident["Filename"] = `${fileName}.pdf`,
-            accident["DocType"] = "PDF",
-            accident["DocTypeCode"] = docType,
-            accident["DocumentDescription"] = "Official Receipts (ORs)"
+          accident['beneficiaryNo'] = beneficiaryCount,
+            accident["filename"] = `${fileName}.pdf`,
+            accident["docType"] = "PDF",
+            accident["docTypeCode"] = docType,
+            accident["documentDescription"] = "Official Receipts (ORs)"
 
           addFileToList(accident, `${fileName}.pdf`);
 
@@ -1528,11 +1541,11 @@ file5.onchange = async function (e) {
 
           let accident = {};
 
-          accident['BeneficiaryNo'] = beneficiaryCount,
-            accident["Filename"] = `${fileName}.pdf`,
-            accident["DocType"] = "PDF",
-            accident["DocTypeCode"] = docType,
-            accident["DocumentDescription"] = "Official Receipts (ORs)"
+          accident['beneficiaryNo'] = beneficiaryCount,
+            accident["filename"] = `${fileName}.pdf`,
+            accident["docType"] = "PDF",
+            accident["docTypeCode"] = docType,
+            accident["documentDescription"] = "Official Receipts (ORs)"
 
           addFileToList(accident, `${fileName}.pdf`);
 
@@ -1584,11 +1597,11 @@ file6.onchange = async function (e) {
 
           let accident = {};
 
-          accident['BeneficiaryNo'] = beneficiaryCount,
-            accident["Filename"] = `${fileName}.pdf`,
-            accident["DocType"] = "PDF",
-            accident["DocTypeCode"] = docType,
-            accident["DocumentDescription"] = "Proof of Bank Account"
+          accident['beneficiaryNo'] = beneficiaryCount,
+            accident["filename"] = `${fileName}.pdf`,
+            accident["docType"] = "PDF",
+            accident["docTypeCode"] = docType,
+            accident["documentDescription"] = "Proof of Bank Account"
 
           addFileToList(accident, `${fileName}.pdf`);
 
@@ -1604,11 +1617,11 @@ file6.onchange = async function (e) {
 
           let accident = {};
 
-          accident['BeneficiaryNo'] = beneficiaryCount,
-            accident["Filename"] = `${fileName}.pdf`,
-            accident["DocType"] = "PDF",
-            accident["DocTypeCode"] = docType,
-            accident["DocumentDescription"] = "Proof of Bank Account"
+          accident['beneficiaryNo'] = beneficiaryCount,
+            accident["filename"] = `${fileName}.pdf`,
+            accident["docType"] = "PDF",
+            accident["docTypeCode"] = docType,
+            accident["documentDescription"] = "Proof of Bank Account"
 
           addFileToList(accident, `${fileName}.pdf`);
 
