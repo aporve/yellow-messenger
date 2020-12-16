@@ -182,7 +182,7 @@ function trackProgress() {
                             claimantFirstName = event.data.claimantFirstName;
 
                             sourceSystem = event.data.sourceSystem;
-                            if (sourceSystem.toLowerCase() == 'iserve') {
+                            if (sourceSystem.trim().toLowerCase() == 'iserve') {
                                 sourceSystem='TIPS'
                             }
                             isFallout = event.data.isFallout;
