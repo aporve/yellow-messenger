@@ -1797,7 +1797,7 @@ function preSubmitCall() {
   preSubmitPayload['data'] = raw;
   document.getElementById("upload_docs_btn").disabled = true;
   document.getElementById("upload_docs_btn").style.cursor = "no-drop";
-  timer(0, 50).then(async () => {
+  // timer(0, 50)
     window.parent.postMessage(JSON.stringify({
       event_code: 'ym-client-event', data: JSON.stringify({
         event: {
@@ -1806,7 +1806,7 @@ function preSubmitCall() {
         }
       })
     }), '*');
-  })
+  
 
   window.addEventListener('message', function (eventData) {
 
@@ -1819,7 +1819,7 @@ function preSubmitCall() {
         console.log(event)
         if (event.event_code == 'preSubmitResponse') { //sucess
           if (event.data.returnCode == '0') {
-            timer(50, 100).then(async () => {
+            // timer(50, 100).then(async () => {
               $("#step2").addClass("active");
               $("#step2>div").addClass("active");
               if (otpSubmitted == false) { otpTimer(); } else {
@@ -1827,7 +1827,7 @@ function preSubmitCall() {
                 $('#requirements').hide();
                 $('#payment').show();
               }
-            })
+            // })
           }
         }
 
@@ -1876,7 +1876,7 @@ function finalSubmitCall() {
   });
   finalData['source'] = source;
   finalData['data'] = raw;
-  timer(0, 50)
+  // timer(0, 50)
   window.parent.postMessage(JSON.stringify({
     event_code: 'ym-client-event', data: JSON.stringify({
       event: {
@@ -1898,7 +1898,7 @@ function finalSubmitCall() {
         if (event.event_code == 'finalSubmitResponse') { //sucess
           if (event.data.returnCode == '0') {
             myDisable()
-            timer(50, 100).then(async () => {
+            // timer(50, 100).then(async () => {
               $("#step2").addClass("done");
               /*  $("#step3").addClass("active");
                $("#step3>div").addClass("active"); */
@@ -1911,7 +1911,7 @@ function finalSubmitCall() {
               $("#pickUp").hide();
               $("#process_confirmation").show();
 
-            });
+            // });
 
           }
           else {
