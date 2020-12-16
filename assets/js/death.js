@@ -58,6 +58,8 @@ $('#privacy_consent_beneficiary_1').prop('checked', true);
 $('#privacy_consent_beneficiary_2').prop('checked', true);
 $('#privacy_consent_beneficiary_3').prop('checked', true);
 
+document.getElementById('submit9_waiting').style.display = 'none'
+document.getElementById('submit10_waiting').style.display = 'none'
 
 let basicInformation = {};
 let InsuredInformation = {};
@@ -222,6 +224,28 @@ function timer(lowerVal, UpperVal) {
 //         }, 500);
 //     })
 // }
+
+function enableDottedLoader() {
+    document.getElementById('submit9').style.display = 'none'
+    document.getElementById('submit9_waiting').style.display = 'block'
+
+    document.getElementById('submit10').style.display = 'none'
+    document.getElementById('submit10_waiting').style.display = 'block'
+
+
+    // document.getElementById('pick_up_btn').style.display = 'none'
+    // document.getElementById('pick_up_btn_waiting').style.display = 'block'
+}
+function disableDottedLoader() {
+    document.getElementById('submit9').style.display = 'block'
+    document.getElementById('submit9_waiting').style.display = 'none'
+
+    document.getElementById('submit10').style.display = 'block'
+    document.getElementById('submit10_waiting').style.display = 'none'
+
+    // document.getElementById('pick_up_btn').style.display = 'block'
+    // document.getElementById('pick_up_btn_waiting').style.display = 'none'
+}
 
 function myDisable2() {
     document.getElementById("submit10").disabled = true;
@@ -692,6 +716,7 @@ function validateNotNumber(evt) {
 }
 //to call preSubmit api
 function preSubmitCall() {
+    enableDottedLoader();
     //Basic Information
     //Insured information
     //Beneficiary list
@@ -730,7 +755,7 @@ function preSubmitCall() {
                 console.log(event)
                 if (event.event_code == 'preSubmitResponse') { //sucess
                     if (event.data.returnCode == '0') {
-
+                        disableDottedLoader();
 
                         // timer(25, 50).then(async () => {
                         $("#step2").addClass("done");
@@ -765,6 +790,7 @@ function preSubmitCall() {
 }
 
 function finalSubmitCall() {
+    enableDottedLoader();
     let filesObject = {};
     filesObject["folderName"] = `CLAIMS/PAL/${referenceNumber}`
     filesObject["fileList"] = filesList;
@@ -815,6 +841,7 @@ function finalSubmitCall() {
                 console.log(event)
                 if (event.event_code == 'finalSubmitResponse') { //sucess
                     if (event.data.returnCode == '0') {
+                        disableDottedLoader();
                         myDisable()
                         // timer(75, 100).then(async () => {
                         $("#step2").addClass("done");
