@@ -1810,6 +1810,7 @@ function getBankDetails() {
                 if (event.event_code == 'payoutDetails') { //sucess
                     if (event.data?.returnCode == '0') {
                         $('#cover-spin').hide(0)
+                        $('#proof_BAO_display').hide();
                         if (event.data?.accountName != null) {
                             isChangeInPayoutOption = 'Y';
                             haveBankDetails = true;
@@ -2124,7 +2125,7 @@ function finalSubmitCall() {
                     }
                 }
                 else {
-                    $("#popUp").modal("show");
+                    // $("#popUp").modal("show");
                 }
             }
         } catch (error) {
