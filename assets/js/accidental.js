@@ -2501,6 +2501,7 @@ function addBank(event) {
   $('#account_details').hide();
   $('#requirements').hide();
   $('#account_details1').show();
+  event.target.value=''
   /*   $('#account_details1')[0].scrollIntoView(true); */
 }
 
