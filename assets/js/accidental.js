@@ -1699,13 +1699,13 @@ file7.onchange = async function (e) {
 
           const formData = new FormData()
           formData.append('file', file, fileName + `.${ext}`)
-          e.target.value = ''
+          // e.target.value = ''
           fileCheck(file, buttonNum, pageId, formData, fileName)
 
 
         }
         else {
-          e.target.value = ''
+          // e.target.value = ''
           proceedScan(file, buttonNum, pageId);
           let fileName = referenceNumber + "-" + docType + "-" + tranType;
 
