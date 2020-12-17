@@ -933,7 +933,7 @@ function handleForm(event) {
         InsuredInformation["firstName"] = field_firstName.toUpperCase();
         InsuredInformation["middleName"] = field_middleName.toUpperCase();
         InsuredInformation["lastName"] = field_lastName.toUpperCase();
-        InsuredInformation["suffix"] = field_lastName_Suffix;
+        InsuredInformation["suffix"] = field_lastName_Suffix.toUpperCase();
         InsuredInformation["dateOfBirth"] = field_DOB.split('-')[1] + '/' + field_DOB.split('-')[2] + '/' + field_DOB.split('-')[0];
         InsuredInformation["countryCode"] = $("select#inlineFormCustomSelect option").filter(":selected").val();
         InsuredInformation["phoneNumber"] = field_mobileNum;

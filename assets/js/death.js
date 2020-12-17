@@ -1749,7 +1749,7 @@ function handleForm(event) {
         InsuredInformation["firstName"] = field_firstName.toUpperCase();
         InsuredInformation["middleName"] = field_middleName.toUpperCase();
         InsuredInformation["lastName"] = field_lastName.toUpperCase();
-        InsuredInformation["suffix"] = field_lastName_Suffix;
+        InsuredInformation["suffix"] = field_lastName_Suffix.toUpperCase();
         InsuredInformation["dateOfBirth"] = field_DOB.split('-')[1] + "/" + field_DOB.split('-')[2] + "/" + field_DOB.split('-')[0];
         InsuredInformation["insuredsDeath"] = field_DOID.split('-')[1] + "/" + field_DOID.split('-')[2] + "/" + field_DOID.split('-')[0];
         document.getElementById('user_mobile').innerHTML = field_BeneficiaryMobileNum.replace(/.(?=.{4})/g, '*')
