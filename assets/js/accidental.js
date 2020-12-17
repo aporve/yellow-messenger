@@ -1120,6 +1120,12 @@ const proceedScan = async (fileObj, button, pageid, formData, fileName) => {
             "Warning : We detected a virus/malware in your uploaded documents. Please re-upload a clean, virus-free document to proceed."
           );
         }
+        if (pageid == 3) {
+          $("#warning_parent_acct1").show();
+          $("#upload_warning_acct1").text(
+            "Warning : We detected a virus/malware in your uploaded documents. Please re-upload a clean, virus-free document to proceed."
+          );
+        }
 
         $(`#file_loader_icon_${button}`).hide();
         $(`#file_Upload_Tick_${button}`).hide();
@@ -1176,6 +1182,10 @@ const fileCheck = (file, button, pageid, formData, fileName) => {
       if (pageid == 2) {
         $("#warning_parent_acct").show();
         $("#upload_warning_acct").text("We noticed that your uploaded documents are unclear and unreadable. Kindly ensure to upload clear copies of your documents to proceed.");
+      }
+      if (pageid == 3) {
+        $("#warning_parent_acct1").show();
+        $("#upload_warning_acct1").text("We noticed that your uploaded documents are unclear and unreadable. Kindly ensure to upload clear copies of your documents to proceed.");
       }
 
       $(`#file_loader_icon_${button}`).hide();
@@ -1668,7 +1678,7 @@ file7.onchange = async function (e) {
     case "pdf":
       var file = this.files[0];
       var buttonNum = 7;
-      var pageId = 2
+      var pageId = 3
       var sizevalid = isFileSizeValid(file, buttonNum);
       if (sizevalid) {
 
@@ -1715,20 +1725,20 @@ file7.onchange = async function (e) {
 
 
       } else {
-        $("#warning_parent_acct").show();
+        $("#warning_parent_acct1").show();
         $("#file_loader_icon_7").hide();
         $("#file_Upload_Tick_7").hide();
         $("#file_upload_cancle_7").show();
-        $("#upload_warning_acct").text(
+        $("#upload_warning_acct1").text(
           "You may only upload documents not exceeding 2MB in file size. Please re-upload in the correct format and file size proceed."
         );
       }
       break;
     default:
-      $("#warning_parent_acct").show();
+      $("#warning_parent_acct1").show();
       $("#file_Upload_Tick_7").hide();
       $("#file_upload_cancle_7").show();
-      $("#upload_warning_acct").text(
+      $("#upload_warning_acct1").text(
         "You may only upload documents that are in .jpg, .pdf formats and must not exceed 2MB in file size. Please re-upload in the correct format and file size to proceed."
       );
       this.value = "";
