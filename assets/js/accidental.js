@@ -2644,6 +2644,10 @@ function handleAddBankInfo(event) {
     $('#upload_feedback_label1').show();
     $('#upload_feedback_label1').text('Please upload your Bank Account Ownership');
   }
+  else {
+    $('#upload_feedback_label1').hide();
+    $('#upload_feedback_label1').text('');
+  }
 
   if (field_AccountName1.length !== 0 && field_AccountNumber1.length !== 0 && field_currency1.length !== 0 && field_Bank1.length !== 0 && field_Branch1.length !== 0 && file6.length !== 0 && (speCharAddAccountName == false) && (numAddAccountName == false) && (numAddAccountNumber == true)) {
     const data = {
