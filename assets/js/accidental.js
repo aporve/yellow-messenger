@@ -3019,7 +3019,6 @@ function submitOtp() {
       event: {
         code: "validateOtp",
         data: validateOtpPayload,
-
       }
     })
   }), '*');
