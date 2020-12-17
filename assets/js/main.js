@@ -30,7 +30,8 @@ var surveyAns2 = 0;
 var surveyQues3;
 var surveyAns3 = 0;
 var surveyObj = {};
-
+var org_claimSubType;
+var org_sourceSystem;
 var survey_form = document.getElementById('customer_survey');
 
 survey_form.addEventListener('submit', submit_survey);
@@ -170,6 +171,7 @@ function trackProgress() {
                             }
                             else {
                                 claim_type = event.data.subType
+                                org_claimSubType = event.data.subType;
                                 if (event.data.subType.toLowerCase() == 'il') {
                                     claim_type = 'illness'
                                 }
@@ -188,8 +190,9 @@ function trackProgress() {
                             claimantFirstName = event.data.claimantFirstName;
 
                             sourceSystem = event.data.sourceSystem;
+                            org_sourceSystem = event.data.sourceSystem;
                             if (sourceSystem.trim().toLowerCase() != 'tips' && sourceSystem.trim().toLowerCase() != 'cms') {
-                                sourceSystem='cms'
+                                sourceSystem = 'cms'
                             }
                             isFallout = event.data.isFallout;
                             claimAmount = event.data.claimAmount;
@@ -411,7 +414,7 @@ function setAccidentClaimStatusMsg() {
         if (docsPending == 'Y') {
             var finalDocsList = '';
             requirementsList.forEach(function (item) {
-                finalDocsList = finalDocsList + '<div style="display: flex;align-items: center; padding-bottom: 1px;"> <div id="outer-circle"> <div id="inner-circle"></div> </div> <p style="padding-left:7px">' +' '+ item.name + '</p> </div>'
+                finalDocsList = finalDocsList + '<div style="display: flex;align-items: center; padding-bottom: 1px;"> <div id="outer-circle"> <div id="inner-circle"></div> </div> <p style="padding-left:7px">' + ' ' + item.name + '</p> </div>'
 
             });
 
@@ -1073,7 +1076,10 @@ function submit_survey(event) {
     {
         'companyName': 'PAL',
         'TIPSReferenceNumber': referenceNumber,
-        'sourceSystem': sourceSystem,
+        'claimType': claim_type,
+        'subType': org_claimSubType,
+        'policyNumber': policyNumber,
+        'sourceSystem': org_sourceSystem,
         'surveyQuestion1': surveyAns1,
         'surveyQuestion2': surveyAns2,
         'surveyQuestion3': surveyAns3
