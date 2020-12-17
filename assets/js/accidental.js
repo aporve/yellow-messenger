@@ -1050,9 +1050,9 @@ function handleForm(event) {
     $("#customer_Name").text(`Hi ${field_firstName}, Hang in there as we are now processing your request. Kindly expect an SMS update from us within 1 to 2 working days on the status of your request.`);
     console.log('Data -> ', data)
 
-    InsuredInformation["firstName"] = field_firstName;
-    InsuredInformation["middleName"] = field_middleName;
-    InsuredInformation["lastName"] = field_lastName;
+    InsuredInformation["firstName"] = field_firstName.toUpperCase();
+    InsuredInformation["middleName"] = field_middleName.toUpperCase();
+    InsuredInformation["lastName"] = field_lastName.toUpperCase();
     InsuredInformation["suffix"] = field_lastName_Suffix;
     InsuredInformation["dateOfBirth"] = field_DOB.split('-')[1] + '/' + field_DOB.split('-')[2] + '/' + field_DOB.split('-')[0];
     InsuredInformation["countryCode"] = $("select#inlineFormCustomSelect option").filter(":selected").val();
