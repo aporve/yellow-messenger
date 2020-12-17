@@ -170,6 +170,12 @@ function trackProgress() {
                             }
                             else {
                                 claim_type = event.data.subType
+                                if (event.data.subType.toLowerCase() == 'il') {
+                                    claim_type = 'illness'
+                                }
+                                else if (event.data.subType.toLowerCase() == 'ac') {
+                                    claim_type = 'accident'
+                                }
                             }
                             transactionNumber = event.data.transactionNumber;
                             disbursementType = event.data.disbursementType;
