@@ -1137,6 +1137,7 @@ const proceedScan = async (fileObj, button, pageid, formData, fileName) => {
         $("#warning_uploads_docs").hide();
 
         $("#warning_parent_acct").hide();
+        $("#warning_parent_acct1").hide();
         $(`#file_loader_icon_${button}`).hide();
         $(`#file_Upload_Tick_${button}`).show();
         $(`#file_upload_cancle_${button}`).hide();
