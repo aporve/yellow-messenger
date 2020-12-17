@@ -46,6 +46,10 @@ let referenceNumber = url.searchParams.get('refNumber');
 let uid = url.searchParams.get('sender');
 let botId = url.searchParams.get('botId');
 var scanDoc = false;
+let beneficiaryAccount = {};
+var payoutOption;
+var isChangeInBankDetails = 'N';
+var isChangeInPayoutOption = 'N';
 $('#privacy_consent_1').prop('checked', true);
 $('#privacy_consent_2').prop('checked', true);
 $('#privacy_consent_3').prop('checked', true);
@@ -54,6 +58,8 @@ $('#privacy_consent_beneficiary_1').prop('checked', true);
 $('#privacy_consent_beneficiary_2').prop('checked', true);
 $('#privacy_consent_beneficiary_3').prop('checked', true);
 
+document.getElementById('submit9_waiting').style.display = 'none'
+document.getElementById('submit10_waiting').style.display = 'none'
 
 let basicInformation = {};
 let InsuredInformation = {};
@@ -65,9 +71,9 @@ let filesList = [];
 
 let beneficiaryCount = 1;
 let docType, tranType;
-basicInformation["WebReferenceNumber"] = referenceNumber;
-basicInformation["CompanyCode"] = "PAL";
-basicInformation["ClaimType"] = "Death";
+basicInformation["webReferenceNumber"] = referenceNumber;
+basicInformation["companyName"] = "PAL";
+basicInformation["claimType"] = "Death";
 
 form.addEventListener('submit', handleForm);
 death__form_addBeneficiary.addEventListener('submit', handleFormAddBeneficiary);
@@ -174,19 +180,19 @@ function addFileToList(fileObject, fileName) {
         filesList.push(fileObject);
     }
 }
+function timer(lowerVal, UpperVal) {
 
-function timer() {
     var random = Math.floor(Math.random() * 5) + 1
     return new Promise((resolve, reject) => {
-        var i = 0
+        var i = lowerVal
         let cleartime = setInterval(() => {
             i = random + i;
             renderProgress(i)
-            if (i == 99) {
-                i = 100;
+            if (i == (UpperVal - 1)) {
+                i = UpperVal;
                 renderProgress(i)
             }
-            if (i == 100) {
+            if (i == UpperVal) {
 
                 console.log("cleartime");
                 clearTimeout(cleartime);
@@ -195,6 +201,50 @@ function timer() {
             //  i++;
         }, 500);
     })
+}
+
+// function timer() {
+//     var random = Math.floor(Math.random() * 5) + 1
+//     return new Promise((resolve, reject) => {
+//         var i = 0
+//         let cleartime = setInterval(() => {
+//             i = random + i;
+//             renderProgress(i)
+//             if (i == 99) {
+//                 i = 100;
+//                 renderProgress(i)
+//             }
+//             if (i == 100) {
+
+//                 console.log("cleartime");
+//                 clearTimeout(cleartime);
+//                 resolve("cleartime")
+//             }
+//             //  i++;
+//         }, 500);
+//     })
+// }
+
+function enableDottedLoader() {
+    document.getElementById('submit9').style.display = 'none'
+    document.getElementById('submit9_waiting').style.display = 'block'
+
+    document.getElementById('submit10').style.display = 'none'
+    document.getElementById('submit10_waiting').style.display = 'block'
+
+
+    // document.getElementById('pick_up_btn').style.display = 'none'
+    // document.getElementById('pick_up_btn_waiting').style.display = 'block'
+}
+function disableDottedLoader() {
+    document.getElementById('submit9').style.display = 'block'
+    document.getElementById('submit9_waiting').style.display = 'none'
+
+    document.getElementById('submit10').style.display = 'block'
+    document.getElementById('submit10_waiting').style.display = 'none'
+
+    // document.getElementById('pick_up_btn').style.display = 'block'
+    // document.getElementById('pick_up_btn_waiting').style.display = 'none'
 }
 
 function myDisable2() {
@@ -664,6 +714,171 @@ function validateNotNumber(evt) {
     $(`#err_${id}`).show();
     return;
 }
+//to call preSubmit api
+function preSubmitCall() {
+    enableDottedLoader();
+    //Basic Information
+    //Insured information
+    //Beneficiary list
+    document.getElementById("submit9").disabled = true;
+    document.getElementById("submit9").style.cursor = "no-drop";
+    document.getElementById("submit10").disabled = true;
+    document.getElementById("submit10").style.cursor = "no-drop";
+    var source = 'Death'
+    var raw = JSON.stringify({
+        "basicInformation": basicInformation,
+        "insuredInformation": InsuredInformation,
+        "beneficiaryList": BeneficiaryList,
+    });
+
+    var preSubmitPayload = {}
+    preSubmitPayload['source'] = source;
+    preSubmitPayload['data'] = raw;
+    // timer(0, 25)
+    window.parent.postMessage(JSON.stringify({
+        event_code: 'ym-client-event', data: JSON.stringify({
+            event: {
+                code: "preSubmit",
+                data: preSubmitPayload
+            }
+        })
+    }), '*');
+
+    window.addEventListener('message', function (eventData) {
+
+        console.log("receiving presubmit event in acc")
+        // console.log(event.data.event_code)
+        try {
+
+            if (eventData.data) {
+                let event = JSON.parse(eventData.data);
+                console.log(event)
+                if (event.event_code == 'preSubmitResponse') { //sucess
+                    if (event.data.returnCode == '0' || event.data.retCode == '0') {
+                        disableDottedLoader();
+
+                        // timer(25, 50).then(async () => {
+                        $("#step2").addClass("done");
+                        $("#step3_circle").addClass("md-step-step3-circle ");
+                        $("#step3_span").addClass("md-step3-span");
+                        $("#step3_reference").addClass("md-step3-span")
+                        if (otpSubmitted == false) { otpTimer(); } else {
+                            $('#requirements').hide();
+                            $('#process_confirmation').show();
+                        }
+
+                        /*  $("#step3").addClass("active");
+                        $("#step3>div").addClass("active"); */
+                        /*  $("#step3").addClass("done"); */
+
+
+                        // });
+                    }
+                    else {
+
+                    }
+                }
+                else {
+
+                }
+            }
+        } catch (error) {
+            console.log(error)
+        }
+
+    })
+}
+
+function finalSubmitCall() {
+    enableDottedLoader();
+    let filesObject = {};
+    filesObject["folderName"] = `CLAIMS/PAL/${referenceNumber}`
+    filesObject["fileList"] = filesList;
+
+    // var field_AccountName = $("#field_AccountName").val();
+    // var field_AccountNumber = $("#field_AccountNumber").val();
+    // var field_Bank = $("#field_Bank").val();
+    // var field_currency = $("from_currency").val();
+    // var field_Branch = $("#field_Branch").val();
+    // let BankDetailsList = [];
+    // BankDetailsList.push(BankDetails);
+    InsuredInformation["payoutOption"] = payoutOption;
+    var finalData = {}
+    var source = 'Death';
+    var raw = JSON.stringify({
+        "companyName": "PAL",
+        "webReferenceNumber": referenceNumber,
+        "payoutOption": payoutOption,
+        "bankDetailsList": BankDetailsList,
+        "isChangeInPayoutOption": isChangeInPayoutOption,
+        "isChangeInBankDetails": isChangeInBankDetails,
+        "filesInformation": filesObject,
+
+        "BasicInformation": basicInformation,
+        "InsuredInformation": InsuredInformation,
+        "BeneficiaryList": BeneficiaryList
+    });
+    finalData['source'] = source;
+    finalData['data'] = raw;
+    // timer(50, 75)
+    window.parent.postMessage(JSON.stringify({
+        event_code: 'ym-client-event', data: JSON.stringify({
+            event: {
+                code: "finalSubmit",
+                data: finalData
+            }
+        })
+    }), '*');
+
+    window.addEventListener('message', function (eventData) {
+
+        console.log("receiving final event in acc")
+        // console.log(event.data.event_code)
+        try {
+
+            if (eventData.data) {
+                let event = JSON.parse(eventData.data);
+                console.log(event)
+                if (event.event_code == 'finalSubmitResponse') { //sucess
+                    if (event.data.returnCode == '0' || event.data.retCode == '0') {
+                        disableDottedLoader();
+                        myDisable()
+                        document.getElementById('ref_number').innerHTML = event.data?.transactionNumber
+                        // timer(75, 100).then(async () => {
+                        $("#step2").addClass("done");
+                        /*  $("#step3").addClass("active");
+                         $("#step3>div").addClass("active"); */
+                        /* $("#step3").addClass("done"); */
+                        $("#step3_circle").addClass("md-step-step3-circle ");
+                        $("#step3_span").addClass("md-step3-span");
+                        $("#step3_reference").addClass("md-step3-span")
+                        $("#account_details").hide();
+                        $('#requirements').hide();
+                        $('#addBeneficiaryRequirements').hide();
+                        $("#process_confirmation").show();
+                        console.log("Data -> ", data);
+                        // });
+                    }
+                    else {
+                        document.getElementById('returnMessage').innerHTML = event.data.returnMessage;
+                        $("#invalidReturnCode").modal("show");
+                        // $("#popUp").modal("show");
+                    }
+                }
+                else {
+                    // $("#popUp").modal("show");
+                }
+            }
+        } catch (error) {
+            console.log(error)
+        }
+
+    })
+
+
+
+}
+
 
 function handleFormAddBeneficiary(event) {
     event.preventDefault();
@@ -977,37 +1192,38 @@ function handleFormAddBeneficiary(event) {
         }
         let beneficiary = {};
 
-        beneficiary["BeneficiaryNo"] = beneficiaryCount.toString(),
-            beneficiary["FirstName"] = field_addBeneficiaryFirstName,
-            beneficiary["MiddleName"] = field_addBeneficiaryMiddleName,
-            beneficiary["LastName"] = field_addBeneficiaryLastName,
-            beneficiary["DateOfBirth"] = field_addBeneficiaryDOB.split('-')[1] + "/" + field_addBeneficiaryDOB.split('-')[2] + "/" + field_addBeneficiaryDOB.split('-')[0],
-            beneficiary["CountryCode"] = $("select#field_addBeneficiaryMobileNumberSelect option").filter(":selected").val(),
-            beneficiary["PhoneNumber"] = field_addBeneficiaryMobileNum,
-            beneficiary["EmailAddress"] = field_addBeneficiaryEmailAddress,
-            beneficiary["HomeAddress"] = field_addBeneficiaryHomeAddress,
-            beneficiary["PlaceOfBirth"] = field_addBeneficiaryPOB,
-            beneficiary["Nationality"] = field_addBeneficiaryNationality,
-            beneficiary["Sex"] = field_addBeneficiarySex,
-            beneficiary["Relationship"] = field_addBeneficiaryRelationToDeceased,
-            beneficiary["DocumentFolder"] = `/CLAIMS/${referenceNumber}`,
-            beneficiary["PayoutOption"] = "CTA",
-            beneficiary["Employer"] = field_addBeneficiaryEmployerName,
-            beneficiary["GovernmentOfficial"] = field_addBeneficiary_relatives1,
-            beneficiary["GovernmentOfficialRelative"] = field_add_Beneficiary_add_relatives2,
-            beneficiary["Occupation"] = field_addBeneficiaryOccupation
+        beneficiary["beneficiaryNo"] = beneficiaryCount.toString(),
+            beneficiary["firstName"] = field_addBeneficiaryFirstName.toUpperCase(),
+            beneficiary["middleName"] = field_addBeneficiaryMiddleName.toUpperCase(),
+            beneficiary["lastName"] = field_addBeneficiaryLastName.toUpperCase(),
+            // beneficiary["suffix"] = field_lastName_Suffix,
+            beneficiary["dateOfBirth"] = field_addBeneficiaryDOB.split('-')[1] + "/" + field_addBeneficiaryDOB.split('-')[2] + "/" + field_addBeneficiaryDOB.split('-')[0],
+            beneficiary["countryCode"] = $("select#field_addBeneficiaryMobileNumberSelect option").filter(":selected").val(),
+            beneficiary["phoneNumber"] = field_addBeneficiaryMobileNum,
+            beneficiary["emailAddress"] = field_addBeneficiaryEmailAddress,
+            beneficiary["homeAddress"] = field_addBeneficiaryHomeAddress,
+            beneficiary["placeOfBirth"] = field_addBeneficiaryPOB,
+            beneficiary["nationality"] = field_addBeneficiaryNationality,
+            beneficiary["sex"] = field_addBeneficiarySex,
+            beneficiary["relationship"] = field_addBeneficiaryRelationToDeceased,
+            // beneficiary["documentFolder"] = `CLAIMS/PAL/${referenceNumber}`,
+            beneficiary["payoutOption"] = payoutOption,
+            // beneficiary["employer"] = field_addBeneficiaryEmployerName,
+            // beneficiary["governmentOfficial"] = field_addBeneficiary_relatives1,
+            // beneficiary["governmentOfficialRelative"] = field_add_Beneficiary_add_relatives2,
+            // beneficiary["occupation"] = field_addBeneficiaryOccupation,
 
-        BeneficiaryList.push(beneficiary);
+            BeneficiaryList.push(beneficiary);
         if (beneficiaryCount == 3) {
             // name to show in 'your request is being processed section'
             ben_name_req_progress = 'Hi ' + field_addBeneficiaryFirstName + '.'
-            $('#user_name').text = ben_name_req_progress;
+            // $('#user_name').text = ben_name_req_progress;
 
         }
         else {
             // name to show in 'your request is being processed section'
             ben_name_req_progress = ''
-            $('#user_name').text = ben_name_req_progress;
+            // $('#user_name').text = ben_name_req_progress;
             $("#customer_Name").text(`Hang in there as we are now processing your request. Kindly expect an SMS update from us within 1 to 2 working days on the status of your request.`);
         }
         dataReset("field_addBeneficiaryFirstName", "field_addBeneficiaryMiddleName", "field_addBeneficiaryLastName", "field_addBeneficiaryMobileNum", "field_addBeneficiaryEmailAddress", "field_addBeneficiaryHomeAddress", "field_addBeneficiaryDOB", "field_addBeneficiaryPOB", "field_addBeneficiaryNationality", "field_addBeneficiarySex", "field_addBeneficiaryRelationToDeceased", "field_addBeneficiaryEmployerName", "field_addBeneficiaryOccupation", "field_addBeneficiary_relatives1", "field_add_Beneficiary_add_relatives2");
@@ -1531,41 +1747,42 @@ function handleForm(event) {
             privacy_consent_1: $("#privacy_consent_1").is(":checked"),
             privacy_consent_2: $("#privacy_consent_2").is(":checked")
         }
-        InsuredInformation["FirstName"] = field_firstName;
-        InsuredInformation["MiddleName"] = field_middleName;
-        InsuredInformation["LastName"] = field_lastName;
-        InsuredInformation["Suffix"] = field_lastName_Suffix;
-        InsuredInformation["DateOfBirth"] = field_DOB.split('-')[1] + "/" + field_DOB.split('-')[2] + "/" + field_DOB.split('-')[0];
-        InsuredInformation["InsuredsDeath"] = field_DOID.split('-')[1] + "/" + field_DOID.split('-')[2] + "/" + field_DOID.split('-')[0];
+        InsuredInformation["firstName"] = field_firstName.toUpperCase();
+        InsuredInformation["middleName"] = field_middleName.toUpperCase();
+        InsuredInformation["lastName"] = field_lastName.toUpperCase();
+        InsuredInformation["suffix"] = field_lastName_Suffix.toUpperCase();
+        InsuredInformation["dateOfBirth"] = field_DOB.split('-')[1] + "/" + field_DOB.split('-')[2] + "/" + field_DOB.split('-')[0];
+        InsuredInformation["insuredsDeath"] = field_DOID.split('-')[1] + "/" + field_DOID.split('-')[2] + "/" + field_DOID.split('-')[0];
         document.getElementById('user_mobile').innerHTML = field_BeneficiaryMobileNum.replace(/.(?=.{4})/g, '*')
-        basicInformation["CauseOfLoss"] = field_NatureLoss;
+        basicInformation["causeOfLoss"] = field_NatureLoss;
 
         let beneficiary = {};
 
-        beneficiary["BeneficiaryNo"] = beneficiaryCount.toString(),
-            beneficiary["FirstName"] = field_BeneficiaryFirstName,
-            beneficiary["MiddleName"] = field_BeneficiaryMiddleName,
-            beneficiary["LastName"] = field_BeneficiaryLastName,
-            beneficiary["DateOfBirth"] = field_BeneficiaryDOB.split('-')[1] + "/" + field_BeneficiaryDOB.split('-')[2] + "/" + field_BeneficiaryDOB.split('-')[0],
-            beneficiary["CountryCode"] = $("select#field_BeneficiaryMobileNumberSelect option").filter(":selected").val(),
-            beneficiary["PhoneNumber"] = field_BeneficiaryMobileNum,
-            beneficiary["EmailAddress"] = field_BeneficiaryEmailAddress,
-            beneficiary["HomeAddress"] = field_BeneficiaryHomeAddress,
-            beneficiary["PlaceOfBirth"] = field_BeneficiaryPOB,
-            beneficiary["Nationality"] = field_BeneficiaryNationality,
-            beneficiary["Sex"] = $("select#field_BeneficiarySex option").filter(":selected").val(),
-            beneficiary["Relationship"] = field_BeneficiaryRelationToDeceased,
-            beneficiary["DocumentFolder"] = `/CLAIMS/${referenceNumber}`,
-            beneficiary["PayoutOption"] = "CTA",
-            beneficiary["Employer"] = field_BeneficiaryEmployerName,
-            beneficiary["GovernmentOfficial"] = $("select#field_Beneficiary_relatives1 option").filter(":selected").val(),
-            beneficiary["GovernmentOfficialRelative"] = $("select#field_Beneficiary_relatives2 option").filter(":selected").val(),
-            beneficiary["Occupation"] = field_BenificiaryOccupation
-        BeneficiaryList.push(beneficiary);
+        beneficiary["beneficiaryNo"] = beneficiaryCount.toString(),
+            beneficiary["firstName"] = field_BeneficiaryFirstName.toUpperCase(),
+            beneficiary["middleName"] = field_BeneficiaryMiddleName.toUpperCase(),
+            beneficiary["lastName"] = field_BeneficiaryLastName.toUpperCase(),
+            // beneficiary["suffix"] = field_,
+            beneficiary["dateOfBirth"] = field_BeneficiaryDOB.split('-')[1] + "/" + field_BeneficiaryDOB.split('-')[2] + "/" + field_BeneficiaryDOB.split('-')[0],
+            beneficiary["countryCode"] = $("select#field_BeneficiaryMobileNumberSelect option").filter(":selected").val(),
+            beneficiary["phoneNumber"] = field_BeneficiaryMobileNum,
+            beneficiary["emailAddress"] = field_BeneficiaryEmailAddress,
+            beneficiary["homeAddress"] = field_BeneficiaryHomeAddress,
+            beneficiary["placeOfBirth"] = field_BeneficiaryPOB,
+            beneficiary["nationality"] = field_BeneficiaryNationality,
+            beneficiary["sex"] = $("select#field_BeneficiarySex option").filter(":selected").val(),
+            beneficiary["relationship"] = field_BeneficiaryRelationToDeceased,
+            // beneficiary["documentFolder"] = `CLAIMS/PAL/${referenceNumber}`,
+            beneficiary["payoutOption"] = payoutOption,
+            // beneficiary["employer"] = field_BeneficiaryEmployerName,
+            // beneficiary["governmentOfficial"] = $("select#field_Beneficiary_relatives1 option").filter(":selected").val(),
+            // beneficiary["governmentOfficialRelative"] = $("select#field_Beneficiary_relatives2 option").filter(":selected").val(),
+            // beneficiary["occupation"] = field_BenificiaryOccupation
+            BeneficiaryList.push(beneficiary);
 
 
         ben_name_req_progress = 'Hi ' + field_firstName + '.'
-        document.getElementById('user_name').innerHTML = ben_name_req_progress; // name to show in 'your request is being processed section'
+        // document.getElementById('user_name').innerHTML = ben_name_req_progress; // name to show in 'your request is being processed section'
 
 
         /*  dataReset("field_firstName", "field_firstName", "field_middleName", "field_lastName", "field_lastName_Suffix", "field_DOB", "field_DOID", "field_BeneficiaryFirstName", "field_BeneficiaryMiddleName", "field_BeneficiaryLastName", "field_BeneficiaryMobileNum", "field_BeneficiaryEmailAddress", "field_BeneficiaryHomeAddress", "field_BeneficiaryDOB", "field_BeneficiaryPOB", "field_BeneficiaryNationality", "field_BeneficiarySex", "field_BeneficiaryRelationToDeceased","field_Beneficiary_relatives1","field_Beneficiary_relatives2") */
@@ -1814,11 +2031,11 @@ file1.onchange = async function (e) {
                     let fileName = referenceNumber + "-" + docType + "-" + tranType;
 
                     let accident = {};
-                    accident['BeneficiaryNo'] = beneficiaryCount,
-                        accident['Filename'] = `${fileName}.pdf`,
-                        accident['DocType'] = "PDF",
-                        accident['DocTypeCode'] = docType,
-                        accident['DocumentDescription'] = "Death certificate of the deceased"
+                    accident['beneficiaryNo'] = beneficiaryCount,
+                        accident['filename'] = `${fileName}.pdf`,
+                        accident['docType'] = "PDF",
+                        accident['docTypeCode'] = docType,
+                        accident['documentDescription'] = "Death certificate of the deceased"
 
                     addFileToList(accident, `${fileName}.pdf`);
                     const formData = new FormData()
@@ -1831,11 +2048,11 @@ file1.onchange = async function (e) {
                     let fileName = referenceNumber + "-" + docType + "-" + tranType;
 
                     let accident = {};
-                    accident['BeneficiaryNo'] = beneficiaryCount,
-                        accident['Filename'] = `${fileName}.pdf`,
-                        accident['DocType'] = "PDF",
-                        accident['DocTypeCode'] = docType,
-                        accident['DocumentDescription'] = "Death certificate of the deceased"
+                    accident['beneficiaryNo'] = beneficiaryCount,
+                        accident['filename'] = `${fileName}.pdf`,
+                        accident['docType'] = "PDF",
+                        accident['docTypeCode'] = docType,
+                        accident['documentDescription'] = "Death certificate of the deceased"
 
                     addFileToList(accident, `${fileName}.pdf`);
                     const formData = new FormData()
@@ -1884,11 +2101,11 @@ file2.onchange = async function (e) {
                     let fileName = referenceNumber + "-" + docType + "-" + tranType;
 
                     let accident = {};
-                    accident['BeneficiaryNo'] = beneficiaryCount,
-                        accident['Filename'] = `${fileName}.pdf`,
-                        accident['DocType'] = "PDF",
-                        accident['DocTypeCode'] = docType,
-                        accident['DocumentDescription'] = "Police Investigation Report"
+                    accident['beneficiaryNo'] = beneficiaryCount,
+                        accident['filename'] = `${fileName}.pdf`,
+                        accident['docType'] = "PDF",
+                        accident['docTypeCode'] = docType,
+                        accident['documentDescription'] = "Police Investigation Report"
 
                     addFileToList(accident, `${fileName}.pdf`);
                     const formData = new FormData()
@@ -1901,11 +2118,11 @@ file2.onchange = async function (e) {
                     let fileName = referenceNumber + "-" + docType + "-" + tranType;
 
                     let accident = {};
-                    accident['BeneficiaryNo'] = beneficiaryCount,
-                        accident['Filename'] = `${fileName}.pdf`,
-                        accident['DocType'] = "PDF",
-                        accident['DocTypeCode'] = docType,
-                        accident['DocumentDescription'] = "Police Investigation Report"
+                    accident['beneficiaryNo'] = beneficiaryCount,
+                        accident['filename'] = `${fileName}.pdf`,
+                        accident['docType'] = "PDF",
+                        accident['docTypeCode'] = docType,
+                        accident['documentDescription'] = "Police Investigation Report"
 
                     addFileToList(accident, `${fileName}.pdf`);
                     const formData = new FormData()
@@ -1954,11 +2171,11 @@ file3.onchange = async function (e) {
                     let fileName = referenceNumber + "-" + docType + "-" + tranType;
 
                     let accident = {};
-                    accident['BeneficiaryNo'] = beneficiaryCount,
-                        accident['Filename'] = `${fileName}.pdf`,
-                        accident['DocType'] = "PDF",
-                        accident['DocTypeCode'] = docType,
-                        accident['DocumentDescription'] = "Claimants valid Government ID (Front)"
+                    accident['beneficiaryNo'] = beneficiaryCount,
+                        accident['filename'] = `${fileName}.pdf`,
+                        accident['docType'] = "PDF",
+                        accident['docTypeCode'] = docType,
+                        accident['documentDescription'] = "Claimants valid Government ID (Front)"
 
                     addFileToList(accident, `${fileName}.pdf`);
                     const formData = new FormData()
@@ -1971,11 +2188,11 @@ file3.onchange = async function (e) {
                     let fileName = referenceNumber + "-" + docType + "-" + tranType;
 
                     let accident = {};
-                    accident['BeneficiaryNo'] = beneficiaryCount,
-                        accident['Filename'] = `${fileName}.pdf`,
-                        accident['DocType'] = "PDF",
-                        accident['DocTypeCode'] = docType,
-                        accident['DocumentDescription'] = "Claimants valid Government ID (Front)"
+                    accident['beneficiaryNo'] = beneficiaryCount,
+                        accident['filename'] = `${fileName}.pdf`,
+                        accident['docType'] = "PDF",
+                        accident['docTypeCode'] = docType,
+                        accident['documentDescription'] = "Claimants valid Government ID (Front)"
 
                     addFileToList(accident, `${fileName}.pdf`);
                     const formData = new FormData()
@@ -2024,11 +2241,11 @@ file4.onchange = async function (e) {
                     let fileName = referenceNumber + "-" + docType + "-" + tranType;
 
                     let accident = {};
-                    accident['BeneficiaryNo'] = beneficiaryCount,
-                        accident['Filename'] = `${fileName}.pdf`,
-                        accident['DocType'] = "PDF",
-                        accident['DocTypeCode'] = docType,
-                        accident['DocumentDescription'] = "Claimants valid Government ID (Back)"
+                    accident['beneficiaryNo'] = beneficiaryCount,
+                        accident['filename'] = `${fileName}.pdf`,
+                        accident['docType'] = "PDF",
+                        accident['docTypeCode'] = docType,
+                        accident['documentDescription'] = "Claimants valid Government ID (Back)"
 
                     addFileToList(accident, `${fileName}.pdf`);
                     const formData = new FormData()
@@ -2041,11 +2258,11 @@ file4.onchange = async function (e) {
                     let fileName = referenceNumber + "-" + docType + "-" + tranType;
 
                     let accident = {};
-                    accident['BeneficiaryNo'] = beneficiaryCount,
-                        accident['Filename'] = `${fileName}.pdf`,
-                        accident['DocType'] = "PDF",
-                        accident['DocTypeCode'] = docType,
-                        accident['DocumentDescription'] = "Claimants valid Government ID (Back)"
+                    accident['beneficiaryNo'] = beneficiaryCount,
+                        accident['filename'] = `${fileName}.pdf`,
+                        accident['docType'] = "PDF",
+                        accident['docTypeCode'] = docType,
+                        accident['documentDescription'] = "Claimants valid Government ID (Back)"
 
                     addFileToList(accident, `${fileName}.pdf`);
                     const formData = new FormData()
@@ -2094,11 +2311,11 @@ file5.onchange = async function (e) {
                     let fileName = referenceNumber + "-" + docType + "-" + tranType;
 
                     let accident = {};
-                    accident['BeneficiaryNo'] = beneficiaryCount,
-                        accident['Filename'] = `${fileName}.pdf`,
-                        accident['DocType'] = "PDF",
-                        accident['DocTypeCode'] = docType,
-                        accident['DocumentDescription'] = "Marriage Contract"
+                    accident['beneficiaryNo'] = beneficiaryCount,
+                        accident['filename'] = `${fileName}.pdf`,
+                        accident['docType'] = "PDF",
+                        accident['docTypeCode'] = docType,
+                        accident['documentDescription'] = "Marriage Contract"
 
                     addFileToList(accident, `${fileName}.pdf`);
                     const formData = new FormData()
@@ -2112,11 +2329,11 @@ file5.onchange = async function (e) {
                     let fileName = referenceNumber + "-" + docType + "-" + tranType;
 
                     let accident = {};
-                    accident['BeneficiaryNo'] = beneficiaryCount,
-                        accident['Filename'] = `${fileName}.pdf`,
-                        accident['DocType'] = "PDF",
-                        accident['DocTypeCode'] = docType,
-                        accident['DocumentDescription'] = "Marriage Contract"
+                    accident['beneficiaryNo'] = beneficiaryCount,
+                        accident['filename'] = `${fileName}.pdf`,
+                        accident['docType'] = "PDF",
+                        accident['docTypeCode'] = docType,
+                        accident['documentDescription'] = "Marriage Contract"
 
                     addFileToList(accident, `${fileName}.pdf`);
                     const formData = new FormData()
@@ -2165,11 +2382,11 @@ file6.onchange = async function (e) {
                     let fileName = referenceNumber + "-" + docType + "-" + tranType;
 
                     let accident = {};
-                    accident['BeneficiaryNo'] = beneficiaryCount,
-                        accident['Filename'] = `${fileName}.pdf`,
-                        accident['DocType'] = "PDF",
-                        accident['DocTypeCode'] = docType,
-                        accident['DocumentDescription'] = "Claimant Birth Certificate"
+                    accident['beneficiaryNo'] = beneficiaryCount,
+                        accident['filename'] = `${fileName}.pdf`,
+                        accident['docType'] = "PDF",
+                        accident['docTypeCode'] = docType,
+                        accident['documentDescription'] = "Claimant Birth Certificate"
 
                     addFileToList(accident, `${fileName}.pdf`);
                     const formData = new FormData()
@@ -2183,11 +2400,11 @@ file6.onchange = async function (e) {
                     let fileName = referenceNumber + "-" + docType + "-" + tranType;
 
                     let accident = {};
-                    accident['BeneficiaryNo'] = beneficiaryCount,
-                        accident['Filename'] = `${fileName}.pdf`,
-                        accident['DocType'] = "PDF",
-                        accident['DocTypeCode'] = docType,
-                        accident['DocumentDescription'] = "Claimant Birth Certificate"
+                    accident['beneficiaryNo'] = beneficiaryCount,
+                        accident['filename'] = `${fileName}.pdf`,
+                        accident['docType'] = "PDF",
+                        accident['docTypeCode'] = docType,
+                        accident['documentDescription'] = "Claimant Birth Certificate"
 
                     addFileToList(accident, `${fileName}.pdf`);
                     const formData = new FormData()
@@ -2237,11 +2454,11 @@ file7.onchange = async function (e) {
 
                     let accident = {};
 
-                    accident['BeneficiaryNo'] = beneficiaryCount,
-                        accident["Filename"] = `${fileName}.pdf`,
-                        accident["DocType"] = "PDF",
-                        accident["DocTypeCode"] = docType,
-                        accident['DocumentDescription'] = "Proof of Bank Account"
+                    accident['beneficiaryNo'] = beneficiaryCount,
+                        accident["filename"] = `${fileName}.pdf`,
+                        accident["docType"] = "PDF",
+                        accident["docTypeCode"] = docType,
+                        accident['documentDescription'] = "Proof of Bank Account"
 
                     addFileToList(accident, `${fileName}.pdf`);
 
@@ -2256,11 +2473,11 @@ file7.onchange = async function (e) {
 
                     let accident = {};
 
-                    accident['BeneficiaryNo'] = beneficiaryCount,
-                        accident["Filename"] = `${fileName}.pdf`,
-                        accident["DocType"] = "PDF",
-                        accident["DocTypeCode"] = docType,
-                        accident['DocumentDescription'] = "Proof of Bank Account"
+                    accident['beneficiaryNo'] = beneficiaryCount,
+                        accident["filename"] = `${fileName}.pdf`,
+                        accident["docType"] = "PDF",
+                        accident["docTypeCode"] = docType,
+                        accident['documentDescription'] = "Proof of Bank Account"
 
                     addFileToList(accident, `${fileName}.pdf`);
 
@@ -2311,11 +2528,11 @@ file8.onchange = async function (e) {
                     let fileName = referenceNumber + "-" + docType + "-" + tranType;
 
                     let accident = {};
-                    accident['BeneficiaryNo'] = beneficiaryCount
-                    accident['Filename'] = `${fileName}.pdf`,
-                        accident['DocType'] = "PDF",
-                        accident['DocTypeCode'] = docType,
-                        accident['DocumentDescription'] = "Proof of Bank Account"
+                    accident['beneficiaryNo'] = beneficiaryCount
+                    accident['filename'] = `${fileName}.pdf`,
+                        accident['docType'] = "PDF",
+                        accident['docTypeCode'] = docType,
+                        accident['documentDescription'] = "Proof of Bank Account"
 
 
                     addFileToList(accident, `${fileName}.pdf`);
@@ -2329,11 +2546,11 @@ file8.onchange = async function (e) {
                     let fileName = referenceNumber + "-" + docType + "-" + tranType;
 
                     let accident = {};
-                    accident['BeneficiaryNo'] = beneficiaryCount
-                    accident['Filename'] = `${fileName}.pdf`,
-                        accident['DocType'] = "PDF",
-                        accident['DocTypeCode'] = docType,
-                        accident['DocumentDescription'] = "Proof of Bank Account"
+                    accident['beneficiaryNo'] = beneficiaryCount
+                    accident['filename'] = `${fileName}.pdf`,
+                        accident['docType'] = "PDF",
+                        accident['docTypeCode'] = docType,
+                        accident['documentDescription'] = "Proof of Bank Account"
 
 
                     addFileToList(accident, `${fileName}.pdf`);
@@ -2383,11 +2600,11 @@ file9.onchange = async function (e) {
                     let fileName = referenceNumber + "-" + docType + "-" + tranType;
 
                     let accident = {};
-                    accident['BeneficiaryNo'] = beneficiaryCount
-                    accident['Filename'] = `${fileName}.pdf`,
-                        accident['DocType'] = "PDF",
-                        accident['DocTypeCode'] = docType,
-                        accident['DocumentDescription'] = "Claimants valid Government ID (Front)"
+                    accident['beneficiaryNo'] = beneficiaryCount
+                    accident['filename'] = `${fileName}.pdf`,
+                        accident['docType'] = "PDF",
+                        accident['docTypeCode'] = docType,
+                        accident['documentDescription'] = "Claimants valid Government ID (Front)"
 
 
                     addFileToList(accident, `${fileName}.pdf`);
@@ -2401,11 +2618,11 @@ file9.onchange = async function (e) {
                     let fileName = referenceNumber + "-" + docType + "-" + tranType;
 
                     let accident = {};
-                    accident['BeneficiaryNo'] = beneficiaryCount
-                    accident['Filename'] = `${fileName}.pdf`,
-                        accident['DocType'] = "PDF",
-                        accident['DocTypeCode'] = docType,
-                        accident['DocumentDescription'] = "Claimants valid Government ID (Front)"
+                    accident['beneficiaryNo'] = beneficiaryCount
+                    accident['filename'] = `${fileName}.pdf`,
+                        accident['docType'] = "PDF",
+                        accident['docTypeCode'] = docType,
+                        accident['documentDescription'] = "Claimants valid Government ID (Front)"
 
 
                     addFileToList(accident, `${fileName}.pdf`);
@@ -2455,11 +2672,11 @@ file10.onchange = async function (e) {
                     let fileName = referenceNumber + "-" + docType + "-" + tranType;
 
                     let accident = {};
-                    accident['BeneficiaryNo'] = beneficiaryCount
-                    accident['Filename'] = `${fileName}.pdf`,
-                        accident['DocType'] = "PDF",
-                        accident['DocTypeCode'] = docType,
-                        accident['DocumentDescription'] = "Claimants valid Government ID (Back)"
+                    accident['beneficiaryNo'] = beneficiaryCount
+                    accident['filename'] = `${fileName}.pdf`,
+                        accident['docType'] = "PDF",
+                        accident['docTypeCode'] = docType,
+                        accident['documentDescription'] = "Claimants valid Government ID (Back)"
 
 
                     addFileToList(accident, `${fileName}.pdf`);
@@ -2473,11 +2690,11 @@ file10.onchange = async function (e) {
                     let fileName = referenceNumber + "-" + docType + "-" + tranType;
 
                     let accident = {};
-                    accident['BeneficiaryNo'] = beneficiaryCount
-                    accident['Filename'] = `${fileName}.pdf`,
-                        accident['DocType'] = "PDF",
-                        accident['DocTypeCode'] = docType,
-                        accident['DocumentDescription'] = "Claimants valid Government ID (Back)"
+                    accident['beneficiaryNo'] = beneficiaryCount
+                    accident['filename'] = `${fileName}.pdf`,
+                        accident['docType'] = "PDF",
+                        accident['docTypeCode'] = docType,
+                        accident['documentDescription'] = "Claimants valid Government ID (Back)"
 
 
                     addFileToList(accident, `${fileName}.pdf`);
@@ -2528,11 +2745,11 @@ file11.onchange = async function (e) {
                     let fileName = referenceNumber + "-" + docType + "-" + tranType;
 
                     let accident = {};
-                    accident['BeneficiaryNo'] = beneficiaryCount
-                    accident['Filename'] = `${fileName}.pdf`,
-                        accident['DocType'] = "PDF",
-                        accident['DocTypeCode'] = docType,
-                        accident['DocumentDescription'] = "Marriage Contract"
+                    accident['beneficiaryNo'] = beneficiaryCount
+                    accident['filename'] = `${fileName}.pdf`,
+                        accident['docType'] = "PDF",
+                        accident['docTypeCode'] = docType,
+                        accident['documentDescription'] = "Marriage Contract"
 
                     addFileToList(accident, `${fileName}.pdf`);
                     const formData = new FormData()
@@ -2546,11 +2763,11 @@ file11.onchange = async function (e) {
                     let fileName = referenceNumber + "-" + docType + "-" + tranType;
 
                     let accident = {};
-                    accident['BeneficiaryNo'] = beneficiaryCount
-                    accident['Filename'] = `${fileName}.pdf`,
-                        accident['DocType'] = "PDF",
-                        accident['DocTypeCode'] = docType,
-                        accident['DocumentDescription'] = "Marriage Contract"
+                    accident['beneficiaryNo'] = beneficiaryCount
+                    accident['filename'] = `${fileName}.pdf`,
+                        accident['docType'] = "PDF",
+                        accident['docTypeCode'] = docType,
+                        accident['documentDescription'] = "Marriage Contract"
 
                     addFileToList(accident, `${fileName}.pdf`);
                     const formData = new FormData()
@@ -2600,11 +2817,11 @@ file12.onchange = async function (e) {
                     let fileName = referenceNumber + "-" + docType + "-" + tranType;
 
                     let accident = {};
-                    accident['BeneficiaryNo'] = beneficiaryCount
-                    accident['Filename'] = `${fileName}.pdf`,
-                        accident['DocType'] = "PDF",
-                        accident['DocTypeCode'] = docType,
-                        accident['DocumentDescription'] = "Claimant Birth Certificate"
+                    accident['beneficiaryNo'] = beneficiaryCount
+                    accident['filename'] = `${fileName}.pdf`,
+                        accident['docType'] = "PDF",
+                        accident['docTypeCode'] = docType,
+                        accident['documentDescription'] = "Claimant Birth Certificate"
 
                     addFileToList(accident, `${fileName}.pdf`);
                     const formData = new FormData()
@@ -2618,11 +2835,11 @@ file12.onchange = async function (e) {
                     let fileName = referenceNumber + "-" + docType + "-" + tranType;
 
                     let accident = {};
-                    accident['BeneficiaryNo'] = beneficiaryCount
-                    accident['Filename'] = `${fileName}.pdf`,
-                        accident['DocType'] = "PDF",
-                        accident['DocTypeCode'] = docType,
-                        accident['DocumentDescription'] = "Claimant Birth Certificate"
+                    accident['beneficiaryNo'] = beneficiaryCount
+                    accident['filename'] = `${fileName}.pdf`,
+                        accident['docType'] = "PDF",
+                        accident['docTypeCode'] = docType,
+                        accident['documentDescription'] = "Claimant Birth Certificate"
 
                     addFileToList(accident, `${fileName}.pdf`);
                     const formData = new FormData()
@@ -3429,7 +3646,7 @@ function buttonSubmitClicked(event) {
             insurance_Checkbox: $('#upload_invalidCheck_2').is(':checked')
         }
         let FilesInformation = {};
-        FilesInformation["FolderName"] = `/CLAIMS/${referenceNumber}`
+        FilesInformation["FolderName"] = `CLAIMS/PAL/${referenceNumber}`
         FilesInformation["FileList"] = filesList;
 
         finalPayload["BasicInformation"] = basicInformation;
@@ -3438,37 +3655,51 @@ function buttonSubmitClicked(event) {
         finalPayload["BankDetailsList"] = BankDetailsList;
         finalPayload["FilesInformation"] = FilesInformation;
 
-        console.log("final payload : ")
-        console.log(finalPayload)
-        if (otpSubmitted == false) { otpTimer(); } else {
-            $('#requirements').hide();
-            $('#process_confirmation').show();
+        var nodes = document.getElementById("requirements").getElementsByTagName('*');
+        for (var i = 0; i < nodes.length; i++) {
+            nodes[i].disabled = true;
+            nodes[i].style.cursor = 'no-drop'
+
         }
-        // otpTimer();
-        window.parent.postMessage(JSON.stringify({
-            event_code: 'ym-client-event', data: JSON.stringify({
-                event: {
-                    code: "finalEvent",
-                    data: JSON.stringify(finalPayload)
-                }
-            })
-        }), '*');
-        myDisable()
-        timer().then(async () => {
-            $("#step2").addClass("done");
-            $("#step3_circle").addClass("md-step-step3-circle ");
-            $("#step3_span").addClass("md-step3-span");
-            $("#step3_reference").addClass("md-step3-span")
-            /*  $("#step3").addClass("active");
-            $("#step3>div").addClass("active"); */
-            /*  $("#step3").addClass("done"); */
+        document.getElementById("requirements").style.opacity = '0.65'
+        preSubmitCall()
+        // console.log("final payload : ")
+        // console.log(finalPayload)
+        // if (otpSubmitted == false) { otpTimer(); } else {
+        //     $('#requirements').hide();
+        //     $('#process_confirmation').show();
+        // }
+        // // otpTimer();
+        // window.parent.postMessage(JSON.stringify({
+        //     event_code: 'ym-client-event', data: JSON.stringify({
+        //         event: {
+        //             code: "finalEvent",
+        //             data: JSON.stringify(finalPayload)
+        //         }
+        //     })
+        // }), '*');
+        // myDisable()
+        // timer().then(async () => {
+        //     $("#step2").addClass("done");
+        //     $("#step3_circle").addClass("md-step-step3-circle ");
+        //     $("#step3_span").addClass("md-step3-span");
+        //     $("#step3_reference").addClass("md-step3-span")
+        //     /*  $("#step3").addClass("active");
+        //     $("#step3>div").addClass("active"); */
+        //     /*  $("#step3").addClass("done"); */
 
 
-        });
-        console.log('upload data --> ', upload_data);
+        // });
+        // console.log('upload data --> ', upload_data);
     }
 }
+function closeModal() {
+    removeTimer();
+    document.getElementById('otp').value = ''
+    $('#otpPopUp').modal('hide');
+    $('#otpExpiry').modal('hide');
 
+}
 function addBeneficiaryButtonClicked(event) {
 
 
@@ -3521,41 +3752,58 @@ function addBeneficiaryButtonClicked(event) {
             /*  insurance_Checkbox: $('#upload_invalidCheck_2').is(':checked') */
         }
 
-        myDisable2()
-        timer2().then(async () => {
-            $("#step2").addClass("done");
-            $("#step3_circle").addClass("md-step-step3-circle ");
-            $("#step3_span").addClass("md-step3-span");
-            $("#step3_reference").addClass("md-step3-span")
-            /*  $("#step3").addClass("active");
-                $("#step3>div").addClass("active"); */
-            /*  $("#step3").addClass("done"); */
-            $('#addBeneficiaryRequirements').hide();
-            $('#process_confirmation').show();
-            console.log('upload data --> ', upload_data);
+        // myDisable2()
+        // timer2().then(async () => {
+        //     $("#step2").addClass("done");
+        //     $("#step3_circle").addClass("md-step-step3-circle ");
+        //     $("#step3_span").addClass("md-step3-span");
+        //     $("#step3_reference").addClass("md-step3-span")
+        //     /*  $("#step3").addClass("active");
+        //         $("#step3>div").addClass("active"); */
+        //     /*  $("#step3").addClass("done"); */
+        //     $('#addBeneficiaryRequirements').hide();
+        //     $('#process_confirmation').show();
+        //     console.log('upload data --> ', upload_data);
 
-            //build final payload here
-            let FilesInformation = {};
-            FilesInformation["FolderName"] = `/CLAIMS/${referenceNumber}`
-            FilesInformation["FileList"] = filesList;
+        //     //build final payload here
+        //     let FilesInformation = {};
+        //     FilesInformation["FolderName"] = `CLAIMS/PAL/${referenceNumber}`
+        //     FilesInformation["FileList"] = filesList;
 
-            finalPayload["BasicInformation"] = basicInformation;
-            finalPayload["InsuredInformation"] = InsuredInformation;
-            finalPayload["BeneficiaryList"] = BeneficiaryList;
-            finalPayload["BankDetailsList"] = BankDetailsList;
-            finalPayload["FilesInformation"] = FilesInformation;
+        //     finalPayload["BasicInformation"] = basicInformation;
+        //     finalPayload["InsuredInformation"] = InsuredInformation;
+        //     finalPayload["BeneficiaryList"] = BeneficiaryList;
+        //     finalPayload["BankDetailsList"] = BankDetailsList;
+        //     finalPayload["FilesInformation"] = FilesInformation;
 
-            console.log("final payload : ")
-            console.log(finalPayload)
-            window.parent.postMessage(JSON.stringify({
-                event_code: 'ym-client-event', data: JSON.stringify({
-                    event: {
-                        code: "finalEvent",
-                        data: JSON.stringify(finalPayload)
-                    }
-                })
-            }), '*');
-        });
+        //     console.log("final payload : ")
+        //     console.log(finalPayload)
+        //     window.parent.postMessage(JSON.stringify({
+        //         event_code: 'ym-client-event', data: JSON.stringify({
+        //             event: {
+        //                 code: "finalEvent",
+        //                 data: JSON.stringify(finalPayload)
+        //             }
+        //         })
+        //     }), '*');
+        // });
+        let FilesInformation = {};
+        FilesInformation["FolderName"] = `CLAIMS/PAL/${referenceNumber}`
+        FilesInformation["FileList"] = filesList;
+
+        finalPayload["BasicInformation"] = basicInformation;
+        finalPayload["InsuredInformation"] = InsuredInformation;
+        finalPayload["BeneficiaryList"] = BeneficiaryList;
+        finalPayload["BankDetailsList"] = BankDetailsList;
+        finalPayload["FilesInformation"] = FilesInformation;
+        var nodes = document.getElementById("addBeneficiaryRequirements").getElementsByTagName('*');
+        for (var i = 0; i < nodes.length; i++) {
+            nodes[i].disabled = true;
+            nodes[i].style.cursor = 'no-drop'
+
+        }
+        document.getElementById("addBeneficiaryRequirements").style.opacity = '0.65'
+        preSubmitCall()
     }
 }
 
@@ -3652,13 +3900,13 @@ function handleAccountInfo(event) {
             field_Currency: $("select#from_currency option").filter(":selected").val(),
             upload_file_7: file7.value
         }
-        let beneficiaryAccount = {};
-        beneficiaryAccount["BeneficiaryNo"] = beneficiaryCount,
-            beneficiaryAccount["BankName"] = field_Bank,
-            beneficiaryAccount["BankBranch"] = field_Branch,
-            beneficiaryAccount["AccountNumber"] = field_AccountNumber,
-            beneficiaryAccount["AccountName"] = field_AccountName,
-            beneficiaryAccount["AccountCurrency"] = $("select#from_currency option").filter(":selected").val(),
+
+        beneficiaryAccount["beneficiaryNo"] = beneficiaryCount,
+            beneficiaryAccount["bankName"] = field_Bank,
+            beneficiaryAccount["bankBranch"] = field_Branch,
+            beneficiaryAccount["accountNumber"] = field_AccountNumber,
+            beneficiaryAccount["accountName"] = field_AccountName,
+            beneficiaryAccount["accountCurrency"] = $("select#from_currency option").filter(":selected").val(),
 
             BankDetailsList.push(beneficiaryAccount);
         $("#step1").addClass("done");
@@ -3676,6 +3924,7 @@ function handleAccountInfo(event) {
 
 function handleAddBankInfo(event) {
     event.preventDefault();
+    isChangeInBankDetails = 'Y';
     var field_AccountName1 = $("#field_AccountName1").val();
     var field_AccountNumber1 = $("#field_AccountNumber1").val();
     var field_currency1 = $("#from_currency1").val();
@@ -3935,12 +4184,12 @@ function addBenificiaryAccountInfo(event) {
             $('#addBeneficiaryRequirements').show();
 
             let beneficiaryAccount = {};
-            beneficiaryAccount["BeneficiaryNo"] = beneficiaryCount,
-                beneficiaryAccount["BankName"] = field_addBenificiaryBank,
-                beneficiaryAccount["BankBranch"] = field_addBeneficiaryBranch,
-                beneficiaryAccount["AccountNumber"] = field_addBenificiaryAccountNumber,
-                beneficiaryAccount["AccountName"] = field_addBenificiaryAccountName,
-                beneficiaryAccount["AccountCurrency"] = $("select#from_addBeneficiarycurrency option").filter(":selected").val(),
+            beneficiaryAccount["beneficiaryNo"] = beneficiaryCount,
+                beneficiaryAccount["bankName"] = field_addBenificiaryBank,
+                beneficiaryAccount["bankBranch"] = field_addBeneficiaryBranch,
+                beneficiaryAccount["accountNumber"] = field_addBenificiaryAccountNumber,
+                beneficiaryAccount["accountName"] = field_addBenificiaryAccountName,
+                beneficiaryAccount["accountCurrency"] = $("select#from_addBeneficiarycurrency option").filter(":selected").val(),
 
                 BankDetailsList.push(beneficiaryAccount);
             /*  console.log('Data -> ', addBenAccountInfo) */
@@ -3962,9 +4211,9 @@ function addBeneficiaryuploadDataReset() {
 }
 
 function bankTranfer() {
-    document.getElementById('ref_number').innerHTML = referenceNumber
-    getBankDetails();
-    trackBenificiary = 0;
+    document.getElementById('ref_number').innerHTML = referenceNumber;
+    payoutOption = 'CTA';
+    // beneficiary["payoutOption"] = "CTA",
     $('#payment').hide();
     $('#account_details').show();
     $("#step1").addClass("done");
@@ -3972,159 +4221,186 @@ function bankTranfer() {
     $("#step2>div").addClass("active");
 }
 
-function getBankDetails() {
-
-
-    var raw = JSON.stringify({ "companyName": "PAL", "webReferenceNumber": referenceNumber });
-    window.parent.postMessage(JSON.stringify({
-        event_code: 'ym-client-event', data: JSON.stringify({
-            event: {
-                code: "getPayloadDetails",
-                data: raw
-            }
-        })
-    }), '*');
-
-    window.addEventListener('message', function (eventData) {
-
-        console.log("receiving presubmit event in acc")
-        // console.log(event.data.event_code)
-        try {
-
-            if (eventData.data) {
-                let event = JSON.parse(eventData.data);
-                console.log(event)
-                if (event.event_code == 'getPayloadResponse') { //sucess
-                    if (event.data.returnCode == '0') {
-
-                        document.getElementById('have_bank_details').innerHTML = ' We have your bank details on file.'
-                        field_AccountName = event.data.accountName;
-                        document.getElementById('field_AccountName').value = field_AccountName;
-
-                        field_AccountNumber = event.data.maskedAccountNumber.replace(/.(?=.{4})/g, '*');
-                        document.getElementById('field_AccountNumber').value = field_AccountNumber;
-
-                        field_Bank = event.data.bankName;
-                        field_Branch = '';
-                        field_Currency = event.data.accountCurrency;
-                        $("#from_currency option").each(function () {
-                            if ($(this).text() == field_Currency) {
-                                $(this).attr('selected', 'selected');
-                            }
-                        });
-
-                        if (field_Currency.toLowerCase() == "peso") {
-
-                            $("#field_Bank").html(
-                                "<option value='Bank of the Philippine Islands - BPI' >Bank of the Philippine Islands - BPI</option><option value='BPI Family Savings Bank - BFB'>BPI Family Savings Bank - BFB</option><option value='Banco de Oro - BDO'>Banco de Oro - BDO</option><option value='China Banking Corporation - CBC'>China Banking Corporation - CBC</option><option value='Citibank Philippines - CITI'>Citibank Philippines - CITI</option><option value='Development Bank of the Phils - DBP'>Development Bank of the Phils - DBP</option><option value='Eastwest Bank - EWB'>Eastwest Bank - EWB</option><option value='Hongkong Shanghai Banking Corp. Phils - HSBC'>Hongkong Shanghai Banking Corp. Phils - HSBC</option><option value='Land Bank of the Philippines - LPB'>Land Bank of the Philippines - LPB</option><option value='Metropolitan Banks and Trust Company - MBTC'>Metropolitan Banks and Trust Company - MBTC</option><option value='Philippine National Bank - PNB'>Philippine National Bank - PNB</option><option value='Rizal Commercial Banking Corp - RCBC'>Rizal Commercial Banking Corp - RCBC</option><option value='Security Bank - SBTC'>Security Bank - SBTC</option><option value='Union Bank of the Philippines - UB'>Union Bank of the Philippines - UB</option>"
-                            );
-                            $("#field_Bank option").each(function () {
-
-                                if ($(this).text().split('-')[1].toLowerCase().trim() == field_Bank.toLowerCase().trim()) {
-
-                                    $(this).attr('selected', 'selected');
-                                }
-                            });
-                        }
-                        else if (field_Currency.toLowerCase() == "usd") {
-                            $("#field_Bank").html(
-                                "<option value='Bank of the Philippine Islands - BPI'>Bank of the Philippine Islands - BPI</option><option value='Banco de Oro - BDO'>Banco de Oro - BDO</option>"
-                            );
-                            $("#field_Bank option").each(function () {
-
-                                if ($(this).text().split('-')[1].toLowerCase().trim() == field_Bank.toLowerCase().trim()) {
-
-                                    $(this).attr('selected', 'selected');
-                                }
-                            });
-                        }
-                    }
-                    else {
-                        $('#change_bank_account').hide()
-                    }
-                }
-                else {
-                    $('#change_bank_account').hide()
-                }
-            }
-            else {
-                $('#change_bank_account').hide()
-            }
-        } catch (error) {
-            console.log(error)
-        }
-
-    })
-
-    // var myHeaders = new Headers();
-    // myHeaders.append("Content-Type", "application/json");
-    // var raw = JSON.stringify({ "companyName": "PAL", "webReferenceNumber": referenceNumber });
-    // var requestOptions = {
-    //   method: 'POST',
-    //   headers: myHeaders,
-    //   body: raw
-    // };
-    // fetch("http://localhost:3000/disbursement_details", requestOptions).then((response) => response.json())
-    //   .then(response => {
-
-    //     if (response.returnCode == '0') {
-    //       if (response.accountName != '') {
-
-    //         document.getElementById('have_bank_details').innerHTML = ' We have your bank details on file.'
-    //         field_AccountName = response.accountName;
-    //         document.getElementById('field_AccountName').value = field_AccountName;
-
-    //         field_AccountNumber = response.maskedAccountNumber.replace(/.(?=.{4})/g, '*');
-    //         document.getElementById('field_AccountNumber').value = field_AccountNumber;
-
-    //         field_Bank = response.bankName;
-
-    //         field_Currency = response.accountCurrency;
-    //         $("#from_currency option").each(function () {
-    //           if ($(this).text() == field_Currency) {
-    //             $(this).attr('selected', 'selected');
-    //           }
-    //         });
-
-    //         if (field_Currency.toLowerCase() == "peso") {
-
-    //           $("#field_Bank").html(
-    //             "<option value='Bank of the Philippine Islands - BPI' >Bank of the Philippine Islands - BPI</option><option value='BPI Family Savings Bank - BFB'>BPI Family Savings Bank - BFB</option><option value='Banco de Oro - BDO'>Banco de Oro - BDO</option><option value='China Banking Corporation - CBC'>China Banking Corporation - CBC</option><option value='Citibank Philippines - CITI'>Citibank Philippines - CITI</option><option value='Development Bank of the Phils - DBP'>Development Bank of the Phils - DBP</option><option value='Eastwest Bank - EWB'>Eastwest Bank - EWB</option><option value='Hongkong Shanghai Banking Corp. Phils - HSBC'>Hongkong Shanghai Banking Corp. Phils - HSBC</option><option value='Land Bank of the Philippines - LPB'>Land Bank of the Philippines - LPB</option><option value='Metropolitan Banks and Trust Company - MBTC'>Metropolitan Banks and Trust Company - MBTC</option><option value='Philippine National Bank - PNB'>Philippine National Bank - PNB</option><option value='Rizal Commercial Banking Corp - RCBC'>Rizal Commercial Banking Corp - RCBC</option><option value='Security Bank - SBTC'>Security Bank - SBTC</option><option value='Union Bank of the Philippines - UB'>Union Bank of the Philippines - UB</option>"
-    //           );
-    //           $("#field_Bank option").each(function () {
-
-    //             if ($(this).text().split('-')[1].toLowerCase().trim() == field_Bank.toLowerCase().trim()) {
-
-    //               $(this).attr('selected', 'selected');
-    //             }
-    //           });
-    //         }
-    //         else if (field_Currency.toLowerCase() == "usd") {
-    //           $("#field_Bank").html(
-    //             "<option value='Bank of the Philippine Islands - BPI'>Bank of the Philippine Islands - BPI</option><option value='Banco de Oro - BDO'>Banco de Oro - BDO</option>"
-    //           );
-    //           $("#field_Bank option").each(function () {
-
-    //             if ($(this).text().split('-')[1].toLowerCase().trim() == field_Bank.toLowerCase().trim()) {
-
-    //               $(this).attr('selected', 'selected');
-    //             }
-    //           });
-    //         }
-
-
-    //       }
-
-    //     }
-    //     else {
-    //       $('#change_bank_account').hide()
-    //     }
-    //   }).catch(error => {
-    //     console.log(error)
-    //   });
+function disableBankDetailsOnHavingData() {
+    document.getElementById('field_AccountName').disabled = true;
+    document.getElementById('field_AccountNumber').disabled = true;
+    document.getElementById('field_Branch').disabled = true;
+    document.getElementById('from_currency').disabled = true;
+    document.getElementById('field_Bank').disabled = true;
 }
 
+
+// function getBankDetails() {
+//     var finalPayload = {};
+//     var source = 'Death';
+//     $('#cover-spin').show(0)
+//     var raw = JSON.stringify({ "companyName": "PAL", "webReferenceNumber": referenceNumber });
+//     finalPayload['source'] = source;
+//     finalPayload['data'] = raw;
+//     window.parent.postMessage(JSON.stringify({
+//         event_code: 'ym-client-event', data: JSON.stringify({
+//             event: {
+//                 code: "getPayoutDetails",
+//                 data: finalPayload
+//             }
+//         })
+//     }), '*');
+
+//     window.addEventListener('message', function (eventData) {
+
+//         console.log("receiving presubmit event in acc")
+//         // console.log(event.data.event_code)
+//         try {
+
+//             if (eventData.data) {
+//                 let event = JSON.parse(eventData.data);
+//                 console.log(event)
+//                 if (event.event_code == 'payoutDetails') { //sucess
+//                     if (event.data?.returnCode == '0') {
+//                         $('#cover-spin').hide(0)
+//                         document.getElementById('have_bank_details').innerHTML = ' We have your bank details on file.'
+//                         field_AccountName = event.data?.accountName;
+//                         document.getElementById('field_AccountName').value = field_AccountName;
+
+//                         field_AccountNumber = event.data?.maskedAccountNumber?.replace(/.(?=.{4})/g, '*');
+//                         document.getElementById('field_AccountNumber').value = field_AccountNumber;
+
+//                         field_Bank = event.data?.bankName;
+//                         field_Branch = '';
+//                         field_Currency = event.data?.accountCurrency;
+//                         $("#from_currency option").each(function () {
+//                             if ($(this).text() == field_Currency) {
+//                                 $(this).attr('selected', 'selected');
+//                             }
+//                         });
+
+//                         if (field_Currency?.toLowerCase() == "peso") {
+
+//                             $("#field_Bank").html(
+//                                 "<option value='Bank of the Philippine Islands - BPI' >Bank of the Philippine Islands - BPI</option><option value='BPI Family Savings Bank - BFB'>BPI Family Savings Bank - BFB</option><option value='Banco de Oro - BDO'>Banco de Oro - BDO</option><option value='China Banking Corporation - CBC'>China Banking Corporation - CBC</option><option value='Citibank Philippines - CITI'>Citibank Philippines - CITI</option><option value='Development Bank of the Phils - DBP'>Development Bank of the Phils - DBP</option><option value='Eastwest Bank - EWB'>Eastwest Bank - EWB</option><option value='Hongkong Shanghai Banking Corp. Phils - HSBC'>Hongkong Shanghai Banking Corp. Phils - HSBC</option><option value='Land Bank of the Philippines - LPB'>Land Bank of the Philippines - LPB</option><option value='Metropolitan Banks and Trust Company - MBTC'>Metropolitan Banks and Trust Company - MBTC</option><option value='Philippine National Bank - PNB'>Philippine National Bank - PNB</option><option value='Rizal Commercial Banking Corp - RCBC'>Rizal Commercial Banking Corp - RCBC</option><option value='Security Bank - SBTC'>Security Bank - SBTC</option><option value='Union Bank of the Philippines - UB'>Union Bank of the Philippines - UB</option>"
+//                             );
+//                             $("#field_Bank option").each(function () {
+
+//                                 if ($(this).text().split('-')[1].toLowerCase().trim() == field_Bank?.toLowerCase().trim()) {
+
+//                                     $(this).attr('selected', 'selected');
+//                                 }
+//                             });
+//                         }
+//                         else if (field_Currency?.toLowerCase() == "usd") {
+//                             $("#field_Bank").html(
+//                                 "<option value='Bank of the Philippine Islands - BPI'>Bank of the Philippine Islands - BPI</option><option value='Banco de Oro - BDO'>Banco de Oro - BDO</option>"
+//                             );
+//                             $("#field_Bank option").each(function () {
+
+//                                 if ($(this).text().split('-')[1].toLowerCase().trim() == field_Bank?.toLowerCase().trim()) {
+
+//                                     $(this).attr('selected', 'selected');
+//                                 }
+//                             });
+//                         }
+//                         disableBankDetailsOnHavingData()
+//                         trackBenificiary = 0;
+//                         $('#payment').hide();
+//                         $('#account_details').show();
+//                         $("#step1").addClass("done");
+//                         $("#step2").addClass("active");
+//                         $("#step2>div").addClass("active");
+//                     }
+//                     else if (event.data.returnCode == '1'){
+//                         $('#cover-spin').hide(0)
+//                         trackBenificiary = 0;
+//                         $('#payment').hide();
+//                         $('#account_details').show();
+//                         $("#step1").addClass("done");
+//                         $("#step2").addClass("active");
+//                         $("#step2>div").addClass("active");
+//                         $('#change_bank_account').hide()
+//                     }
+//                 }
+//                 else {
+//                     $('#change_bank_account').hide()
+//                 }
+//             }
+//             else {
+//                 $('#change_bank_account').hide()
+//             }
+//         } catch (error) {
+//             console.log(error)
+//         }
+
+//     })
+
+//     // var myHeaders = new Headers();
+//     // myHeaders.append("Content-Type", "application/json");
+//     // var raw = JSON.stringify({ "companyName": "PAL", "webReferenceNumber": referenceNumber });
+//     // var requestOptions = {
+//     //   method: 'POST',
+//     //   headers: myHeaders,
+//     //   body: raw
+//     // };
+//     // fetch("http://localhost:3000/disbursement_details", requestOptions).then((response) => response.json())
+//     //   .then(response => {
+
+//     //     if (response.returnCode == '0') {
+//     //       if (response.accountName != '') {
+
+//     //         document.getElementById('have_bank_details').innerHTML = ' We have your bank details on file.'
+//     //         field_AccountName = response.accountName;
+//     //         document.getElementById('field_AccountName').value = field_AccountName;
+
+//     //         field_AccountNumber = response.maskedAccountNumber.replace(/.(?=.{4})/g, '*');
+//     //         document.getElementById('field_AccountNumber').value = field_AccountNumber;
+
+//     //         field_Bank = response.bankName;
+
+//     //         field_Currency = response.accountCurrency;
+//     //         $("#from_currency option").each(function () {
+//     //           if ($(this).text() == field_Currency) {
+//     //             $(this).attr('selected', 'selected');
+//     //           }
+//     //         });
+
+//     //         if (field_Currency.toLowerCase() == "peso") {
+
+//     //           $("#field_Bank").html(
+//     //             "<option value='Bank of the Philippine Islands - BPI' >Bank of the Philippine Islands - BPI</option><option value='BPI Family Savings Bank - BFB'>BPI Family Savings Bank - BFB</option><option value='Banco de Oro - BDO'>Banco de Oro - BDO</option><option value='China Banking Corporation - CBC'>China Banking Corporation - CBC</option><option value='Citibank Philippines - CITI'>Citibank Philippines - CITI</option><option value='Development Bank of the Phils - DBP'>Development Bank of the Phils - DBP</option><option value='Eastwest Bank - EWB'>Eastwest Bank - EWB</option><option value='Hongkong Shanghai Banking Corp. Phils - HSBC'>Hongkong Shanghai Banking Corp. Phils - HSBC</option><option value='Land Bank of the Philippines - LPB'>Land Bank of the Philippines - LPB</option><option value='Metropolitan Banks and Trust Company - MBTC'>Metropolitan Banks and Trust Company - MBTC</option><option value='Philippine National Bank - PNB'>Philippine National Bank - PNB</option><option value='Rizal Commercial Banking Corp - RCBC'>Rizal Commercial Banking Corp - RCBC</option><option value='Security Bank - SBTC'>Security Bank - SBTC</option><option value='Union Bank of the Philippines - UB'>Union Bank of the Philippines - UB</option>"
+//     //           );
+//     //           $("#field_Bank option").each(function () {
+
+//     //             if ($(this).text().split('-')[1].toLowerCase().trim() == field_Bank.toLowerCase().trim()) {
+
+//     //               $(this).attr('selected', 'selected');
+//     //             }
+//     //           });
+//     //         }
+//     //         else if (field_Currency.toLowerCase() == "usd") {
+//     //           $("#field_Bank").html(
+//     //             "<option value='Bank of the Philippine Islands - BPI'>Bank of the Philippine Islands - BPI</option><option value='Banco de Oro - BDO'>Banco de Oro - BDO</option>"
+//     //           );
+//     //           $("#field_Bank option").each(function () {
+
+//     //             if ($(this).text().split('-')[1].toLowerCase().trim() == field_Bank.toLowerCase().trim()) {
+
+//     //               $(this).attr('selected', 'selected');
+//     //             }
+//     //           });
+//     //         }
+
+
+//     //       }
+
+//     //     }
+//     //     else {
+//     //       $('#change_bank_account').hide()
+//     //     }
+//     //   }).catch(error => {
+//     //     console.log(error)
+//     //   });
+// }
+
 function addBeneficiarybankTranfer() {
+    payoutOption = 'CTA'
     trackaddBenificiary = 0;
     if (buttonCount == 1) {
         trackaddBenificiary1 = trackaddBenificiary;
@@ -4156,10 +4432,12 @@ function addBeneficiarybankTranfer() {
 
 function pickUp() {
     // BeneficiaryList.filter(bens => bens[BeneficiaryNo])
-    document.getElementById('ref_number').innerHTML = referenceNumber
+    document.getElementById('ref_number').innerHTML = referenceNumber;
+    payoutOption = 'PUA';
+    // beneficiary["payoutOption"] = "PUA";
     let index = BeneficiaryList.findIndex(ele => ele["BeneficiaryNo"] == "1")
     let benObject = BeneficiaryList[index]
-    benObject["PayoutOption"] = "PUA";
+    // benObject["payoutOption"] = payoutOption;
     BeneficiaryList[index] = benObject;
 
     $('#payment').hide();
@@ -4170,9 +4448,10 @@ function pickUp() {
 }
 
 function addBeneficiaryPickup() {
+    payoutOption = 'PUA'
     let index = BeneficiaryList.findIndex(ele => ele["BeneficiaryNo"] == (beneficiaryCount.toString()))
     let benObject = BeneficiaryList[index]
-    benObject["PayoutOption"] = "PUA";
+    // benObject["payoutOption"] = "PUA";
     BeneficiaryList[index] = benObject;
 
     trackaddBenificiary = 1;
@@ -4636,6 +4915,10 @@ var invalidOtp = 0;
 
 // otp timer function
 function otpTimer() {
+    document.getElementById('otp-btn').style.display = 'block'
+    document.getElementById('otp-invalid-btn').style.display = 'block'
+    document.getElementById('otp-expiry-btn').style.display = 'block'
+    document.getElementById('loader-btn').style.display = 'none'
     if (resendCount <= 5) {
         $('#otpPopUp').modal('show');
         if (remaining == 120) {
@@ -4671,6 +4954,7 @@ function removeTimer() {
 }
 
 function resendOtp(type) {
+    debugger
     removeTimer();
     resendCount++;
     if (resendCount > 5) { // on reaching max resend (5 times)
@@ -4680,18 +4964,34 @@ function resendOtp(type) {
 
     }
     else {
+        if (type == 'otpExpire') {
+            document.getElementById('otp-expiry-btn').style.display = 'none'
+            document.getElementById('loader-btn-expiry').style.display = 'block'
+        }
+        else if (type == 'invalidInput') {
+            document.getElementById('otp-invalid-btn').style.display = 'none'
+            document.getElementById('loader-btn-invalid').style.display = 'block'
+
+        }
+        document.getElementById('otp-btn').style.display = 'none'
+        document.getElementById('loader-btn').style.display = 'block'
+        var source = 'Death'
+        var validateOtpPayload = {}
+        removeTimer();
         var raw = JSON.stringify({
 
             "companyName": "PAL",
             "webReferenceNumber": referenceNumber
 
         });
+        validateOtpPayload['source'] = source;
+        validateOtpPayload['data'] = raw;
 
         window.parent.postMessage(JSON.stringify({
             event_code: 'ym-client-event', data: JSON.stringify({
                 event: {
                     code: "resetOtp",
-                    data: raw
+                    data: validateOtpPayload
                 }
             })
         }), '*');
@@ -4706,30 +5006,31 @@ function resendOtp(type) {
                     let event = JSON.parse(eventData.data);
                     if (event.event_code == 'resetResponse') { //sucess
                         console.log(event.data)
-                        $('#invalidOtp').modal('hide');
-                        if (event.data == '0') {
-                          
+
+                        if (event.data.returnCode == '0' || event.data.retCode == '0') {
+                            $('#invalidOtp').modal('hide');
                             if (type != 'resend') { $('#otpPopUp').modal('show'); }
                             document.getElementById('otp').value = ''
                             otpTimer();
                         }
                         else {
-                            $('#otpPopUp').modal('hide');
+                            // $('#otpPopUp').modal('hide');
                         }
-                        
+
                     }
                     else {
-                        $('#otpPopUp').modal('hide');
+                        // $('#otpPopUp').modal('hide');
                     }
                 }
                 else {
-                    $('#otpPopUp').modal('hide');
+                    // $('#otpPopUp').modal('hide');
                 }
             } catch (error) {
                 console.log(error)
-                $('#otpPopUp').modal('hide');
+                alert(error)
+                // $('#otpPopUp').modal('hide');
             }
-            
+
         })
         $('#otpExpiry').modal('hide');
     }
@@ -4756,16 +5057,26 @@ function resendOtp(type) {
 
 
 function submitOtp() {
+    document.getElementById('otp-btn').style.display = 'none'
+    document.getElementById('loader-btn').style.display = 'block'
+    var source = 'Death'
+    var validateOtpPayload = {}
     removeTimer();
     var raw = JSON.stringify({
-        "companyName": "PAL",
-        "webReferenceNumber": referenceNumber
+        "oneTimePINInformation": {
+            "companyName": "PAL",
+            "webReferenceNumber": referenceNumber,
+            "oneTimePIN": document.getElementById('otp').value
+        }
+
     });
+    validateOtpPayload['source'] = source;
+    validateOtpPayload['data'] = raw;
     window.parent.postMessage(JSON.stringify({
         event_code: 'ym-client-event', data: JSON.stringify({
             event: {
                 code: "validateOtp",
-                data: raw
+                data: validateOtpPayload
             }
         })
     }), '*');
@@ -4780,21 +5091,32 @@ function submitOtp() {
                 let event = JSON.parse(eventData.data);
                 if (event.event_code == 'validationResponse') { //sucess
                     console.log(event.data)
-                    if (event.data == '0') {
+                    if (event.data.returnCode == '0' || event.data.retCode == '0') {
                         $('#otpPopUp').modal('hide');
-                        $('#requirements').hide();
-                        $('#process_confirmation').show();
+                        $('#invalidOtp').modal('hide');
+
                         otpSubmitted = true;
+                        document.getElementById('otp').value = '';
+                        finalSubmitCall();
                     }
-                    else {
+                    else if (event.data.returnCode == '1' || event.data.returnCode == '2') {
+
                         invalidOtp++;
-                        if (invalidOtp < 3) {
+                        if (invalidOtp <= 3) {
+                            $('#otpPopUp').modal('hide');
                             $('#invalidOtp').modal('show');
                         }
                         else {
+                            $('#otpPopUp').modal('hide');
                             $('#invalidOtp').modal('hide');
                             $('#maxInvalidOtp').modal('show');
                         }
+                        document.getElementById('otp').value = '';
+                    }
+                    else {
+                        $('#invalidOtp').modal('hide');
+                        document.getElementById('returnMessage').innerHTML = event.data.returnMessage;
+                        $("#invalidReturnCode").modal("show");
                     }
                 }
                 else {
@@ -4804,7 +5126,7 @@ function submitOtp() {
         } catch (error) {
             console.log(error)
         }
-        document.getElementById('otp').value = '';
+        // document.getElementById('otp').value = '';
     })
 
 

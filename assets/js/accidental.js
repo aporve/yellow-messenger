@@ -25,11 +25,27 @@ var user_mobile;
 var currSeconds = 0;
 var otpSubmitted = false;
 var haveBankDetails = false;
-
+var duration;
+var remaining = 120; // 2 mins timer 
+var resendCount = 0;
+var otpModal = document.getElementById('otpPopUp');
+var otpExpModal = document.getElementById('otpExpiry');
+var invalidOtpModal = document.getElementById('invalidOtp');
+var maxResendOtp = document.getElementById('maxResendOtp');
+var invalidOtp = 0;
 var scanDoc = false;
+var payoutOption;
+var isChangeInBankDetails = 'N';
+var isChangeInPayoutOption = 'N';
 $('#privacy_consent_1').prop('checked', true);
 $('#privacy_consent_2').prop('checked', true);
 $('#privacy_consent_3').prop('checked', true);
+
+document.getElementById('upload_waiting_btn').style.display = 'none'
+document.getElementById('account_details1_btn_waiting').style.display = 'none'
+document.getElementById('pick_up_btn_waiting').style.display = 'none'
+document.getElementById('submit9_waiting_btn').style.display = 'none'
+
 var form_addBank = document.getElementById("addbank_form");
 form_addBank.addEventListener('submit', handleAddBankInfo);
 
@@ -79,6 +95,8 @@ function myDisable() {
   document.getElementById("back_btn1").style.cursor = "no-drop";
   document.getElementById("back_btn1").style.pointerEvents = "none";
   document.getElementById("bank_form").style.cursor = "no-drop";
+
+
 }
 
 function addFileToList(fileObject, fileName) {
@@ -91,27 +109,41 @@ function addFileToList(fileObject, fileName) {
   }
 }
 
-function timer() {
+function timer(lowerVal, UpperVal) {
+
   var random = Math.floor(Math.random() * 5) + 1
   return new Promise((resolve, reject) => {
-    var i = 0
+    var i = lowerVal
+    // document.getElementsByClassName('loader1').style.display = 'block'
     let cleartime = setInterval(() => {
       i = random + i;
       renderProgress(i)
-      if (i == 99) {
-        i = 100;
+      if (i == (UpperVal - 1)) {
+        i = UpperVal;
         renderProgress(i)
       }
-      if (i == 100) {
+      if (i == UpperVal) {
 
         console.log("cleartime");
         clearTimeout(cleartime);
+        // document.getElementsByClassName('loader1').style.display='none'
         resolve("cleartime")
       }
+      // if (i > UpperVal) {
+
+      //   console.log("cleartime");
+      //   clearInterval(cleartime);
+
+      //   resolve("cleartime")
+      //   if (i > 100) {
+      //     renderProgress(0);
+      //   }
+      // }
       //  i++;
     }, 500);
   })
 }
+
 
 function renderProgress(progress) {
   progress = Math.floor(progress);
@@ -135,7 +167,10 @@ function renderProgress(progress) {
       .css("transform", "rotate(0deg)");
     $(".animate-75-100-b").css("transform", "rotate(" + angle + "deg)");
   }
+  // if (progress != 0) {
   $(".text").html(progress + "%");
+  // }
+
 }
 
 let finalPayload = {};
@@ -152,10 +187,10 @@ let beneficiaryCount = 1;
 let filesMap = {};
 let claimType, causeOfLoss, govIdFront, govIdBack, apsFile, narrationReport, officialReceipts;
 let file1Buffer, file2Buffer, file3Buffer, file4Buffer, file5Buffer, file6Buffer, file7Buffer, file8Buffer;
-basicInformation["WebReferenceNumber"] = referenceNumber;
-basicInformation["CompanyCode"] = "PAL";
-basicInformation["ClaimType"] = "Living";
-basicInformation["CauseOfLoss"] = "Accident";
+basicInformation["webReferenceNumber"] = referenceNumber;
+basicInformation["companyName"] = "PAL";
+basicInformation["claimType"] = "Living";
+basicInformation["causeOfLoss"] = "Accident";
 
 $(document).ready(function (event) {
   disableFutureDates();
@@ -164,7 +199,10 @@ $(document).ready(function (event) {
   let idleInterval = setInterval(timerIncrement, 1000);
   $(this).mousemove(resetTimer);
   $(this).keypress(resetTimer);
-
+  $('#spin1').hide();
+  $('#spin2').hide();
+  $('#spin3').hide();
+  $('#spin4').hide();
   var val = 'Peso'
   if (val == "Peso") {
     $("#field_Bank").html(
@@ -705,20 +743,20 @@ function handleForm(event) {
 
   var comapareDates = compareFun(field_DOB, field_DOA);
 
-  InsuredInformation["FirstName"] = field_firstName;
-  InsuredInformation["MiddleName"] = field_firstName;
-  InsuredInformation["LastName"] = field_firstName;
-  InsuredInformation["Suffix"] = field_firstName;
-  InsuredInformation["DateOfBirth"] = field_firstName;
-  InsuredInformation["CountryCode"] = field_firstName;
-  InsuredInformation["PhoneNumber"] = field_firstName;
-  InsuredInformation["EmailAddress"] = field_firstName;
-  InsuredInformation["HomeAddress"] = field_firstName;
-  InsuredInformation["InjuryDetails"] = field_firstName;
-  InsuredInformation["AccidentDate"] = field_firstName;
-  InsuredInformation["AccidentTime"] = field_firstName;
-  InsuredInformation["AccidentPlace"] = field_firstName;
-  InsuredInformation["FirstName"] = field_firstName;
+  InsuredInformation["firstName"] = field_firstName;
+  InsuredInformation["middleName"] = field_firstName;
+  InsuredInformation["lastName"] = field_firstName;
+  InsuredInformation["suffix"] = field_firstName;
+  InsuredInformation["dateOfBirth"] = field_firstName;
+  InsuredInformation["countryCode"] = field_firstName;
+  InsuredInformation["phoneNumber"] = field_firstName;
+  InsuredInformation["emailAddress"] = field_firstName;
+  InsuredInformation["homeAddress"] = field_firstName;
+  InsuredInformation["injuryDetails"] = field_firstName;
+  InsuredInformation["accidentDate"] = field_firstName;
+  InsuredInformation["accidentTime"] = field_firstName;
+  InsuredInformation["accidentPlace"] = field_firstName;
+  // InsuredInformation["firstName"] = field_firstName;
 
   var specFirstName = specialcharacterValidation(field_firstName);
   var specMiddleName = specialcharacterValidation(field_middleName);
@@ -1012,19 +1050,19 @@ function handleForm(event) {
     $("#customer_Name").text(`Hi ${field_firstName}, Hang in there as we are now processing your request. Kindly expect an SMS update from us within 1 to 2 working days on the status of your request.`);
     console.log('Data -> ', data)
 
-    InsuredInformation["FirstName"] = field_firstName;
-    InsuredInformation["MiddleName"] = field_middleName;
-    InsuredInformation["LastName"] = field_lastName;
-    InsuredInformation["Suffix"] = field_lastName_Suffix;
-    InsuredInformation["DateOfBirth"] = field_DOB.split('-')[1] + '/' + field_DOB.split('-')[2] + '/' + field_DOB.split('-')[0];
-    InsuredInformation["CountryCode"] = $("select#inlineFormCustomSelect option").filter(":selected").val();
-    InsuredInformation["PhoneNumber"] = field_mobileNum;
-    InsuredInformation["EmailAddress"] = field_emailAddress;
-    InsuredInformation["HomeAddress"] = field_homeAddress;
-    InsuredInformation["InjuryDetails"] = field_injury;
-    InsuredInformation["AccidentDate"] = field_DOA.split('-')[1] + '/' + field_DOA.split('-')[2] + '/' + field_DOA.split('-')[0];
-    InsuredInformation["AccidentTime"] = full_TOA;
-    InsuredInformation["AccidentPlace"] = field_POA;
+    InsuredInformation["firstName"] = field_firstName.toUpperCase();
+    InsuredInformation["middleName"] = field_middleName.toUpperCase();
+    InsuredInformation["lastName"] = field_lastName.toUpperCase();
+    InsuredInformation["suffix"] = field_lastName_Suffix.toUpperCase();
+    InsuredInformation["dateOfBirth"] = field_DOB.split('-')[1] + '/' + field_DOB.split('-')[2] + '/' + field_DOB.split('-')[0];
+    InsuredInformation["countryCode"] = $("select#inlineFormCustomSelect option").filter(":selected").val();
+    InsuredInformation["phoneNumber"] = field_mobileNum;
+    InsuredInformation["emailAddress"] = field_emailAddress;
+    InsuredInformation["homeAddress"] = field_homeAddress;
+    InsuredInformation["injuryDetails"] = field_injury;
+    InsuredInformation["accidentDate"] = field_DOA.split('-')[1] + '/' + field_DOA.split('-')[2] + '/' + field_DOA.split('-')[0];
+    InsuredInformation["accidentTime"] = full_TOA;
+    InsuredInformation["accidentPlace"] = field_POA;
     // for otp screen
     document.getElementById('user_mobile').innerHTML = field_mobileNum.replace(/.(?=.{4})/g, '*')
     // for otp screen
@@ -1082,6 +1120,12 @@ const proceedScan = async (fileObj, button, pageid, formData, fileName) => {
             "Warning : We detected a virus/malware in your uploaded documents. Please re-upload a clean, virus-free document to proceed."
           );
         }
+        if (pageid == 3) {
+          $("#warning_parent_acct1").show();
+          $("#upload_warning_acct1").text(
+            "Warning : We detected a virus/malware in your uploaded documents. Please re-upload a clean, virus-free document to proceed."
+          );
+        }
 
         $(`#file_loader_icon_${button}`).hide();
         $(`#file_Upload_Tick_${button}`).hide();
@@ -1093,6 +1137,7 @@ const proceedScan = async (fileObj, button, pageid, formData, fileName) => {
         $("#warning_uploads_docs").hide();
 
         $("#warning_parent_acct").hide();
+        $("#warning_parent_acct1").hide();
         $(`#file_loader_icon_${button}`).hide();
         $(`#file_Upload_Tick_${button}`).show();
         $(`#file_upload_cancle_${button}`).hide();
@@ -1138,6 +1183,10 @@ const fileCheck = (file, button, pageid, formData, fileName) => {
       if (pageid == 2) {
         $("#warning_parent_acct").show();
         $("#upload_warning_acct").text("We noticed that your uploaded documents are unclear and unreadable. Kindly ensure to upload clear copies of your documents to proceed.");
+      }
+      if (pageid == 3) {
+        $("#warning_parent_acct1").show();
+        $("#upload_warning_acct1").text("We noticed that your uploaded documents are unclear and unreadable. Kindly ensure to upload clear copies of your documents to proceed.");
       }
 
       $(`#file_loader_icon_${button}`).hide();
@@ -1195,11 +1244,11 @@ file1.onchange = async function (e) {
           console.log("setting file data : ");
           let accident = {};
           // accident['LIDC001Front'] = {
-          accident['BeneficiaryNo'] = beneficiaryCount,
-            accident["Filename"] = `${fileName}.pdf`,
-            accident["DocType"] = "PDF",
-            accident["DocTypeCode"] = "LIDC001",
-            accident["DocumentDescription"] = "Front copy of doc"
+          accident["beneficiaryNo"] = beneficiaryCount,
+            accident["filename"] = `${fileName}.pdf`,
+            accident["docType"] = "PDF",
+            accident["docTypeCode"] = "LIDC001",
+            accident["documentDescription"] = "Front copy of doc"
           // }
 
           addFileToList(accident, `${fileName}.pdf`);
@@ -1214,11 +1263,11 @@ file1.onchange = async function (e) {
           console.log("setting file data : ");
           let accident = {};
           // accident['LIDC001Front'] = {
-          accident['BeneficiaryNo'] = beneficiaryCount,
-            accident["Filename"] = `${fileName}.pdf`,
-            accident["DocType"] = "PDF",
-            accident["DocTypeCode"] = "LIDC001",
-            accident["DocumentDescription"] = "Front copy of doc"
+          accident['beneficiaryNo'] = beneficiaryCount,
+            accident["filename"] = `${fileName}.pdf`,
+            accident["docType"] = "PDF",
+            accident["docTypeCode"] = "LIDC001",
+            accident["documentDescription"] = "Front copy of doc"
           // }
 
           addFileToList(accident, `${fileName}.pdf`);
@@ -1271,11 +1320,11 @@ file2.onchange = async function (e) {
           let fileName = referenceNumber + "-" + docType + "-" + tranType;
 
           let accident = {};
-          accident['BeneficiaryNo'] = beneficiaryCount,
-            accident["Filename"] = `${fileName}.pdf`,
-            accident["DocType"] = "PDF",
-            accident["DocTypeCode"] = "LIDC001",
-            accident["DocumentDescription"] = "Back copy of doc"
+          accident['beneficiaryNo'] = beneficiaryCount,
+            accident["filename"] = `${fileName}.pdf`,
+            accident["docType"] = "PDF",
+            accident["docTypeCode"] = "LIDC001",
+            accident["documentDescription"] = "Back copy of doc"
 
           addFileToList(accident, `${fileName}.pdf`);
           const formData = new FormData()
@@ -1289,11 +1338,11 @@ file2.onchange = async function (e) {
           let fileName = referenceNumber + "-" + docType + "-" + tranType;
 
           let accident = {};
-          accident['BeneficiaryNo'] = beneficiaryCount,
-            accident["Filename"] = `${fileName}.pdf`,
-            accident["DocType"] = "PDF",
-            accident["DocTypeCode"] = "LIDC001",
-            accident["DocumentDescription"] = "Back copy of doc"
+          accident['beneficiaryNo'] = beneficiaryCount,
+            accident["filename"] = `${fileName}.pdf`,
+            accident["docType"] = "PDF",
+            accident["docTypeCode"] = "LIDC001",
+            accident["documentDescription"] = "Back copy of doc"
 
           addFileToList(accident, `${fileName}.pdf`);
           const formData = new FormData()
@@ -1343,11 +1392,11 @@ file3.onchange = async function (e) {
 
           let accident = {};
 
-          accident['BeneficiaryNo'] = beneficiaryCount,
-            accident["Filename"] = `${fileName}.pdf`,
-            accident["DocType"] = "PDF",
-            accident["DocTypeCode"] = docType,
-            accident["DocumentDescription"] = "Attending Physician’s Statement"
+          accident['beneficiaryNo'] = beneficiaryCount,
+            accident["filename"] = `${fileName}.pdf`,
+            accident["docType"] = "PDF",
+            accident["docTypeCode"] = docType,
+            accident["documentDescription"] = "Attending Physician’s Statement"
 
           addFileToList(accident, `${fileName}.pdf`);
           const formData = new FormData()
@@ -1361,11 +1410,11 @@ file3.onchange = async function (e) {
 
           let accident = {};
 
-          accident['BeneficiaryNo'] = beneficiaryCount,
-            accident["Filename"] = `${fileName}.pdf`,
-            accident["DocType"] = "PDF",
-            accident["DocTypeCode"] = docType,
-            accident["DocumentDescription"] = "Attending Physician’s Statement"
+          accident['beneficiaryNo'] = beneficiaryCount,
+            accident["filename"] = `${fileName}.pdf`,
+            accident["docType"] = "PDF",
+            accident["docTypeCode"] = docType,
+            accident["documentDescription"] = "Attending Physician’s Statement"
 
           addFileToList(accident, `${fileName}.pdf`);
           const formData = new FormData()
@@ -1415,11 +1464,11 @@ file4.onchange = async function (e) {
 
           let accident = {};
 
-          accident['BeneficiaryNo'] = beneficiaryCount,
-            accident["Filename"] = `${fileName}.pdf`,
-            accident["DocType"] = "PDF",
-            accident["DocTypeCode"] = docType,
-            accident["DocumentDescription"] = "Police or Narration Report"
+          accident['beneficiaryNo'] = beneficiaryCount,
+            accident["filename"] = `${fileName}.pdf`,
+            accident["docType"] = "PDF",
+            accident["docTypeCode"] = docType,
+            accident["documentDescription"] = "Police or Narration Report"
 
           addFileToList(accident, `${fileName}.pdf`);
           const formData = new FormData()
@@ -1434,11 +1483,11 @@ file4.onchange = async function (e) {
 
           let accident = {};
 
-          accident['BeneficiaryNo'] = beneficiaryCount,
-            accident["Filename"] = `${fileName}.pdf`,
-            accident["DocType"] = "PDF",
-            accident["DocTypeCode"] = docType,
-            accident["DocumentDescription"] = "Police or Narration Report"
+          accident['beneficiaryNo'] = beneficiaryCount,
+            accident["filename"] = `${fileName}.pdf`,
+            accident["docType"] = "PDF",
+            accident["docTypeCode"] = docType,
+            accident["documentDescription"] = "Police or Narration Report"
 
           addFileToList(accident, `${fileName}.pdf`);
           const formData = new FormData()
@@ -1489,11 +1538,11 @@ file5.onchange = async function (e) {
 
           let accident = {};
 
-          accident['BeneficiaryNo'] = beneficiaryCount,
-            accident["Filename"] = `${fileName}.pdf`,
-            accident["DocType"] = "PDF",
-            accident["DocTypeCode"] = docType,
-            accident["DocumentDescription"] = "Official Receipts (ORs)"
+          accident['beneficiaryNo'] = beneficiaryCount,
+            accident["filename"] = `${fileName}.pdf`,
+            accident["docType"] = "PDF",
+            accident["docTypeCode"] = docType,
+            accident["documentDescription"] = "Official Receipts (ORs)"
 
           addFileToList(accident, `${fileName}.pdf`);
 
@@ -1509,11 +1558,11 @@ file5.onchange = async function (e) {
 
           let accident = {};
 
-          accident['BeneficiaryNo'] = beneficiaryCount,
-            accident["Filename"] = `${fileName}.pdf`,
-            accident["DocType"] = "PDF",
-            accident["DocTypeCode"] = docType,
-            accident["DocumentDescription"] = "Official Receipts (ORs)"
+          accident['beneficiaryNo'] = beneficiaryCount,
+            accident["filename"] = `${fileName}.pdf`,
+            accident["docType"] = "PDF",
+            accident["docTypeCode"] = docType,
+            accident["documentDescription"] = "Official Receipts (ORs)"
 
           addFileToList(accident, `${fileName}.pdf`);
 
@@ -1565,11 +1614,11 @@ file6.onchange = async function (e) {
 
           let accident = {};
 
-          accident['BeneficiaryNo'] = beneficiaryCount,
-            accident["Filename"] = `${fileName}.pdf`,
-            accident["DocType"] = "PDF",
-            accident["DocTypeCode"] = docType,
-            accident["DocumentDescription"] = "Proof of Bank Account"
+          accident['beneficiaryNo'] = beneficiaryCount,
+            accident["filename"] = `${fileName}.pdf`,
+            accident["docType"] = "PDF",
+            accident["docTypeCode"] = docType,
+            accident["documentDescription"] = "Proof of Bank Account"
 
           addFileToList(accident, `${fileName}.pdf`);
 
@@ -1585,11 +1634,11 @@ file6.onchange = async function (e) {
 
           let accident = {};
 
-          accident['BeneficiaryNo'] = beneficiaryCount,
-            accident["Filename"] = `${fileName}.pdf`,
-            accident["DocType"] = "PDF",
-            accident["DocTypeCode"] = docType,
-            accident["DocumentDescription"] = "Proof of Bank Account"
+          accident['beneficiaryNo'] = beneficiaryCount,
+            accident["filename"] = `${fileName}.pdf`,
+            accident["docType"] = "PDF",
+            accident["docTypeCode"] = docType,
+            accident["documentDescription"] = "Proof of Bank Account"
 
           addFileToList(accident, `${fileName}.pdf`);
 
@@ -1619,8 +1668,9 @@ file6.onchange = async function (e) {
       this.value = "";
   }
 };
-
 file7.onchange = async function (e) {
+  docType = "LIBA001";
+  tranType = "BA-MIN";
   $("#file_upload_cancle_7").hide();
   $("#file_Upload_Tick_7").hide();
   var ext = this.value.match(/\.([^\.]+)$/)[1];
@@ -1629,49 +1679,124 @@ file7.onchange = async function (e) {
     case "pdf":
       var file = this.files[0];
       var buttonNum = 7;
+      var pageId = 3
       var sizevalid = isFileSizeValid(file, buttonNum);
       if (sizevalid) {
 
         if (ext == "jpg") {
-          // var isFileBlur = fileCheck(file, buttonNum)
-          // if (isFileBlur == false) {
-          //   file1Buffer = await getBuffer(file);
-          //   console.log("file buffer : ")
-          //   console.log(file1Buffer);
-          //   filesMap["file7"] = file1Buffer;
-          // }
+
+          let fileName = referenceNumber + "-" + docType + "-" + tranType;
+
+          let accident = {};
+
+          accident['beneficiaryNo'] = beneficiaryCount,
+            accident["filename"] = `${fileName}.pdf`,
+            accident["docType"] = "PDF",
+            accident["docTypeCode"] = docType,
+            accident["documentDescription"] = "Proof of Bank Account"
+
+          addFileToList(accident, `${fileName}.pdf`);
+
+          const formData = new FormData()
+          formData.append('file', file, fileName + `.${ext}`)
+          // e.target.value = ''
+          fileCheck(file, buttonNum, pageId, formData, fileName)
+
 
         }
         else {
-          proceedScan(file, buttonNum);
+          // e.target.value = ''
+          proceedScan(file, buttonNum, pageId);
+          let fileName = referenceNumber + "-" + docType + "-" + tranType;
 
-          file1Buffer = await getBuffer(file);
-          console.log("file buffer : ")
-          console.log(file1Buffer);
-          filesMap["file7"] = file1Buffer;
+          let accident = {};
 
+          accident['beneficiaryNo'] = beneficiaryCount,
+            accident["filename"] = `${fileName}.pdf`,
+            accident["docType"] = "PDF",
+            accident["docTypeCode"] = docType,
+            accident["documentDescription"] = "Proof of Bank Account"
+
+          addFileToList(accident, `${fileName}.pdf`);
+
+          const formData = new FormData()
+          formData.append('file', file, fileName + `.${ext}`)
+          handleFileUpload(formData, fileName);
         }
 
+
       } else {
-        $("#warning_uploads_docs").show();
+        $("#warning_parent_acct1").show();
         $("#file_loader_icon_7").hide();
         $("#file_Upload_Tick_7").hide();
         $("#file_upload_cancle_7").show();
-        $("#upload_warning").text(
+        $("#upload_warning_acct1").text(
           "You may only upload documents not exceeding 2MB in file size. Please re-upload in the correct format and file size proceed."
         );
       }
       break;
     default:
-      $("#warning_uploads_docs").show();
+      $("#warning_parent_acct1").show();
       $("#file_Upload_Tick_7").hide();
       $("#file_upload_cancle_7").show();
-      $("#upload_warning").text(
+      $("#upload_warning_acct1").text(
         "You may only upload documents that are in .jpg, .pdf formats and must not exceed 2MB in file size. Please re-upload in the correct format and file size to proceed."
       );
       this.value = "";
   }
 };
+// file7.onchange = async function (e) {
+//   $("#file_upload_cancle_7").hide();
+//   $("#file_Upload_Tick_7").hide();
+//   var ext = this.value.match(/\.([^\.]+)$/)[1];
+//   switch (ext) {
+//     case "jpg":
+//     case "pdf":
+//       var file = this.files[0];
+//       var buttonNum = 7;
+//       var sizevalid = isFileSizeValid(file, buttonNum);
+//       if (sizevalid) {
+
+//         if (ext == "jpg") {
+//           // var isFileBlur = fileCheck(file, buttonNum)
+//           // if (isFileBlur == false) {
+//           //   file1Buffer = await getBuffer(file);
+//           //   console.log("file buffer : ")
+//           //   console.log(file1Buffer);
+//           //   filesMap["file7"] = file1Buffer;
+//           // }
+
+//         }
+//         else {
+//           proceedScan(file, buttonNum);
+
+//           file1Buffer = await getBuffer(file);
+//           console.log("file buffer : ")
+//           console.log(file1Buffer);
+//           filesMap["file7"] = file1Buffer;
+
+//         }
+
+//       } else {
+//         $("#warning_uploads_docs").show();
+//         $("#file_loader_icon_7").hide();
+//         $("#file_Upload_Tick_7").hide();
+//         $("#file_upload_cancle_7").show();
+//         $("#upload_warning").text(
+//           "You may only upload documents not exceeding 2MB in file size. Please re-upload in the correct format and file size proceed."
+//         );
+//       }
+//       break;
+//     default:
+//       $("#warning_uploads_docs").show();
+//       $("#file_Upload_Tick_7").hide();
+//       $("#file_upload_cancle_7").show();
+//       $("#upload_warning").text(
+//         "You may only upload documents that are in .jpg, .pdf formats and must not exceed 2MB in file size. Please re-upload in the correct format and file size to proceed."
+//       );
+//       this.value = "";
+//   }
+// };
 
 
 function buttonSubmitClicked(event) {
@@ -1734,250 +1859,77 @@ function buttonSubmitClicked(event) {
     insurance_Checkbox: $('#upload_invalidCheck_2').is(':checked')
   }
 
+
+
   // $("#step2").addClass("active");
   // $("#step2>div").addClass("active");
+  // if (otpSubmitted == false) { otpTimer(); } else {
 
+  //   $('#requirements').hide();
+  //   $('#payment').show();
+  // }
 
-  let BankDetailsList = [];
-  let filesObject = {};
-  let preSubmitObj = {};
-  filesObject["folderName"] = `/CLAIMS/${referenceNumber}`
-  filesObject["fileList"] = filesList;
-
-  preSubmitObj["basicInformation"] = basicInformation;
-  preSubmitObj["insuredInformation"] = InsuredInformation;
-  preSubmitObj["bankDetailsList"] = BankDetailsList;
-  preSubmitObj["filesInformation"] = filesObject;
-  preSubmitObj["beneficiaryList"] = [];
-
-  console.log('upload data --> ', upload_data);
-
-
-
-
-  $("#step2").addClass("active");
-  $("#step2>div").addClass("active");
-  if (otpSubmitted == false) { otpTimer(); } else {
-
-    $('#requirements').hide();
-    $('#payment').show();
-  }
-
-  // window.parent.postMessage(JSON.stringify({
-  //   event_code: 'ym-client-event', data: JSON.stringify({
-  //     event: {
-  //       code: "preSubmit",
-  //       data: JSON.stringify(preSubmitObj)
-  //     }
-  //   })
-  // }), '*');
-  // window.addEventListener('message', function (eventData) {
-
-  //   console.log("receiving presubmit event in acc")
-  //   // console.log(event.data.event_code)
-  //   try {
-
-  //     if (eventData.data) {
-  //       let event = JSON.parse(eventData.data);
-  //       console.log(event)
-  //       if (event.event_code == 'preSubmitResponse') { //sucess
-  //         if (event.data == '0') {
-  //           $("#step2").addClass("active");
-  //           $("#step2>div").addClass("active");
-  //           if (otpSubmitted == false) { otpTimer(); } else {
-
-  //             $('#requirements').hide();
-  //             $('#payment').show();
-  //           }
-  //         }
-  //         else {
-
-  //         }
-  //       }
-  //       else {
-
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-
-  // })
-
+  preSubmitCall()
 
 }
 
+function enableDottedLoader() {
+  document.getElementById('upload_docs_btn').style.display = 'none'
+  document.getElementById('upload_waiting_btn').style.display = 'block'
+
+  document.getElementById('account_details1_btn').style.display = 'none'
+  document.getElementById('account_details1_btn_waiting').style.display = 'block'
 
 
-function handleAccountInfo(event) {
-  event.preventDefault();
-  var field_AccountName = $("#field_AccountName").val();
-  var field_AccountNumber = $("#field_AccountNumber").val();
-  var field_Bank = $("#field_Bank").val();
-  var field_currency = $("from_currency").val();
-  var field_Branch = $("#field_Branch").val();
-  var speCharAccountName = specialcharacterValidation(field_AccountName);
-  var numAccountName = numberValidation(field_AccountName);
-  var specAccountNumber = specialcharacterValidation(field_AccountNumber);
-  var numAccountNumber = onlyNumberValidate(field_AccountNumber);
+  document.getElementById('pick_up_btn').style.display = 'none'
+  document.getElementById('pick_up_btn_waiting').style.display = 'block'
 
-  var lenAccountName = fieldCheckLength(field_AccountName, 90);
-  var lenAccountNumber = fieldCheckLength(field_AccountNumber, 20);
-  var lenBranch = fieldCheckLength(field_Branch, 50);
+  document.getElementById('submit9').style.display = 'none'
+  document.getElementById('submit9_waiting_btn').style.display = 'block'
 
-  if (field_AccountName.length === 0) {
-    $("#err_field_AccountName").text('Field is empty');
-    $("#err_field_AccountName").show();
-  } else if (lenAccountName) {
-    $("#err_field_AccountName").text("Maximum 90 characters allowed!");
-    $("#err_field_AccountName").show();
-  } else if (speCharAccountName) {
-    $("#err_field_AccountName").text('special character is not allowed');
-    $("#err_field_AccountName").show();
-  } else if (numAccountName) {
-    $("#err_field_AccountName").text('Number not allowed');
-    $("#err_field_AccountName").show();
-  } else {
-    $("#err_field_AccountName").text('');
-    $("#err_field_AccountName").hide();
-  }
+}
+function disableDottedLoader() {
+  document.getElementById('upload_docs_btn').style.display = 'block'
+  document.getElementById('upload_waiting_btn').style.display = 'none'
 
-  if (field_AccountNumber.length === 0) {
-    $("#err_field_AccountNumber").text('Field is empty');
-    $("#err_field_AccountNumber").show();
-  } else if (lenAccountNumber) {
-    $("#err_field_AccountNumber").text("Maximum 20 characters allowed!");
-    $("#err_field_AccountNumber").show();
-  } else if (!numAccountNumber || specAccountNumber) {
-    $("#err_field_AccountNumber").text("Only number is allowed");
-    $("#err_field_AccountNumber").show();
-  } else {
-    $("#err_field_AccountNumber").text('');
-    $("#err_field_AccountNumber").hide();
-  }
+  document.getElementById('account_details1_btn').style.display = 'block'
+  document.getElementById('account_details1_btn_waiting').style.display = 'none'
 
-  if (field_Bank.length <= 0) {
-    $("#err_field_Bank").text('Field is empty');
-    $("#err_field_Bank").show();
-  } else {
-    $("#err_field_Bank").text('');
-    $("#err_field_Bank").hide();
-  }
+  document.getElementById('pick_up_btn').style.display = 'block'
+  document.getElementById('pick_up_btn_waiting').style.display = 'none'
 
-  if (field_Branch.length === 0) {
-    $("#err_field_Branch").text('Field is empty');
-    $("#err_field_Branch").show();
-  } else if (lenBranch) {
-    $("#err_field_Branch").text("Maximum 50 characters allowed!");
-    $("#err_field_Branch").show();
-  } else {
-    $("#err_field_Branch").text("");
-    $("#err_field_Branch").hide();
-  }
-
-  if (field_currency <= 0) {
-    $("#err_field_Currency").text('Field is empty');
-    $("#err_field_Currency").show();
-  } else {
-    $("#err_field_Currency").text('');
-    $("#err_field_Currency").show();
-  }
-
-  if (!file6.value) {
-    $('#upload_feedback_label').show();
-    $('#upload_feedback_label').text('Please upload your Bank Account Ownership');
-  } else {
-    $('#upload_feedback_label').hide();
-    $('#upload_feedback_label').text('');
-  }
-
-  if (
-    field_AccountName.length !== 0 &&
-    field_AccountNumber.length !== 0 &&
-    field_Bank.length !== 0 &&
-    field_Branch.length !== 0 &&
-    file6.length !== 0 &&
-    speCharAccountName == false &&
-    numAccountName == false &&
-    numAccountNumber == true &&
-    lenAccountName == false &&
-    lenAccountNumber == false &&
-    lenBranch == false &&
-    file6.value &&
-    !$("#file_Upload_Tick_6").is(":hidden")
-  ) {
-    const data = {
-      field_AccountName,
-      field_AccountNumber,
-      field_Bank,
-      field_Branch,
-      field_Currency: $("select#from_currency option")
-        .filter(":selected")
-        .val(),
-      upload_file_6: file6.value,
-    };
-
-    BankDetails["BeneficiaryNo"] = 1;
-    BankDetails["BankName"] = field_Bank;
-    BankDetails["BankBranch"] = field_Branch;
-    BankDetails["AccountName"] = field_AccountName;
-    BankDetails["AccountNumber"] = field_AccountNumber;
-    BankDetails["AccountCurrency"] = $("select#from_currency option").filter(":selected").val();
-
-    let BankDetailsList = [];
-    BankDetailsList.push(BankDetails);
-
-    let filesObject = {};
-    filesObject["FolderName"] = `/CLAIMS/${referenceNumber}`
-    filesObject["FileList"] = filesList;
-
-    InsuredInformation["PayoutOption"] = "CTA";
-    // filesMap["Accident"] = accident
-    finalPayload["BasicInformation"] = basicInformation;
-    finalPayload["InsuredInformation"] = InsuredInformation;
-    finalPayload["BankDetailsList"] = BankDetailsList;
-    finalPayload["FilesInformation"] = filesObject;
-
-    console.log("FPB : ")
-    console.log(finalPayload)
-    window.parent.postMessage(JSON.stringify({
-      event_code: 'ym-client-event', data: JSON.stringify({
-        event: {
-          code: "finalEvent",
-          data: JSON.stringify(finalPayload)
-        }
-      })
-    }), '*');
-    myDisable()
-    timer().then(async () => {
-      $("#step2").addClass("done");
-      /*  $("#step3").addClass("active");
-       $("#step3>div").addClass("active"); */
-      /* $("#step3").addClass("done"); */
-      $("#step3_circle").addClass("md-step-step3-circle ");
-      $("#step3_span").addClass("md-step3-span");
-      $("#step3_reference").addClass("md-step3-span")
-      $("#account_details").hide();
-      $("#process_confirmation").show();
-      console.log("Data -> ", data);
-    });
-  } else {
-    $("#popUp").modal("show");
-  }
+  document.getElementById('submit9').style.display = 'block'
+  document.getElementById('submit9_waiting_btn').style.display = 'none'
 }
 
-function getBankDetails() {
+//to call preSubmit api
+function preSubmitCall() {
+  enableDottedLoader();
+  //Basic Information
+  //Insured information
+  //Beneficiary list
+  var source = 'Accident'
+  var raw = JSON.stringify({
+    "basicInformation": basicInformation,
+    "insuredInformation": InsuredInformation,
+    "beneficiaryList": [],
+  });
 
-
-  var raw = JSON.stringify({ "companyName": "PAL", "webReferenceNumber": referenceNumber });
+  var preSubmitPayload = {}
+  preSubmitPayload['source'] = source;
+  preSubmitPayload['data'] = raw;
+  document.getElementById("upload_docs_btn").disabled = true;
+  document.getElementById("upload_docs_btn").style.cursor = "no-drop";
+  // timer(0, 50)
   window.parent.postMessage(JSON.stringify({
     event_code: 'ym-client-event', data: JSON.stringify({
       event: {
-        code: "getPayloadDetails",
-        data: raw
+        code: "preSubmit",
+        data: preSubmitPayload
       }
     })
   }), '*');
+
 
   window.addEventListener('message', function (eventData) {
 
@@ -1988,52 +1940,469 @@ function getBankDetails() {
       if (eventData.data) {
         let event = JSON.parse(eventData.data);
         console.log(event)
-        if (event.event_code == 'getPayloadResponse') { //sucess
-          if (event.data.returnCode == '0') {
+        if (event.event_code == 'preSubmitResponse') { //sucess
+          if (event.data.returnCode == '0' || event.data.retCode == '0') {
+            disableDottedLoader();
+            // timer(50, 100).then(async () => {
+            $("#step2").addClass("active");
+            $("#step2>div").addClass("active");
+            if (otpSubmitted == false) { otpTimer(); } else {
 
-            document.getElementById('have_bank_details').innerHTML = ' We have your bank details on file.'
-            field_AccountName = event.data.accountName;
-            document.getElementById('field_AccountName').value = field_AccountName;
-
-            field_AccountNumber = event.data.maskedAccountNumber.replace(/.(?=.{4})/g, '*');
-            document.getElementById('field_AccountNumber').value = field_AccountNumber;
-
-            field_Bank = event.data.bankName;
-            field_Branch = '';
-            field_Currency = event.data.accountCurrency;
-            $("#from_currency option").each(function () {
-              if ($(this).text() == field_Currency) {
-                $(this).attr('selected', 'selected');
-              }
-            });
-
-            if (field_Currency.toLowerCase() == "peso") {
-
-              $("#field_Bank").html(
-                "<option value='Bank of the Philippine Islands - BPI' >Bank of the Philippine Islands - BPI</option><option value='BPI Family Savings Bank - BFB'>BPI Family Savings Bank - BFB</option><option value='Banco de Oro - BDO'>Banco de Oro - BDO</option><option value='China Banking Corporation - CBC'>China Banking Corporation - CBC</option><option value='Citibank Philippines - CITI'>Citibank Philippines - CITI</option><option value='Development Bank of the Phils - DBP'>Development Bank of the Phils - DBP</option><option value='Eastwest Bank - EWB'>Eastwest Bank - EWB</option><option value='Hongkong Shanghai Banking Corp. Phils - HSBC'>Hongkong Shanghai Banking Corp. Phils - HSBC</option><option value='Land Bank of the Philippines - LPB'>Land Bank of the Philippines - LPB</option><option value='Metropolitan Banks and Trust Company - MBTC'>Metropolitan Banks and Trust Company - MBTC</option><option value='Philippine National Bank - PNB'>Philippine National Bank - PNB</option><option value='Rizal Commercial Banking Corp - RCBC'>Rizal Commercial Banking Corp - RCBC</option><option value='Security Bank - SBTC'>Security Bank - SBTC</option><option value='Union Bank of the Philippines - UB'>Union Bank of the Philippines - UB</option>"
-              );
-              $("#field_Bank option").each(function () {
-
-                if ($(this).text().split('-')[1].toLowerCase().trim() == field_Bank.toLowerCase().trim()) {
-
-                  $(this).attr('selected', 'selected');
-                }
-              });
+              $('#requirements').hide();
+              $('#payment').show();
             }
-            else if (field_Currency.toLowerCase() == "usd") {
-              $("#field_Bank").html(
-                "<option value='Bank of the Philippine Islands - BPI'>Bank of the Philippine Islands - BPI</option><option value='Banco de Oro - BDO'>Banco de Oro - BDO</option>"
-              );
-              $("#field_Bank option").each(function () {
+            // })
+          }
+        }
 
-                if ($(this).text().split('-')[1].toLowerCase().trim() == field_Bank.toLowerCase().trim()) {
+        else {
 
-                  $(this).attr('selected', 'selected');
-                }
-              });
-            }
+        }
+      }
+      else {
+
+
+      }
+    } catch (error) {
+      console.log(error)
+    }
+
+  })
+}
+
+function finalSubmitCall() {
+  enableDottedLoader();
+  let filesObject = {};
+  filesObject["folderName"] = `CLAIMS/PAL/${referenceNumber}`
+  filesObject["fileList"] = filesList;
+
+  // var field_AccountName = $("#field_AccountName").val();
+  // var field_AccountNumber = $("#field_AccountNumber").val();
+  // var field_Bank = $("#field_Bank").val();
+  // var field_currency = $("from_currency").val();
+  // var field_Branch = $("#field_Branch").val();
+  let BankDetailsList = [];
+  BankDetailsList.push(BankDetails);
+  InsuredInformation['payoutOption'] = payoutOption;
+  var finalData = {}
+  var source = 'Accident';
+  var raw = JSON.stringify({
+    "companyName": "PAL",
+    "webReferenceNumber": referenceNumber,
+    "payoutOption": payoutOption,
+    "bankDetailsList": BankDetailsList,
+    "isChangeInPayoutOption": isChangeInPayoutOption,
+    "isChangeInBankDetails": isChangeInBankDetails,
+    "filesInformation": filesObject,
+
+    "BasicInformation": basicInformation,
+    "InsuredInformation": InsuredInformation,
+    "BeneficiaryList": []
+  });
+  finalData['source'] = source;
+  finalData['data'] = raw;
+  // timer(0, 50)
+  window.parent.postMessage(JSON.stringify({
+    event_code: 'ym-client-event', data: JSON.stringify({
+      event: {
+        code: "finalSubmit",
+        data: finalData
+      }
+    })
+  }), '*');
+
+  window.addEventListener('message', function (eventData) {
+
+    console.log("receiving final event in acc")
+    // console.log(event.data.event_code)
+    try {
+
+      if (eventData.data) {
+        let event = JSON.parse(eventData.data);
+        console.log(event)
+        if (event.event_code == 'finalSubmitResponse') { //sucess
+          console.log('finalsubmit event received')
+          if (event.data.returnCode == '0' || event.data.retCode == '0') {
+            disableDottedLoader();
+            myDisable()
+            document.getElementById('ref_number').innerHTML = event.data?.transactionNumber
+            // timer(50, 100).then(async () => {
+            $("#step2").addClass("done");
+
+            $("#step3_circle").addClass("md-step-step3-circle ");
+            $("#step3_span").addClass("md-step3-span");
+            $("#step3_reference").addClass("md-step3-span")
+            $("#account_details").hide();
+            $("#account_details1").hide();
+            $("#pickUp").hide();
+            $("#process_confirmation").show();
+
+            // });
+
           }
           else {
+            // alert(event.data.returnMessage + 'returnCode not 0 ')
+            document.getElementById('returnMessage').innerHTML = event.data.returnMessage;
+            $("#invalidReturnCode").modal("show");
+          }
+        }
+        else {
+          // $("#popUp").modal("show");
+        }
+      }
+    } catch (error) {
+      console.log(error)
+    }
+
+  })
+
+
+
+}
+
+function handleAccountInfo(event) {
+  event.preventDefault();
+  var field_AccountName = $("#field_AccountName").val();
+  var field_AccountNumber = $("#field_AccountNumber").val();
+  var field_Bank = $("#field_Bank").val();
+  var field_currency = $("from_currency").val();
+  var field_Branch = $("#field_Branch").val();
+  if (haveBankDetails == false) {
+    var speCharAccountName = specialcharacterValidation(field_AccountName);
+    var numAccountName = numberValidation(field_AccountName);
+    var specAccountNumber = specialcharacterValidation(field_AccountNumber);
+    var numAccountNumber = onlyNumberValidate(field_AccountNumber);
+
+    var lenAccountName = fieldCheckLength(field_AccountName, 90);
+    var lenAccountNumber = fieldCheckLength(field_AccountNumber, 20);
+    var lenBranch = fieldCheckLength(field_Branch, 50);
+
+    if (field_AccountName.length === 0) {
+      $("#err_field_AccountName").text('Field is empty');
+      $("#err_field_AccountName").show();
+    } else if (lenAccountName) {
+      $("#err_field_AccountName").text("Maximum 90 characters allowed!");
+      $("#err_field_AccountName").show();
+    } else if (speCharAccountName) {
+      $("#err_field_AccountName").text('special character is not allowed');
+      $("#err_field_AccountName").show();
+    } else if (numAccountName) {
+      $("#err_field_AccountName").text('Number not allowed');
+      $("#err_field_AccountName").show();
+    } else {
+      $("#err_field_AccountName").text('');
+      $("#err_field_AccountName").hide();
+    }
+
+    if (field_AccountNumber.length === 0) {
+      $("#err_field_AccountNumber").text('Field is empty');
+      $("#err_field_AccountNumber").show();
+    } else if (lenAccountNumber) {
+      $("#err_field_AccountNumber").text("Maximum 20 characters allowed!");
+      $("#err_field_AccountNumber").show();
+    } else if (!numAccountNumber || specAccountNumber) {
+      $("#err_field_AccountNumber").text("Only number is allowed");
+      $("#err_field_AccountNumber").show();
+    } else {
+      $("#err_field_AccountNumber").text('');
+      $("#err_field_AccountNumber").hide();
+    }
+
+    if (field_Bank.length <= 0) {
+      $("#err_field_Bank").text('Field is empty');
+      $("#err_field_Bank").show();
+    } else {
+      $("#err_field_Bank").text('');
+      $("#err_field_Bank").hide();
+    }
+
+    if (field_Branch.length === 0) {
+      $("#err_field_Branch").text('Field is empty');
+      $("#err_field_Branch").show();
+    } else if (lenBranch) {
+      $("#err_field_Branch").text("Maximum 50 characters allowed!");
+      $("#err_field_Branch").show();
+    } else {
+      $("#err_field_Branch").text("");
+      $("#err_field_Branch").hide();
+    }
+
+    if (field_currency <= 0) {
+      $("#err_field_Currency").text('Field is empty');
+      $("#err_field_Currency").show();
+    } else {
+      $("#err_field_Currency").text('');
+      $("#err_field_Currency").show();
+    }
+
+    if (!file6.value) {
+      $('#upload_feedback_label').show();
+      $('#upload_feedback_label').text('Please upload your Bank Account Ownership');
+    } else {
+      $('#upload_feedback_label').hide();
+      $('#upload_feedback_label').text('');
+    }
+
+
+    if (
+      field_AccountName.length !== 0 &&
+      field_AccountNumber.length !== 0 &&
+      field_Bank.length !== 0 &&
+      field_Branch.length !== 0 &&
+      file6.length !== 0 &&
+      speCharAccountName == false &&
+      numAccountName == false &&
+      numAccountNumber == true &&
+      lenAccountName == false &&
+      lenAccountNumber == false &&
+      lenBranch == false &&
+      file6.value &&
+      !$("#file_Upload_Tick_6").is(":hidden")
+    ) {
+      const data = {
+        field_AccountName,
+        field_AccountNumber,
+        field_Bank,
+        field_Branch,
+        field_Currency: $("select#from_currency option")
+          .filter(":selected")
+          .val(),
+        upload_file_6: file6.value,
+      };
+      let BankDetailsList = [];
+      let BeneficiaryList = [];
+      BankDetails["beneficiaryNo"] = 1;
+      BankDetails["bankName"] = field_Bank;
+      BankDetails["bankBranch"] = field_Branch;
+      BankDetails["accountName"] = field_AccountName;
+      BankDetails["accountNumber"] = field_AccountNumber;
+      BankDetails["accountCurrency"] = field_currency ? field_Currency : $("select#from_currency option").filter(":selected").val();
+
+
+      BankDetailsList.push(BankDetails);
+
+      let filesObject = {};
+      filesObject["folderName"] = `CLAIMS/PAL/${referenceNumber}`
+      filesObject["filesList"] = filesList;
+
+      // InsuredInformation["PayoutOption"] = "CTA";
+      BeneficiaryList['payoutOption'] = 'CTA';
+
+      // var finalData = {}
+      // var source = 'Accident';
+      // var raw = {};
+      // raw['basicInformation'] = basicInformation;
+      // raw['insuredInformation'] = InsuredInformation;
+      // raw['bankDetailsList'] = BankDetailsList;
+      // raw['filesInformation'] = filesObject;
+      // raw["beneficiaryList"] = BeneficiaryList;
+      // finalData['source'] = source;
+      // finalData['data'] = JSON.stringify(raw);
+
+
+
+
+      // myDisable()
+      // timer().then(async () => {
+      //   $("#step2").addClass("done");
+      //   /*  $("#step3").addClass("active");
+      //    $("#step3>div").addClass("active"); */
+      //   /* $("#step3").addClass("done"); */
+      //   $("#step3_circle").addClass("md-step-step3-circle ");
+      //   $("#step3_span").addClass("md-step3-span");
+      //   $("#step3_reference").addClass("md-step3-span")
+      //   $("#account_details").hide();
+      //   $("#process_confirmation").show();
+      //   console.log("Data -> ", data);
+      // });
+      // document.getElementById("account_details_btn").disabled = true;
+      // document.getElementById("account_details_btn").style.cursor = "no-drop";
+      document.getElementById("submit9").disabled = true;
+      document.getElementById("submit9").style.cursor = "no-drop";
+      var nodes = document.getElementById("bank_form").getElementsByTagName('*');
+      for (var i = 0; i < nodes.length; i++) {
+        nodes[i].disabled = true;
+        nodes[i].style.cursor = 'no-drop'
+
+      }
+      document.getElementById("bank_form").style.opacity = '0.65'
+      finalSubmitCall()
+
+    } else {
+      $("#popUp").modal("show");
+    }
+
+  }
+  else {
+    let BankDetailsList = [];
+    let BeneficiaryList = [];
+    BankDetails["beneficiaryNo"] = 1;
+    BankDetails["bankName"] = field_Bank;
+    BankDetails["bankBranch"] = field_Branch;
+    BankDetails["accountName"] = field_AccountName;
+    BankDetails["accountNumber"] = field_AccountNumber;
+    BankDetails["accountCurrency"] = field_currency ? field_Currency : $("select#from_currency option").filter(":selected").val();
+
+
+    BankDetailsList.push(BankDetails);
+
+    let filesObject = {};
+    filesObject["FolderName"] = `CLAIMS/PAL/${referenceNumber}`
+    filesObject["fileList"] = filesList;
+
+    // InsuredInformation["PayoutOption"] = "CTA";
+    BeneficiaryList['payoutOption'] = 'CTA';
+    // document.getElementById("account_details_btn").disabled = true;
+    // document.getElementById("account_details_btn").style.cursor = "no-drop";
+    document.getElementById("submit9").disabled = true;
+    document.getElementById("submit9").style.cursor = "no-drop";
+    finalSubmitCall()
+  }
+}
+
+function disableBankDetailsOnHavingData() {
+  document.getElementById('field_AccountName').disabled = true;
+  document.getElementById('field_AccountNumber').disabled = true;
+  document.getElementById('field_Branch').disabled = true;
+  document.getElementById('from_currency').disabled = true;
+  document.getElementById('field_Bank').disabled = true;
+
+  document.getElementById("field_AccountName").style.cursor = "no-drop";
+  document.getElementById("field_AccountNumber").style.cursor = "no-drop";
+  document.getElementById("field_Branch").style.cursor = "no-drop";
+  document.getElementById("from_currency").style.cursor = "no-drop";
+  document.getElementById("field_Bank").style.cursor = "no-drop";
+}
+
+function getBankDetails() {
+  var finalPayload = {};
+  var source = 'Accident';
+  $('#cover-spin').show(0)
+
+  var raw = JSON.stringify({ "companyName": "PAL", "webReferenceNumber": referenceNumber });
+  finalPayload['source'] = source;
+  finalPayload['data'] = raw;
+  window.parent.postMessage(JSON.stringify({
+    event_code: 'ym-client-event', data: JSON.stringify({
+      event: {
+        code: "getPayoutDetails",
+        data: finalPayload
+      }
+    })
+  }), '*');
+
+  window.addEventListener('message', function (eventData) {
+
+    console.log("receiving payout  event in acc")
+    // console.log(event.data.event_code)
+    try {
+
+      if (eventData.data) {
+        let event = JSON.parse(eventData.data);
+        console.log(event)
+        if (event.event_code == 'payoutDetails') { //sucess
+          if (event.data.returnCode == '0' || event.data.retCode == '0') {
+            $('#cover-spin').hide(0)
+            if (event.data.accountName != null) {
+              $('#proof_BAO_display').hide();
+              haveBankDetails = true;
+              isChangeInPayoutOption = 'Y';
+              document.getElementById('have_bank_details').innerHTML = ' We have your bank details on file.'
+              field_AccountName = event.data?.accountName;
+              document.getElementById('field_AccountName').value = field_AccountName;
+              document.getElementById('field_AccountName1').value = field_AccountName;
+
+              field_AccountNumber = event.data?.maskedAccountNumber?.replace(/.(?=.{4})/g, '*');
+              document.getElementById('field_AccountNumber').value = field_AccountNumber;
+              document.getElementById('field_AccountNumber1').value = field_AccountNumber;
+              field_Branch = ''
+              document.getElementById('field_Branch').value = field_Branch;
+              document.getElementById('field_Branch1').value = field_Branch;
+
+
+              field_Bank = event.data?.bankName;
+              document.getElementById('field_Bank').value = field_Bank;
+              document.getElementById('field_Bank1').value = field_Bank;
+
+              field_Currency = event.data?.accountCurrency;
+              if (field_Currency.toLowerCase() == 'php') {
+                field_Currency = 'peso'
+              }
+              $("#from_currency option").each(function () {
+                if ($(this).text().toLowerCase() == field_Currency) {
+                  $(this).attr('selected', 'selected');
+                }
+              });
+              $("#from_currency1 option").each(function () {
+                if ($(this).text().toLowerCase() == field_Currency) {
+                  $(this).attr('selected', 'selected');
+                }
+              });
+
+              if (field_Currency?.toLowerCase() == "peso") {
+
+                $("#field_Bank").html(
+                  "<option value='Bank of the Philippine Islands - BPI' >Bank of the Philippine Islands - BPI</option><option value='BPI Family Savings Bank - BFB'>BPI Family Savings Bank - BFB</option><option value='Banco de Oro - BDO'>Banco de Oro - BDO</option><option value='China Banking Corporation - CBC'>China Banking Corporation - CBC</option><option value='Citibank Philippines - CITI'>Citibank Philippines - CITI</option><option value='Development Bank of the Phils - DBP'>Development Bank of the Phils - DBP</option><option value='Eastwest Bank - EWB'>Eastwest Bank - EWB</option><option value='Hongkong Shanghai Banking Corp. Phils - HSBC'>Hongkong Shanghai Banking Corp. Phils - HSBC</option><option value='Land Bank of the Philippines - LPB'>Land Bank of the Philippines - LPB</option><option value='Metropolitan Banks and Trust Company - MBTC'>Metropolitan Banks and Trust Company - MBTC</option><option value='Philippine National Bank - PNB'>Philippine National Bank - PNB</option><option value='Rizal Commercial Banking Corp - RCBC'>Rizal Commercial Banking Corp - RCBC</option><option value='Security Bank - SBTC'>Security Bank - SBTC</option><option value='Union Bank of the Philippines - UB'>Union Bank of the Philippines - UB</option>"
+                );
+                $("#field_Bank option").each(function () {
+
+                  if ($(this).text().split('-')[1].toLowerCase().trim() == field_Bank?.toLowerCase().trim()) {
+
+                    $(this).attr('selected', 'selected');
+                  }
+                });
+              }
+              else if (field_Currency?.toLowerCase() == "usd") {
+                $("#field_Bank").html(
+                  "<option value='Bank of the Philippine Islands - BPI'>Bank of the Philippine Islands - BPI</option><option value='Banco de Oro - BDO'>Banco de Oro - BDO</option>"
+                );
+                $("#field_Bank option").each(function () {
+
+                  if ($(this).text().split('-')[1].toLowerCase().trim() == field_Bank?.toLowerCase().trim()) {
+
+                    $(this).attr('selected', 'selected');
+                  }
+                });
+              }
+
+              if (field_Currency?.toLowerCase() == "peso") {
+
+                $("#field_Bank1").html(
+                  "<option value='Bank of the Philippine Islands - BPI' >Bank of the Philippine Islands - BPI</option><option value='BPI Family Savings Bank - BFB'>BPI Family Savings Bank - BFB</option><option value='Banco de Oro - BDO'>Banco de Oro - BDO</option><option value='China Banking Corporation - CBC'>China Banking Corporation - CBC</option><option value='Citibank Philippines - CITI'>Citibank Philippines - CITI</option><option value='Development Bank of the Phils - DBP'>Development Bank of the Phils - DBP</option><option value='Eastwest Bank - EWB'>Eastwest Bank - EWB</option><option value='Hongkong Shanghai Banking Corp. Phils - HSBC'>Hongkong Shanghai Banking Corp. Phils - HSBC</option><option value='Land Bank of the Philippines - LPB'>Land Bank of the Philippines - LPB</option><option value='Metropolitan Banks and Trust Company - MBTC'>Metropolitan Banks and Trust Company - MBTC</option><option value='Philippine National Bank - PNB'>Philippine National Bank - PNB</option><option value='Rizal Commercial Banking Corp - RCBC'>Rizal Commercial Banking Corp - RCBC</option><option value='Security Bank - SBTC'>Security Bank - SBTC</option><option value='Union Bank of the Philippines - UB'>Union Bank of the Philippines - UB</option>"
+                );
+                $("#field_Bank1 option").each(function () {
+
+                  if ($(this).text().split('-')[1].toLowerCase().trim() == field_Bank?.toLowerCase().trim()) {
+
+                    $(this).attr('selected', 'selected');
+                  }
+                });
+              }
+              else if (field_Currency?.toLowerCase() == "usd") {
+                $("#field_Bank1").html(
+                  "<option value='Bank of the Philippine Islands - BPI'>Bank of the Philippine Islands - BPI</option><option value='Banco de Oro - BDO'>Banco de Oro - BDO</option>"
+                );
+                $("#field_Bank1 option").each(function () {
+
+                  if ($(this).text().split('-')[1].toLowerCase().trim() == field_Bank?.toLowerCase().trim()) {
+
+                    $(this).attr('selected', 'selected');
+                  }
+                });
+              }
+              disableBankDetailsOnHavingData()
+            }
+            $('#payment').hide();
+            $('#account_details').show();
+            $("#step2").addClass("active");
+            $("#step2>div").addClass("active");
+          }
+          else if (event.data.returnCode == '1') {
+            $('#cover-spin').hide(0)
+            $('#payment').hide();
+            $('#account_details').show();
+            $("#step2").addClass("active");
+            $("#step2>div").addClass("active");
             $('#change_bank_account').hide()
           }
         }
@@ -2119,26 +2488,27 @@ function getBankDetails() {
 }
 
 
+
 function bankTranfer() {
 
-  document.getElementById('ref_number').innerHTML = referenceNumber
+  document.getElementById('ref_number').innerHTML = referenceNumber;
+  payoutOption = 'CTA';
   getBankDetails();
-  $('#payment').hide();
-  $('#account_details').show();
-  $("#step2").addClass("active");
-  $("#step2>div").addClass("active");
+
 }
 
 function pickUp() {
-  document.getElementById('ref_number').innerHTML = referenceNumber
+  document.getElementById('ref_number').innerHTML = referenceNumber;
+
+  payoutOption = 'PUA';
   let filesObject = {};
-  filesObject["FolderName"] = `/CLAIMS/${referenceNumber}`
-  filesObject["FileList"] = filesList;
+  filesObject["folderName"] = `CLAIMS/PAL/${referenceNumber}`
+  filesObject["fileList"] = filesList;
   let BankDetailsList = [];
   BankDetailsList.push(BankDetails);
 
   // filesMap["Accident"] = accident
-  InsuredInformation["PayoutOption"] = "PUA";
+  // InsuredInformation["PayoutOption"] = "PUA";
   finalPayload["BasicInformation"] = basicInformation;
   finalPayload["InsuredInformation"] = InsuredInformation;
   finalPayload["BankDetailsList"] = BankDetailsList;
@@ -2146,16 +2516,16 @@ function pickUp() {
   // finalPayload["stageThree"] = true;
   // finalPayload["referenceNumber"] = referenceNumber;
 
-  console.log("pick up payload : ")
-  console.log(finalPayload)
-  window.parent.postMessage(JSON.stringify({
-    event_code: 'ym-client-event', data: JSON.stringify({
-      event: {
-        code: "finalEvent",
-        data: JSON.stringify(finalPayload)
-      }
-    })
-  }), '*');
+  // console.log("pick up payload : ")
+  // console.log(finalPayload)
+  // window.parent.postMessage(JSON.stringify({
+  //   event_code: 'ym-client-event', data: JSON.stringify({
+  //     event: {
+  //       code: "finalEvent",
+  //       data: JSON.stringify(finalPayload)
+  //     }
+  //   })
+  // }), '*');
   $('#payment').hide();
   /* $('#process_confirmation').show(); */
   $("#pickUp").show();
@@ -2165,15 +2535,32 @@ function pickUp() {
 }
 
 function pickup_Bpi() {
-  $("#pickUp").hide();
-  $('#process_confirmation').show();
-  $("#step2").addClass("done");
-  $("#step3_circle").addClass("md-step-step3-circle ");
-  $("#step3_span").addClass("md-step3-span");
-  $("#step3_reference").addClass("md-step3-span")
-  /*  $("#step3").addClass("active");
-   $("#step3>div").addClass("active"); */
-  /*  $("#step3").addClass("done"); */
+  document.getElementById("pick_up_btn").disabled = true;
+  document.getElementById("pick_up_btn").style.cursor = "no-drop";
+  finalSubmitCall()
+
+  // var finalData = {}
+  // var source = 'Accident';
+  // var raw = {};
+  // let filesObject = {};
+  // filesObject["FolderName"] = `CLAIMS/PAL/${referenceNumber}`
+  // filesObject["FileList"] = filesList;
+  // let BankDetailsList = [];
+  // let BeneficiaryList = [];
+  // BeneficiaryList['payoutOption'] = 'PUA'
+  // // BankDetailsList.push(BankDetails);
+  // raw['basicInformation'] = basicInformation;
+  // raw['insuredInformation'] = InsuredInformation;
+  // raw['bankDetailsList'] = BankDetailsList;
+  // raw['filesInformation'] = filesObject;
+  // raw["beneficiaryList"] = BeneficiaryList;
+  // finalData['source'] = source;
+  // finalData['data'] = JSON.stringify(raw);
+
+
+
+
+
 }
 
 function addBank(event) {
@@ -2181,11 +2568,13 @@ function addBank(event) {
   $('#account_details').hide();
   $('#requirements').hide();
   $('#account_details1').show();
+  event.target.value = ''
   /*   $('#account_details1')[0].scrollIntoView(true); */
 }
 
 function handleAddBankInfo(event) {
   event.preventDefault();
+  isChangeInBankDetails = 'Y';
   var field_AccountName1 = $("#field_AccountName1").val();
   var field_AccountNumber1 = $("#field_AccountNumber1").val();
   var field_currency1 = $("#from_currency1").val();
@@ -2256,32 +2645,69 @@ function handleAddBankInfo(event) {
     $('#upload_feedback_label1').text('Please upload your Bank Account Ownership');
   }
 
-  if (field_AccountName1.length !== 0 && field_AccountNumber1.length !== 0 && field_currency1.length !== 0 && field_Bank1.length !== 0 && field_Branch1.length !== 0 && file7.length !== 0 && (speCharAddAccountName == false) && (numAddAccountName == false) && (numAddAccountNumber == true)) {
+  if (field_AccountName1.length !== 0 && field_AccountNumber1.length !== 0 && field_currency1.length !== 0 && field_Bank1.length !== 0 && field_Branch1.length !== 0 && file6.length !== 0 && (speCharAddAccountName == false) && (numAddAccountName == false) && (numAddAccountNumber == true)) {
     const data = {
       field_AccountName1,
       field_AccountNumber1,
       field_Bank1,
       field_Branch1,
       field_Currency1: $("select#from_currency1 option").filter(":selected").val(),
-      upload_file_7: file7.value
+      upload_file_6: file6.value
     }
-    $("#step3_circle").addClass("md-step-step3-circle ");
-    $("#step3_span").addClass("md-step3-span");
-    $("#step3_reference").addClass("md-step3-span")
-    /* $("#step3").addClass("active");
-    $("#step3>div").addClass("active"); */
-    /* $("#step3").addClass("done"); */
-    $('#account_details1').hide();
-    $('#process_confirmation').show();
-    console.log('bank data -> ', data)
+    var BankDetails = {}
+    let BankDetailsList = [];
+    // let BeneficiaryList = [];
+    BankDetails["beneficiaryNo"] = 1
+    BankDetails["bankName"] = field_Bank1;
+    BankDetails["bankBranch"] = field_Branch1;
+    BankDetails["accountName"] = field_AccountName1;
+    BankDetails["accountNumber"] = field_AccountNumber1;
+    BankDetails["accountCurrency"] = $("select#from_currency1 option").filter(":selected").val(),
+      BankDetailsList.push(BankDetails);
+
+
+
+    // let filesObject = {};
+    // filesObject["FolderName"] = `CLAIMS/PAL/${referenceNumber}`
+    // filesObject["FileList"] = filesList;
+
+    // // InsuredInformation["PayoutOption"] = "CTA";
+    // BeneficiaryList['payoutOption'] = 'CTA';
+
+    // var finalData = {}
+    // var source = 'Accident';
+    // var raw = {};
+    // raw['basicInformation'] = basicInformation;
+    // raw['insuredInformation'] = InsuredInformation;
+    // raw['bankDetailsList'] = BankDetailsList;
+    // raw['filesInformation'] = filesObject;
+    // raw["beneficiaryList"] = BeneficiaryList;
+    // finalData['source'] = source;
+    // finalData['data'] = JSON.stringify(raw);
+    document.getElementById("account_details1_btn").disabled = true;
+    document.getElementById("account_details1_btn").style.cursor = "no-drop";
+    var nodes = document.getElementById("addbank_form").getElementsByTagName('*');
+    for (var i = 0; i < nodes.length; i++) {
+      nodes[i].disabled = true;
+      nodes[i].style.cursor = 'no-drop'
+
+    }
+    document.getElementById("addbank_form").style.opacity = '0.65'
+    finalSubmitCall()
+
   }
+}
+function closeModal() {
+  removeTimer();
+  document.getElementById('otp').value = ''
+  $('#otpPopUp').modal('hide');
+  $('#otpExpiry').modal('hide');
+
 }
 
 function openlink() {
   window.open("https://www.google.com/maps/search/bpi+branch+locator/@14.6079731,120.9860096,14z/data=!3m1!4b1");
 }
-
-
 
 function validateEmail(my_email) {
   var ind0 = my_email.indexOf("@");
@@ -2369,18 +2795,15 @@ function goBack1() {
 
 
 //drop-2 methods
-var duration;
-var remaining = 120; // 2 mins timer 
-var resendCount = 0;
-var otpModal = document.getElementById('otpPopUp');
-var otpExpModal = document.getElementById('otpExpiry');
-var invalidOtpModal = document.getElementById('invalidOtp');
-var maxResendOtp = document.getElementById('maxResendOtp');
-var invalidOtp = 0;
+
 
 
 // otp timer function
 function otpTimer() {
+  document.getElementById('otp-btn').style.display = 'block'
+  document.getElementById('otp-invalid-btn').style.display = 'block'
+  document.getElementById('otp-expiry-btn').style.display = 'block'
+  document.getElementById('loader-btn').style.display = 'none'
   if (resendCount <= 5) {
     $('#otpPopUp').modal('show');
     if (remaining == 120) {
@@ -2416,6 +2839,7 @@ function removeTimer() {
 }
 
 function resendOtp(type) {
+
   removeTimer();
   resendCount++;
   if (resendCount > 5) { // on reaching max resend (5 times)
@@ -2425,18 +2849,33 @@ function resendOtp(type) {
 
   }
   else {
-    var raw = JSON.stringify({
+    if (type == 'otpExpire') {
+      document.getElementById('otp-expiry-btn').style.display = 'none'
+      document.getElementById('loader-btn-expiry').style.display = 'block'
+    }
+    else if (type == 'invalidInput') {
+      document.getElementById('otp-invalid-btn').style.display = 'none'
+      document.getElementById('loader-btn-invalid').style.display = 'block'
 
+    }
+    document.getElementById('otp-btn').style.display = 'none'
+    document.getElementById('loader-btn').style.display = 'block'
+    var source = 'Accident'
+    var validateOtpPayload = {}
+
+    var raw = JSON.stringify({
       "companyName": "PAL",
       "webReferenceNumber": referenceNumber
 
     });
 
+    validateOtpPayload['source'] = source;
+    validateOtpPayload['data'] = raw;
     window.parent.postMessage(JSON.stringify({
       event_code: 'ym-client-event', data: JSON.stringify({
         event: {
           code: "resetOtp",
-          data: raw
+          data: validateOtpPayload
         }
       })
     }), '*');
@@ -2450,29 +2889,32 @@ function resendOtp(type) {
         if (eventData.data) {
           let event = JSON.parse(eventData.data);
           if (event.event_code == 'resetResponse') { //sucess
-            $('#invalidOtp').modal('hide');
-            console.log(event.data)
-            if (event.data == '0') {
 
+            console.log(event.data)
+            if (event.data.returnCode == '0' || event.data.retCode == '0') {
+              debugger
+              $('#invalidOtp').modal('hide');
               if (type != 'resend') { $('#otpPopUp').modal('show'); }
               document.getElementById('otp').value = ''
               otpTimer();
             }
             else {
-              $('#otpPopUp').modal('hide');
+              $('#invalidOtp').modal('hide');
+              // $('#otpPopUp').modal('hide');
 
             }
           }
           else {
-            $('#otpPopUp').modal('hide');
+            // $('#otpPopUp').modal('hide');
           }
         }
         else {
-          $('#otpPopUp').modal('hide');
+          // $('#otpPopUp').modal('hide');
         }
       } catch (error) {
         console.log(error)
-        $('#otpPopUp').modal('hide');
+        alert(error);
+        // $('#otpPopUp').modal('hide');
       }
 
     })
@@ -2554,10 +2996,11 @@ function resendOtp(type) {
 
 
 function submitOtp() {
-  $('#loader').show();
-  debugger
+  document.getElementById('otp-btn').style.display = 'none'
+  document.getElementById('loader-btn').style.display = 'block'
   removeTimer();
-  var source='Accident'
+  // $('#three-dot-loader').show()
+  var source = 'Accident'
   var raw = JSON.stringify({
     "oneTimePINInformation": {
       "companyName": "PAL",
@@ -2576,37 +3019,51 @@ function submitOtp() {
       event: {
         code: "validateOtp",
         data: validateOtpPayload,
-        
       }
     })
   }), '*');
 
+  // document.getElementById('time-left').style.display = 'none'
   window.addEventListener('message', function (eventData) {
 
     console.log("receiving otp event in acc")
     // console.log(event.data.event_code)
     try {
-      debugger
       if (eventData.data) {
+
         let event = JSON.parse(eventData.data);
         if (event.event_code == 'validationResponse') { //sucess
           console.log(event.data)
-          if (event.data.returnCode == '0') {
+          if (event.data.returnCode == '0' || event.data.retCode == '0') {
+            // $('#cover-spin').hide(0)
+            $('#invalidOtp').modal('hide');
             $('#otpPopUp').modal('hide');
             $('#requirements').hide();
             $('#payment').show();
             otpSubmitted = true;
-            $('#loader').hide();
+            document.getElementById('otp').value = '';
+            // document.getElementById('otp-btn').style.display = 'block'
           }
-          else {
+          else if (event.data.returnCode == '1' || event.data.returnCode == '2') {
             invalidOtp++;
-            if (invalidOtp < 3) {
+            if (invalidOtp <= 3) {
+              $('#otpPopUp').modal('hide');
               $('#invalidOtp').modal('show');
             }
             else {
+              $('#otpExpiry').modal('hide');
+              $('#maxResendOtp').modal('hide');
+              $('#otpPopUp').modal('hide');
               $('#invalidOtp').modal('hide');
               $('#maxInvalidOtp').modal('show');
             }
+            document.getElementById('otp').value = '';
+            $('#cover-spin').hide(0)
+          }
+          else {
+            $('#invalidOtp').modal('hide');
+            document.getElementById('returnMessage').innerHTML = event.data.returnMessage;
+            $("#invalidReturnCode").modal("show");
           }
 
         }
@@ -2617,7 +3074,7 @@ function submitOtp() {
     } catch (error) {
       console.log(error)
     }
-    document.getElementById('otp').value = '';
+
   })
 
 
@@ -2693,12 +3150,12 @@ function submitOtp() {
 }
 
 // When the user clicks anywhere outside of the modal, close it and remove timer 
-window.onclick = function (event) {
-  if (event.target == otpModal || event.target == otpExpModal || event.target == invalidOtpModal || event.target == maxResendOtp) {
-    console.log(event.target)
-    removeTimer();
-  }
-}
+// window.onclick = function (event) {
+//   if (event.target == otpModal || event.target == otpExpModal || event.target == invalidOtpModal || event.target == maxResendOtp) {
+//     console.log(event.target)
+//     removeTimer();
+//   }
+// }
 
 // when user clicks exit button from OTP pop up
 function backToFileClaim() {
@@ -2707,7 +3164,7 @@ function backToFileClaim() {
 
 
 }
-
+debugger
 
 
 
