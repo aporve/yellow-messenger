@@ -1940,7 +1940,7 @@ function preSubmitCall() {
         let event = JSON.parse(eventData.data);
         console.log(event)
         if (event.event_code == 'preSubmitResponse') { //sucess
-          if (event.data.returnCode == '0') {
+          if (event.data.returnCode == '0' || event.data.retCode == '0') {
             disableDottedLoader();
             // timer(50, 100).then(async () => {
             $("#step2").addClass("active");
@@ -2021,7 +2021,7 @@ function finalSubmitCall() {
         console.log(event)
         if (event.event_code == 'finalSubmitResponse') { //sucess
           console.log('finalsubmit event received')
-          if (event.data.returnCode == '0') {
+          if (event.data.returnCode == '0' || event.data.retCode == '0') {
             disableDottedLoader();
             myDisable()
             document.getElementById('ref_number').innerHTML = event.data?.transactionNumber
@@ -2300,7 +2300,7 @@ function getBankDetails() {
         let event = JSON.parse(eventData.data);
         console.log(event)
         if (event.event_code == 'payoutDetails') { //sucess
-          if (event.data.returnCode == '0') {
+          if (event.data.returnCode == '0' || event.data.retCode == '0') {
             $('#cover-spin').hide(0)
             if (event.data.accountName != null) {
               $('#proof_BAO_display').hide();
@@ -2890,7 +2890,7 @@ function resendOtp(type) {
           if (event.event_code == 'resetResponse') { //sucess
 
             console.log(event.data)
-            if (event.data.returnCode == '0') {
+            if (event.data.returnCode == '0' || event.data.retCode == '0') {
               debugger
               $('#invalidOtp').modal('hide');
               if (type != 'resend') { $('#otpPopUp').modal('show'); }
@@ -3034,7 +3034,7 @@ function submitOtp() {
         let event = JSON.parse(eventData.data);
         if (event.event_code == 'validationResponse') { //sucess
           console.log(event.data)
-          if (event.data.returnCode == '0') {
+          if (event.data.returnCode == '0' || event.data.retCode == '0') {
             // $('#cover-spin').hide(0)
             $('#invalidOtp').modal('hide');
             $('#otpPopUp').modal('hide');
