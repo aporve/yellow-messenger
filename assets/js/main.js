@@ -99,7 +99,7 @@ function captcha() {
         $("#err_field_ref_num").hide();
     }
 
-    if (ref_num.length != 0 && lenRefNo == false && specRefNo == false && numRefNo == true) { // $('#refNoWarning').modal('hide');
+    if (ref_num.length != 0 && ref_num.length == 10 && lenRefNo == false && specRefNo == false && numRefNo == true) { // $('#refNoWarning').modal('hide');
         if (grecaptcha && grecaptcha.getResponse().length > 0) {
 
             referenceNumber = document.getElementById('reference_number').value
