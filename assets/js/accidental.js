@@ -2001,15 +2001,17 @@ function finalSubmitCall() {
   });
   finalData['source'] = source;
   finalData['data'] = raw;
-  // timer(0, 50)
-  window.parent.postMessage(JSON.stringify({
-    event_code: 'ym-client-event', data: JSON.stringify({
-      event: {
-        code: "finalSubmit",
-        data: finalData
-      }
-    })
-  }), '*');
+  timer(0, 50).then((val)=>{
+    window.parent.postMessage(JSON.stringify({
+      event_code: 'ym-client-event', data: JSON.stringify({
+        event: {
+          code: "finalSubmit",
+          data: finalData
+        }
+      })
+    }), '*');
+  })
+ 
 
   window.addEventListener('message', function (eventData) {
 
@@ -2026,7 +2028,7 @@ function finalSubmitCall() {
             disableDottedLoader();
             myDisable()
             document.getElementById('ref_number').innerHTML = event.data?.transactionNumber
-            // timer(50, 100).then(async () => {
+            timer(50, 100).then(async () => {
             $("#step2").addClass("done");
 
             $("#step3_circle").addClass("md-step-step3-circle ");
@@ -2037,7 +2039,7 @@ function finalSubmitCall() {
             $("#pickUp").hide();
             $("#process_confirmation").show();
 
-            // });
+            });
 
           }
           else {
