@@ -80,8 +80,13 @@ function captcha() {
     if (ref_num.length === 0) {
         $("#err_field_ref_num").text('Field is empty');
         $("#err_field_ref_num").show();
-    } else if (lenRefNo) {
-        $("#err_field_ref_num").text("Maximum 10 characters allowed!");
+    }
+    else if (ref_num.length != 10) {
+        $("#err_field_ref_num").text('Should consist of 10 digits');
+        $("#err_field_ref_num").show();
+    }
+    else if (lenRefNo) {
+        $("#err_field_ref_num").text("Maximum 10 digits allowed!");
         $("#err_field_ref_num").show();
     } else if (specRefNo) {
         $("#err_field_ref_num").text('Special character is not allowed');
