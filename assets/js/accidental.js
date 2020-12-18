@@ -1792,7 +1792,7 @@ file7.onchange = async function (e) {
 //       $("#file_Upload_Tick_7").hide();
 //       $("#file_upload_cancle_7").show();
 //       $("#upload_warning").text(
-//         "You may only upload documents that are in .jpg, .pdf formats and must not exceed 2MB in file size. Please re-upload in the correct format and file size to proceed."
+//         "You may only upload documents that are in .jpg, .pdf formats and must not exceed 2MB in file size. Please re-upload in the correct format and file size proceed."
 //       );
 //       this.value = "";
 //   }
