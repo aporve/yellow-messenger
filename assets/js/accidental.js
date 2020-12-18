@@ -44,7 +44,7 @@ $('#privacy_consent_3').prop('checked', true);
 document.getElementById('upload_waiting_btn').style.display = 'none'
 document.getElementById('account_details1_btn_waiting').style.display = 'none'
 document.getElementById('pick_up_btn_waiting').style.display = 'none'
-document.getElementById('submit9_waiting_btn').style.display = 'none'
+// document.getElementById('submit9_waiting_btn').style.display = 'none'
 
 var form_addBank = document.getElementById("addbank_form");
 form_addBank.addEventListener('submit', handleAddBankInfo);
