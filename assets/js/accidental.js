@@ -2896,7 +2896,7 @@ function resendOtp(type) {
 
             console.log(event.data)
             if (event.data.returnCode == '0' || event.data.retCode == '0') {
-              debugger
+
               $('#invalidOtp').modal('hide');
               if (type != 'resend') { $('#otpPopUp').modal('show'); }
               document.getElementById('otp').value = ''
@@ -3134,7 +3134,7 @@ function submitOtp() {
   // removeTimer();
 
   // if (document.getElementById('otp').value != dummy_otp) {
-  //   debugger
+  //    
   //   invalidOtp++;
   //   if (invalidOtp < 3) {
   //     $('#invalidOtp').modal('show');
@@ -3168,7 +3168,7 @@ function backToFileClaim() {
 
 
 }
-debugger
+
 
 
 

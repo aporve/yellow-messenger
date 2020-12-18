@@ -31,7 +31,7 @@ var surveyQues3;
 var surveyAns3 = 0;
 var surveyObj = {};
 var org_claimSubType;
-var org_sourceSystem='';
+var org_sourceSystem = '';
 var survey_form = document.getElementById('customer_survey');
 
 survey_form.addEventListener('submit', submit_survey);
@@ -1054,7 +1054,7 @@ function selectAnswer(quesn_num, id, selectedOption) {
 
 
 }
-debugger
+
 
 function submit_survey(event) {
     event.preventDefault();
