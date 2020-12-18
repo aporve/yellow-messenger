@@ -44,7 +44,7 @@ $('#privacy_consent_3').prop('checked', true);
 document.getElementById('upload_waiting_btn').style.display = 'none'
 document.getElementById('account_details1_btn_waiting').style.display = 'none'
 document.getElementById('pick_up_btn_waiting').style.display = 'none'
-// document.getElementById('submit9_waiting_btn').style.display = 'none'
+document.getElementById('submit9_waiting_btn').style.display = 'none'
 
 var form_addBank = document.getElementById("addbank_form");
 form_addBank.addEventListener('submit', handleAddBankInfo);
@@ -1885,7 +1885,7 @@ function enableDottedLoader() {
   document.getElementById('pick_up_btn_waiting').style.display = 'block'
 
   document.getElementById('submit9').style.display = 'none'
-  // document.getElementById('submit9_waiting_btn').style.display = 'block'
+  document.getElementById('submit9_waiting_btn').style.display = 'block'
 
 }
 function disableDottedLoader() {
@@ -1899,7 +1899,7 @@ function disableDottedLoader() {
   document.getElementById('pick_up_btn_waiting').style.display = 'none'
 
   document.getElementById('submit9').style.display = 'block'
-  // document.getElementById('submit9_waiting_btn').style.display = 'none'
+  document.getElementById('submit9_waiting_btn').style.display = 'none'
 }
 
 //to call preSubmit api
@@ -1971,7 +1971,7 @@ function preSubmitCall() {
 }
 
 function finalSubmitCall() {
-  // enableDottedLoader();
+  enableDottedLoader();
   let filesObject = {};
   filesObject["folderName"] = `CLAIMS/PAL/${referenceNumber}`
   filesObject["fileList"] = filesList;
@@ -2001,17 +2001,15 @@ function finalSubmitCall() {
   });
   finalData['source'] = source;
   finalData['data'] = raw;
-  timer(0, 50).then((val)=>{
-    window.parent.postMessage(JSON.stringify({
-      event_code: 'ym-client-event', data: JSON.stringify({
-        event: {
-          code: "finalSubmit",
-          data: finalData
-        }
-      })
-    }), '*');
-  })
- 
+  // timer(0, 50)
+  window.parent.postMessage(JSON.stringify({
+    event_code: 'ym-client-event', data: JSON.stringify({
+      event: {
+        code: "finalSubmit",
+        data: finalData
+      }
+    })
+  }), '*');
 
   window.addEventListener('message', function (eventData) {
 
@@ -2025,10 +2023,10 @@ function finalSubmitCall() {
         if (event.event_code == 'finalSubmitResponse') { //sucess
           console.log('finalsubmit event received')
           if (event.data.returnCode == '0' || event.data.retCode == '0') {
-            // disableDottedLoader();
+            disableDottedLoader();
             myDisable()
             document.getElementById('ref_number').innerHTML = event.data?.transactionNumber
-            timer(50, 100).then(async () => {
+            // timer(50, 100).then(async () => {
             $("#step2").addClass("done");
 
             $("#step3_circle").addClass("md-step-step3-circle ");
@@ -2039,7 +2037,7 @@ function finalSubmitCall() {
             $("#pickUp").hide();
             $("#process_confirmation").show();
 
-            });
+            // });
 
           }
           else {
