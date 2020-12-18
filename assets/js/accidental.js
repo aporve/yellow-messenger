@@ -1885,7 +1885,7 @@ function enableDottedLoader() {
   document.getElementById('pick_up_btn_waiting').style.display = 'block'
 
   document.getElementById('submit9').style.display = 'none'
-  document.getElementById('submit9_waiting_btn').style.display = 'block'
+  // document.getElementById('submit9_waiting_btn').style.display = 'block'
 
 }
 function disableDottedLoader() {
@@ -1899,7 +1899,7 @@ function disableDottedLoader() {
   document.getElementById('pick_up_btn_waiting').style.display = 'none'
 
   document.getElementById('submit9').style.display = 'block'
-  document.getElementById('submit9_waiting_btn').style.display = 'none'
+  // document.getElementById('submit9_waiting_btn').style.display = 'none'
 }
 
 //to call preSubmit api
