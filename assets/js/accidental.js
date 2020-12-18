@@ -1971,7 +1971,7 @@ function preSubmitCall() {
 }
 
 function finalSubmitCall() {
-  enableDottedLoader();
+  // enableDottedLoader();
   let filesObject = {};
   filesObject["folderName"] = `CLAIMS/PAL/${referenceNumber}`
   filesObject["fileList"] = filesList;
@@ -2025,7 +2025,7 @@ function finalSubmitCall() {
         if (event.event_code == 'finalSubmitResponse') { //sucess
           console.log('finalsubmit event received')
           if (event.data.returnCode == '0' || event.data.retCode == '0') {
-            disableDottedLoader();
+            // disableDottedLoader();
             myDisable()
             document.getElementById('ref_number').innerHTML = event.data?.transactionNumber
             timer(50, 100).then(async () => {
