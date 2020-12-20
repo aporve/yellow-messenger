@@ -1626,6 +1626,8 @@ function enableDottedLoader() {
 }
 function disableDottedLoader() {
     document.getElementById('upload_docs_btn').style.display = 'block'
+    document.getElementById("upload_docs_btn").disabled = false;
+    document.getElementById("upload_docs_btn").style.cursor = "pointer";
     document.getElementById('upload_waiting_btn').style.display = 'none'
 
     document.getElementById('account_details1_btn').style.display = 'block'

@@ -243,6 +243,10 @@ function disableDottedLoader() {
     document.getElementById('submit10').style.display = 'block'
     document.getElementById('submit10_waiting').style.display = 'none'
 
+    document.getElementById("submit9").disabled = false;
+    document.getElementById("submit9").style.cursor = "pointer";
+    document.getElementById("submit10").disabled = false;
+    document.getElementById("submit10").style.cursor = "pointer";
     // document.getElementById('pick_up_btn').style.display = 'block'
     // document.getElementById('pick_up_btn_waiting').style.display = 'none'
 }
