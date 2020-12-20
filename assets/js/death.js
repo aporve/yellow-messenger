@@ -775,7 +775,8 @@ function preSubmitCall() {
                         // });
                     }
                     else {
-
+                        document.getElementById('returnMessage').innerHTML = event.data.returnMessage;
+                        $("#invalidReturnCode").modal("show");
                     }
                 }
                 else {

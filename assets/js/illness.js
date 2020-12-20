@@ -2189,7 +2189,8 @@ function preSubmitCall() {
                         // })
                     }
                     else {
-
+                        document.getElementById('returnMessage').innerHTML = event.data.returnMessage;
+                        $("#invalidReturnCode").modal("show");
                     }
                 }
                 else {
@@ -2797,9 +2798,6 @@ window.onclick = function (event) {
 }
 // when user clicks exit button from OTP pop up
 function backToFileClaim() {
-
     window.location.href = "main.html";
-
-
 }
 //drop-2 methods

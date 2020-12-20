@@ -1952,6 +1952,9 @@ function preSubmitCall() {
               $('#payment').show();
             }
             // })
+          } else {
+            document.getElementById('returnMessage').innerHTML = event.data.returnMessage;
+            $("#invalidReturnCode").modal("show");
           }
         }
 
