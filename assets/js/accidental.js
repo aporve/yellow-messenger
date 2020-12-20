@@ -2901,12 +2901,14 @@ function resendOtp(type) {
             if (event.data.returnCode == '0' || event.data.retCode == '0') {
 
               $('#invalidOtp').modal('hide');
+              $('#otpExpiry').modal('hide');
               if (type != 'resend') { $('#otpPopUp').modal('show'); }
               document.getElementById('otp').value = ''
               otpTimer();
             }
             else {
               $('#invalidOtp').modal('hide');
+              $('#otpExpiry').modal('hide');
               // $('#otpPopUp').modal('hide');
 
             }
@@ -2925,7 +2927,7 @@ function resendOtp(type) {
       }
 
     })
-    $('#otpExpiry').modal('hide');
+ 
   }
 
   //api call for resend otp
