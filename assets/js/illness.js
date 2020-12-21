@@ -2689,7 +2689,7 @@ function submitOtp() {
                     console.log(event.data)
                     if (event.data.returnCode == '0' || event.data.retCode == '0') {
                         document.getElementById("back_btn1").style.cursor = "no-drop";
-                        document.getElementById("back_btn1").style.pointerEvents = "none";
+                        document.getElementById("back_btn1").disabled = true;
                         $('#otpPopUp').modal('hide');
                         $('#invalidOtp').modal('hide');
                         $('#requirements').hide();
