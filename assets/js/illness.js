@@ -19,7 +19,7 @@ var scanDoc = false;
 haveBankDetails = false;
 $('#privacy_consent_1').prop('checked', true);
 $('#privacy_consent_2').prop('checked', true);
-$('#privacy_consent_3').prop('checked', true);
+// $('#privacy_consent_3').prop('checked', true);
 
 document.getElementById('upload_waiting_btn').style.display = 'none'
 document.getElementById('account_details1_btn_waiting').style.display = 'none'
@@ -912,7 +912,7 @@ function handleForm(event) {
             privacy_checkbox: $("#invalidCheck_privacy").is(":checked"),
             privacy_consent_1: $("#privacy_consent_1").is(":checked"),
             privacy_consent_2: $("#privacy_consent_2").is(":checked"),
-            privacy_consent_3: $("#privacy_consent_3").is(":checked"),
+            // privacy_consent_3: $("#privacy_consent_3").is(":checked"),
 
 
         };
