@@ -1943,7 +1943,7 @@ function preSubmitCall() {
         let event = JSON.parse(eventData.data);
         console.log(event)
         if (event.event_code == 'preSubmitResponse') { //sucess
-          if (event.data.returnCode == '0' || event.data.retCode == '0') {
+          if (event.data.returnCode == '1' || event.data.retCode == '1') {
             disableDottedLoader();
             // timer(50, 100).then(async () => {
             $("#step2").addClass("active");
