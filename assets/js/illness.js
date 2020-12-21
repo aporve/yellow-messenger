@@ -1795,6 +1795,13 @@ function handleAccountInfo(event) {
     else {
         document.getElementById("submit9").disabled = true;
         document.getElementById("submit9").style.cursor = "no-drop";
+        var nodes = document.getElementById("bank_form").getElementsByTagName('*');
+        for (var i = 0; i < nodes.length; i++) {
+            nodes[i].disabled = true;
+            nodes[i].style.cursor = 'no-drop'
+
+        }
+        document.getElementById("bank_form").style.opacity = '0.65'
         finalSubmitCall();
     }
 }
