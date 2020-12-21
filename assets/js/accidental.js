@@ -2781,8 +2781,10 @@ function goBack() {
   $("#step2").removeClass("active");
   $("#step2>div").removeClass("active");
   $("#step2").removeClass("done");
+
   $('#requirements').hide();
   $('#form_wrapper').show();
+  $('#accidental_data_privacy').show();
   /* $('#form_wrapper')[0].scrollIntoView(true); */
 }
 
