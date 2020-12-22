@@ -229,7 +229,7 @@ function trackProgress() {
                             surveyTag = event.data.surveyTag?.toLowerCase();
 
                             //for customer survey
-                            if ((claimStatus.toLowerCase() == 'denied1' || claimStatus.toLowerCase() == 'denied2' || claimStatus.toLowerCase() == 'denied3' || claimStatus.toLowerCase() == 'denied4' || claimStatus.toLowerCase() == 'approved') && (surveyTag == 'N' || surveyTag == null)) {
+                            if ((claimStatus.toLowerCase() == 'denied1' || claimStatus.toLowerCase() == 'denied2' || claimStatus.toLowerCase() == 'denied3' || claimStatus.toLowerCase() == 'denied4' || claimStatus.toLowerCase() == 'approved') && (surveyTag == 'n' || surveyTag == null)) {
                                 $('#customer_survey').show()
                             }
                             else {
