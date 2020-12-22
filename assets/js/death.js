@@ -1213,10 +1213,10 @@ function handleFormAddBeneficiary(event) {
             beneficiary["relationship"] = field_addBeneficiaryRelationToDeceased,
             // beneficiary["documentFolder"] = `CLAIMS/PAL/${referenceNumber}`,
             beneficiary["payoutOption"] = payoutOption,
-            // beneficiary["employer"] = field_addBeneficiaryEmployerName,
-            // beneficiary["governmentOfficial"] = field_addBeneficiary_relatives1,
-            // beneficiary["governmentOfficialRelative"] = field_add_Beneficiary_add_relatives2,
-            // beneficiary["occupation"] = field_addBeneficiaryOccupation,
+            beneficiary["employer"] = field_addBeneficiaryEmployerName,
+            beneficiary["governmentOfficial"] = field_addBeneficiary_relatives1,
+            beneficiary["governmentOfficialRelative"] = field_add_Beneficiary_add_relatives2,
+            beneficiary["occupation"] = field_addBeneficiaryOccupation,
 
             BeneficiaryList.push(beneficiary);
         if (beneficiaryCount == 3) {
@@ -1779,10 +1779,10 @@ function handleForm(event) {
             beneficiary["relationship"] = field_BeneficiaryRelationToDeceased,
             // beneficiary["documentFolder"] = `CLAIMS/PAL/${referenceNumber}`,
             beneficiary["payoutOption"] = payoutOption,
-            // beneficiary["employer"] = field_BeneficiaryEmployerName,
-            // beneficiary["governmentOfficial"] = $("select#field_Beneficiary_relatives1 option").filter(":selected").val(),
-            // beneficiary["governmentOfficialRelative"] = $("select#field_Beneficiary_relatives2 option").filter(":selected").val(),
-            // beneficiary["occupation"] = field_BenificiaryOccupation
+            beneficiary["employer"] = field_BeneficiaryEmployerName,
+            beneficiary["governmentOfficial"] = $("select#field_Beneficiary_relatives1 option").filter(":selected").val(),
+            beneficiary["governmentOfficialRelative"] = $("select#field_Beneficiary_relatives2 option").filter(":selected").val(),
+            beneficiary["occupation"] = field_BenificiaryOccupation
             BeneficiaryList.push(beneficiary);
 
 
