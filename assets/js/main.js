@@ -195,11 +195,11 @@ function trackProgress() {
                             document.getElementById('go-btn').style.display = 'block'
                             document.getElementById('loader-btn').style.display = 'none'
                             if (event.data.type.toLowerCase() == 'death') {
-                                claim_type = event.data.type
+                                claim_type = event.data.type?.toLowerCase()
                             }
                             else {
-                                claim_type = event.data.subType
-                                org_claimSubType = event.data.subType;
+                                claim_type = event.data.subType?.toLowerCase()
+                                org_claimSubType = event.data.subType?.toLowerCase();
                                 if (event.data.subType.toLowerCase() == 'il') {
                                     claim_type = 'illness'
                                 }
@@ -208,17 +208,17 @@ function trackProgress() {
                                 }
                             }
                             transactionNumber = event.data.transactionNumber;
-                            disbursementType = event.data.disbursementType;
+                            disbursementType = event.data.disbursementType?.toUpperCase();
                             beneficiaryCount = event.data.beneficiaryCount;
                             lapsationDate = event.data.lapsationDate;
-                            claimStatus = event.data.claimStatus;
-                            docsPending = event.data.docsPending;
-                            docsReceived = event.data.docsReceived;
+                            claimStatus = event.data.claimStatus?.toLowerCase();
+                            docsPending = event.data.docsPending?.toLowerCase();
+                            docsReceived = event.data.docsReceived?.toLowerCase();
                             policyNumber = event.data.policyNumber;
                             claimantFirstName = event.data.claimantFirstName;
 
-                            sourceSystem = event.data.sourceSystem;
-                            org_sourceSystem = event.data.sourceSystem;
+                            sourceSystem = event.data.sourceSystem?.toLowerCase();
+                            org_sourceSystem = event.data.sourceSystem?.toLowerCase();
                             if (sourceSystem.trim().toLowerCase() != 'tips' && sourceSystem.trim().toLowerCase() != 'cms') {
                                 sourceSystem = 'cms'
                             }
@@ -226,10 +226,10 @@ function trackProgress() {
                             claimAmount = event.data.claimAmount;
                             currency = event.data.currency;
                             requirementsList = event.data.requirementsList;
-                            surveyTag = event.data.surveyTag;
+                            surveyTag = event.data.surveyTag?.toLowerCase();
 
                             //for customer survey
-                            if ((claimStatus.toLowerCase() == 'denied1' || claimStatus.toLowerCase() == 'denied2' || claimStatus.toLowerCase() == 'denied3' || claimStatus.toLowerCase() == 'denied4' || claimStatus.toLowerCase() == 'approved') && (surveyTag == 'N' || surveyTag == null)) {
+                            if ((claimStatus.toLowerCase() == 'denied1' || claimStatus.toLowerCase() == 'denied2' || claimStatus.toLowerCase() == 'denied3' || claimStatus.toLowerCase() == 'denied4' || claimStatus.toLowerCase() == 'approved') && (surveyTag == 'n' || surveyTag == null)) {
                                 $('#customer_survey').show()
                             }
                             else {
@@ -932,15 +932,22 @@ function twoStepperActive() {
 /* -------functions for stepper------ */
 
 function trackProgressDropDown() {
+    var disbMsg;
+    if (disbursementType?.toLowerCase() == 'cta') {
+        disbMsg = 'Bank Transfer'
+    }
+    else if (disbursementType?.toLowerCase() == 'pua') {
+        disbMsg = 'Pick Up Anywhere'
+    }
     var final_progress_result = ''
-    final_progress_result = '<div class="step step-active"><div><div class="circle " id="circle2"><i class="fa fa-check" ></i ></div ></div><div><div class="title">' + progress_msges[0]['msg'] + claim_type.toLowerCase() + ' claim.'+ '</div></div></div>' +
+    final_progress_result = '<div class="step step-active"><div><div class="circle " id="circle2"><i class="fa fa-check" ></i ></div ></div><div><div class="title">' + progress_msges[0]['msg'] + claim_type.toLowerCase() + ' claim.' + '</div></div></div>' +
         '<div class="step step-active"><div><div class="circle " id="circle2"><i class="fa fa-check" ></i ></div ></div><div><div class="title">' + progress_msges[1]['msg'] + '</div></div></div>' +
-        (claim_type == 'Accident' || claim_type == 'Illness'  ?
-            '<div class="step step-active"><div><div class="circle " id="circle2"><i class="fa fa-check" ></i ></div ></div><div><div class="title">' + 'You have chosen ' + disbursementType + ' as a preferred payout method' + '</div></div></div>' :
+        (claim_type == 'Accident' || claim_type == 'Illness' ?
+            '<div class="step step-active"><div><div class="circle " id="circle2"><i class="fa fa-check" ></i ></div ></div><div><div class="title">' + 'You have chosen ' + disbMsg + ' as a preferred payout method' + '</div></div></div>' :
             beneficiaryCount == 1 ?
-                '<div class="step step-active"><div><div class="circle " id="circle2"><i class="fa fa-check" ></i ></div ></div><div><div class="title">' + 'You have chosen ' + disbursementType + ' as a preferred payout method' + '</div></div></div>' :
+                '<div class="step step-active"><div><div class="circle " id="circle2"><i class="fa fa-check" ></i ></div ></div><div><div class="title">' + 'You have chosen ' + disbMsg + ' as a preferred payout method' + '</div></div></div>' :
                 '<div class="step step-active"><div><div class="circle " id="circle2"><i class="fa fa-check" ></i ></div ></div><div><div class="title">' + 'You have chosen your preferred payout methods.' + '</div></div></div>')
-        + (claimStatus.toLowerCase() == 'received' ?
+        + (claimStatus.toLowerCase() == 'received' || claimStatus.toLowerCase() == 'approved' || claimStatus.toLowerCase() == 'denied1' || claimStatus.toLowerCase() == 'denied2' || claimStatus.toLowerCase() == 'denied3' || claimStatus.toLowerCase() == 'denied4' ?
             '<div class="step step-active"><div><div class="circle " id="circle2"><i class="fa fa-check" ></i ></div ></div><div><div class="title">' + progress_msges[4]['msg'] + '</div></div></div>' : '') +
         (docsPending.toLowerCase() == 'y' && docsReceived.toLowerCase() == 'n' ?
             '<div class="step step-active"><div><div class="circle " id="circle2"><i class="fa fa-check" ></i ></div ></div><div><div class="title">' + progress_msges[5]['msg'] + '</div></div></div>' :
@@ -953,9 +960,9 @@ function trackProgressDropDown() {
         + (claimStatus == 'approved' ?
             '<div class="step step-active"><div><div class="circle " id="circle2"><i class="fa fa-check" ></i ></div ></div><div><div class="title">' + progress_msges[8]['msg'] + '</div></div></div>' + '<div class="step step-active"><div><div class="circle " id="circle2"><i class="fa fa-check" ></i ></div ></div><div><div class="title">' + progress_msges[11]['msg'] + '</div></div></div>' :
             '')
-        + (claimStatus == 'approved' && disbursementType == 'CTA' && beneficiaryCount == 1 ?
-            '<div class="step step-active"><div><div class="circle " id="circle2"><i class="fa fa-check" ></i ></div ></div><div><div class="title">' + progress_msges[12]['msg'] + '</div></div></div>'
-            : claimStatus == 'approved' && disbursementType == 'PUA' && beneficiaryCount == 1 ? '<div class="step step-active"><div><div class="circle " id="circle2"><i class="fa fa-check" ></i ></div ></div><div><div class="title">' + progress_msges[9]['msg'] + '</div></div></div>' : '')
+        // + (claimStatus == 'approved' && disbursementType == 'CTA' && beneficiaryCount == 1 ?
+        //     '<div class="step step-active"><div><div class="circle " id="circle2"><i class="fa fa-check" ></i ></div ></div><div><div class="title">' + progress_msges[12]['msg'] + '</div></div></div>'
+        //     : claimStatus == 'approved' && disbursementType == 'PUA' && beneficiaryCount == 1 ? '<div class="step step-active"><div><div class="circle " id="circle2"><i class="fa fa-check" ></i ></div ></div><div><div class="title">' + progress_msges[9]['msg'] + '</div></div></div>' : '')
     document.getElementById('progs-status').innerHTML = final_progress_result
 
     //--before integration--//
@@ -1109,7 +1116,7 @@ function submit_survey(event) {
         'claimType': claim_type,
         'subType': org_claimSubType,
         'policyNumber': policyNumber,
-        'sourceSystem': org_sourceSystem,
+        'sourceSystem': org_sourceSystem.trim(),
         'surveyQuestion1': surveyAns1,
         'surveyQuestion2': surveyAns2,
         'surveyQuestion3': surveyAns3
@@ -1120,6 +1127,7 @@ function submit_survey(event) {
     var source = 'main';
     finalPayload['source'] = source;
     finalPayload['data'] = raw;
+    $('#cover-spin').show(0)
     window.parent.postMessage(JSON.stringify({
         event_code: 'ym-client-event', data: JSON.stringify({
             event: {
@@ -1130,15 +1138,16 @@ function submit_survey(event) {
     }), '*');
     window.addEventListener('message', function (eventData) {
 
-        console.log("receiving survey event in acc")
+       
         // console.log(event.data.event_code)
         try {
 
             if (eventData.data) {
                 let event = JSON.parse(eventData.data);
-                console.log(event)
                 if (event.event_code == 'surveryResponse') { //sucess
-                    console.log(event.data)
+                    console.log("receiving survey event in acc")
+                   
+                
                     if (event.data.returnCode == '0' || event.data.retCode == '0') {
                         var nodes = document.getElementById("customer_survey").getElementsByTagName('*');
                         for (var i = 0; i < nodes.length; i++) {
@@ -1147,6 +1156,12 @@ function submit_survey(event) {
 
                         }
                         document.getElementById("customer_survey").style.opacity = '0.65'
+                        $('#cover-spin').hide(0)
+                    } else {
+                        $('#cover-spin').hide(0)
+                        document.getElementById('returnMessage').innerHTML = event.data.returnMessage;
+                        $("#invalidReturnCode").modal("show");
+
                     }
                 }
                 else {
