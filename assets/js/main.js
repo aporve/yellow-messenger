@@ -1138,15 +1138,16 @@ function submit_survey(event) {
     }), '*');
     window.addEventListener('message', function (eventData) {
 
-        console.log("receiving survey event in acc")
+       
         // console.log(event.data.event_code)
         try {
 
             if (eventData.data) {
-                let event = JSON.parse(eventData.data);
-                console.log(event)
+               
                 if (event.event_code == 'surveryResponse') { //sucess
-                    console.log(event.data)
+                    console.log("receiving survey event in acc")
+                    let event = JSON.parse(eventData.data);
+                
                     if (event.data.returnCode == '0' || event.data.retCode == '0') {
                         var nodes = document.getElementById("customer_survey").getElementsByTagName('*');
                         for (var i = 0; i < nodes.length; i++) {
