@@ -933,10 +933,10 @@ function twoStepperActive() {
 
 function trackProgressDropDown() {
     var disbMsg;
-    if (disbursementType.toLowerCase() == 'cta') {
+    if (disbursementType?.toLowerCase() == 'cta') {
         disbMsg = 'Bank Transfer'
     }
-    else if (disbursementType.toLowerCase() == 'pua') {
+    else if (disbursementType?.toLowerCase() == 'pua') {
         disbMsg = 'Pick Up Anywhere'
     }
     var final_progress_result = ''
