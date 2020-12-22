@@ -195,11 +195,11 @@ function trackProgress() {
                             document.getElementById('go-btn').style.display = 'block'
                             document.getElementById('loader-btn').style.display = 'none'
                             if (event.data.type.toLowerCase() == 'death') {
-                                claim_type = event.data.type
+                                claim_type = event.data.type?.toLowerCase()
                             }
                             else {
-                                claim_type = event.data.subType
-                                org_claimSubType = event.data.subType;
+                                claim_type = event.data.subType?.toLowerCase()
+                                org_claimSubType = event.data.subType?.toLowerCase();
                                 if (event.data.subType.toLowerCase() == 'il') {
                                     claim_type = 'illness'
                                 }
@@ -208,17 +208,17 @@ function trackProgress() {
                                 }
                             }
                             transactionNumber = event.data.transactionNumber;
-                            disbursementType = event.data.disbursementType;
+                            disbursementType = event.data.disbursementType?.toUpperCase();
                             beneficiaryCount = event.data.beneficiaryCount;
                             lapsationDate = event.data.lapsationDate;
-                            claimStatus = event.data.claimStatus;
-                            docsPending = event.data.docsPending;
-                            docsReceived = event.data.docsReceived;
+                            claimStatus = event.data.claimStatus?.toLowerCase();
+                            docsPending = event.data.docsPending?.toLowerCase();
+                            docsReceived = event.data.docsReceived?.toLowerCase();
                             policyNumber = event.data.policyNumber;
                             claimantFirstName = event.data.claimantFirstName;
 
-                            sourceSystem = event.data.sourceSystem;
-                            org_sourceSystem = event.data.sourceSystem;
+                            sourceSystem = event.data.sourceSystem?.toLowerCase();
+                            org_sourceSystem = event.data.sourceSystem?.toLowerCase();
                             if (sourceSystem.trim().toLowerCase() != 'tips' && sourceSystem.trim().toLowerCase() != 'cms') {
                                 sourceSystem = 'cms'
                             }
@@ -226,7 +226,7 @@ function trackProgress() {
                             claimAmount = event.data.claimAmount;
                             currency = event.data.currency;
                             requirementsList = event.data.requirementsList;
-                            surveyTag = event.data.surveyTag;
+                            surveyTag = event.data.surveyTag?.toLowerCase();
 
                             //for customer survey
                             if ((claimStatus.toLowerCase() == 'denied1' || claimStatus.toLowerCase() == 'denied2' || claimStatus.toLowerCase() == 'denied3' || claimStatus.toLowerCase() == 'denied4' || claimStatus.toLowerCase() == 'approved') && (surveyTag == 'N' || surveyTag == null)) {
