@@ -749,7 +749,7 @@ function preSubmitCall() {
                 }
             })
         }), '*');
-        timer(2, 45).then(async () => {
+        timer(2, 30).then(async () => {
         })
     })
 
@@ -767,7 +767,7 @@ function preSubmitCall() {
                     if (event.data.returnCode == '0' || event.data.retCode == '0') {
                         // disableDottedLoader();
                         clearTimeout(cleartime);
-                        timer(45, 75).then(async () => {
+                        timer(30, 35).then(async () => {
                         $("#step2").addClass("done");
                         $("#step3_circle").addClass("md-step-step3-circle ");
                         $("#step3_span").addClass("md-step3-span");
@@ -831,7 +831,7 @@ function finalSubmitCall() {
     });
     finalData['source'] = source;
     finalData['data'] = raw;
-    timer(75, 77).then(async () => {
+    timer(35, 75).then(async () => {
         window.parent.postMessage(JSON.stringify({
             event_code: 'ym-client-event', data: JSON.stringify({
                 event: {
@@ -851,7 +851,7 @@ function finalSubmitCall() {
                 if (event.event_code == 'uploadSuccess') { //sucess
                     clearTimeout(cleartime);
                     console.log('upload success event received')
-                    timer(77, 85).then(async () => {
+                    timer(75, 85).then(async () => {
 
 
                     })
