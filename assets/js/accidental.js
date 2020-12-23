@@ -2020,13 +2020,17 @@ function finalSubmitCall() {
       })
     }), '*');
   })
+  timer(25, 50).then(async () => {
+  })
   window.addEventListener('message', function (eventData) {
+   
     try {
 
       if (eventData.data) {
         let event = JSON.parse(eventData.data);
         console.log(event)
         if (event.event_code == 'uploadSuccess') { //sucess
+          clearTimeout(cleartime);
           console.log('upload success event received')
           timer(25, 75).then(async () => {
            
