@@ -2029,6 +2029,53 @@ function finalSubmitCall() {
         if (event.event_code == 'uploadSuccess') { //sucess
           console.log('upload success event received')
           timer(25, 75).then(async () => {
+            window.addEventListener('message', function (eventData) {
+
+
+              // console.log(event.data.event_code)
+              try {
+
+                if (eventData.data) {
+                  let event = JSON.parse(eventData.data);
+                  console.log(event)
+                  if (event.event_code == 'finalSubmitResponse') { //sucess
+
+                    console.log('finalsubmit event received')
+                    if (event.data.returnCode == '0' || event.data.retCode == '0') {
+                      // disableDottedLoader();
+                      myDisable()
+                      document.getElementById('ref_number').innerHTML = event.data?.transactionNumber
+                      // timer(50, 100).then(async () => {
+                      timer(75, 100).then(async () => {
+                        $("#step2").addClass("done");
+
+                        $("#step3_circle").addClass("md-step-step3-circle ");
+                        $("#step3_span").addClass("md-step3-span");
+                        $("#step3_reference").addClass("md-step3-span")
+                        $("#account_details").hide();
+                        $("#account_details1").hide();
+                        $("#pickUp").hide();
+                        $("#process_confirmation").show();
+                      })
+                      // });
+
+                    }
+                    else {
+                      // alert(event.data.returnMessage + 'returnCode not 0 ')
+                      document.getElementById('returnMessage').innerHTML = event.data.returnMessage;
+                      $("#invalidReturnCode").modal("show");
+                    }
+                  }
+                  else {
+                    // $("#popUp").modal("show");
+                  }
+                }
+              } catch (error) {
+                console.log(error)
+              }
+
+            })
+
           })
         
          
@@ -2042,53 +2089,7 @@ function finalSubmitCall() {
     }
 
   })
-  window.addEventListener('message', function (eventData) {
-
-   
-    // console.log(event.data.event_code)
-    try {
-    
-      if (eventData.data) {
-        let event = JSON.parse(eventData.data);
-        console.log(event)
-        if (event.event_code == 'finalSubmitResponse') { //sucess
-         
-          console.log('finalsubmit event received')
-          if (event.data.returnCode == '0' || event.data.retCode == '0') {
-            // disableDottedLoader();
-            myDisable()
-            document.getElementById('ref_number').innerHTML = event.data?.transactionNumber
-            // timer(50, 100).then(async () => {
-            timer(75, 100).then(async () => {
-              $("#step2").addClass("done");
-
-              $("#step3_circle").addClass("md-step-step3-circle ");
-              $("#step3_span").addClass("md-step3-span");
-              $("#step3_reference").addClass("md-step3-span")
-              $("#account_details").hide();
-              $("#account_details1").hide();
-              $("#pickUp").hide();
-              $("#process_confirmation").show();
-            })
-            // });
-
-          }
-          else {
-            // alert(event.data.returnMessage + 'returnCode not 0 ')
-            document.getElementById('returnMessage').innerHTML = event.data.returnMessage;
-            $("#invalidReturnCode").modal("show");
-          }
-        }
-        else {
-          // $("#popUp").modal("show");
-        }
-      }
-    } catch (error) {
-      console.log(error)
-    }
-
-  })
-
+ 
 
 
 }
