@@ -750,7 +750,7 @@ function preSubmitCall() {
 
     window.addEventListener('message', function (eventData) {
 
-        console.log("receiving presubmit event in acc")
+     
         // console.log(event.data.event_code)
         try {
 
@@ -758,6 +758,7 @@ function preSubmitCall() {
                 let event = JSON.parse(eventData.data);
                 console.log(event)
                 if (event.event_code == 'preSubmitResponse') { //sucess
+                    console.log("receiving presubmit event in death")
                     if (event.data.returnCode == '0' || event.data.retCode == '0') {
                         disableDottedLoader();
 
@@ -837,7 +838,7 @@ function finalSubmitCall() {
 
     window.addEventListener('message', function (eventData) {
 
-        console.log("receiving final event in acc")
+       
         // console.log(event.data.event_code)
         try {
 
@@ -845,6 +846,7 @@ function finalSubmitCall() {
                 let event = JSON.parse(eventData.data);
                 console.log(event)
                 if (event.event_code == 'finalSubmitResponse') { //sucess
+                    console.log("receiving final event in death")
                     if (event.data.returnCode == '0' || event.data.retCode == '0') {
                         disableDottedLoader();
                         myDisable()
