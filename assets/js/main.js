@@ -239,7 +239,10 @@ function trackProgress() {
                             //for customer survey
 
                             document.getElementById('original_ref_no').innerHTML = document.getElementById('reference_number').value;
-                            document.getElementById('payment_amount').innerHTML = currency + ' ' + claimAmount;
+                            if (claimAmount != null && claimAmount != '' && claimAmount != '0.0') { document.getElementById('payment_amount').innerHTML = currency + ' ' + claimAmount; }
+                            else {
+                                document.getElementById('payment_amount').innerHTML = ''
+                            }
 
                             displayDateForClaimStatus()
                             $("#img_claim").hide();
@@ -960,9 +963,9 @@ function trackProgressDropDown() {
         + (claimStatus == 'approved' ?
             '<div class="step step-active"><div><div class="circle " id="circle2"><i class="fa fa-check" ></i ></div ></div><div><div class="title">' + progress_msges[8]['msg'] + '</div></div></div>' + '<div class="step step-active"><div><div class="circle " id="circle2"><i class="fa fa-check" ></i ></div ></div><div><div class="title">' + progress_msges[11]['msg'] + '</div></div></div>' :
             '')
-        // + (claimStatus == 'approved' && disbursementType == 'CTA' && beneficiaryCount == 1 ?
-        //     '<div class="step step-active"><div><div class="circle " id="circle2"><i class="fa fa-check" ></i ></div ></div><div><div class="title">' + progress_msges[12]['msg'] + '</div></div></div>'
-        //     : claimStatus == 'approved' && disbursementType == 'PUA' && beneficiaryCount == 1 ? '<div class="step step-active"><div><div class="circle " id="circle2"><i class="fa fa-check" ></i ></div ></div><div><div class="title">' + progress_msges[9]['msg'] + '</div></div></div>' : '')
+    // + (claimStatus == 'approved' && disbursementType == 'CTA' && beneficiaryCount == 1 ?
+    //     '<div class="step step-active"><div><div class="circle " id="circle2"><i class="fa fa-check" ></i ></div ></div><div><div class="title">' + progress_msges[12]['msg'] + '</div></div></div>'
+    //     : claimStatus == 'approved' && disbursementType == 'PUA' && beneficiaryCount == 1 ? '<div class="step step-active"><div><div class="circle " id="circle2"><i class="fa fa-check" ></i ></div ></div><div><div class="title">' + progress_msges[9]['msg'] + '</div></div></div>' : '')
     document.getElementById('progs-status').innerHTML = final_progress_result
 
     //--before integration--//
@@ -1138,7 +1141,7 @@ function submit_survey(event) {
     }), '*');
     window.addEventListener('message', function (eventData) {
 
-       
+
         // console.log(event.data.event_code)
         try {
 
@@ -1146,8 +1149,8 @@ function submit_survey(event) {
                 let event = JSON.parse(eventData.data);
                 if (event.event_code == 'surveryResponse') { //sucess
                     console.log("receiving survey event in acc")
-                   
-                
+
+
                     if (event.data.returnCode == '0' || event.data.retCode == '0') {
                         var nodes = document.getElementById("customer_survey").getElementsByTagName('*');
                         for (var i = 0; i < nodes.length; i++) {
