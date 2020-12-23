@@ -100,7 +100,7 @@ function addFileToList(fileObject, fileName) {
 let cleartime = null;
 function timer(lowerVal, UpperVal) {
 
-    var random = Math.floor(Math.random() * 5) + 1
+    var random = 1
     return new Promise((resolve, reject) => {
         var i = lowerVal
       cleartime = setInterval(() => {
