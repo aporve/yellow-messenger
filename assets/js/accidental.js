@@ -2027,9 +2027,10 @@ function finalSubmitCall() {
         let event = JSON.parse(eventData.data);
         console.log(event)
         if (event.event_code == 'uploadSuccess') { //sucess
+          console.log('upload success event received')
           timer(25, 75).then(async () => {
           })
-          console.log('upload success event received')
+        
          
         }
         else {
