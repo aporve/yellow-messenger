@@ -2586,7 +2586,7 @@ function pickUp() {
 function pickup_Bpi() {
   document.getElementById("pick_up_btn").disabled = true;
   document.getElementById("pick_up_btn").style.cursor = "no-drop";
-  document.getElementById('msg').display = 'none'
+  document.getElementById('msg').style.display = 'none'
   var nodes = document.getElementById("pickUp").getElementsByTagName('*');
   for (var i = 0; i < nodes.length; i++) {
     nodes[i].disabled = true;
