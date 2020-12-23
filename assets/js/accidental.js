@@ -2019,9 +2019,10 @@ function finalSubmitCall() {
         }
       })
     }), '*');
+    timer(25, 50).then(async () => {
+    })
   })
-  timer(25, 50).then(async () => {
-  })
+ 
   window.addEventListener('message', function (eventData) {
    
     try {
@@ -2032,7 +2033,7 @@ function finalSubmitCall() {
         if (event.event_code == 'uploadSuccess') { //sucess
           clearTimeout(cleartime);
           console.log('upload success event received')
-          timer(25, 75).then(async () => {
+          timer(50, 75).then(async () => {
            
 
           })
