@@ -222,7 +222,7 @@ function trackProgress() {
                             if (sourceSystem.trim().toLowerCase() != 'tips' && sourceSystem.trim().toLowerCase() != 'cms') {
                                 sourceSystem = 'cms'
                             }
-                            isFallout = event.data.isFallout;
+                            isFallout = event.data?.isFallout?.toLowerCase();
                             claimAmount = event.data.claimAmount;
                             currency = event.data.currency;
                             requirementsList = event.data.requirementsList;
@@ -239,7 +239,10 @@ function trackProgress() {
                             //for customer survey
 
                             document.getElementById('original_ref_no').innerHTML = document.getElementById('reference_number').value;
-                            document.getElementById('payment_amount').innerHTML = currency + ' ' + claimAmount;
+                            if (claimAmount != null && claimAmount != '' && claimAmount != '0.0' && claimAmount != '0.00') { document.getElementById('payment_amount').innerHTML = currency + ' ' + claimAmount; }
+                            else {
+                                document.getElementById('payment_amount').innerHTML = ''
+                            }
 
                             displayDateForClaimStatus()
                             $("#img_claim").hide();
@@ -436,7 +439,7 @@ function setClaimProgressScreenHeader(title) {
 // functions to set the message for each claim status //
 function setAccidentClaimStatusMsg() {
 
-    if (sourceSystem.toLowerCase() == 'tips') {
+    if (isFallout.toLowerCase() == 'y') {
 
         if (docsPending == 'Y') {
             var finalDocsList = '';
@@ -458,7 +461,7 @@ function setAccidentClaimStatusMsg() {
                 twoStepperActive();
             }
             else if (claimStatus.toLowerCase() == 'approved') {
-                document.getElementById('claim-msg-text').innerHTML = '<div> <h3>YOUR REQUEST HAS BEEN APPROVED</h3> <br /> <p class="font-weight-justy request-font"> Hi ' + claimantFirstName + '. We are glad to let you know that we have approved your claim request for your AIA Philam Life policy no. ' + policyNumber + '. </p> <br /> <p class="font-weight-normal request-font"> Kindly expect to receive ' + currency + ' ' + claimAmount + ' through your chosen payout method. Please expect an update from us on when your benefit will be released. </p> <br /> <p class="font-weight-normal request-font"> We have also sent this information via SMS for your reference. </p> </div>'
+                document.getElementById('claim-msg-text').innerHTML = '<div> <h3>YOUR REQUEST HAS BEEN APPROVED</h3> <br /> <p class="font-weight-justy request-font"> Hi ' + claimantFirstName + '. We are glad to let you know that we have approved your claim request for your AIA Philam Life policy. </p> <br /> <p class="font-weight-normal request-font"> Kindly expect to receive your claim benefits  through your chosen payout method. Please expect an update from us on when your benefit will be released. </p> <br /> <p class="font-weight-normal request-font"> We have also sent this information via SMS for your reference. </p> </div>'
 
                 document.getElementById("turnaround-time-ref").style.display = "none";
                 document.getElementById("payment-ref").style.display = "block";
@@ -492,7 +495,7 @@ function setAccidentClaimStatusMsg() {
 
         }
     }
-    else if (sourceSystem.toLowerCase() == 'cms') {
+    else if (isFallout.toLowerCase() == 'n') {
         if (docsPending == 'Y') {
             var finalDocsList = '';
             requirementsList.forEach(function (item) {
@@ -587,7 +590,7 @@ function setAccidentClaimStatusMsg() {
     // }
 }
 function setIllnessClaimStatusMsg() {
-    if (sourceSystem.toLowerCase() == 'tips') {
+    if (isFallout.toLowerCase() == 'y') {
 
         if (docsPending == 'Y') {
 
@@ -609,7 +612,7 @@ function setIllnessClaimStatusMsg() {
                 twoStepperActive();
             }
             else if (claimStatus.toLowerCase() == 'approved') {
-                document.getElementById('claim-msg-text').innerHTML = '<div> <h3>YOUR REQUEST HAS BEEN APPROVED</h3> <br /> <p class="font-weight-justy request-font"> Hi ' + claimantFirstName + '. We are glad to let you know that we have approved your claim request for your AIA Philam Life policy no. ' + policyNumber + '. </p> <br /> <p class="font-weight-normal request-font"> Kindly expect to receive ' + currency + ' ' + claimAmount + ' through your chosen payout method. Please expect an update from us on when your benefit will be released. </p> <br /> <p class="font-weight-normal request-font"> We have also sent this information via SMS for your reference. </p> </div>'
+                document.getElementById('claim-msg-text').innerHTML = '<div> <h3>YOUR REQUEST HAS BEEN APPROVED</h3> <br /> <p class="font-weight-justy request-font"> Hi ' + claimantFirstName + '. We are glad to let you know that we have approved your claim request for your AIA Philam Life policy. </p> <br /> <p class="font-weight-normal request-font"> Kindly expect to receive your claim benefits  through your chosen payout method. Please expect an update from us on when your benefit will be released. </p> <br /> <p class="font-weight-normal request-font"> We have also sent this information via SMS for your reference. </p> </div>'
 
                 document.getElementById("turnaround-time-ref").style.display = "none";
                 document.getElementById("payment-ref").style.display = "block";
@@ -642,7 +645,7 @@ function setIllnessClaimStatusMsg() {
             }
         }
     }
-    else if (sourceSystem.toLowerCase() == 'cms') {
+    else if (isFallout.toLowerCase() == 'n') {
         if (docsPending == 'Y') {
             var finalDocsList = '';
             requirementsList.forEach(function (item) {
@@ -726,7 +729,7 @@ function setIllnessClaimStatusMsg() {
 
 }
 function setDeathClaimStatusMsg() {
-    if (sourceSystem.toLowerCase() == 'tips') {
+    if (isFallout.toLowerCase() == 'y') {
 
         if (docsPending == 'Y') {
             var finalDocsList = '';
@@ -748,12 +751,12 @@ function setDeathClaimStatusMsg() {
             }
             else if (claimStatus.toLowerCase() == 'approved') {
                 if (beneficiaryCount < 1) {
-                    document.getElementById('claim-msg-text').innerHTML = '<div> <h3>YOUR REQUEST HAS BEEN APPROVED</h3> <br /> <p class="font-weight-justy request-font"> Hi ' + claimantFirstName + '. We would like to let you know that we have approved your claim request for your AIA Philam Life policy no. ' + policyNumber + '. </p> <br /> <p class="font-weight-normal request-font"> Kindly expect to receive ' + currency + ' ' + claimAmount + ' through your chosen payout method. Please expect an update from us on when your benefit will be released. </p> <br /> <p class="font-weight-normal request-font"> We have also sent this information via SMS for your reference. </p> </div>'
+                    document.getElementById('claim-msg-text').innerHTML = '<div> <h3>YOUR REQUEST HAS BEEN APPROVED</h3> <br /> <p class="font-weight-justy request-font"> Hi ' + claimantFirstName + '. We would like to let you know that we have approved your claim request for your AIA Philam Life policy . </p> <br /> <p class="font-weight-normal request-font"> Kindly expect to receive the benefit through your chosen payout method. Please expect an update from us on when your benefit will be released. </p> <br /> <p class="font-weight-normal request-font"> We have also sent this information via SMS for your reference. </p> </div>'
                     document.getElementById("turnaround-time-ref").style.display = "none";
                     document.getElementById("payment-ref").style.display = "block";
                 }
                 else {
-                    document.getElementById('claim-msg-text').innerHTML = '<div> <h3>YOUR PAYOUT HAS BEEN APPROVED</h3> <br /> <p class="font-weight-justy request-font"> We would like to let you know that we have approved your claim request for your AIA Philam Life policy no. ' + policyNumber + '. </p> <br /> <p class="font-weight-normal request-font"> Kindly expect to receive the benefit through your chosen payout method. Please expect an update from us on when your benefit will be released. </p> <br /> <p class="font-weight-normal request-font"> We have also sent this information via SMS for your reference. </p> </div>'
+                    document.getElementById('claim-msg-text').innerHTML = '<div> <h3>YOUR PAYOUT HAS BEEN APPROVED</h3> <br /> <p class="font-weight-justy request-font"> We would like to let you know that we have approved your claim request for your AIA Philam Life policy . </p> <br /> <p class="font-weight-normal request-font"> Kindly expect to receive the benefit through your chosen payout method. Please expect an update from us on when your benefit will be released. </p> <br /> <p class="font-weight-normal request-font"> We have also sent this information via SMS for your reference. </p> </div>'
                     document.getElementById("turnaround-time-ref").style.display = "none";
                     document.getElementById("payment-ref").style.display = "none";
                 }
@@ -788,7 +791,7 @@ function setDeathClaimStatusMsg() {
             }
         }
     }
-    else if (sourceSystem.toLowerCase() == 'cms') {
+    else if (isFallout.toLowerCase() == 'n') {
         if (docsPending == 'Y') {
             var finalDocsList = '';
             requirementsList.forEach(function (item) {
@@ -960,9 +963,9 @@ function trackProgressDropDown() {
         + (claimStatus == 'approved' ?
             '<div class="step step-active"><div><div class="circle " id="circle2"><i class="fa fa-check" ></i ></div ></div><div><div class="title">' + progress_msges[8]['msg'] + '</div></div></div>' + '<div class="step step-active"><div><div class="circle " id="circle2"><i class="fa fa-check" ></i ></div ></div><div><div class="title">' + progress_msges[11]['msg'] + '</div></div></div>' :
             '')
-        // + (claimStatus == 'approved' && disbursementType == 'CTA' && beneficiaryCount == 1 ?
-        //     '<div class="step step-active"><div><div class="circle " id="circle2"><i class="fa fa-check" ></i ></div ></div><div><div class="title">' + progress_msges[12]['msg'] + '</div></div></div>'
-        //     : claimStatus == 'approved' && disbursementType == 'PUA' && beneficiaryCount == 1 ? '<div class="step step-active"><div><div class="circle " id="circle2"><i class="fa fa-check" ></i ></div ></div><div><div class="title">' + progress_msges[9]['msg'] + '</div></div></div>' : '')
+    // + (claimStatus == 'approved' && disbursementType == 'CTA' && beneficiaryCount == 1 ?
+    //     '<div class="step step-active"><div><div class="circle " id="circle2"><i class="fa fa-check" ></i ></div ></div><div><div class="title">' + progress_msges[12]['msg'] + '</div></div></div>'
+    //     : claimStatus == 'approved' && disbursementType == 'PUA' && beneficiaryCount == 1 ? '<div class="step step-active"><div><div class="circle " id="circle2"><i class="fa fa-check" ></i ></div ></div><div><div class="title">' + progress_msges[9]['msg'] + '</div></div></div>' : '')
     document.getElementById('progs-status').innerHTML = final_progress_result
 
     //--before integration--//
@@ -1138,7 +1141,7 @@ function submit_survey(event) {
     }), '*');
     window.addEventListener('message', function (eventData) {
 
-       
+
         // console.log(event.data.event_code)
         try {
 
@@ -1146,8 +1149,8 @@ function submit_survey(event) {
                 let event = JSON.parse(eventData.data);
                 if (event.event_code == 'surveryResponse') { //sucess
                     console.log("receiving survey event in acc")
-                   
-                
+
+
                     if (event.data.returnCode == '0' || event.data.retCode == '0') {
                         var nodes = document.getElementById("customer_survey").getElementsByTagName('*');
                         for (var i = 0; i < nodes.length; i++) {
@@ -1157,6 +1160,7 @@ function submit_survey(event) {
                         }
                         document.getElementById("customer_survey").style.opacity = '0.65'
                         $('#cover-spin').hide(0)
+                        $("#successfullSurvey").modal("show");
                     } else {
                         $('#cover-spin').hide(0)
                         document.getElementById('returnMessage').innerHTML = event.data.returnMessage;
