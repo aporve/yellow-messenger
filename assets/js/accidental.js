@@ -2010,7 +2010,7 @@ function finalSubmitCall() {
   });
   finalData['source'] = source;
   finalData['data'] = raw;
-  timer(0, 70).then(async () => {
+  timer(0, 25).then(async () => {
     window.parent.postMessage(JSON.stringify({
       event_code: 'ym-client-event', data: JSON.stringify({
         event: {
@@ -2020,7 +2020,27 @@ function finalSubmitCall() {
       })
     }), '*');
   })
+  window.addEventListener('message', function (eventData) {
+    try {
 
+      if (eventData.data) {
+        let event = JSON.parse(eventData.data);
+        console.log(event)
+        if (event.event_code == 'uploadSuccess') { //sucess
+          timer(25, 75).then(async () => {
+          })
+          console.log('upload success event received')
+         
+        }
+        else {
+          // $("#popUp").modal("show");
+        }
+      }
+    } catch (error) {
+      console.log(error)
+    }
+
+  })
   window.addEventListener('message', function (eventData) {
 
    
@@ -2038,7 +2058,7 @@ function finalSubmitCall() {
             myDisable()
             document.getElementById('ref_number').innerHTML = event.data?.transactionNumber
             // timer(50, 100).then(async () => {
-            timer(70, 100).then(async () => {
+            timer(75, 100).then(async () => {
               $("#step2").addClass("done");
 
               $("#step3_circle").addClass("md-step-step3-circle ");
