@@ -1653,6 +1653,7 @@ function handleAccountInfo(event) {
     var field_AccountNumber = $("#field_AccountNumber").val();
     var field_Bank = $("#field_Bank").val();
     var field_Branch = $("#field_Branch").val();
+    // var field_Currency = $("from_currency").val();
     if (haveBankDetails == false) {
         var speCharAccountName = specialcharacterValidation(field_AccountName);
         var numAccountName = numberValidation(field_AccountName);
@@ -1734,7 +1735,7 @@ function handleAccountInfo(event) {
             BankDetails["bankBranch"] = field_Branch;
             BankDetails["accountName"] = field_AccountName;
             BankDetails["accountNumber"] = field_AccountNumber;
-            BankDetails["accountCurrency"] = field_Currency ? field_Currency : $("select#from_currency option").filter(":selected").val();
+            BankDetails["accountCurrency"] = $("select#from_currency option").filter(":selected").val();;
             document.getElementById("submit9").disabled = true;
             document.getElementById("submit9").style.cursor = "no-drop";
             var nodes = document.getElementById("bank_form").getElementsByTagName('*');
