@@ -1160,6 +1160,7 @@ function submit_survey(event) {
                         }
                         document.getElementById("customer_survey").style.opacity = '0.65'
                         $('#cover-spin').hide(0)
+                        $("#successfullSurvey").modal("show");
                     } else {
                         $('#cover-spin').hide(0)
                         document.getElementById('returnMessage').innerHTML = event.data.returnMessage;
