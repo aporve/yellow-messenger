@@ -1063,6 +1063,8 @@ function handleForm(event) {
     InsuredInformation["accidentDate"] = field_DOA.split('-')[1] + '/' + field_DOA.split('-')[2] + '/' + field_DOA.split('-')[0];
     InsuredInformation["accidentTime"] = full_TOA;
     InsuredInformation["accidentPlace"] = field_POA;
+    InsuredInformation["check1"] = data.privacy_consent_1;
+    InsuredInformation["check2"] = data.privacy_consent_2;
     // for otp screen
     document.getElementById('user_mobile').innerHTML = field_mobileNum.replace(/.(?=.{4})/g, '*')
     // for otp screen

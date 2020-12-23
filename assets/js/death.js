@@ -1219,7 +1219,8 @@ function handleFormAddBeneficiary(event) {
             beneficiary["governmentOfficial"] = field_addBeneficiary_relatives1,
             beneficiary["governmentOfficialRelative"] = field_add_Beneficiary_add_relatives2,
             beneficiary["occupation"] = field_addBeneficiaryOccupation,
-
+            beneficiary["check1"] = dataBen.privacy_consent_beneficiary_1,
+            beneficiary["check2"] = dataBen.privacy_consent_beneficiary_2
             BeneficiaryList.push(beneficiary);
         if (beneficiaryCount == 3) {
             // name to show in 'your request is being processed section'
@@ -1785,6 +1786,8 @@ function handleForm(event) {
             beneficiary["governmentOfficial"] = $("select#field_Beneficiary_relatives1 option").filter(":selected").val(),
             beneficiary["governmentOfficialRelative"] = $("select#field_Beneficiary_relatives2 option").filter(":selected").val(),
             beneficiary["occupation"] = field_BenificiaryOccupation
+        beneficiary["check1"] = data.privacy_consent_1,
+            beneficiary["check2"] = data.privacy_consent_2,
             BeneficiaryList.push(beneficiary);
 
 
