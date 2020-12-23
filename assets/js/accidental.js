@@ -2019,7 +2019,7 @@ function finalSubmitCall() {
         }
       })
     }), '*');
-    timer(25, 60).then(async () => {
+    timer(25, 65).then(async () => {
     })
   })
  
@@ -2033,7 +2033,7 @@ function finalSubmitCall() {
         if (event.event_code == 'uploadSuccess') { //sucess
           clearTimeout(cleartime);
           console.log('upload success event received')
-          timer(60, 75).then(async () => {
+          timer(65, 75).then(async () => {
            
 
           })
