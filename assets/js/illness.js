@@ -2259,7 +2259,7 @@ function finalSubmitCall() {
     });
     finalData['source'] = source;
     finalData['data'] = raw;
-    timer(0, 70).then(async () => {
+    timer(0, 25).then(async () => {
         window.parent.postMessage(JSON.stringify({
             event_code: 'ym-client-event', data: JSON.stringify({
                 event: {
@@ -2268,8 +2268,35 @@ function finalSubmitCall() {
                 }
             })
         }), '*');
+        timer(25, 75).then(async () => {
+        })
     })
+    window.addEventListener('message', function (eventData) {
 
+        try {
+
+            if (eventData.data) {
+                let event = JSON.parse(eventData.data);
+                console.log(event)
+                if (event.event_code == 'uploadSuccess') { //sucess
+                    clearTimeout(cleartime);
+                    console.log('upload success event received')
+                    timer(75, 85).then(async () => {
+
+
+                    })
+
+
+                }
+                else {
+                    // $("#popUp").modal("show");
+                }
+            }
+        } catch (error) {
+            console.log(error)
+        }
+
+    })
     window.addEventListener('message', function (eventData) {
 
        
@@ -2280,12 +2307,13 @@ function finalSubmitCall() {
                 let event = JSON.parse(eventData.data);
                 console.log(event)
                 if (event.event_code == 'finalSubmitResponse') { //sucess
+                    clearTimeout(cleartime);
                     console.log("receiving final event in illlness")
                     if (event.data.returnCode == '0' || event.data.retCode == '0') {
                         // disableDottedLoader();
                         myDisable()
                         document.getElementById('ref_number').innerHTML = event.data?.transactionNumber
-                        timer(70, 100).then(async () => {
+                        timer(85, 100).then(async () => {
                         $("#step2").addClass("done");
                         /*  $("#step3").addClass("active");
                          $("#step3>div").addClass("active"); */

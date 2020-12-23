@@ -2019,7 +2019,7 @@ function finalSubmitCall() {
         }
       })
     }), '*');
-    timer(25, 65).then(async () => {
+    timer(25, 75).then(async () => {
     })
   })
  
@@ -2033,7 +2033,7 @@ function finalSubmitCall() {
         if (event.event_code == 'uploadSuccess') { //sucess
           clearTimeout(cleartime);
           console.log('upload success event received')
-          timer(65, 75).then(async () => {
+          timer(75, 85).then(async () => {
            
 
           })
@@ -2067,7 +2067,7 @@ function finalSubmitCall() {
             myDisable()
             document.getElementById('ref_number').innerHTML = event.data?.transactionNumber
             // timer(50, 100).then(async () => {
-            timer(75, 100).then(async () => {
+            timer(85, 100).then(async () => {
               $("#step2").addClass("done");
 
               $("#step3_circle").addClass("md-step-step3-circle ");
