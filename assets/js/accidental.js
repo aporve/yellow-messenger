@@ -1063,6 +1063,8 @@ function handleForm(event) {
     InsuredInformation["accidentDate"] = field_DOA.split('-')[1] + '/' + field_DOA.split('-')[2] + '/' + field_DOA.split('-')[0];
     InsuredInformation["accidentTime"] = full_TOA;
     InsuredInformation["accidentPlace"] = field_POA;
+    InsuredInformation["check1"] = data.privacy_consent_1;
+    InsuredInformation["check2"] = data.privacy_consent_2;
     // for otp screen
     document.getElementById('user_mobile').innerHTML = field_mobileNum.replace(/.(?=.{4})/g, '*')
     // for otp screen
@@ -1935,7 +1937,7 @@ function preSubmitCall() {
 
   window.addEventListener('message', function (eventData) {
 
-    console.log("receiving presubmit event in acc")
+  
     // console.log(event.data.event_code)
     try {
 
@@ -1943,6 +1945,7 @@ function preSubmitCall() {
         let event = JSON.parse(eventData.data);
         console.log(event)
         if (event.event_code == 'preSubmitResponse') { //sucess
+          console.log("receiving presubmit event in acc")
           if (event.data.returnCode == '0' || event.data.retCode == '0') {
             disableDottedLoader();
             // timer(50, 100).then(async () => {
@@ -2018,14 +2021,15 @@ function finalSubmitCall() {
 
   window.addEventListener('message', function (eventData) {
 
-    console.log("receiving final event in acc")
+   
     // console.log(event.data.event_code)
     try {
-
+    
       if (eventData.data) {
         let event = JSON.parse(eventData.data);
         console.log(event)
         if (event.event_code == 'finalSubmitResponse') { //sucess
+         
           console.log('finalsubmit event received')
           if (event.data.returnCode == '0' || event.data.retCode == '0') {
             disableDottedLoader();

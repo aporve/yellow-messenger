@@ -1653,6 +1653,7 @@ function handleAccountInfo(event) {
     var field_AccountNumber = $("#field_AccountNumber").val();
     var field_Bank = $("#field_Bank").val();
     var field_Branch = $("#field_Branch").val();
+    // var field_Currency = $("from_currency").val();
     if (haveBankDetails == false) {
         var speCharAccountName = specialcharacterValidation(field_AccountName);
         var numAccountName = numberValidation(field_AccountName);
@@ -1729,6 +1730,12 @@ function handleAccountInfo(event) {
                 field_Currency: $("select#from_currency option").filter(":selected").val(),
                 upload_file_6: file6.value
             }
+            BankDetails["beneficiaryNo"] = 1;
+            BankDetails["bankName"] = field_Bank;
+            BankDetails["bankBranch"] = field_Branch;
+            BankDetails["accountName"] = field_AccountName;
+            BankDetails["accountNumber"] = field_AccountNumber;
+            BankDetails["accountCurrency"] = $("select#from_currency option").filter(":selected").val();;
             document.getElementById("submit9").disabled = true;
             document.getElementById("submit9").style.cursor = "no-drop";
             var nodes = document.getElementById("bank_form").getElementsByTagName('*');
@@ -1793,6 +1800,12 @@ function handleAccountInfo(event) {
     }
 
     else {
+        BankDetails["beneficiaryNo"] = 1;
+        BankDetails["bankName"] = field_Bank;
+        BankDetails["bankBranch"] = field_Branch;
+        BankDetails["accountName"] = field_AccountName;
+        BankDetails["accountNumber"] = field_AccountNumber;
+        BankDetails["accountCurrency"] = field_Currency ? field_Currency : $("select#from_currency option").filter(":selected").val();
         document.getElementById("submit9").disabled = true;
         document.getElementById("submit9").style.cursor = "no-drop";
         var nodes = document.getElementById("bank_form").getElementsByTagName('*');
@@ -2178,7 +2191,7 @@ function preSubmitCall() {
 
     window.addEventListener('message', function (eventData) {
 
-        console.log("receiving presubmit event in acc")
+      
         // console.log(event.data.event_code)
         try {
 
@@ -2186,6 +2199,7 @@ function preSubmitCall() {
                 let event = JSON.parse(eventData.data);
                 console.log(event)
                 if (event.event_code == 'preSubmitResponse') { //sucess
+                    console.log("receiving presubmit event in illness")
                     if (event.data.returnCode == '0' || event.data.retCode == '0') {
                         disableDottedLoader();
                         // timer(50, 100).then(async () => {
@@ -2256,7 +2270,7 @@ function finalSubmitCall() {
 
     window.addEventListener('message', function (eventData) {
 
-        console.log("receiving final event in acc")
+       
         // console.log(event.data.event_code)
         try {
 
@@ -2264,6 +2278,7 @@ function finalSubmitCall() {
                 let event = JSON.parse(eventData.data);
                 console.log(event)
                 if (event.event_code == 'finalSubmitResponse') { //sucess
+                    console.log("receiving final event in illlness")
                     if (event.data.returnCode == '0' || event.data.retCode == '0') {
                         disableDottedLoader();
                         myDisable()
