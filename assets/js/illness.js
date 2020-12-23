@@ -2259,7 +2259,7 @@ function finalSubmitCall() {
     });
     finalData['source'] = source;
     finalData['data'] = raw;
-    timer(0, 25).then(async () => {
+    timer(0, 2).then(async () => {
         window.parent.postMessage(JSON.stringify({
             event_code: 'ym-client-event', data: JSON.stringify({
                 event: {
@@ -2268,7 +2268,7 @@ function finalSubmitCall() {
                 }
             })
         }), '*');
-        timer(25, 75).then(async () => {
+        timer(2, 75).then(async () => {
         })
     })
     window.addEventListener('message', function (eventData) {
