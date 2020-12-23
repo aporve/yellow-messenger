@@ -1729,6 +1729,12 @@ function handleAccountInfo(event) {
                 field_Currency: $("select#from_currency option").filter(":selected").val(),
                 upload_file_6: file6.value
             }
+            BankDetails["beneficiaryNo"] = 1;
+            BankDetails["bankName"] = field_Bank;
+            BankDetails["bankBranch"] = field_Branch;
+            BankDetails["accountName"] = field_AccountName;
+            BankDetails["accountNumber"] = field_AccountNumber;
+            BankDetails["accountCurrency"] = field_currency ? field_Currency : $("select#from_currency option").filter(":selected").val();
             document.getElementById("submit9").disabled = true;
             document.getElementById("submit9").style.cursor = "no-drop";
             var nodes = document.getElementById("bank_form").getElementsByTagName('*');
@@ -1793,6 +1799,12 @@ function handleAccountInfo(event) {
     }
 
     else {
+        BankDetails["beneficiaryNo"] = 1;
+        BankDetails["bankName"] = field_Bank;
+        BankDetails["bankBranch"] = field_Branch;
+        BankDetails["accountName"] = field_AccountName;
+        BankDetails["accountNumber"] = field_AccountNumber;
+        BankDetails["accountCurrency"] = field_currency ? field_Currency : $("select#from_currency option").filter(":selected").val();
         document.getElementById("submit9").disabled = true;
         document.getElementById("submit9").style.cursor = "no-drop";
         var nodes = document.getElementById("bank_form").getElementsByTagName('*');
