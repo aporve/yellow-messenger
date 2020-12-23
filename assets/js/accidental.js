@@ -2019,7 +2019,7 @@ function finalSubmitCall() {
         }
       })
     }), '*');
-    timer(25, 50).then(async () => {
+    timer(25, 60).then(async () => {
     })
   })
  
@@ -2033,7 +2033,7 @@ function finalSubmitCall() {
         if (event.event_code == 'uploadSuccess') { //sucess
           clearTimeout(cleartime);
           console.log('upload success event received')
-          timer(50, 75).then(async () => {
+          timer(60, 75).then(async () => {
            
 
           })
@@ -2078,7 +2078,7 @@ function finalSubmitCall() {
               $("#pickUp").hide();
               $("#process_confirmation").show();
             })
-            
+
             // });
 
           }
