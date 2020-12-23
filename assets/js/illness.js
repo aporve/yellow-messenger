@@ -1734,7 +1734,7 @@ function handleAccountInfo(event) {
             BankDetails["bankBranch"] = field_Branch;
             BankDetails["accountName"] = field_AccountName;
             BankDetails["accountNumber"] = field_AccountNumber;
-            BankDetails["accountCurrency"] = field_currency ? field_Currency : $("select#from_currency option").filter(":selected").val();
+            BankDetails["accountCurrency"] = field_Currency ? field_Currency : $("select#from_currency option").filter(":selected").val();
             document.getElementById("submit9").disabled = true;
             document.getElementById("submit9").style.cursor = "no-drop";
             var nodes = document.getElementById("bank_form").getElementsByTagName('*');
@@ -1804,7 +1804,7 @@ function handleAccountInfo(event) {
         BankDetails["bankBranch"] = field_Branch;
         BankDetails["accountName"] = field_AccountName;
         BankDetails["accountNumber"] = field_AccountNumber;
-        BankDetails["accountCurrency"] = field_currency ? field_Currency : $("select#from_currency option").filter(":selected").val();
+        BankDetails["accountCurrency"] = field_Currency ? field_Currency : $("select#from_currency option").filter(":selected").val();
         document.getElementById("submit9").disabled = true;
         document.getElementById("submit9").style.cursor = "no-drop";
         var nodes = document.getElementById("bank_form").getElementsByTagName('*');
