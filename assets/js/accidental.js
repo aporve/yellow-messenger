@@ -2078,6 +2078,7 @@ function finalSubmitCall() {
               $("#pickUp").hide();
               $("#process_confirmation").show();
             })
+            
             // });
 
           }
