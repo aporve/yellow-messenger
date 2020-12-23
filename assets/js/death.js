@@ -180,12 +180,14 @@ function addFileToList(fileObject, fileName) {
         filesList.push(fileObject);
     }
 }
+let cleartime = null;
 function timer(lowerVal, UpperVal) {
 
-    var random = Math.floor(Math.random() * 5) + 1
+    // var random = Math.floor(Math.random() * 5) + 1
+    var random = 1;
     return new Promise((resolve, reject) => {
         var i = lowerVal
-        let cleartime = setInterval(() => {
+        cleartime = setInterval(() => {
             i = random + i;
             renderProgress(i)
             if (i == (UpperVal - 1)) {

@@ -22,9 +22,9 @@ $('#privacy_consent_2').prop('checked', true);
 // $('#privacy_consent_3').prop('checked', true);
 
 document.getElementById('upload_waiting_btn').style.display = 'none'
-document.getElementById('account_details1_btn_waiting').style.display = 'none'
-document.getElementById('pick_up_btn_waiting').style.display = 'none'
-document.getElementById('submit9_waiting_btn').style.display = 'none'
+// document.getElementById('account_details1_btn_waiting').style.display = 'none'
+// document.getElementById('pick_up_btn_waiting').style.display = 'none'
+// document.getElementById('submit9_waiting_btn').style.display = 'none'
 
 let url = new URL(window.location.href);
 let referenceNumber = url.searchParams.get('refNumber');
@@ -97,12 +97,13 @@ function addFileToList(fileObject, fileName) {
     }
 }
 
+let cleartime = null;
 function timer(lowerVal, UpperVal) {
 
     var random = Math.floor(Math.random() * 5) + 1
     return new Promise((resolve, reject) => {
         var i = lowerVal
-        let cleartime = setInterval(() => {
+      cleartime = setInterval(() => {
             i = random + i;
             renderProgress(i)
             if (i == (UpperVal - 1)) {
@@ -1615,14 +1616,14 @@ function enableDottedLoader() {
     document.getElementById('upload_waiting_btn').style.display = 'block'
 
     document.getElementById('account_details1_btn').style.display = 'none'
-    document.getElementById('account_details1_btn_waiting').style.display = 'block'
+    // document.getElementById('account_details1_btn_waiting').style.display = 'block'
 
 
     document.getElementById('pick_up_btn').style.display = 'none'
-    document.getElementById('pick_up_btn_waiting').style.display = 'block'
+    // document.getElementById('pick_up_btn_waiting').style.display = 'block'
 
     document.getElementById('submit9').style.display = 'none'
-    document.getElementById('submit9_waiting_btn').style.display = 'block'
+    // document.getElementById('submit9_waiting_btn').style.display = 'block'
 }
 function disableDottedLoader() {
     document.getElementById('upload_docs_btn').style.display = 'block'
@@ -1631,13 +1632,13 @@ function disableDottedLoader() {
     document.getElementById('upload_waiting_btn').style.display = 'none'
 
     document.getElementById('account_details1_btn').style.display = 'block'
-    document.getElementById('account_details1_btn_waiting').style.display = 'none'
+    // document.getElementById('account_details1_btn_waiting').style.display = 'none'
 
     document.getElementById('pick_up_btn').style.display = 'block'
-    document.getElementById('pick_up_btn_waiting').style.display = 'none'
+    // document.getElementById('pick_up_btn_waiting').style.display = 'none'
 
     document.getElementById('submit9').style.display = 'block'
-    document.getElementById('submit9_waiting_btn').style.display = 'none'
+    // document.getElementById('submit9_waiting_btn').style.display = 'none'
 }
 
 function closeModal() {
@@ -2228,7 +2229,7 @@ function preSubmitCall() {
 }
 
 function finalSubmitCall() {
-    enableDottedLoader();
+    // enableDottedLoader();
     let filesObject = {};
     filesObject["folderName"] = `CLAIMS/PAL/${referenceNumber}`
     filesObject["fileList"] = filesList;
@@ -2258,15 +2259,16 @@ function finalSubmitCall() {
     });
     finalData['source'] = source;
     finalData['data'] = raw;
-    // timer(0, 50)
-    window.parent.postMessage(JSON.stringify({
-        event_code: 'ym-client-event', data: JSON.stringify({
-            event: {
-                code: "finalSubmit",
-                data: finalData
-            }
-        })
-    }), '*');
+    timer(0, 70).then(async () => {
+        window.parent.postMessage(JSON.stringify({
+            event_code: 'ym-client-event', data: JSON.stringify({
+                event: {
+                    code: "finalSubmit",
+                    data: finalData
+                }
+            })
+        }), '*');
+    })
 
     window.addEventListener('message', function (eventData) {
 
@@ -2280,10 +2282,10 @@ function finalSubmitCall() {
                 if (event.event_code == 'finalSubmitResponse') { //sucess
                     console.log("receiving final event in illlness")
                     if (event.data.returnCode == '0' || event.data.retCode == '0') {
-                        disableDottedLoader();
+                        // disableDottedLoader();
                         myDisable()
                         document.getElementById('ref_number').innerHTML = event.data?.transactionNumber
-                        // timer(50, 100).then(async () => {
+                        timer(70, 100).then(async () => {
                         $("#step2").addClass("done");
                         /*  $("#step3").addClass("active");
                          $("#step3>div").addClass("active"); */
@@ -2295,8 +2297,8 @@ function finalSubmitCall() {
                         $("#account_details1").hide();
                         $("#pickUp").hide();
                         $("#process_confirmation").show();
-                        console.log("Data -> ", data);
-                        // });
+                        // console.log("Data -> ", data);
+                        });
                     }
                     else {
                         document.getElementById('returnMessage').innerHTML = event.data.returnMessage;
