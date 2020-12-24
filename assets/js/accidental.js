@@ -2548,7 +2548,7 @@ function bankTranfer() {
 
 function pickUp() {
   document.getElementById('ref_number').innerHTML = referenceNumber;
-  document.getElementById('loader1').style.display = 'none'
+  document.getElementById('spin_loader_1').style.display = 'none'
   payoutOption = 'PUA';
   let filesObject = {};
   filesObject["folderName"] = `CLAIMS/PAL/${referenceNumber}`
@@ -2587,7 +2587,7 @@ function pickup_Bpi() {
   document.getElementById("pick_up_btn").disabled = true;
   document.getElementById("pick_up_btn").style.cursor = "no-drop";
   document.getElementById('msg').style.display = 'none'
-  document.getElementById('loader1').style.display = 'block'
+  document.getElementById('spin_loader_1').style.display = 'block'
   document.getElementById("goback_pickup").style.display = "none";
   var nodes = document.getElementById("pickUp").getElementsByTagName('*');
   for (var i = 0; i < nodes.length; i++) {
