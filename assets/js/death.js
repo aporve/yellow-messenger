@@ -173,20 +173,12 @@ function myDisable() {
 
 function addFileToList(fileObject, fileName) {
     console.log(fileName);
-    // let index = filesList.findIndex(x => x.Filename == fileName)
+    let index = filesList.findIndex(x => x.Filename == fileName)
 
-    // if (index === -1) {
-    //     console.log("adding bcoz unique");
-    //     filesList.push(fileObject);
-    // }
-
-    let index = filesList.find(x => x.Filename == fileName)
-
-    if (index === undefined) {
+    if (index === -1) {
         console.log("adding bcoz unique");
         filesList.push(fileObject);
     }
-
 }
 let cleartime = null;
 function timer(lowerVal, UpperVal) {
