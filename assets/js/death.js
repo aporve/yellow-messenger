@@ -3852,6 +3852,7 @@ function addBeneficiaryButtonClicked(event) {
 }
 
 function handleAccountInfo(event) {
+    debugger
     event.preventDefault();
     var field_AccountName = $("#field_AccountName").val();
     var field_AccountNumber = $("#field_AccountNumber").val();
@@ -4063,6 +4064,7 @@ function handleAddBankInfo(event) {
 
 /* Add Beneficiary Account Information */
 function addBenificiaryAccountInfo(event) {
+    debugger
     event.preventDefault();
     var field_addBenificiaryAccountName = $("#field_addBenificiaryAccountName").val();
     var field_addBenificiaryAccountNumber = $("#field_addBenificiaryAccountNumber").val();
