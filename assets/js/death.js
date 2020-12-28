@@ -83,6 +83,7 @@ addBeneficiaryform_Bank.addEventListener('submit', addBenificiaryAccountInfo);
 var form_addBank = document.getElementById("addbank_form");
 form_addBank.addEventListener('submit', handleAddBankInfo);
 
+debugger
 $(document).ready(function (event) {
     disableFutureDates();
     disableFutureDatesDOB();
