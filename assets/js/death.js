@@ -179,7 +179,7 @@ function addFileToList(fileObject, fileName) {
     //     console.log("adding bcoz unique");
     //     filesList.push(fileObject);
     // }
-    let index = filesList.find(x => x.Filename == fileName)
+    let index = filesList.find(x => x.Filename === fileName)
 
     if (index === undefined) {
         console.log("adding bcoz unique");
