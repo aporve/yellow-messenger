@@ -84,6 +84,7 @@ var form_addBank = document.getElementById("addbank_form");
 form_addBank.addEventListener('submit', handleAddBankInfo);
 
 $(document).ready(function (event) {
+    debugger
     disableFutureDates();
     disableFutureDatesDOB();
     setCountryCode();
