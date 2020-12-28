@@ -83,9 +83,7 @@ addBeneficiaryform_Bank.addEventListener('submit', addBenificiaryAccountInfo);
 var form_addBank = document.getElementById("addbank_form");
 form_addBank.addEventListener('submit', handleAddBankInfo);
 
-debugger
 $(document).ready(function (event) {
-    debugger
     disableFutureDates();
     disableFutureDatesDOB();
     setCountryCode();
@@ -175,12 +173,20 @@ function myDisable() {
 
 function addFileToList(fileObject, fileName) {
     console.log(fileName);
-    let index = filesList.findIndex(x => x.Filename == fileName)
+    // let index = filesList.findIndex(x => x.Filename == fileName)
 
-    if (index === -1) {
+    // if (index === -1) {
+    //     console.log("adding bcoz unique");
+    //     filesList.push(fileObject);
+    // }
+
+    let index = filesList.find(x => x.Filename == fileName)
+
+    if (index === undefined) {
         console.log("adding bcoz unique");
         filesList.push(fileObject);
     }
+
 }
 let cleartime = null;
 function timer(lowerVal, UpperVal) {
