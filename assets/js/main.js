@@ -737,10 +737,18 @@ function setDeathClaimStatusMsg() {
                 finalDocsList = finalDocsList + '<div style="display: flex;align-items: center; padding-bottom: 1px;"> <div id="outer-circle"> <div id="inner-circle"></div> </div> <p style="padding-left:7px">' + ' ' + item.name + '</p> </div>'
 
             });
-            document.getElementById('claim-msg-text').innerHTML = '<div> <h3>YOUR OTHER CLAIMS DOCUMENTS</h3> <br /> <p class="font-weight-justy request-font"> Hi ' + claimantFirstName + '.We have reviewed your initial claim request submission and identified that we may need the following documents for us to proceed: </p > <br /> <p class="font-weight-normal request-font"> <div style="padding-left: 10px;"> ' + finalDocsList + '</div> </p> <br /> <p class="font-weight-normal request-font"> Don&#39;t worry, you can easily submit these documents to your Financial Advisor so we can proceed with your claim request.You may also submit your documents to any AIA Philam Life Customer Service Center near you.To find the nearest branch, please click <a href = "https://wwwuat.philamlife.com/en/help-support/locate-us.html"> here </a>. </p> </div>';
-            document.getElementById("turnaround-time-ref").style.display = "block";
-            document.getElementById("payment-ref").style.display = "none";
-            twoStepperActive();
+            if( claimantFirstName !== '') {
+                document.getElementById('claim-msg-text').innerHTML = '<div> <h3>YOUR OTHER CLAIMS DOCUMENTS</h3> <br /> <p class="font-weight-justy request-font"> Hi ' + claimantFirstName + '.We have reviewed your initial claim request submission and identified that we may need the following documents for us to proceed: </p > <br /> <p class="font-weight-normal request-font"> <div style="padding-left: 10px;"> ' + finalDocsList + '</div> </p> <br /> <p class="font-weight-normal request-font"> Don&#39;t worry, you can easily submit these documents to your Financial Advisor so we can proceed with your claim request.You may also submit your documents to any AIA Philam Life Customer Service Center near you.To find the nearest branch, please click <a href = "https://wwwuat.philamlife.com/en/help-support/locate-us.html"> here </a>. </p> </div>';
+                document.getElementById("turnaround-time-ref").style.display = "block";
+                document.getElementById("payment-ref").style.display = "none";
+                twoStepperActive();
+            }else{
+                document.getElementById('claim-msg-text').innerHTML = '<div> <h3>YOUR OTHER CLAIMS DOCUMENTS</h3> <br /> <p class="font-weight-justy request-font"> We have reviewed your initial claim request submission and identified that we may need the following documents for us to proceed: </p > <br /> <p class="font-weight-normal request-font"> <div style="padding-left: 10px;"> ' + finalDocsList + '</div> </p> <br /> <p class="font-weight-normal request-font"> Don&#39;t worry, you can easily submit these documents to your Financial Advisor so we can proceed with your claim request.You may also submit your documents to any AIA Philam Life Customer Service Center near you.To find the nearest branch, please click <a href = "https://wwwuat.philamlife.com/en/help-support/locate-us.html"> here </a>. </p> </div>';
+                document.getElementById("turnaround-time-ref").style.display = "block";
+                document.getElementById("payment-ref").style.display = "none";
+                twoStepperActive();
+            }
+            
         }
         else {
             if (claimStatus.toLowerCase() == 'received') {
@@ -837,7 +845,7 @@ function setDeathClaimStatusMsg() {
                 document.getElementById("payment-ref").style.display = "none";
                 allStepperActive()
             }
-            else if (claimStatus.toLowerCase() == 'denied4') {
+            else if (claimStatus.toLowerCase() == 'denied3') {
                 if(claimantFirstName !== ''){
                     document.getElementById('claim-msg-text').innerHTML = '<div> <h3>YOUR REQUEST HAS BEEN DENIED</h3> <br /> <p class="font-weight-justy request-font"><p> Sorry, there seems to be a problem.</p><br /> Hi ' + claimantFirstName + ', first of all, we would like to extend our deepest sympathies for your loss. However, after reviewing the documents you submitted, we regret to inform you that we are unable to grant your claim request right now. There seems to be a problem since your policy doesn’t have Death coverage. </p> <br /> <p class="font-weight-normal request-font"> We understand that you’re going through a tough time, ' + claimantFirstName + '. Please let us know if you wish to discuss this in detail so we can assist in providing you alternative options. You may reach us through our Customer Hotline at (02)8528-2000 or you may discuss your concern with your financial advisor. </p> <br /> <p class="font-weight-normal request-font"> If you have other questions, you may reach out to us by chatting Aya of AIA Philam Life on Facebook Messenger or sending us an e-mail at philamlife@aia.com. </p> </div>'
                     document.getElementById("turnaround-time-ref").style.display = "none";
@@ -850,7 +858,7 @@ function setDeathClaimStatusMsg() {
                     allStepperActive()
                 }
             }
-            else if (claimStatus.toLowerCase() == 'denied3') {
+            else if (claimStatus.toLowerCase() == 'denied4') {
                 if(claimantFirstName !== ''){
                     document.getElementById('claim-msg-text').innerHTML = '<div> <h3>YOUR REQUEST HAS BEEN DENIED</h3> <br /> <p class="font-weight-justy request-font"><p> Sorry, there seems to be a problem.</p><br /> Hi ' + claimantFirstName + ', first of all, we would like to extend our deepest sympathies for your loss. However, after reviewing the documents you submitted, we regret to inform you that we are unable to grant your claim request right now. There seems to be a problem as your coverage and all its benefits have ended last ' + lapsationDate + ' due to non-payment of premium dues. </p> <br /> <p class="font-weight-normal request-font"> We are sorry for this news and we understand that you’re going through a tough time, ' + claimantFirstName + '. If you wish to discuss more about your claim request, or if you’d like to know how we can reinstate your policy, you may reach out to us by chatting Aya of AIA Philam Life on Facebook Messenger or sending us an e-mail at philamlife@aia.com. You may also call us at our Customer Hotline at (02)8528-2000. </p> </div>'
                     document.getElementById("turnaround-time-ref").style.display = "none";
