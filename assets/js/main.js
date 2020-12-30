@@ -441,7 +441,7 @@ function setAccidentClaimStatusMsg() {
 
     if (isFallout.toLowerCase() == 'y') {
 
-        if (docsPending == 'y') {
+        if (docsPending == 'y' && docsReceived == 'n') {
             var finalDocsList = '';
             requirementsList.forEach(function (item) {
                 finalDocsList = finalDocsList + '<div style="display: flex;align-items: center; padding-bottom: 1px;"> <div id="outer-circle"> <div id="inner-circle"></div> </div> <p style="padding-left:7px">' + ' ' + item.name + '</p> </div>'
@@ -496,7 +496,7 @@ function setAccidentClaimStatusMsg() {
         }
     }
     else if (isFallout.toLowerCase() == 'n') {
-        if (docsPending == 'y') {
+        if (docsPending == 'y' && docsReceived == 'n') {
             var finalDocsList = '';
             requirementsList.forEach(function (item) {
                 finalDocsList = finalDocsList + '<div style="display: flex;align-items: center; padding-bottom: 1px;"> <div id="outer-circle"> <div id="inner-circle"></div> </div> <p style="padding-left:7px">' + ' ' + item.name + '</p> </div>'
@@ -592,7 +592,7 @@ function setAccidentClaimStatusMsg() {
 function setIllnessClaimStatusMsg() {
     if (isFallout.toLowerCase() == 'y') {
 
-        if (docsPending == 'y') {
+        if (docsPending == 'y' && docsReceived == 'n') {
 
             twoStepperActive();
             var finalDocsList = '';
@@ -646,7 +646,7 @@ function setIllnessClaimStatusMsg() {
         }
     }
     else if (isFallout.toLowerCase() == 'n') {
-        if (docsPending == 'y') {
+        if (docsPending == 'y' && docsReceived == 'n') {
             var finalDocsList = '';
             requirementsList.forEach(function (item) {
                 finalDocsList = finalDocsList + '<div style="display: flex;align-items: center; padding-bottom: 1px;"> <div id="outer-circle"> <div id="inner-circle"></div> </div> <p style="padding-left:7px">' + ' ' + item.name + '</p> </div>'
@@ -731,7 +731,7 @@ function setIllnessClaimStatusMsg() {
 function setDeathClaimStatusMsg() {
     if (isFallout.toLowerCase() == 'y') {
 
-        if (docsPending == 'y') {
+        if (docsPending == 'y' && docsReceived == 'n') {
             var finalDocsList = '';
             requirementsList.forEach(function (item) {
                 finalDocsList = finalDocsList + '<div style="display: flex;align-items: center; padding-bottom: 1px;"> <div id="outer-circle"> <div id="inner-circle"></div> </div> <p style="padding-left:7px">' + ' ' + item.name + '</p> </div>'
@@ -825,7 +825,7 @@ function setDeathClaimStatusMsg() {
         }
     }
     else if (isFallout.toLowerCase() == 'n') {
-        if (docsPending == 'y') {
+        if (docsPending == 'y' && docsReceived == 'n') {
             var finalDocsList = '';
             requirementsList.forEach(function (item) {
                 finalDocsList = finalDocsList + '<div style="display: flex;align-items: center; padding-bottom: 1px;"> <div id="outer-circle"> <div id="inner-circle"></div> </div> <p style="padding-left:7px">' + ' ' + item.name + '</p> </div>'
