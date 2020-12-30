@@ -441,7 +441,7 @@ function setAccidentClaimStatusMsg() {
 
     if (isFallout.toLowerCase() == 'y') {
 
-        if (docsPending == 'y' && docsReceived == 'n' && (claimStatus !== 'denied1' || claimStatus !== 'denied2' || claimStatus !== 'denied3' || claimStatus !== 'denied4')) {
+        if (docsPending == 'y' && docsReceived == 'n' && claimStatus !== 'received') {
             var finalDocsList = '';
             requirementsList.forEach(function (item) {
                 finalDocsList = finalDocsList + '<div style="display: flex;align-items: center; padding-bottom: 1px;"> <div id="outer-circle"> <div id="inner-circle"></div> </div> <p style="padding-left:7px">' + ' ' + item.name + '</p> </div>'
@@ -496,7 +496,7 @@ function setAccidentClaimStatusMsg() {
         }
     }
     else if (isFallout.toLowerCase() == 'n') {
-        if (docsPending == 'y' && docsReceived == 'n' && (claimStatus !== 'denied1' || claimStatus !== 'denied2' || claimStatus !== 'denied3' || claimStatus !== 'denied4')) {
+        if (docsPending == 'y' && docsReceived == 'n' && claimStatus == 'received') {
             var finalDocsList = '';
             requirementsList.forEach(function (item) {
                 finalDocsList = finalDocsList + '<div style="display: flex;align-items: center; padding-bottom: 1px;"> <div id="outer-circle"> <div id="inner-circle"></div> </div> <p style="padding-left:7px">' + ' ' + item.name + '</p> </div>'
