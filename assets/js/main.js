@@ -441,7 +441,7 @@ function setAccidentClaimStatusMsg() {
 
     if (isFallout.toLowerCase() == 'y') {
 
-        if (docsPending == 'y' && docsReceived == 'n') {
+        if (docsPending == 'y' && docsReceived == 'n' && claimStatus == 'received') {
             var finalDocsList = '';
             requirementsList.forEach(function (item) {
                 finalDocsList = finalDocsList + '<div style="display: flex;align-items: center; padding-bottom: 1px;"> <div id="outer-circle"> <div id="inner-circle"></div> </div> <p style="padding-left:7px">' + ' ' + item.name + '</p> </div>'
@@ -496,7 +496,7 @@ function setAccidentClaimStatusMsg() {
         }
     }
     else if (isFallout.toLowerCase() == 'n') {
-        if (docsPending == 'y' && docsReceived == 'n') {
+        if (docsPending == 'y' && docsReceived == 'n' && claimStatus == 'received') {
             var finalDocsList = '';
             requirementsList.forEach(function (item) {
                 finalDocsList = finalDocsList + '<div style="display: flex;align-items: center; padding-bottom: 1px;"> <div id="outer-circle"> <div id="inner-circle"></div> </div> <p style="padding-left:7px">' + ' ' + item.name + '</p> </div>'
@@ -757,7 +757,7 @@ function setDeathClaimStatusMsg() {
                 twoStepperActive();
             }
             else if (claimStatus.toLowerCase() == 'approved') {
-                if (beneficiaryCount < 1) {
+                if (beneficiaryCount == 1) {
                     document.getElementById('claim-msg-text').innerHTML = '<div> <h3>YOUR REQUEST HAS BEEN APPROVED</h3> <br /> <p class="font-weight-justy request-font"> Hi ' + claimantFirstName + '. We would like to let you know that we have approved your claim request for your AIA Philam Life policy . </p> <br /> <p class="font-weight-normal request-font"> Kindly expect to receive the benefit through your chosen payout method. Please expect an update from us on when your benefit will be released. </p> <br /> <p class="font-weight-normal request-font"> We have also sent this information via SMS for your reference. </p> </div>'
                     document.getElementById("turnaround-time-ref").style.display = "none";
                     document.getElementById("payment-ref").style.display = "block";
@@ -858,9 +858,15 @@ function setDeathClaimStatusMsg() {
                     document.getElementById("payment-ref").style.display = "block";
                 }
                 else {
-                    document.getElementById('claim-msg-text').innerHTML = '<div> <h3>YOUR PAYOUT HAS BEEN APPROVED</h3> <br /> <p class="font-weight-justy request-font"> We would like to let you know that we have approved your claim request for your AIA Philam Life policy no. ' + policyNumber + '  for ' + beneficiaryCount + ' beneficiary/ies. </p> <br /> <p class="font-weight-normal request-font"> Kindly expect to receive the benefit through your chosen payout method. Please expect an update from us on when your benefit will be released. </p> <br /> <p class="font-weight-normal request-font"> We have also sent this information via SMS for your reference. </p> </div>'
-                    document.getElementById("turnaround-time-ref").style.display = "none";
-                    document.getElementById("payment-ref").style.display = "none";
+                    if( claimantFirstName !== '') {
+                        document.getElementById('claim-msg-text').innerHTML = '<div> <h3>YOUR PAYOUT HAS BEEN APPROVED</h3> <br /> <p class="font-weight-justy request-font"> Hi ' + claimantFirstName + '. We would like to let you know that we have approved your claim request for your AIA Philam Life policy no. ' + policyNumber + '  for ' + beneficiaryCount + ' beneficiary/ies. </p> <br /> <p class="font-weight-normal request-font"> Kindly expect to receive the benefit through your chosen payout method. Please expect an update from us on when your benefit will be released. </p> <br /> <p class="font-weight-normal request-font"> We have also sent this information via SMS for your reference. </p> </div>'
+                        document.getElementById("turnaround-time-ref").style.display = "none";
+                        document.getElementById("payment-ref").style.display = "none";
+                    }else {
+                        document.getElementById('claim-msg-text').innerHTML = '<div> <h3>YOUR PAYOUT HAS BEEN APPROVED</h3> <br /> <p class="font-weight-justy request-font"> We would like to let you know that we have approved your claim request for your AIA Philam Life policy no. ' + policyNumber + '  for ' + beneficiaryCount + ' beneficiary/ies. </p> <br /> <p class="font-weight-normal request-font"> Kindly expect to receive the benefit through your chosen payout method. Please expect an update from us on when your benefit will be released. </p> <br /> <p class="font-weight-normal request-font"> We have also sent this information via SMS for your reference. </p> </div>'
+                        document.getElementById("turnaround-time-ref").style.display = "none";
+                        document.getElementById("payment-ref").style.display = "none";
+                    }
                 }
                 allStepperActive()
             }
