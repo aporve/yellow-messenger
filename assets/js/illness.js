@@ -89,7 +89,7 @@ function myDisable() {
 function addFileToList(fileObject, fileName) {
     console.log("in function, with name : ");
     console.log(fileName);
-    let index = filesList.findIndex(x => x.Filename == fileName)
+    let index = filesList.findIndex(x => x.filename == fileName)
 
     if (index === -1) {
         console.log("adding bcoz unique");
