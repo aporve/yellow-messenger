@@ -972,7 +972,7 @@
                                     privacy in accordance with law. A copy
                                     of Circular Letter No. 2016-54 may be accessed at the Insurance Commission’s website
                                     at
-                                    <a href="https://www.insurance.gov.ph" target="_blank">www.insurance.gov.ph</a>
+                                    <a href="https://www.insurance.gov.ph" target="_blank">www.insurance.gov.ph</a>.
                                 </li>
 
                                 <li>
@@ -1012,7 +1012,8 @@
                                             design and communication of the Company’s marketing campaigns and offers in
                                             order to improve the
                                             quality of service the Company provides, and to receive such marketing
-                                            campaigns.
+                                            campaigns.I/we agree to share the information in the insurance policy with third
+                                            parties for marketing campaigns.
                                         </p>
                                         <p id="err_privacy_consent1" class="error" style="margin-left: 5rem"></p>
                                     </div>
@@ -1030,7 +1031,7 @@
                                         <p id="err_privacy_consent2" class="error" style="margin-left: 5rem"></p>
                                     </div>
                                 </li>
-                                <li style="list-style: none;">
+                                <!-- <li style="list-style: none;">
                                     <div class="form-group form-check">
                                         <input type="checkbox" class="form-check-input" id="privacy_consent_3">
                                         <p class="privacy_consent" style="margin-left: 1rem;">
@@ -1039,7 +1040,7 @@
                                         </p>
                                         <p id="err_privacy_consent3" class="error" style="margin-left: 5rem"></p>
                                     </div>
-                                </li>
+                                </li> -->
 
 
                                 <li>
@@ -1047,15 +1048,17 @@
                                         I/we may at anytime withdraw our consent by visiting Philam branches, calling
                                         the Company’s contact center, or by emailing the request to <a target="_blank"
                                             href="mailto:phi.philamprivacy@aia.com">phi.philamprivacy@aia.com</a>. Upon
-                                        receipt of such withdrawal of consent, the Company will no longer approach you
-                                        for promotions or products that may be suited to your insurance needs. However,
-                                        rest assured that this will not affect our ability to provide quality service in
-                                        relation to your existing policies.
+                                        receipt of such withdrawal of consent, the Company will no longer approach me/us
+                                        for promotions or products that
+                                        may be suited to my/our insurance needs. I/We am/are assured that this will not
+                                        affect the Company’s ability to provide
+                                        quality service in relation to my/our existing policies.
                                     </p>
                                 </li>
                                 <li>
                                     <p style="margin-left: 1rem;">
-                                        Please visit our website, <a href="https://www.philamlife.com"> www.philamlife.com</a> for our Privacy Statement, which
+                                        Please visit our website, <a target="_blank" href="https://www.philamlife.com">
+                                            www.philamlife.com</a> for our Privacy Statement, which
                                         provides further details on why your
                                         personal data is collected, how it is intended to be used, to whom your personal
                                         data may be transferred to, how to
@@ -1210,8 +1213,37 @@
                                     <div class="col-md-12" style="display: flex; justify-content: flex-end;">
                                         <a href="#" onclick="goBack()"
                                             style="align-self: flex-end; color: #b8123e; padding: 0 1rem; margin: 0 0">Back</a>
-                                        <button style="width: 50%;" type="submit" onclick="buttonSubmitClicked(event)"
-                                            class="btn submit__btn">Submit</button>
+                                        <button id="upload_docs_btn" style="width: 50%;" type="submit"
+                                            onclick="buttonSubmitClicked(event)" class="btn submit__btn">Submit
+                                            <!-- <div class="loader1" id="file_loader_icon_9">
+                                                <div class="loader-bg">
+                                                    <div class="text"></div>
+                                                </div>
+                                                <div class="spiner-holder-one animate-0-25-a">
+                                                    <div class="spiner-holder-two animate-0-25-b">
+                                                        <div class="loader-spiner"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="spiner-holder-one animate-25-50-a">
+                                                    <div class="spiner-holder-two animate-25-50-b">
+                                                        <div class="loader-spiner"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="spiner-holder-one animate-50-75-a">
+                                                    <div class="spiner-holder-two animate-50-75-b">
+                                                        <div class="loader-spiner"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="spiner-holder-one animate-75-100-a">
+                                                    <div class="spiner-holder-two animate-75-100-b">
+                                                        <div class="loader-spiner"></div>
+                                                    </div>
+                                                </div>
+                                            </div>  -->
+                                        </button>
+                                        <button id='upload_waiting_btn' type="button" class="btn btn-danger"
+                                            style="width: 50%;padding: 0;display: none"><span
+                                                class="loading"></span></button>
                                     </div>
                                 </div>
                             </div>
@@ -1305,7 +1337,7 @@
                                 </p>
                                 <br />
                                 <p class="font-weight-normal">You may also check the progress of your request at <a
-                                        href="">Status Tracker</a>. Just
+                                        href="main.html">Status Tracker</a>. Just
                                     type in your reference
                                     number to view the status of your
                                     request.</p>
@@ -1423,7 +1455,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-12 col-md-6">
+                                        <div class="col-12 col-md-6" id="proof_BAO_display">
                                             <div class="form-row">
                                                 <div style="padding: 0; margin: 1.5rem 0;">
                                                     <p class="upload_btn_title">Proof of Bank Account Ownership</p>
@@ -1514,6 +1546,10 @@
                                                             </div>
 
                                                         </button>
+                                                        <!-- <button id='submit9_waiting_btn' type="button"
+                                                            class="btn btn-danger"
+                                                            style="width: 100%; margin: 3rem 0;padding: 0;display: none"><span
+                                                                class="loading"></span></button> -->
                                                     </div>
                                                 </div>
                                             </div>
@@ -1649,13 +1685,71 @@
                                                             class="upload_btn_span">&#10006;</span>
                                                     </span>
                                                     <small class="form-text text-muted">
-                                                        Acceptable format .jpg .pdf & 2MB size
+                                                        Please upload any of the following bank
+                                                        account documents: Passbook, Bank
+                                                        Account Statement, or Bank Certification.
+                                                        You may only upload documents that are
+                                                        in .jpg, .pdf formats and must not
+                                                        exceed 2MB in file size.
+                                                    </small>
+                                                    <small class="form-text text-muted">
+                                                        Kindly ensure that only one file is uploaded in each field so we
+                                                        can successfully process your submission.
                                                     </small>
                                                     <p class="feedback_label" id="upload_feedback_label1"></p>
                                                 </div>
                                             </div>
+                                            <div class="card" id="warning_parent_acct1">
+                                                <div class="card-body" style="display: flex;padding: 0.5rem;">
+                                                    <div style="font-size: 1.8rem;">
+                                                        <svg width="1em" height="1em" viewBox="0 0 16 16"
+                                                            class="bi bi-exclamation-triangle-fill" fill="currentColor"
+                                                            xmlns="http://www.w3.org/2000/svg">
+                                                            <path fill-rule="evenodd"
+                                                                d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 5zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+                                                        </svg>
+                                                    </div>
+                                                    <div id="upload_warning_acct1"
+                                                        style="padding: 0 0.9rem; color: red;">
+                                                        Warning: We detected a virus/malware in your uploaded documents.
+                                                        Please re-upload a clean, virus-free document to proceed.
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <button type="submit" class="btn submit__btn"
-                                                style="width: 50%; margin: 3rem 0;">Submit</button>
+                                                style="width: 50%; margin: 3rem 0;" id='account_details1_btn'>Submit
+
+                                                <div class="loader1" id="file_loader_icon_9">
+                                                    <div class="loader-bg">
+                                                        <div class="text"></div>
+                                                    </div>
+                                                    <div class="spiner-holder-one animate-0-25-a">
+                                                        <div class="spiner-holder-two animate-0-25-b">
+                                                            <div class="loader-spiner"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="spiner-holder-one animate-25-50-a">
+                                                        <div class="spiner-holder-two animate-25-50-b">
+                                                            <div class="loader-spiner"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="spiner-holder-one animate-50-75-a">
+                                                        <div class="spiner-holder-two animate-50-75-b">
+                                                            <div class="loader-spiner"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="spiner-holder-one animate-75-100-a">
+                                                        <div class="spiner-holder-two animate-75-100-b">
+                                                            <div class="loader-spiner"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </button>
+                                            <!-- <div style="text-align: -webkit-right;"> <button
+                                                    id='account_details1_btn_waiting' type="button"
+                                                    class="btn btn-danger"
+                                                    style="width: 50%; margin: 3rem 0;padding: 0;display: none"><span
+                                                        class="loading"></span></button></div> -->
                                         </div>
                                         <!-- <div class="col-12 col-md-12">
                                             <div class="row">
@@ -1702,12 +1796,40 @@
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6" style="display: flex; justify-content: flex-end;">
-                                    <a href="#" onclick="goBackPickup()"
+                                    <a href="#" onclick="goBackPickup()" id="goback_pickup"
                                         style="align-self: flex-end; color: #b8123e; padding: 0 1rem; margin: 0 0.5rem 0.7rem 0.5rem;">Back</a>
-                                    <div class="popup">
-                                        <button type="submit" onclick="pickup_Bpi()" class="btn"
-                                            style="width: 100%;">YES, I WOULD LIKE TO PICK UP MY BENEFIT THROUGH
-                                            BPI</button>
+                                    <div class="popup" style="width: 100%;">
+                                        <button type="submit" onclick="pickup_Bpi()" class="btn" style="width: 100%;"
+                                            id="pick_up_btn"><span id='msg' style="color:white">YES, I WOULD LIKE TO PICK UP MY BENEFIT THROUGH
+                                            BPI</span>
+                                            <div class="loader1" id="file_loader_icon_9">
+                                                <div class="loader-bg">
+                                                    <div class="text"></div>
+                                                </div>
+                                                <div class="spiner-holder-one animate-0-25-a">
+                                                    <div class="spiner-holder-two animate-0-25-b">
+                                                        <div class="loader-spiner"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="spiner-holder-one animate-25-50-a">
+                                                    <div class="spiner-holder-two animate-25-50-b">
+                                                        <div class="loader-spiner"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="spiner-holder-one animate-50-75-a">
+                                                    <div class="spiner-holder-two animate-50-75-b">
+                                                        <div class="loader-spiner"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="spiner-holder-one animate-75-100-a">
+                                                    <div class="spiner-holder-two animate-75-100-b">
+                                                        <div class="loader-spiner"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <!-- </button><button id='pick_up_btn_waiting' type="button" class="btn btn-danger"
+                                            style="width: 100%;padding-left: 50px;padding-right: 50px;display: none"><span
+                                                class="loading"></span></button> -->
                                     </div>
                                 </div>
                             </div>
@@ -1731,32 +1853,54 @@
                         style="width: 50%; margin: 0 auto 3rem auto;">OK</button>
                 </div>
         </section>
-        <!-- otp pop up modal (drop-2 ) -->
-        <section class="hide modal fade" id="otpPopUp" tabindex="-1" role="dialog" aria-labelledby="otpPopUp"
-            aria-hidden="true">
+        <!-- invalid return code-->
+        <section class="hide modal fade" id="invalidReturnCode" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
-                        <p id="otp-text">We have send a One-Time PIN to your
+                        <p style="text-align: center;" id="returnMessage"></p>
+                    </div>
+                    <button type="button" class="btn btn-danger" style="width: 50%; margin: 0 auto 3rem auto;"
+                        onclick="backToFileClaim()">Ok</button>
+                </div>
+        </section>
+        <!--  invalid return code-->
+        <!-- otp pop up modal (drop-2 ) -->
+        <section class="hide modal fade" id="otpPopUp" tabindex="-1" role="dialog" aria-labelledby="otpPopUp"
+            aria-hidden="true" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <button type="button" class="close" aria-label="Close"
+                            style="text-align: right;padding:12px"><span aria-hidden="true"
+                                onclick="closeModal()">&times;</span></button><br>
+                        <p id="otp-text">We have sent a One-Time PIN to your
                             <br> mobile number <span id="user_mobile"></span>.
-                            <br> Kindly enter the OTP in the space below.</p>
+                            <br> Kindly enter the OTP in the space below.
+                        </p>
                         <p id="otp-text">Your OTP expires after two minutes.
                             <br> Click
                             <a style="color:#1b89f0 ;cursor: pointer;" onclick="resendOtp('resend')">here</a> to resend
                             another
-                            one.</p>
+                            one.
+                        </p>
                         <p id="otp-text">If your current mobile number does not
                             <br> match our records, kindly update your
                             <br> contact details via
                             <a style="color:#1b89f0 ;cursor: pointer;">ePlan</a> or by calling
-                            <br> our hotline at (02)8528-2000. </p>
+                            <br> our hotline at (02)8528-2000.
+                        </p>
                         <br>
                         <input type="text" class="input__box" maxlength="25" id="otp" value="" placeholder="OTP"
                             tabindex="1" />
                         <div align="right">Time left : <span id="otpTimer"></span></div>
                     </div>
-                    <button type="button" data-dismiss="modal" class="btn btn-danger" onclick="submitOtp(event)"
+                    <button id='otp-btn' type="button" class="btn btn-danger" onclick="submitOtp(event)"
                         style="width: 50%; margin: 0 auto 3rem auto;">Submit</button>
+                    <button id='loader-btn' type="button" class="btn btn-danger"
+                        style="width: 50%; margin: 0 auto 3rem auto;padding: 0;display: none"><span
+                            class="loading"></span></button>
                 </div>
 
             </div>
@@ -1765,7 +1909,7 @@
 
         <!-- Empty mobile number  modal (drop-2 ) -->
         <section class="hide modal fade" id="emptyMobileNumPopUp" tabindex="-1" role="dialog"
-            aria-labelledby="emptyMobileNumPopUp" aria-hidden="true">
+            aria-labelledby="emptyMobileNumPopUp" aria-hidden="true" data-backdrop="static" data-keyboard="false">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
@@ -1789,13 +1933,101 @@
 
         <!-- Invalid Otp modal (drop-2 ) -->
         <section class="hide modal fade" id="invalidOtp" tabindex="-1" role="dialog" aria-labelledby="invalidOtp"
-            aria-hidden="true">
+            aria-hidden="true" data-backdrop="static" data-keyboard="false">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
                         <p id="modal-text" style="text-align:center;">Sorry, you have entered an invalid
                             <br> One-Time-Pin. To have another OTP sent to your mobile number, please click
                             <a style="color:#1b89f0 ;cursor: pointer;" onclick="resendOtp('invalidInput')">here</a>.
+                        </p>
+
+                        <br>
+
+                    </div>
+                    <button id="otp-invalid-btn" type="button" class="btn btn-danger" data-dismiss="modal"
+                        style="width: 50%; margin: 0 auto 3rem auto;" onclick="backToFileClaim()">Exit</button>
+
+                    <button id='loader-btn-invalid' type="button" class="btn btn-danger"
+                        style="width: 50%; margin: 0 auto 3rem auto;padding: 0;display: none"><span
+                            class="loading"></span></button>
+                </div>
+
+            </div>
+        </section>
+        <!-- Invalid Otp modal (drop-2 ) -->
+
+        <!--Otp expiry modal (drop-2 ) -->
+        <section class="hide modal fade" id="otpExpiry" tabindex="-1" role="dialog" aria-labelledby="otpExpiry"
+            aria-hidden="true" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <p id="modal-text">Sorry, your 2 minutes to enter the OTP is up. To have another OTP sent to
+                            your mobile
+                            number,please click
+                            <a style="color:#1b89f0;cursor: pointer;" onclick="resendOtp('otpExpire')">here</a>.
+                        </p>
+
+                    </div>
+                    <br>
+                    <button id="otp-expiry-btn" type="button" class="btn btn-danger" data-dismiss="modal"
+                        style="width: 50%; margin: 0 auto 3rem auto;" onclick="backToFileClaim()">Exit</button>
+
+                    <button id='loader-btn-expiry' type="button" class="btn btn-danger"
+                        style="width: 50%; margin: 0 auto 3rem auto;padding: 0;display: none"><span
+                            class="loading"></span></button>
+
+                </div>
+
+            </div>
+        </section>
+        <!-- Otp expiry modal (drop-2 ) -->
+
+        <!--Resend otp max number exceed (drop-2 ) -->
+        <section class="hide modal fade" id="maxResendOtp" tabindex="-1" role="dialog" aria-labelledby="maxResendOtp"
+            aria-hidden="true" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <p id="modal-text">Sorry, you have reached the maximum
+                            <br> allowable number to resend the OTP to <br> your mobile number. Please try again <br> in
+                            2
+                            hours.
+                        </p>
+
+                    </div>
+                    <br>
+                    <button type="button" class="btn btn-danger" 
+                        style="width: 50%; margin: 0 auto 3rem auto;" onclick="backToFileClaim()">Exit</button>
+                </div>
+            </div>
+        </section>
+        <section class="hide modal fade" id="popUp_DOB" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <p id="p1">We’re sorry, the date of birth keyed in is invalid and does not match the
+                            date of incident / loss reported. Please double check all information before
+                            proceeding.
+                        </p>
+                    </div>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"
+                        style="width: 50%; margin: 0 auto 3rem auto;">Ok</button>
+                </div>
+        </section>
+
+        <!-- Max Invalid Otp  modal (drop-2 ) -->
+        <section class="hide modal fade" id="maxInvalidOtp" tabindex="-1" role="dialog" aria-labelledby="maxInvalidOtp"
+            aria-hidden="true" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <p id="modal-text" style="text-align:center;">Sorry, you have entered an invalid
+                            One-Time PIN.
+                            After 3 attempts, we will no longer be able to generate a new PIN for
+                            you. Kindly seek assistance from your financial advisor.
                         </p>
 
                         <br>
@@ -1808,89 +2040,13 @@
 
             </div>
         </section>
-        <!-- Invalid Otp modal (drop-2 ) -->
-
-        <!--Otp expiry modal (drop-2 ) -->
-        <section class="hide modal fade" id="otpExpiry" tabindex="-1" role="dialog" aria-labelledby="otpExpiry"
-            aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <p id="modal-text">Sorry, your 2 minutes to enter the OTP is up. To have another OTP sent to
-                            your mobile
-                            number,please click
-                            <a style="color:#1b89f0;cursor: pointer;" onclick="resendOtp('otpExpire')">here</a>.
-                        </p>
-
-                    </div>
-                    <br>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal"
-                        style="width: 50%; margin: 0 auto 3rem auto;" onclick="backToFileClaim()">Exit</button>
-                </div>
-
-            </div>
-        </section>
-        <!-- Otp expiry modal (drop-2 ) -->
-
-        <!--Resend otp max number exceed (drop-2 ) -->
-        <section class="hide modal fade" id="maxResendOtp" tabindex="-1" role="dialog" aria-labelledby="maxResendOtp"
-            aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <p id="modal-text">Sorry, you have reached the maximum
-                            <br> allowable number to resend the OTP to <br> your mobile number. Please try again <br> in
-                            24
-                            hours.</p>
-
-                    </div>
-                    <br>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal"
-                        style="width: 50%; margin: 0 auto 3rem auto;" onclick="backToFileClaim()">Exit</button>
-                </div>
-
-                <section class="hide modal fade" id="popUp_DOB" tabindex="-1" role="dialog"
-                    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                            <div class="modal-body">
-                                <p id="p1">We’re sorry, the date of birth keyed in is invalid and does not match the
-                                    date of incident / loss reported. Please double check all information before
-                                    proceeding.
-                                </p>
-                            </div>
-                            <button type="button" class="btn btn-danger" data-dismiss="modal"
-                                style="width: 50%; margin: 0 auto 3rem auto;">Ok</button>
-                        </div>
-                </section>
-
-                <!-- Max Invalid Otp  modal (drop-2 ) -->
-                <section class="hide modal fade" id="maxInvalidOtp" tabindex="-1" role="dialog"
-                    aria-labelledby="maxInvalidOtp" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                            <div class="modal-body">
-                                <p id="modal-text" style="text-align:center;">Sorry, you have entered an invalid
-                                    One-Time PIN.
-                                    After 3 attempts, we will no longer be able to generate a new PIN for
-                                    you. Kindly seek assistance from your financial advisor.
-                                </p>
-
-                                <br>
-
-
-                            </div>
-                            <button type="button" class="btn btn-danger" data-dismiss="modal"
-                                style="width: 50%; margin: 0 auto 3rem auto;" onclick="backToFileClaim()">Exit</button>
-                        </div>
-
-                    </div>
-                </section>
-                <!-- Max Invalid Otp modal (drop-2 ) -->
+        <!-- Max Invalid Otp modal (drop-2 ) -->
+        <div id="cover-spin"></div>
     </main>
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-        crossorigin="anonymous"></script>
+        crossorigin="anonymous"></script> -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
