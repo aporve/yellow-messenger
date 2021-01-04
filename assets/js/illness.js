@@ -2633,6 +2633,8 @@ function resendOtp(type) {
                         else {
                             $('#otpExpiry').modal('hide');
                             $('#invalidOtp').modal('hide');
+                            document.getElementById('returnMessage').innerHTML = event.data.returnMessage;
+                            $("#invalidReturnCode").modal("show");
                             // $('#otpPopUp').modal('hide');
                         }
                     }

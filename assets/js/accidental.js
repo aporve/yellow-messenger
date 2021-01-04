@@ -2971,6 +2971,8 @@ function resendOtp(type) {
             else {
               $('#invalidOtp').modal('hide');
               $('#otpExpiry').modal('hide');
+              document.getElementById('returnMessage').innerHTML = event.data.returnMessage;
+              $("#invalidReturnCode").modal("show");
               // $('#otpPopUp').modal('hide');
 
             }
