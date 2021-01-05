@@ -1909,6 +1909,7 @@ function disableDottedLoader() {
 }
 function refreshPage(){
   window.location.href = "main.html";
+  window.clear = clear
   // window.location.reload()
   // window.location.href = window.location.href
 }
