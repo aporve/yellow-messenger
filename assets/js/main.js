@@ -241,7 +241,8 @@ function trackProgress() {
                             document.getElementById('original_ref_no').innerHTML = document.getElementById('reference_number').value;
                             if (claimAmount != null && claimAmount != '' && claimAmount != '0.0' && claimAmount != '0.00') { document.getElementById('payment_amount').innerHTML = currency + ' ' + claimAmount; }
                             else {
-                                document.getElementById('payment_amount').disabled = true;
+                                document.getElementById('payment_amount').innerHTML = ''
+                                document.getElementById("payment-ref").disabled = true;
                             }
 
                             displayDateForClaimStatus()
