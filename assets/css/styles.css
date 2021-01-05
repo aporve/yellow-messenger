@@ -1373,8 +1373,3 @@ padding-bottom: 10px;
     text-shadow:
       .25em 0 0 white,
       .5em 0 0 white;}}
-
-.disabledbutton {
-  pointer-events: none;
-  opacity: 0.4;
-}

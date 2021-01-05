@@ -242,6 +242,7 @@ function trackProgress() {
                             if (claimAmount != null && claimAmount != '' && claimAmount != '0.0' && claimAmount != '0.00') { document.getElementById('payment_amount').innerHTML = currency + ' ' + claimAmount; }
                             else {
                                 document.getElementById('payment_amount').innerHTML = ''
+                                $("#payment-ref").css("background-color", "gray");
                             }
 
                             displayDateForClaimStatus()
@@ -761,7 +762,6 @@ function setDeathClaimStatusMsg() {
                     document.getElementById('claim-msg-text').innerHTML = '<div> <h3>YOUR REQUEST HAS BEEN APPROVED</h3> <br /> <p class="font-weight-justy request-font"> Hi ' + claimantFirstName + '. We would like to let you know that we have approved your claim request for your AIA Philam Life policy . </p> <br /> <p class="font-weight-normal request-font"> Kindly expect to receive the benefit through your chosen payout method. Please expect an update from us on when your benefit will be released. </p> <br /> <p class="font-weight-normal request-font"> We have also sent this information via SMS for your reference. </p> </div>'
                     document.getElementById("turnaround-time-ref").style.display = "none";
                     document.getElementById("payment-ref").style.display = "block";
-                    $("#payment-ref").addClass("disabledbutton");
                 }
                 else {
                     document.getElementById('claim-msg-text').innerHTML = '<div> <h3>YOUR PAYOUT HAS BEEN APPROVED</h3> <br /> <p class="font-weight-justy request-font"> We would like to let you know that we have approved your claim request for your AIA Philam Life policy . </p> <br /> <p class="font-weight-normal request-font"> Kindly expect to receive the benefit through your chosen payout method. Please expect an update from us on when your benefit will be released. </p> <br /> <p class="font-weight-normal request-font"> We have also sent this information via SMS for your reference. </p> </div>'
