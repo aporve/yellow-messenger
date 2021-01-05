@@ -22,7 +22,7 @@ var sourceSystem;
 var isFallout;
 var surveyTag;
 var referenceNumber = null;
-
+var org_claimType;
 var surveyQues1;
 var surveyAns1 = 0;
 var surveyQues2;
@@ -194,6 +194,7 @@ function trackProgress() {
                         if (event.data.type != null) {
                             document.getElementById('go-btn').style.display = 'block'
                             document.getElementById('loader-btn').style.display = 'none'
+                            org_claimType = event.data.type;
                             if (event.data.type.toLowerCase() == 'death') {
                                 claim_type = event.data.type?.toLowerCase()
                             }
@@ -1186,17 +1187,17 @@ function submit_survey(event) {
     //     referenceNumber: referenceNumber,
     //     data: survey_data
     // }
-    if (org_sourceSystem == '' || org_sourceSystem == null) {
-        org_sourceSystem = 'cms'
-    }
+    // if (org_sourceSystem == '' || org_sourceSystem == null) {
+    //     org_sourceSystem = 'cms'
+    // }
     var survey_data =
     {
         'companyName': 'PAL',
         'TIPSReferenceNumber': referenceNumber,
-        'claimType': claim_type,
+        'type': org_claimType,
         'subType': org_claimSubType,
         'policyNumber': policyNumber,
-        'sourceSystem': org_sourceSystem.trim(),
+        'sourceSystem': org_sourceSystem,
         'surveyQuestion1': surveyAns1,
         'surveyQuestion2': surveyAns2,
         'surveyQuestion3': surveyAns3
