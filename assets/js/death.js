@@ -726,7 +726,7 @@ var timerVal = null;
 function otpTimerFunction() {
     timerVal = setTimeout(() => {
         if (isOtpPopShown == false) {
-            disableDottedLoader();
+            // disableDottedLoader();
             document.getElementById('fallbackMessage').innerHTML = '<p>Your request is taking a while to get through due to intermittent connection. Stay with us! <br> Please refresh the page and re-submit your request to continue.</p>';
             $("#fallbackMessagePopUp").modal("show");
         }
