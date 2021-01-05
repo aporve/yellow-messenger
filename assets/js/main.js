@@ -200,7 +200,7 @@ function trackProgress() {
                             }
                             else {
                                 claim_type = event.data.subType?.toLowerCase()
-                                org_claimSubType = event.data.subType?.toLowerCase();
+                                org_claimSubType = event.data.subType;
                                 if (event.data.subType.toLowerCase() == 'il') {
                                     claim_type = 'illness'
                                 }
@@ -219,7 +219,7 @@ function trackProgress() {
                             claimantFirstName = event.data.claimantFirstName;
 
                             sourceSystem = event.data.sourceSystem?.toLowerCase();
-                            org_sourceSystem = event.data.sourceSystem?.toLowerCase();
+                            org_sourceSystem = event.data.sourceSystem;
                             if (sourceSystem.trim().toLowerCase() != 'tips' && sourceSystem.trim().toLowerCase() != 'cms') {
                                 sourceSystem = 'cms'
                             }
