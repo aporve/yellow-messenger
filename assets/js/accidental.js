@@ -1907,7 +1907,10 @@ function disableDottedLoader() {
   document.getElementById('submit9').style.display = 'block'
   // document.getElementById('submit9_waiting_btn').style.display = 'none'
 }
-
+function refreshPage(){
+  window.location.href = "main.html";
+  location.reload()
+}
 var timerVal = null;
 function otpTimerFunction() {
   timerVal = setTimeout(() => {
