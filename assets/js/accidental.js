@@ -1908,8 +1908,8 @@ function disableDottedLoader() {
   // document.getElementById('submit9_waiting_btn').style.display = 'none'
 }
 function refreshPage(){
-  window.location.href = "main.html";
-  window.location.reload(true);
+  // window.location.href = "main.html";
+  window.location.reload()
 }
 var timerVal = null;
 function otpTimerFunction() {
