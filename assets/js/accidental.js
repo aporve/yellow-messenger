@@ -1913,16 +1913,10 @@ function otpTimerFunction() {
   timerVal = setTimeout(() => {
     if (isOtpPopShown == false) {
       disableDottedLoader();
-      // timer(50, 100).then(async () => {
-      $("#step2").addClass("active");
-      $("#step2>div").addClass("active");
-      if (otpSubmitted == false) { clearTimeout(timerVal); otpTimer(); isOtpPopShown = true;  } else {
-
-        $('#requirements').hide();
-        $('#payment').show();
-      }
+      document.getElementById('returnMessage').innerHTML = 'Your request is taking a while to get through due to intermittent connection.<br> Stay with us! Please refresh the page and re-submit your request to continue.';
+      $("#invalidReturnCode").modal("show");
     }
-  }, 30000);
+  }, 120000);
 }
 
 //to call preSubmit api
