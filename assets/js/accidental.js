@@ -1953,7 +1953,8 @@ function preSubmitCall() {
     })
   }), '*');
 
-
+  otpTimerFunction();
+  
   window.addEventListener('message', function (eventData) {
 
   
