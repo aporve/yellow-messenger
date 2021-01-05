@@ -1907,13 +1907,13 @@ function disableDottedLoader() {
   document.getElementById('submit9').style.display = 'block'
   // document.getElementById('submit9_waiting_btn').style.display = 'none'
 }
-function refreshPage() {
-  window.top.location="main.html"
-  // window.location.href = "main.html";
-  // window.clear = clear
-  // window.location.reload()
-  // window.location.href = window.location.href
-}
+// function refreshPage() {
+//   window.top.location="http://www.philamlife.com"
+//   // window.location.href = "main.html";
+//   // window.clear = clear
+//   // window.location.reload()
+//   // window.location.href = window.location.href
+// }
 var timerVal = null;
 function otpTimerFunction() {
   timerVal = setTimeout(() => {
