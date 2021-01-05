@@ -2357,6 +2357,7 @@ function bankTranfer() {
 
 function pickUp() {
     document.getElementById('ref_number').innerHTML = referenceNumber;
+    document.getElementById('spin_loader_1').style.display = 'none'
     payoutOption = 'PUA';
     let filesObject = {};
     filesObject["FolderName"] = `CLAIMS/PAL/${referenceNumber}`
@@ -2395,6 +2396,7 @@ function pickup_Bpi() {
     document.getElementById("pick_up_btn").disabled = true;
     document.getElementById("pick_up_btn").style.cursor = "no-drop";
     document.getElementById("goback_pickup").style.display = "none";
+    
     var nodes = document.getElementById("pickUp").getElementsByTagName('*');
     for (var i = 0; i < nodes.length; i++) {
         nodes[i].disabled = true;
@@ -2403,6 +2405,7 @@ function pickup_Bpi() {
     }
     document.getElementById("pickUp").style.opacity = '0.65'
     document.getElementById('msg').style.display = 'none'
+    document.getElementById('spin_loader_1').style.display = 'block'
     finalSubmitCall();
 
     // $("#pickUp").hide();
@@ -2630,6 +2633,8 @@ function resendOtp(type) {
                         else {
                             $('#otpExpiry').modal('hide');
                             $('#invalidOtp').modal('hide');
+                            document.getElementById('returnMessage').innerHTML = event.data.returnMessage;
+                            $("#invalidReturnCode").modal("show");
                             // $('#otpPopUp').modal('hide');
                         }
                     }
