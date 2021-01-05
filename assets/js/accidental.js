@@ -37,6 +37,7 @@ var scanDoc = false;
 var payoutOption;
 var isChangeInBankDetails = 'N';
 var isChangeInPayoutOption = 'N';
+var isOtpPopShown = false;
 $('#privacy_consent_1').prop('checked', true);
 $('#privacy_consent_2').prop('checked', true);
 // $('#privacy_consent_3').prop('checked', true);
@@ -1907,6 +1908,23 @@ function disableDottedLoader() {
   // document.getElementById('submit9_waiting_btn').style.display = 'none'
 }
 
+var timerVal = null;
+function otpTimerFunction() {
+  timerVal = setTimeout(() => {
+    if (isOtpPopShown == false) {
+      disableDottedLoader();
+      // timer(50, 100).then(async () => {
+      $("#step2").addClass("active");
+      $("#step2>div").addClass("active");
+      if (otpSubmitted == false) { otpTimer(); isOtpPopShown = true; clearTimeout(timerVal); } else {
+
+        $('#requirements').hide();
+        $('#payment').show();
+      }
+    }
+  }, 30000);
+}
+
 //to call preSubmit api
 function preSubmitCall() {
   enableDottedLoader();
@@ -1946,21 +1964,25 @@ function preSubmitCall() {
         let event = JSON.parse(eventData.data);
         console.log(event)
         if (event.event_code == 'preSubmitResponse') { //sucess
-          console.log("receiving presubmit event in acc")
-          if (event.data.returnCode == '0' || event.data.retCode == '0') {
-            disableDottedLoader();
-            // timer(50, 100).then(async () => {
-            $("#step2").addClass("active");
-            $("#step2>div").addClass("active");
-            if (otpSubmitted == false) { otpTimer(); } else {
+          clearTimeout(timerVal);
+          if (isOtpPopShown == false) {
+            console.log("receiving presubmit event in acc")
+            if (event.data.returnCode == '0' || event.data.retCode == '0') {
+              disableDottedLoader();
+              // timer(50, 100).then(async () => {
+              $("#step2").addClass("active");
+              $("#step2>div").addClass("active");
+              if (otpSubmitted == false) { otpTimer(); isOtpPopShown = true; } else {
 
-              $('#requirements').hide();
-              $('#payment').show();
-            }
-            // })
+                $('#requirements').hide();
+                $('#payment').show();
+              }
+          
+              // })
           } else {
             document.getElementById('returnMessage').innerHTML = event.data.returnMessage;
             $("#invalidReturnCode").modal("show");
+            }
           }
         }
 
