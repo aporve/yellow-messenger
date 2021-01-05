@@ -767,6 +767,7 @@ function setDeathClaimStatusMsg() {
                     document.getElementById("turnaround-time-ref").style.display = "none";
                     document.getElementById("payment-ref").style.display = "block";
                     document.getElementById("payment-ref").disabled = true;
+                    document.getElementById("payment-ref").style.cursor = "no-drop";
                 }
 
                 allStepperActive()
