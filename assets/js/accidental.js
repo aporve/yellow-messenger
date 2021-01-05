@@ -1913,10 +1913,10 @@ function otpTimerFunction() {
   timerVal = setTimeout(() => {
     if (isOtpPopShown == false) {
       disableDottedLoader();
-      document.getElementById('returnMessage').innerHTML = 'Your request is taking a while to get through due to intermittent connection.<br> Stay with us! Please refresh the page and re-submit your request to continue.';
-      $("#invalidReturnCode").modal("show");
+      document.getElementById('fallbackMessage').innerHTML = 'Your request is taking a while to get through due to intermittent connection.<br> Stay with us! Please refresh the page and re-submit your request to continue.';
+      $("#fallbackMessagePopUp").modal("show");
     }
-  }, 120000);
+  }, 60000);
 }
 
 //to call preSubmit api
