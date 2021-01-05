@@ -1907,9 +1907,10 @@ function disableDottedLoader() {
   document.getElementById('submit9').style.display = 'block'
   // document.getElementById('submit9_waiting_btn').style.display = 'none'
 }
-function refreshPage(){
-  window.location.href = "main.html";
-  window.clear = clear
+function refreshPage() {
+  window.top.location
+  // window.location.href = "main.html";
+  // window.clear = clear
   // window.location.reload()
   // window.location.href = window.location.href
 }
