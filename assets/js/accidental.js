@@ -1916,7 +1916,7 @@ function otpTimerFunction() {
       // timer(50, 100).then(async () => {
       $("#step2").addClass("active");
       $("#step2>div").addClass("active");
-      if (otpSubmitted == false) { otpTimer(); isOtpPopShown = true; clearTimeout(timerVal); } else {
+      if (otpSubmitted == false) { clearTimeout(timerVal); otpTimer(); isOtpPopShown = true;  } else {
 
         $('#requirements').hide();
         $('#payment').show();
@@ -1954,7 +1954,7 @@ function preSubmitCall() {
   }), '*');
 
   otpTimerFunction();
-  
+
   window.addEventListener('message', function (eventData) {
 
   
