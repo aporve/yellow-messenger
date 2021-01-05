@@ -1909,8 +1909,8 @@ function disableDottedLoader() {
 }
 function refreshPage(){
   // window.location.href = "main.html";
-  // window.location.reload()
-  window.location.href = window.location.href
+  window.location.reload()
+  // window.location.href = window.location.href
 }
 var timerVal = null;
 function otpTimerFunction() {
