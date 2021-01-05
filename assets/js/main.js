@@ -242,7 +242,7 @@ function trackProgress() {
                             if (claimAmount != null && claimAmount != '' && claimAmount != '0.0' && claimAmount != '0.00') { document.getElementById('payment_amount').innerHTML = currency + ' ' + claimAmount; }
                             else {
                                 document.getElementById('payment_amount').innerHTML = ''
-                                $("#payment-ref").css({"background-color":"lightgray", "color": "#b3b1b2"});
+                                $("#payment-ref").css({"background-color":"lightgray", "color": "#b3b1b2 !important"});
                             }
 
                             displayDateForClaimStatus()
